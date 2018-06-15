@@ -2,7 +2,7 @@
 <template>
     <div class="main-box">
         <div class="header-wrap">
-            <div class="company">杭州知己鹰眼管理系统</div>
+            <div class="company">鹰眼管理系统</div>
             <div class="top-menu" style="float:left;">
                 <el-menu :default-active="horizontalIndex"
                       class="el-menu-demo"
@@ -84,7 +84,7 @@
                 </el-submenu>
             </el-menu>
         </div>
-        <div class="content-wrap" ref="content" :style="isCollapse ? 'margin-left:70px;' : 'margin-left:200px;'">
+        <div class="content-wrap" ref="content" :style="isCollapse ? 'margin-left:70px;' : 'margin-left:160px;'">
             <router-view></router-view>
         </div>
     </div>
@@ -135,8 +135,8 @@ export default {
             background: #545c64;
             .company{
                 float:left;
-                margin-right:40px;
-                width:200px;
+                margin-right:30px;
+                width:160px;
                 line-height:60px;
                 font-size:18px;
                 text-align:center;
@@ -162,8 +162,7 @@ export default {
     }
 
     .el-menu-vertical-demo:not(.el-menu--collapse) {
-        width: 200px;
-        min-height: 400px;
+        width: 160px;
     }
     .el-menu{
         border:0;
