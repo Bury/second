@@ -2,13 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // 模板框架
-import Main from '../views/Main'
+import Main from '../views/home/Main'
 
 // 登录页面
 import Home from '../views/Home'
 
 //客流统计
-import Dashboard from '../views/home/Dashboard'
+import Statistics from '../views/statistics/Statistics'
 
 //提醒列表
 import RemindList from '../views/remind/RemindList'
@@ -21,17 +21,19 @@ import OrderList from '../views/order/OrderList'
 
 /*标签管理*/
 import LabelList from '../views/label/LabelList'
+import LabelDetail from '../views/label/LabelDetail'
+
 
 /*设备管理*/
 import Equipment from '../views/equipment/Equipment'
 
 /*****系统设置*****/
 //提醒设置
-import RemindSet from '../views/setUp/RemindSet'
+import RemindSet from '../views/setting/RemindSet'
 //营业时间设置
-import OpenTimeSet from '../views/setUp/OpenTimeSet'
+import OpenTimeSet from '../views/setting/OpenTimeSet'
 //个人中心
-import Personal from '../views/setUp/Personal'
+import Personal from '../views/setting/Personal'
 
 
 Vue.use(Router)
@@ -48,11 +50,12 @@ const router = new Router({
     path: '/',
     component: Main,
     children: [
-      {path: '',name: 'Dashboard',component: Dashboard},
+      {path: '',name: 'Statistics',component: Statistics},
       {path: 'RemindList',name: 'RemindList',component: RemindList},
       {path: 'GuestList',name: 'GuestList',component: GuestList},
       {path: 'OrderList',name: 'OrderList',component: OrderList},
       {path: 'LabelList',name: 'LabelList',component: LabelList},
+      {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
       {path: 'Equipment',name: 'Equipment',component: Equipment},
       {path: 'RemindSet',name: 'RemindSet',component: RemindSet},
       {path: 'OpenTimeSet',name: 'OpenTimeSet',component: OpenTimeSet},

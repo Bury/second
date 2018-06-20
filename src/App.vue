@@ -29,7 +29,7 @@ export default {
   min-width:1204px;
   min-height: 100%;
   color: #ffffff;
-  background-color: #f9f9f9;
+  background-color: #fff;
   overflow: auto;
 }
 
@@ -45,5 +45,14 @@ a {
 
 a:focus {
   outline :none;
+}
+ul,li{list-style: none;}
+
+.el-table th{
+  background-color: #C3CBD3;
+}
+.el-table th>.cell{
+  text-align: center;
+  color:#333;
 }
 </style>

@@ -1,17 +1,15 @@
 <template>
-	<div class="label-list-page">
+	<div class="label-detail-page">
 		<div class="top-box">
 			<el-button type="primary" class="add-btn" @click="fnAdd()">新增</el-button>
 			
 		</div>
 		<el-table :data="tableData" border style="width:623px;text-align:center;">
-	    	<el-table-column prop="name" label="标签类名" width="220"></el-table-column>
+	    	<el-table-column prop="name" label="标签名" width="220"></el-table-column>
 		    <el-table-column label="操作" width="400">
 			    <template slot-scope="scope">
 			    	<el-button type="primary" icon="el-icon-edit" circle
 			    		@click="fnEdit(scope.row)"></el-button>
-			    	<el-button type="info" icon="el-icon-setting" circle
-			    		@click="fnGoPage(scope.row)"></el-button>
 			    	<el-button type="danger" icon="el-icon-delete" circle
 			    		@click="fnRemove(scope.row)"></el-button>
 			    </template>
@@ -22,18 +20,12 @@
 </template>
 <script>
 	export default{
-		name:'label-list',
+		name:'label-detail',
 		data(){
 			return {
 				tableData: [{
 				  id:1,
-		          name: '材质111',
-		        },{
-				  id:2,
-		          name: '材质222',
-		        },{
-				  id:3,
-		          name: '材质333',
+		          name: '翡翠',
 		        }],
 		       
 			}
@@ -58,7 +50,7 @@
 			},
 			fnEdit(row){
 				console.log(row);
-				this.$prompt('标签类名', '编辑提示', {
+				this.$prompt('标签名', '编辑提示', {
 		          confirmButtonText: '确定',
 		          cancelButtonText: '取消',
 		          inputValue:row.name,
@@ -79,7 +71,7 @@
 			},
 			fnAdd(row){
 				console.log(row);
-				this.$prompt('标签类名', '编辑提示', {
+				this.$prompt('标签名', '编辑提示', {
 		          confirmButtonText: '确定',
 		          cancelButtonText: '取消',
 		          inputPattern: /^\s*$/,
@@ -97,19 +89,12 @@
 		          });       
 		        });
 			},
-			fnGoPage(row){
-				this.$router.push({
-					name: 'LabelDetail',
-					query: {
-	                    LabelId: row.id
-	                }
-				});
-			}
+			
 		}
 	}
 </script>
 <style lang="scss" scoped>
-	.label-list-page{
+	.label-detail-page{
 		.top-box{
 			position:relative;
 			margin-bottom:40px;
