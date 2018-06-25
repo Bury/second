@@ -1,5 +1,5 @@
 <template>
-	<div class="remind-list">
+	<div class="remind-list-page">
 		<div class="top-box">
 			<el-form :inline="true" :model="formInline" class="demo-form-inline">
 			  <el-form-item label="进店时间：">
@@ -47,46 +47,58 @@
 			</el-form>
 		</div>
 		<!-- 列表 -->
-		<el-table :data="tableData" border style="width: 2913px;text-align:center;">
-	    	<el-table-column fixed prop="Id" label="ID" width="60"></el-table-column>
-		    <el-table-column prop="img" label="人脸" width="80"></el-table-column>
-		    <el-table-column prop="name" label="姓名" width="100"></el-table-column>
-		    <el-table-column prop="sex" label="性别" width="50"></el-table-column>
+		<el-table :data="tableData" border style="width: 1331px;text-align:center;">
+	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
+		    <el-table-column prop="avatar_path" label="人脸" width="80"></el-table-column>
+		    <el-table-column prop="customerMerchant.name" label="姓名" width="100"></el-table-column>
+		    <el-table-column label="性别" width="50">
+		    	<template slot-scope="scope">
+		           <span>{{scope.row.gender == 1 ?'男':'女'}}</span>
+		        </template>
+		    </el-table-column>
 		    <el-table-column prop="age" label="年龄" width="50"></el-table-column>
-		    <el-table-column prop="adress" label="地址" width="300"></el-table-column>
-		    <el-table-column prop="phone" label="手机号" width="110"></el-table-column>
-		    <el-table-column prop="cont" label="消费次数" width="80"></el-table-column>
-		    <el-table-column prop="totalMoney" label="消费金额" width="120"></el-table-column>
-		    <el-table-column prop="level" label="客户等级" width="120"></el-table-column>
-		    <el-table-column prop="preStore" label="上次进店信息" width="120"></el-table-column>
-		    <el-table-column prop="preTime" label="上次进店时间" width="160"></el-table-column>
+		    <el-table-column prop="customerMerchant.phone" label="手机号" width="110"></el-table-column>
+		    <el-table-column prop="customerMerchant.consume_num" label="消费次数" width="80"></el-table-column>
+		    <el-table-column prop="customerMerchant.consume_money" label="消费金额" width="120"></el-table-column>
+		    <el-table-column label="客户等级" width="120">
+		    	<template slot-scope="scope">
+		    		<span v-if="scope.row.is_new === '1' && scope.row.vip_level === '0'">新客匿名</span>
+			    	<span v-if="scope.row.is_new === '1' && scope.row.vip_level === '1'">新客VIP</span>
+			    	<span v-if="scope.row.is_new === '0' && scope.row.vip_level === '0'">熟客匿名</span>
+			    	<span v-if="scope.row.is_new === '0' && scope.row.vip_level === '1'">熟客VIP</span>
+		    	</template>
+		    </el-table-column>
+		    <el-table-column prop="store_name" label="进店信息" width="120"></el-table-column>
+		    <el-table-column prop="created_at" label="进店时间" width="160"></el-table-column>
+		    <el-table-column prop="device_name" label="设备信息" width="160"></el-table-column>
 		    <el-table-column fixed="right" label="操作" width="100">
 			    <template slot-scope="scope">
-			        <el-button @click="handleClick(scope.row)" type="text" size="small">详情备注</el-button>
+			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
 			    </template>
 		    </el-table-column>
 	    </el-table>
 
 	  	<!-- 弹窗 -->
-	  	<el-dialog title="提示" :visible.sync="dialogVisible" style="min-width:1200px;">
-			<el-tabs v-model="activeName" @tab-click="checkout()">
+	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;">
+			<el-tabs v-model="activeName" @tab-click="checkout">
 			    <el-tab-pane label="个人信息" name="first">
-			    	<user-info></user-info>
+			    	<user-info :customerId="customer_id"></user-info>
 			    </el-tab-pane>
 			    <el-tab-pane label="到店记录" name="second">
-			    	<store-record></store-record>
+			    	<store-record :customerId="customer_id"></store-record>
 			    </el-tab-pane>
 			    <el-tab-pane label="订单记录" name="third">
-			    	<order-record></order-record>
+			    	<order-record :customerId="customer_id"></order-record>
 			    </el-tab-pane>
 			</el-tabs>
 		</el-dialog>
 	</div>
 </template>
 <script>
-	import userInfo from './userInfo'
-	import StoreRecord from './StoreRecord'
-	import OrderRecord from './OrderRecord'
+	import remindApi from '../../api/remind'
+	import userInfo from '../../components/userInfo'
+	import StoreRecord from '../../components/StoreRecord'
+	import OrderRecord from '../../components/OrderRecord'
     export default {
         name:'remind-list',
         components: {
@@ -105,50 +117,46 @@
 		          minM:'',
 		          maxM:''
 		        },
-		        tableData: [{
-		          Id: '0001',
-		          img: '',
-		          name: '呆呆',
-		          sex: 1,
-		          age: 22,
-		          adress:'地址地址地址',
-		          phone: 15855443130,
-		          cont: 1,
-		          totalMoney: 2888,
-		          level: 1,
-		          preStore: '浙北店',
-		          preTime: '2018/6/12 12:00'
-		        },{
-		          Id: '0001',
-		          img: '',
-		          name: '呆呆',
-		          sex: 1,
-		          age: 22,
-		          adress:'地址地址地址',
-		          phone: 15855443130,
-		          cont: 1,
-		          totalMoney: 2888,
-		          level: 1,
-		          preStore: '浙北店',
-		          preTime: '2018/6/12 12:00'
-		        }],
+		        tableData: [],
 		        dialogVisible:false,//弹窗是否显示
+		        customer_id:'',
 		        activeName: 'first'
 
             }
         },
-        
+        created:function(){
+        	this.remindList(1);
+        },
         methods: {
+        	//列表
+        	remindList(consume){
+        		let list = {
+			        	'consume':consume
+			    	}
+			    let qs = require('querystring')
+        		remindApi.remindList(qs.stringify(list)).then((res) => {
+        			if(res.data.errno === 0){
+						console.log(res.data.data.list)
+						this.$data.tableData = res.data.data.list;
+
+        			}else{
+
+        			}
+        			
+        		})
+        	},
         	onSubmit() {
 		        console.log('submit!');
 		    },
-		    handleClick(row) {
-		        console.log(row);
+		    showDialog(row) {
+		        console.log(row.customer_id);
+		        this.$data.customer_id = row.customer_id;
+		        this.$data.activeName = 'first';
 		        this.$data.dialogVisible = true;
 		    },
 		    checkout(tab, event) {
-		        console.log(tab, event);
-		      }
+		        // console.log(tab, event);
+		    }
 	    },
     }
 </script>

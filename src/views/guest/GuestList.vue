@@ -1,5 +1,159 @@
 <template>
-	<div>
-		来客列表
+	<div class="guest-list-page">
+		<div class="top-box">
+			<el-form :inline="true" :model="formInline" class="demo-form-inline">
+			  <el-form-item label="进店时间：">
+			    <el-select v-model="formInline.region" placeholder="活动区域">
+			      <el-option label="区域一" value="shanghai"></el-option>
+			      <el-option label="区域二" value="beijing"></el-option>
+			    </el-select>
+			  </el-form-item>
+			  <el-form-item label="客户等级：">
+			    <el-select v-model="formInline.level" placeholder="客户等级">
+			      <el-option label="全部" value="5"></el-option>
+			      <el-option label="新客匿名" value="1"></el-option>
+			      <el-option label="新客VIP" value="2"></el-option>
+			      <el-option label="熟客匿名" value="3"></el-option>
+			      <el-option label="熟客VIP" value="4"></el-option>
+			    </el-select>
+			  </el-form-item>
+			  <el-form-item label="年龄：">
+			    <el-select v-model="formInline.age" placeholder="年龄">
+			      <el-option label="全部" value="7"></el-option>
+			      <el-option label="20岁以下" value="1"></el-option>
+			      <el-option label="20-29岁" value="2"></el-option>
+			      <el-option label="30-39岁" value="3"></el-option>
+			      <el-option label="40-49岁" value="4"></el-option>
+			      <el-option label="50-59岁" value="5"></el-option>
+			      <el-option label="60岁以上" value="6"></el-option>
+			    </el-select>
+			  </el-form-item>
+			  <el-form-item label="性别：">
+			    <el-select v-model="formInline.sex" placeholder="性别">
+			      <el-option label="全部" value="3"></el-option>
+			      <el-option label="男" value="1"></el-option>
+			      <el-option label="女" value="0"></el-option>
+			    </el-select>
+			  </el-form-item>
+			  <el-form-item>
+			    <el-button type="primary" @click="onSubmit">查询</el-button>
+			  </el-form-item>
+			</el-form>
+		</div>
+		<!-- 列表 -->
+		<el-table :data="tableData" border style="width: 1331px;text-align:center;">
+	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
+		    <el-table-column prop="avatar_path" label="人脸" width="80"></el-table-column>
+		    <el-table-column prop="customerMerchant.name" label="姓名" width="100"></el-table-column>
+		    <el-table-column label="性别" width="50">
+		    	<template slot-scope="scope">
+		           <span>{{scope.row.gender == 1 ?'男':'女'}}</span>
+		        </template>
+		    </el-table-column>
+		    <el-table-column prop="age" label="年龄" width="50"></el-table-column>
+		    <el-table-column prop="customerMerchant.phone" label="手机号" width="110"></el-table-column>
+		    <el-table-column prop="customerMerchant.consume_num" label="消费次数" width="80"></el-table-column>
+		    <el-table-column prop="customerMerchant.consume_money" label="消费金额" width="120"></el-table-column>
+		    <el-table-column label="客户等级" width="120">
+		    	<template slot-scope="scope">
+		    		<span v-if="scope.row.is_new === '1' && scope.row.vip_level === '0'">新客匿名</span>
+			    	<span v-if="scope.row.is_new === '1' && scope.row.vip_level === '1'">新客VIP</span>
+			    	<span v-if="scope.row.is_new === '0' && scope.row.vip_level === '0'">熟客匿名</span>
+			    	<span v-if="scope.row.is_new === '0' && scope.row.vip_level === '1'">熟客VIP</span>
+		    	</template>
+		    </el-table-column>
+		    <el-table-column prop="store_name" label="进店信息" width="120"></el-table-column>
+		    <el-table-column prop="created_at" label="进店时间" width="160"></el-table-column>
+		    <el-table-column prop="device_name" label="设备信息" width="160"></el-table-column>
+		    <el-table-column fixed="right" label="操作" width="100">
+			    <template slot-scope="scope">
+			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
+			    </template>
+		    </el-table-column>
+	    </el-table>
+
+	  	<!-- 弹窗 -->
+	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;">
+			<el-tabs v-model="activeName" @tab-click="checkout()">
+			    <el-tab-pane label="个人信息" name="first">
+			    	<user-info :customerId="customer_id"></user-info>
+			    </el-tab-pane>
+			    <el-tab-pane label="到店记录" name="second">
+			    	<store-record :customerId="customer_id"></store-record>
+			    </el-tab-pane>
+			    <el-tab-pane label="订单记录" name="third">
+			    	<order-record :customerId="customer_id"></order-record>
+			    </el-tab-pane>
+			</el-tabs>
+		</el-dialog>
 	</div>
 </template>
+<script>
+	import remindApi from '../../api/remind'
+	import userInfo from '../../components/userInfo'
+	import StoreRecord from '../../components/StoreRecord'
+	import OrderRecord from '../../components/OrderRecord'
+    export default {
+        name:'guest-list',
+        components: {
+		    userInfo,
+		    StoreRecord,
+		    OrderRecord
+		},
+        data(){
+            return{
+            	formInline: {
+		          start:'',
+		          end:'',
+		          level:'',
+		          age:'',
+		          sex:'',
+		        },
+		        tableData: [],
+		        dialogVisible:false,//弹窗是否显示
+		        customer_id:'',
+		        activeName: 'first'
+
+            }
+        },
+        created:function(){
+        	this.guestList(0);
+        },
+        methods: {
+        	//列表
+        	guestList(consume){
+        		let list = {
+			        	'consume':consume
+			    	}
+			    let qs = require('querystring')
+        		remindApi.remindList(qs.stringify(list)).then((res) => {
+        			if(res.data.errno === 0){
+						console.log(res.data.data.list)
+						this.$data.tableData = res.data.data.list;
+
+        			}else{
+
+        			}
+        			
+        		})
+        	},
+        	onSubmit() {
+		        console.log('submit!');
+		    },
+		    showDialog(row) {
+		        console.log(row.customer_id);
+		        this.$data.customer_id = row.customer_id;
+		        this.$data.activeName = 'first';
+		        this.$data.dialogVisible = true;
+		    },
+		    checkout(tab, event) {
+		        console.log(tab, event);
+		      }
+	    },
+    }
+</script>
+<style lang="scss" scoped>
+	.el-table thead{
+		color:#333; 
+	}
+</style>

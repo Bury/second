@@ -8,35 +8,77 @@
         </div>
 		<div class="type-list">
             <el-checkbox-group v-model="checkedType" @change="fnChangeType">
-                <el-checkbox v-for="city in types" :label="city" :key="city">{{city}}</el-checkbox>
+                <el-checkbox v-for="(tpye,key) in types" :label="tpye">{{typeVal[key]}}</el-checkbox>
             </el-checkbox-group>
         </div>
 		<div class="saveBtn">
-            <el-button type="primary" class="save-btn">保存</el-button>
+            <el-button type="primary" class="save-btn" @click="fnSetRemind">保存</el-button>
         </div>
 	</div>
 </template>
 <script>
+  import settingApi from '../../api/setting'
   const typeOptions = ['新客匿名', '新客VIP', '熟客匿名', '熟客VIP'];
+  const typeId = ["1","2","3","4"]
   export default {
     data() {
       return {
         checkAll: false,
-        checkedType: ['新客匿名', '新客VIP',],
-        types: typeOptions,
+        checkedType: [],
+        types: typeId,
+        typeVal: typeOptions,
         isIndeterminate: true
       };
     },
+    created:function(){
+        this.fnGetRemind();
+    },
     methods: {
-      handleCheckAllChange(val) {
-        this.checkedType = val ? typeOptions : [];
-        this.isIndeterminate = false;
-      },
-      fnChangeType(value) {
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.types.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.types.length;
-      }
+        //显示
+        fnGetRemind(){
+            settingApi.getRemind().then((res) => {
+                if(res.data.errno === 0){
+                    console.log(res.data.data);
+                    this.checkedType = res.data.data.remind_ids.split(",");
+                    if(this.checkedType.length == this.types.length){
+                        this.checkAll = true;
+                        this.isIndeterminate = false;
+                    }
+                    
+                }else{
+                    this.$message.error(res.data.msg);
+                }
+            })
+
+        },
+
+        //设置
+        fnSetRemind(){
+            let list = {
+                    'remind_ids' :  this.checkedType.toString(),
+                }
+            let qs = require('querystring')
+            settingApi.setRemind(qs.stringify(list)).then((res) => {
+                if(res.data.errno === 0){
+                    console.log(res.data.data);
+                    
+                }else{
+                    this.$message.error(res.data.msg);
+                }
+            })
+        },
+
+        handleCheckAllChange(val) {
+            this.checkedType = val ? typeId : [];
+            this.isIndeterminate = false;
+            console.log(this.checkedType)
+        },
+        fnChangeType(value) {
+            console.log(value)
+            let checkedCount = value.length;
+            this.checkAll = checkedCount === this.types.length;
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.types.length;
+        }
     }
   };
 </script>

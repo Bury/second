@@ -1,15 +1,15 @@
 <template>
-	<div class="label-list-page">
+	<div class="role-set-page">
 		<div class="top-box">
 			<el-button type="primary" class="add-btn" @click="fnAdd()">新增</el-button>
 		</div>
 		<el-table :data="tableData" border style="width:621px;text-align:center;">
-	    	<el-table-column prop="name" label="标签类名" width="320"></el-table-column>
+	    	<el-table-column prop="roleName" label="角色名" width="320"></el-table-column>
 		    <el-table-column label="操作" width="300">
 			    <template slot-scope="scope">
 			    	<el-button type="primary" icon="el-icon-edit" circle
 			    		@click="fnEdit(scope.row)"></el-button>
-			    	<el-button type="info" icon="el-icon-message" circle
+			    	<el-button type="info" icon="el-icon-setting" circle
 			    		@click="fnGoPage(scope.row)"></el-button>
 			    	<el-button type="danger" icon="el-icon-delete" circle
 			    		@click="fnRemove(scope.row)"></el-button>
@@ -21,18 +21,18 @@
 </template>
 <script>
 	export default{
-		name:'label-list',
+		name:'role-set',
 		data(){
 			return {
 				tableData: [{
 				  id:1,
-		          name: '材质111',
+		          roleName: '主管',
 		        },{
 				  id:2,
-		          name: '材质222',
+		          roleName: '技术员1',
 		        },{
 				  id:3,
-		          name: '材质333',
+		          roleName: '技术员2',
 		        }],
 		       
 			}
@@ -108,7 +108,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.label-list-page{
+	.role-set-page{
 		.top-box{
 			position:relative;
 			margin-bottom:40px;

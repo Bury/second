@@ -92,6 +92,7 @@ export default {
             position: fixed;
             top: 0;
             left: 0;
+            z-index:99;
             height: 60px;
             width: 100%;
             min-width: 1204px;
@@ -111,14 +112,22 @@ export default {
             left:0;
             top:60px;
             z-index:999;
-            min-height: 100%;
+            height: 100%;
             background: #545c64;
-            overflow: hidden;
-            overflow-y: visible;
+            overflow-x:hidden;
+            overflow-y:auto;
+            // -ms-overflow-style:none;
+            // overflow:-moz-scrollbars-none;
             .left-menu{
-               
             }
         }
+        .left-menu-wrap::-webkit-scrollbar {
+            // display: none;
+        }
+        .left-menu-wrap::-moz-scrollbar {
+            // display: none;
+        }
+        
         .content-wrap{
             padding:90px 30px 30px;
 
@@ -127,8 +136,12 @@ export default {
 
     .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 160px;
+
     }
     .el-menu{
         border:0;
+
+
     }
+
 </style>

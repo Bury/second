@@ -36,17 +36,35 @@
                     <span slot="title">标签管理</span>
                 </el-menu-item>
             </router-link>
-            <router-link :to="{name: 'Equipment'}">
+           <!--  <router-link :to="{name: 'Equipment'}">
                 <el-menu-item index="/Equipment">
                     <i class="el-icon-view"></i>
                     <span slot="title">设备管理</span>
                 </el-menu-item>
-            </router-link>
-            <el-submenu index="1-7">
+            </router-link> -->
+            <el-submenu index="1-6">
+                <template slot="title">
+                    <i class="el-icon-view"></i>
+                    <span slot="title">设备管理</span>
+                </template>
+                <router-link :to="{name: 'Equipment'}">
+                    <el-menu-item index="/Equipment">设备管理admin端</el-menu-item>
+                </router-link>
+                <router-link :to="{name: 'EquipmentOfOwner'}">
+                    <el-menu-item index="/EquipmentOfOwner">设备管理店长端</el-menu-item>
+                </router-link>
+            </el-submenu>
+            <el-submenu index="1-7" style="padding-bottom:200px;">
                 <template slot="title">
                     <i class="el-icon-setting"></i>
                     <span slot="title">系统设置</span>
                 </template>
+                <router-link :to="{name: 'StoreSet'}">
+                    <el-menu-item index="/StoreSet">门店设置</el-menu-item>
+                </router-link>
+                <router-link :to="{name: 'RoleSet'}">
+                    <el-menu-item index="/RoleSet">角色管理</el-menu-item>
+                </router-link>
                 <router-link :to="{name: 'RemindSet'}">
                     <el-menu-item index="/RemindSet">提醒配置</el-menu-item>
                 </router-link>

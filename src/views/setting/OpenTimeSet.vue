@@ -2,28 +2,30 @@
 	<div class="open-time-set-page">
 		<h3 class="top-box">营业时间设置</h3>
 		<div class="time-box">
-			<el-time-select placeholder="起始时间" v-model="startTime"
+			<el-time-select placeholder="开始时间" v-model="startTime"
 		    :picker-options="{
-		      start: '08:30',
+		      start: '00:00',
 		      step: '00:15',
-		      end: '18:30'}">
+		      end: '23:59',
+		      maxTime: endTime}">
 	  		</el-time-select>
 	  		<span style="padding:0 10px;">至</span> 
 			<el-time-select placeholder="结束时间" v-model="endTime"
 			    :picker-options="{
-			      start: '08:30',
+			      start: '00:00',
 			      step: '00:15',
-			      end: '18:30',
+			      end: '23:59',
 			      minTime: startTime}">
 			</el-time-select>
 		</div>
 		<div class="saveBtn">
-			<el-button type="primary" class="save-btn">保存</el-button>
+			<el-button type="primary" class="save-btn" @click="fnSetTime">保存</el-button>
 		</div>
 	</div>
 </template>
 
 <script>
+  import settingApi from '../../api/setting'
   export default {
   	name:'open-time-set',
     data() {
@@ -31,6 +33,63 @@
         startTime: '',
         endTime: ''
       };
+    },
+    created:function(){
+    	this.fnGetTime();
+    },
+    methods:{
+    	//显示
+    	fnGetTime(){
+    		settingApi.getTime().then((res) => {
+    			if(res.data.errno === 0){
+					console.log(res.data.data);
+					this.$data.startTime = res.data.data.start_time;
+					this.$data.endTime = res.data.data.end_time;
+    			}else{
+					this.$message.error(res.data.msg);
+    			}
+    		})
+    	},
+
+    	//设置
+    	fnSetTime(){
+    		var startTime = this.$data.startTime;
+    		var endTime = this.$data.endTime;
+    		if(startTime == ''){
+    			this.$message({
+		          message: '请选择开始时间',
+		          type: 'warning',
+		          duration:1000
+		        });
+    			return false;
+    		}
+    		if(endTime == ''){
+    			this.$message({
+		          message: '请选择结束时间',
+		          type: 'warning',
+		          duration:1000
+		        });
+    			return false;
+    		}
+			let list = {
+		        	'start_time' : startTime,
+		        	'end_time'   : endTime
+		    	}
+		    let qs = require('querystring')
+    		settingApi.setBusinessTime(qs.stringify(list)).then((res) => {
+    			if(res.data.errno === 0){
+					console.log(res)
+					this.$message({
+			          message: '营业时间设置成功',
+			          type: 'success',
+			          duration:1500
+			        });
+
+    			}else{
+					this.$message.error(res.data.msg);
+    			}
+    		})
+    	},
     }
   }
 </script>
