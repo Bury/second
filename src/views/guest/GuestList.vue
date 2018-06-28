@@ -41,9 +41,13 @@
 			</el-form>
 		</div>
 		<!-- 列表 -->
-		<el-table :data="tableData" border style="width: 1331px;text-align:center;">
+		<el-table :data="tableData" border height="380" style="width: 1331px;text-align:center;">
 	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
-		    <el-table-column prop="avatar_path" label="人脸" width="80"></el-table-column>
+		    <el-table-column label="人脸" width="80">
+		    	<template slot-scope="scope">
+		           <img :src="scope.row.avatar_path" style="display:block;margin:0 auto;width:80%;">
+		        </template>
+		    </el-table-column>
 		    <el-table-column prop="customerMerchant.name" label="姓名" width="100"></el-table-column>
 		    <el-table-column label="性别" width="50">
 		    	<template slot-scope="scope">
@@ -72,6 +76,14 @@
 		    </el-table-column>
 	    </el-table>
 
+		<!-- 分页 -->
+		
+		<el-pagination background layout="prev, pager, next" 
+			:page-size="20"
+			:current-page="1"
+			:total="100">
+		</el-pagination>
+		
 	  	<!-- 弹窗 -->
 	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;">
 			<el-tabs v-model="activeName" @tab-click="checkout()">
@@ -89,14 +101,14 @@
 	</div>
 </template>
 <script>
-	import remindApi from '../../api/remind'
-	import userInfo from '../../components/userInfo'
+	import guestApi from '../../api/guest'
+	import UserInfo from '../../components/UserInfo'
 	import StoreRecord from '../../components/StoreRecord'
 	import OrderRecord from '../../components/OrderRecord'
     export default {
         name:'guest-list',
         components: {
-		    userInfo,
+		    UserInfo,
 		    StoreRecord,
 		    OrderRecord
 		},
@@ -117,16 +129,16 @@
             }
         },
         created:function(){
-        	this.guestList(0);
+        	this.guestList(1);
         },
         methods: {
         	//列表
-        	guestList(consume){
+        	guestList(page){
         		let list = {
-			        	'consume':consume
+			        	'page':page
 			    	}
 			    let qs = require('querystring')
-        		remindApi.remindList(qs.stringify(list)).then((res) => {
+        		guestApi.guestList(qs.stringify(list)).then((res) => {
         			if(res.data.errno === 0){
 						console.log(res.data.data.list)
 						this.$data.tableData = res.data.data.list;
@@ -155,5 +167,9 @@
 <style lang="scss" scoped>
 	.el-table thead{
 		color:#333; 
+	}
+	.el-pagination{
+		margin:20px ;
+	  	float: right;
 	}
 </style>

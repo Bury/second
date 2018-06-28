@@ -7,7 +7,8 @@
 					<div class="left-img"></div>
 					<ul class="right-txt">
 						<li class="item-time">时间：{{storeRecords.list[key].created_at}}</li>
-						<li class="store-info">{{storeRecords.list[key].store_name}} —— {{storeRecords.list[key].device_name}}</li>
+						<li class="store-info">门店：{{storeRecords.list[key].store_name}}</li>
+						<li class="store-info">设备：{{storeRecords.list[key].device_name}}</li>
 					</ul>
 				</div>
 			</li>
@@ -69,7 +70,7 @@
 					}
 					.right-txt{
 						float: left;
-						line-height:30px;
+						line-height:26px;
 					}
 				}
 			}

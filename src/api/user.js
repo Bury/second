@@ -1,48 +1,45 @@
 /**
- * 提醒列表 
+ * 当前用户登录、退出、修改密码、信息
  */
 import axios from 'axios'
 
 export default {
-	
-	remindList (list) {
+	getUserInfo () {
     return new Promise((resolve, reject) => {
-      axios.post(global.GET_REMIND_LIST, list).then((res) => {
+      axios.post(global.GET_USER_INFO).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)
       })
     })
   },
-
-  personalInfo(customer_id){
+	changePWD (list) {
     return new Promise((resolve, reject) => {
-      axios.post(global.GET_PERSONAL_INFO, customer_id).then((res) => {
+      axios.post(global.CHANGE_PASSWORD, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)
       })
     })
   },
-
-  storeRecord(list){
+  logout (list) {
     return new Promise((resolve, reject) => {
-      axios.post(global.GET_STORE_RECORE, list).then((res) => {
+      axios.post(global.LOGOUT, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)
       })
     })
   },
-
-  orderRecord(list){
+  login (list) {
     return new Promise((resolve, reject) => {
-      axios.post(global.GET_ORDER_RECORE, list).then((res) => {
+      axios.post(global.LOGIN, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)
       })
     })
-  }
+  },
+  
 
 }

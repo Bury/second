@@ -14,6 +14,7 @@ import axios from 'axios'
 import * as filters from './filters'
 import './config/constants'
 
+
 Vue.use(ElementUI)
 
 Vue.filter('date', filters.dateFilter)

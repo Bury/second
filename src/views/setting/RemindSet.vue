@@ -38,7 +38,7 @@
         fnGetRemind(){
             settingApi.getRemind().then((res) => {
                 if(res.data.errno === 0){
-                    console.log(res.data.data);
+                    console.log(res);
                     this.checkedType = res.data.data.remind_ids.split(",");
                     if(this.checkedType.length == this.types.length){
                         this.checkAll = true;
@@ -60,8 +60,8 @@
             let qs = require('querystring')
             settingApi.setRemind(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
-                    console.log(res.data.data);
-                    
+                    console.log(res);
+                    this.fnGetRemind();
                 }else{
                     this.$message.error(res.data.msg);
                 }

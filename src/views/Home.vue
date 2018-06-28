@@ -1,16 +1,19 @@
 <template>
-    <div class="home">
-      <div class="table">
-        <div class="container">
-          <!--<div class="logo">
-            杭州知己科技有限公司
-          </div>-->
-          <div class="main">
-            <login></login>
+    <div class="home" >
+      <div class="bg" id="particles-js">
+        <div class="table" >
+          <div class="container">
+            <!--<div class="logo">
+              杭州知己科技有限公司
+            </div>-->
+            <div class="main">
+              <login></login>
+            </div>
           </div>
         </div>
       </div>
-      <div id="particles-js" class="bg"></div>
+      
+      <!-- <div id="particles-js" class="bg"></div> -->
     </div>
 </template>
 
@@ -70,13 +73,11 @@ export default {
 <style scoped>
 .home {
   color: black;
-  position: absol/ute;
-  top: 0px;
-  bottom: 0px;
   width: 100%;
+  height:100%;
   margin-left: 0;
   background-color: #002f44;
-  z-index: -1;
+  overflow: hidden;
 }
 .home .table {
   

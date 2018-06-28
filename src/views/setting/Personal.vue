@@ -8,60 +8,124 @@
 		</div>
 		<el-form ref="form" :model="userForm" label-width="75px" disabled>
 		  	<el-form-item label="用户名：">
-		    	<el-input v-model="userForm.userName"></el-input>
+		    	<el-input v-model="userForm.role_name"></el-input>
 		  	</el-form-item>
 		  	<el-form-item label="联系人：">
-		    	<el-input v-model="userForm.contacts"></el-input>
+		    	<el-input v-model="userForm.username"></el-input>
 		  	</el-form-item>
 		</el-form>
 
 		<!-- 修改密码 -->
 		<el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="min-width:800px;">
-		  <el-form :model="form">
-		    <el-form-item label="原密码：" :label-width="formLabelWidth">
-		      <el-input v-model="form.name" auto-complete="off"></el-input>
+		  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+		    <el-form-item label="原密码：" prop="oldPwd">
+		      <el-input v-model="ruleForm.oldPwd" ></el-input>
 		    </el-form-item>
-		    <el-form-item label="新密码：" :label-width="formLabelWidth">
-		      <el-input v-model="form.name" auto-complete="off"></el-input>
+		    <el-form-item label="新密码：" prop="newPwd">
+		      <el-input v-model="ruleForm.newPwd" ></el-input>
 		    </el-form-item>
-		    <el-form-item label="确认密码：" :label-width="formLabelWidth">
-		      <el-input v-model="form.name" auto-complete="off"></el-input>
+		    <el-form-item label="确认密码：" prop="reNowPwd">
+		      <el-input v-model="ruleForm.reNowPwd" ></el-input>
 		    </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
-		    <el-button @click="dialogFormVisible = false">取 消</el-button>
-		    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+		    <el-button @click="cancel">取 消</el-button>
+		    <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
 		  </div>
 		</el-dialog>
 	</div>
 </template>
 <script>
+	import userApi from '../../api/user'
   export default {
   	name:'personal',
     data() {
       return {
-        userForm: {
-          userName: 'admin',
-          contacts:'aaa'
-        },
+        userForm: {},
         dialogFormVisible: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+        ruleForm: {
+          oldPwd:'',
+          newPwd:'',
+          reNowPwd:''
         },
-        formLabelWidth: '90px'
+        rules: {
+          oldPwd: [
+            { required: true, message: '请输入原密码：', trigger: 'blur' },
+            { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
+          ],
+          newPwd: [
+            { required: true, message: '请输入新密码：', trigger: 'blur' },
+            { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
+          ],
+          reNowPwd: [
+            { required: true, message: '请再次输入密码', trigger: 'blur' },
+            {
+                validator: (rule, value, callback) => {
+                    if (value !== this.$data.ruleForm.newPwd) {
+                        callback(new Error('两次输入密码不一致!'));
+                    } else {
+                        callback();
+                    }
+                },
+                trigger: 'blur'
+            }
+          ]
+        }
       }
     },
+    created:function(){
+    	this.getUserInfo();
+    },
     methods: {
+      getUserInfo(){
+		userApi.getUserInfo().then((res) => {
+			if(res.data.errno === 0){
+				console.log(res);
+				this.$data.userForm = res.data.data.user;
+				
+			}else{
+				this.$message.error(res.data.msg);
+			}
+		})
+      },
       fnChangePWD(){
       	this.$data.dialogFormVisible = true;
-      }
+      },
+
+      cancel(){
+      	this.$data.dialogFormVisible = false;
+      	this.$data.ruleForm.oldPwd = '';
+        this.$data.ruleForm.newPwd = '';
+        this.$data.ruleForm.reNowPwd = '';
+      },
+      submitForm(formName){
+		this.$refs[formName].validate((valid) => {
+			console.log(valid)
+	        if (valid) {
+	        	let list = {
+					'old_password': this.$data.ruleForm.oldPwd,
+					'new_password':this.$data.ruleForm.newPwd 
+				}
+				let qs = require('querystring')
+				userApi.changePWD(qs.stringify(list)).then((res) => {
+					if(res.data.errno === 0){
+						userApi.logout().then((res1) => {
+							if(res1.data.errno === 0){
+								this.$router.replace({
+									name: 'Login'
+								});
+							}else{
+								this.$message.error(res1.data.msg);
+							}
+						})
+						
+					}else{
+						this.$message.error(res.data.msg);
+					}
+				})
+	        } 
+        });
+      },
 
     }
   }

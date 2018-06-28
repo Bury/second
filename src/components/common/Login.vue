@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     login () {
-      this.$router.replace({name: 'Dashboard'})
+      this.$router.replace({name: 'Statistics'})
     }
   }
 }

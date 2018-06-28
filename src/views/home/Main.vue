@@ -3,7 +3,7 @@
     <div class="main-box">
         <div class="header-wrap">
             <div class="company">鹰眼管理系统</div>
-            <div class="top-menu" style="float:left;">
+            <!-- <div class="top-menu" style="float:left;">
                 <el-menu :default-active="horizontalIndex"
                       class="el-menu-demo"
                       mode="horizontal"
@@ -16,16 +16,17 @@
                     <el-menu-item index="3">我的工作台3</el-menu-item>
                     <el-menu-item index="4">我的工作台4</el-menu-item>
                 </el-menu>
-            </div>
+            </div> -->
             <div class="user">
-                <!-- <el-dropdown trigger="hover" @command="handleCommand">
-                    <span class="el-dropdown-link">
+                <el-dropdown trigger="hover" >
+                    <span class="el-dropdown-link" style="color:#fff;">
                       你好，张三<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item divided command="logout" >退出</el-dropdown-item>
+                    <el-dropdown-menu slot="dropdown" style="text-align:center;">
+                        <el-dropdown-item divided command="logout" >个人中心</el-dropdown-item>
+                        <el-dropdown-item divided command="logout" >退出</el-dropdown-item>
                     </el-dropdown-menu>
-                </el-dropdown> -->
+                </el-dropdown>
             </div>
         </div>
         <div class="left-menu-wrap">
@@ -95,7 +96,7 @@ export default {
             z-index:99;
             height: 60px;
             width: 100%;
-            min-width: 1204px;
+            // min-width: 1204px;
             background: #545c64;
             .company{
                 float:left;
@@ -105,6 +106,11 @@ export default {
                 font-size:18px;
                 text-align:center;
                 color:#fff;
+            }
+            .user{
+                position: absolute;
+                right:50px;
+                line-height:60px;
             }
         }
         .left-menu-wrap{

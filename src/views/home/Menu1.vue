@@ -63,7 +63,7 @@
                     <el-menu-item index="/StoreSet">门店设置</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'RoleSet'}">
-                    <el-menu-item index="/RoleSet">角色管理</el-menu-item>
+                    <el-menu-item index="/RoleSet">角色权限管理</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'RemindSet'}">
                     <el-menu-item index="/RemindSet">提醒配置</el-menu-item>

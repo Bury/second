@@ -55,4 +55,7 @@ ul,li{list-style: none;}
   text-align: center;
   color:#333;
 }
+.el-tree-node__content{
+    display:inline-block !important;
+  }
 </style>

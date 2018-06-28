@@ -4,105 +4,257 @@
 			<el-button type="primary" class="add-btn" @click="fnAdd()">新增</el-button>
 		</div>
 		<el-table :data="tableData" border style="width:621px;text-align:center;">
-	    	<el-table-column prop="roleName" label="角色名" width="320"></el-table-column>
+	    	<el-table-column prop="name" label="角色名" width="320"></el-table-column>
 		    <el-table-column label="操作" width="300">
 			    <template slot-scope="scope">
 			    	<el-button type="primary" icon="el-icon-edit" circle
 			    		@click="fnEdit(scope.row)"></el-button>
 			    	<el-button type="info" icon="el-icon-setting" circle
-			    		@click="fnGoPage(scope.row)"></el-button>
+			    		@click="fnSet(scope.row)"></el-button>
 			    	<el-button type="danger" icon="el-icon-delete" circle
 			    		@click="fnRemove(scope.row)"></el-button>
 			    </template>
 		    </el-table-column>
 	    </el-table>
 
+		<!-- 添加、修改 -->
+	    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
+		  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+			  <el-form-item label="角色名：" prop="name">
+			    <el-input v-model="ruleForm.name"></el-input>
+			  </el-form-item>
+		  </el-form>
+		  <div slot="footer" class="dialog-footer">
+		    <el-button @click="cancel">取 消</el-button>
+		    <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
+		  </div>
+		</el-dialog>
+
+		<!-- 权限管理 -->
+	    <el-dialog title="权限管理" :visible.sync="dialogForm2Visible">
+		  <h3 class="role-info">岗位名称：{{currentName}}</h3>
+		  <div style="margin:20px 0;overflow:hidden;">
+		  	<h3 style="float:left;">权限设置：</h3>
+		  	<el-tree
+			  :data="dialogForm2"
+			  show-checkbox
+			  default-expand-all
+			  node-key="id"
+			  ref="tree"
+			  highlight-current
+			  :default-checked-keys="checkedIds"
+			  style="float:left;padding:20px 40px 20px 20px;height:220px;overflow:auto;border:1px solid #d2d2d2;">
+			</el-tree>
+		  </div>
+		  <div slot="footer" class="dialog-footer">
+		    <el-button @click="cancel">取 消</el-button>
+		    <el-button type="primary" @click="submitForm2">确 定</el-button>
+		  </div>
+		</el-dialog>
 	</div>
 </template>
 <script>
+	import settingApi from '../../api/setting'
 	export default{
 		name:'role-set',
 		data(){
 			return {
-				tableData: [{
-				  id:1,
-		          roleName: '主管',
-		        },{
-				  id:2,
-		          roleName: '技术员1',
-		        },{
-				  id:3,
-		          roleName: '技术员2',
-		        }],
-		       
+				tableData: [],
+				dialogTitle:"",
+				dialogFormVisible: false,
+		        ruleForm: {
+		          	name: '',
+		        },
+		        currentId:'',
+		        currentName:'',
+		        rules: {
+		          name: [
+		            { required: true, message: '请输入角色名', trigger: 'blur' },
+		            { min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
+		          ]
+		        },
+		        dialogForm2Visible:false,
+		        dialogForm2: [],
+		        checkedIds:[]
+
+
 			}
 		},
+		created:function(){
+			this.roleList();
+		},
 		methods: {
+			//列表
+			roleList(){
+	    		settingApi.roleList().then((res) => {
+	    			if(res.data.errno === 0){
+						console.log(res);
+						this.$data.tableData = res.data.data.list;
+	    			}else{
+						this.$message.error(res.data.msg);
+	    			}
+	    		})
+	    	},
+
 			fnRemove(row){
-				this.$confirm('确认删除标签：'+row.name+' ？', '删除提示', {
+				this.$confirm('确认删除该角色：'+row.name+' ？', '删除提示', {
 		          confirmButtonText: '确定',
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
-		          this.$message({
-		            type: 'success',
-		            message: '删除成功!'
-		          });
+		          let list = {
+						'id': row.id
+					}
+					let qs = require('querystring')
+	        		settingApi.deleRole(qs.stringify(list)).then((res) => {
+	        			if(res.data.errno === 0){
+							console.log(res)
+							this.$message({
+					            type: 'success',
+					            message: '删除成功!'
+					          });
+							this.roleList();
+	        			}else{
+							this.$message.error(res.data.msg);
+	        			}
+	        			
+	        		})
 		        }).catch(() => {
-		          this.$message({
-		            type: 'info',
-		            message: '已取消删除'
-		          });          
+		          // this.$message({
+		          //   type: 'info',
+		          //   message: '已取消删除'
+		          // });          
 		        });
 			},
 			fnEdit(row){
 				console.log(row);
-				this.$prompt('标签类名', '编辑提示', {
-		          confirmButtonText: '确定',
-		          cancelButtonText: '取消',
-		          inputValue:row.name,
-		          inputPattern: /^\s*$/,
-		          inputErrorMessage: '标签类名不能为空'
-		        }).then(({ value }) => {
-		        	//接口调试
-		          this.$message({
-		            type: 'success',
-		            message: '修改成功'
-		          });
-		        }).catch(() => {
-		          this.$message({
-		            type: 'info',
-		            message: '取消输入'
-		          });       
-		        });
+				this.$data.dialogTitle = '编辑'; 
+				this.$data.currentId = row.id;
+				this.$data.ruleForm.name = row.name;
+				this.$data.dialogFormVisible = true;
+				
 			},
 			fnAdd(){
-				console.log(row);
-				this.$prompt('标签类名', '编辑提示', {
-		          confirmButtonText: '确定',
-		          cancelButtonText: '取消',
-		          inputPattern: /^\s*$/,
-		          inputErrorMessage: '标签类名不能为空'
-		        }).then(({ value }) => {
-		        	//接口调试
-		          this.$message({
-		            type: 'success',
-		            message: '修改成功'
-		          });
-		        }).catch(() => {
-		          this.$message({
-		            type: 'info',
-		            message: '取消输入'
-		          });       
+				this.$data.dialogTitle = '添加';
+				this.$data.currentId = "";
+				this.$data.ruleForm.name = "";
+				this.$data.dialogFormVisible = true;
+			},
+			
+			cancel(){
+				this.$data.dialogFormVisible = false;
+				this.$data.dialogForm2Visible = false;
+				this.$data.ruleForm.name = '';
+				this.$data.currentId = '';
+			},
+			submitForm(formName){
+				this.$refs[formName].validate((valid) => {
+					console.log(valid)
+			        if (valid) {
+						if(this.$data.currentId !== ''){
+							let list = {
+								'id': this.$data.currentId,
+								'name':this.$data.ruleForm.name
+							}
+							let qs = require('querystring')
+			        		settingApi.editRole(qs.stringify(list)).then((res) => {
+			        			if(res.data.errno === 0){
+									console.log(res)
+									this.roleList();
+									this.$data.ruleForm.name = '';
+									this.$data.currentId = '';
+									this.$data.dialogFormVisible = false;
+
+			        			}else{
+									this.$message.error(res.data.msg);	
+								}		        			
+			        			
+			        		})
+						}else{
+							let list = {
+						        'name':this.$data.ruleForm.name
+						    }
+						    let qs = require('querystring')
+			        		settingApi.addRole(qs.stringify(list)).then((res) => {
+			        			if(res.data.errno === 0){
+									console.log(res)
+									this.roleList();
+									this.$data.ruleForm.name = '';
+									this.$data.currentId = '';
+									this.$data.dialogFormVisible = false;
+
+			        			}else{
+			        				this.$message.error(res.data.msg);
+
+			        			}
+			        			
+			        		})
+						}
+			        } 
 		        });
 			},
-			fnGoPage(row){
-				this.$router.push({
-					name: 'LabelDetail',
-					query: {
-	                    LabelId: row.id
-	                }
-				});
+
+			fnSet(row){
+				this.$data.currentName = row.name;
+				this.$data.currentId = row.id;
+				let list = {
+			        'role_id':row.id
+			    }
+			    let qs = require('querystring')
+        		settingApi.allPermission(qs.stringify(list)).then((res) => {
+        			if(res.data.errno === 0){
+						console.log(res)
+						this.$data.dialogForm2 = res.data.data;
+						var checkedId = [];
+						for(var i=0; i< this.$data.dialogForm2.length; i++){
+							var rootIdx = i;
+							if(this.$data.dialogForm2[rootIdx].is_permission === 1){
+								var len = checkedId.length;
+								checkedId[len] = this.$data.dialogForm2[rootIdx].id;
+								
+							}
+							if(this.$data.dialogForm2[rootIdx].children && this.$data.dialogForm2[rootIdx].children.length>0){
+								for(var j=0; j<this.$data.dialogForm2[rootIdx].children.length; j++){
+									var childIdx = j;
+									if(this.$data.dialogForm2[rootIdx].children[childIdx].is_permission === 1){
+										var len = checkedId.length;
+										checkedId[len] = this.$data.dialogForm2[rootIdx].children[childIdx].id;
+										
+									}
+								}
+							}
+						}
+						this.$data.checkedIds = checkedId;
+						console.log(this.$data.checkedIds)
+        			}else{
+        				this.$message.error(res.data.msg);
+
+        			}
+        			
+        		})
+				this.$data.dialogForm2Visible = true;
+			},
+
+			submitForm2(){
+				this.$data.checkedIds = this.$refs.tree.getCheckedKeys();
+				console.log(this.$data.currentId)
+				console.log(this.$data.checkedIds)
+				let list = {
+			        'role_id':this.$data.currentId,
+			        'permission_ids':this.$data.checkedIds.toString()
+			    }
+			    let qs = require('querystring')
+        		settingApi.editPermission(qs.stringify(list)).then((res) => {
+        			if(res.data.errno === 0){
+						console.log(res)
+						this.$data.currentId = '';
+						this.$data.dialogForm2Visible = false;
+        			}else{
+        				this.$message.error(res.data.msg);
+
+        			}
+        			
+        		})
 			}
 		}
 	}
@@ -121,5 +273,7 @@
 
 			}
 		}
+
 	}
+	
 </style>
