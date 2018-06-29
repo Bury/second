@@ -14,6 +14,8 @@ global.GET_PERSONAL_INFO = `${SERVER_IP}${COMMON}customer/personal-info`
 global.GET_STORE_RECORE = `${SERVER_IP}${COMMON}customer/store-recore`
 // post customer/order-recore 订单记录
 global.GET_ORDER_RECORE = `${SERVER_IP}${COMMON}customer/order-recore`
+// post customer/levels 提醒列表用户等级筛选项
+global.GET_LEVELS = `${SERVER_IP}${COMMON}customer/levels`
 
 /*来客列表*/
 // post customer/visitor-list 获取提醒列表

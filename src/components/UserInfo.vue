@@ -10,7 +10,7 @@
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
-                    <img src="" alt="人脸图像">
+                    <img :src="userInfo.avatar_path" alt="人脸图像" style="width:100%;">
                 </div>
                 <div class="img-id">人脸ID：{{userInfo.id}}</div>
             </div>
@@ -32,7 +32,7 @@
     export default {
       	name:'user-info',
         props:{
-            customerId:String
+            customerId:Number
         },
         data() {
             return {

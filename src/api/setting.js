@@ -5,9 +5,9 @@ import axios from 'axios'
 
 export default {
   //角色管理
-  roleList () {
+  roleList (list) {
     return new Promise((resolve, reject) => {
-      axios.post(global.GET_ROLE_LIST).then((res) => {
+      axios.post(global.GET_ROLE_LIST,list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)

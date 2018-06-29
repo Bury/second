@@ -16,7 +16,7 @@
 	export default{
 		name:'order-record',
 		props:{
-            customerId:String
+            customerId:Number
         },
 		data(){
 			return{

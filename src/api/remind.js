@@ -43,6 +43,16 @@ export default {
         reject(err)
       })
     })
+  },
+
+  getLevels(){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GET_LEVELS).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
   }
 
 }

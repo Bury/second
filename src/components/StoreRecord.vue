@@ -20,7 +20,7 @@
 	export default{
 		name:'store-record',
 		props:{
-            customerId:String
+            customerId:Number
         },
 		data(){
 			return{

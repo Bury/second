@@ -3,19 +3,33 @@
 		<div class="top-box">
 			<el-button type="primary" class="add-btn" @click="fnAdd()">新增</el-button>
 		</div>
-		<el-table :data="tableData" border style="width:621px;text-align:center;">
+		<el-table :data="tableData" border height="392" style="width:621px;text-align:center;">
 	    	<el-table-column prop="name" label="角色名" width="320"></el-table-column>
 		    <el-table-column label="操作" width="300">
 			    <template slot-scope="scope">
-			    	<el-button type="primary" icon="el-icon-edit" circle
+			    	<el-button type="primary" icon="el-icon-edit" circle size="small"
 			    		@click="fnEdit(scope.row)"></el-button>
-			    	<el-button type="info" icon="el-icon-setting" circle
+			    	<el-button type="info" icon="el-icon-setting" circle size="small"
 			    		@click="fnSet(scope.row)"></el-button>
-			    	<el-button type="danger" icon="el-icon-delete" circle
+			    	<el-button type="danger" icon="el-icon-delete" circle size="small"
 			    		@click="fnRemove(scope.row)"></el-button>
 			    </template>
 		    </el-table-column>
 	    </el-table>
+
+	    <!-- 分页 -->
+	    <div v-if="tableData.length > 0" style="margin:0 auto;width:621px;">
+	    	<el-pagination 
+				background
+	            class="pagination" 
+	            layout="prev, pager, next" 
+	            small 
+	            @current-change="handleCurrentChange" 
+	            :current-page="pagination.currentPage" 
+	            :page-size="requestParameters.page_size"
+	            :total="pagination.totalCount">
+	        </el-pagination>
+	    </div>
 
 		<!-- 添加、修改 -->
 	    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
@@ -60,6 +74,10 @@
 		data(){
 			return {
 				tableData: [],
+				pagination:{
+		        	currentPage:1,
+		        	totalCount:0,
+		        },
 				dialogTitle:"",
 				dialogFormVisible: false,
 		        ruleForm: {
@@ -75,8 +93,11 @@
 		        },
 		        dialogForm2Visible:false,
 		        dialogForm2: [],
-		        checkedIds:[]
-
+		        checkedIds:[],
+		        requestParameters: {
+	                page: 1,
+	                page_size:10
+	            }
 
 			}
 		},
@@ -86,15 +107,24 @@
 		methods: {
 			//列表
 			roleList(){
-	    		settingApi.roleList().then((res) => {
+				let qs = require('querystring')
+	    		settingApi.roleList(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
 						console.log(res);
 						this.$data.tableData = res.data.data.list;
+						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
 	    			}else{
 						this.$message.error(res.data.msg);
 	    			}
 	    		})
 	    	},
+
+	    	handleCurrentChange(currentPage) {
+	            console.log(currentPage)
+	            this.$data.requestParameters.page = currentPage;
+	            this.roleList();
+	        },
 
 			fnRemove(row){
 				this.$confirm('确认删除该角色：'+row.name+' ？', '删除提示', {
@@ -274,6 +304,10 @@
 			}
 		}
 
+	}
+	.el-pagination{
+		margin:20px 0;
+	  	float: right;
 	}
 	
 </style>

@@ -146,8 +146,7 @@ export default {
     }
     .el-menu{
         border:0;
-
-
     }
+    
 
 </style>

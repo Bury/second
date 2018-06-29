@@ -1,25 +1,46 @@
 <template>
-	<div class="guest-list-page">
+	<div class="remind-list-page">
 		<div class="top-box">
-			<el-form :inline="true" :model="formInline" class="demo-form-inline">
-			  <el-form-item label="进店时间：">
-			    <el-select v-model="formInline.region" placeholder="活动区域">
-			      <el-option label="区域一" value="shanghai"></el-option>
-			      <el-option label="区域二" value="beijing"></el-option>
-			    </el-select>
-			  </el-form-item>
-			  <el-form-item label="客户等级：">
-			    <el-select v-model="formInline.level" placeholder="客户等级">
-			      <el-option label="全部" value="5"></el-option>
+			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
+			  <el-form-item label="门店选择：">
+			    <el-select v-model="requestParameters.level" placeholder="客户等级">
+			      <el-option label="全部" value="0"></el-option>
 			      <el-option label="新客匿名" value="1"></el-option>
 			      <el-option label="新客VIP" value="2"></el-option>
 			      <el-option label="熟客匿名" value="3"></el-option>
 			      <el-option label="熟客VIP" value="4"></el-option>
 			    </el-select>
 			  </el-form-item>
+			  <el-form-item label="进店时间：">
+				<el-date-picker
+			      v-model="value4"
+			      type="datetimerange"
+			      range-separator="至"
+			      start-placeholder="开始时间"
+			      end-placeholder="结束时间">
+			    </el-date-picker>
+			  </el-form-item>
+			   <el-form-item label="人脸ID：">
+			    <el-input v-model="requestParameters.id"></el-input>
+			  </el-form-item>
+			  <el-form-item label="客户等级：">
+			    <el-select v-model="requestParameters.level" placeholder="客户等级">
+			      <el-option label="全部" value="0"></el-option>
+			      <el-option label="新客匿名" value="1"></el-option>
+			      <el-option label="新客VIP" value="2"></el-option>
+			      <el-option label="熟客匿名" value="3"></el-option>
+			      <el-option label="熟客VIP" value="4"></el-option>
+			    </el-select>
+			  </el-form-item>
+			  <el-form-item label="消费金额：">
+			    <el-input v-model="requestParameters.consume_money_start"></el-input>
+			  </el-form-item>
+			  <el-form-item label="至">
+			    <el-input v-model="requestParameters.consume_money_end"></el-input>
+			  </el-form-item>
 			  <el-form-item label="年龄：">
-			    <el-select v-model="formInline.age" placeholder="年龄">
-			      <el-option label="全部" value="7"></el-option>
+			    <el-select v-model="requestParameters.age" placeholder="年龄">
+			      <el-option label="全部" value="0"></el-option>
 			      <el-option label="20岁以下" value="1"></el-option>
 			      <el-option label="20-29岁" value="2"></el-option>
 			      <el-option label="30-39岁" value="3"></el-option>
@@ -29,10 +50,10 @@
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="性别：">
-			    <el-select v-model="formInline.sex" placeholder="性别">
-			      <el-option label="全部" value="3"></el-option>
+			    <el-select v-model="requestParameters.sex" placeholder="性别">
+			      <el-option label="全部" value="0"></el-option>
 			      <el-option label="男" value="1"></el-option>
-			      <el-option label="女" value="0"></el-option>
+			      <el-option label="女" value="2"></el-option>
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item>
@@ -41,11 +62,11 @@
 			</el-form>
 		</div>
 		<!-- 列表 -->
-		<el-table :data="tableData" border height="380" style="width: 1331px;text-align:center;">
+		<el-table :data="tableData" border height="380" style="margin:0 auto;width: 1501px;text-align:center;">
 	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
-		    <el-table-column label="人脸" width="80">
+		    <el-table-column label="人脸" width="60">
 		    	<template slot-scope="scope">
-		           <img :src="scope.row.avatar_path" style="display:block;margin:0 auto;width:80%;">
+		           <img :src="scope.row.avatar_path" style="display:block;margin:0 auto;width:100%;">
 		        </template>
 		    </el-table-column>
 		    <el-table-column prop="customerMerchant.name" label="姓名" width="100"></el-table-column>
@@ -60,16 +81,20 @@
 		    <el-table-column prop="customerMerchant.consume_money" label="消费金额" width="120"></el-table-column>
 		    <el-table-column label="客户等级" width="120">
 		    	<template slot-scope="scope">
-		    		<span v-if="scope.row.is_new === '1' && scope.row.vip_level === '0'">新客匿名</span>
-			    	<span v-if="scope.row.is_new === '1' && scope.row.vip_level === '1'">新客VIP</span>
-			    	<span v-if="scope.row.is_new === '0' && scope.row.vip_level === '0'">熟客匿名</span>
-			    	<span v-if="scope.row.is_new === '0' && scope.row.vip_level === '1'">熟客VIP</span>
+		    		<span v-if="scope.row.is_new == 1 && scope.row.vip_level == 0">新客匿名</span>
+			    	<span v-if="scope.row.is_new == 1 && scope.row.vip_level == 1">新客VIP</span>
+			    	<span v-if="scope.row.is_new == 0 && scope.row.vip_level == 0">熟客匿名</span>
+			    	<span v-if="scope.row.is_new == 0 && scope.row.vip_level == 1">熟客VIP</span>
 		    	</template>
 		    </el-table-column>
-		    <el-table-column prop="store_name" label="进店信息" width="120"></el-table-column>
-		    <el-table-column prop="created_at" label="进店时间" width="160"></el-table-column>
-		    <el-table-column prop="device_name" label="设备信息" width="160"></el-table-column>
-		    <el-table-column fixed="right" label="操作" width="100">
+		    <el-table-column prop="store_name" label="进店信息" width="220"></el-table-column>
+		    <el-table-column prop="created_at" label="进店时间" width="200">
+		    	<template slot-scope="scope">
+		    		{{scope.row.created_at | date(4)}}
+		    	</template>
+		    </el-table-column>
+		    <el-table-column prop="device_name" labedateformat('YYYY-MM-DD HH:mm:ss')l="设备信息" width="160"></el-table-column>
+		    <el-table-column fixed="right" label="操作" width="150">
 			    <template slot-scope="scope">
 			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
 			    </template>
@@ -77,16 +102,23 @@
 	    </el-table>
 
 		<!-- 分页 -->
+		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1501px;">
+			<el-pagination 
+				background
+	            class="pagination" 
+	            layout="prev, pager, next" 
+	            small 
+	            @current-change="handleCurrentChange" 
+	            :current-page="pagination.currentPage" 
+	            :page-size="requestParameters.page_size"
+	            :total="pagination.totalCount">
+	        </el-pagination>
+		</div>
 		
-		<el-pagination background layout="prev, pager, next" 
-			:page-size="20"
-			:current-page="1"
-			:total="100">
-		</el-pagination>
-		
+
 	  	<!-- 弹窗 -->
 	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;">
-			<el-tabs v-model="activeName" @tab-click="checkout()">
+			<el-tabs v-model="activeName" @tab-click="checkout">
 			    <el-tab-pane label="个人信息" name="first">
 			    	<user-info :customerId="customer_id"></user-info>
 			    </el-tab-pane>
@@ -114,34 +146,45 @@
 		},
         data(){
             return{
-            	formInline: {
-		          start:'',
-		          end:'',
-		          level:'',
-		          age:'',
-		          sex:'',
-		        },
 		        tableData: [],
+		        pagination:{
+		        	currentPage:1,
+		        	totalCount:0,
+		        },
 		        dialogVisible:false,//弹窗是否显示
-		        customer_id:'',
-		        activeName: 'first'
+		        customer_id:-1,
+		        activeName: 'first',
+		        value4: ['',''],
+		        requestParameters: {
+	                page: 1,
+	                page_size:10,
+	                id:'',
+	                store_time_start:'',
+	                store_time_end:'',
+	                level:'',
+	                age:'',
+	                gender:'',
+	                consume_money_start:'',
+	                consume_money_end:''
+	            }
 
             }
         },
         created:function(){
-        	this.guestList(1);
+        	this.guestList();
         },
         methods: {
         	//列表
-        	guestList(page){
-        		let list = {
-			        	'page':page
-			    	}
-			    let qs = require('querystring')
-        		guestApi.guestList(qs.stringify(list)).then((res) => {
+        	guestList(){
+        		this.$data.store_time_start = this.$data.value4[0];
+	            this.$data.store_time_end = this.$data.value4[1];
+			    let qs = require('querystring');
+        		guestApi.guestList(qs.stringify(this.$data.requestParameters)).then((res) => {
         			if(res.data.errno === 0){
-						console.log(res.data.data.list)
+						console.log(res) 
 						this.$data.tableData = res.data.data.list;
+						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
 
         			}else{
 
@@ -149,8 +192,15 @@
         			
         		})
         	},
+
+        	handleCurrentChange(currentPage) {
+	            console.log(currentPage)
+	            this.$data.requestParameters.page = currentPage;
+	            this.guestList();
+	        },
         	onSubmit() {
-		        console.log('submit!');
+        		console.log(this.$data.value4)
+		        this.guestList();
 		    },
 		    showDialog(row) {
 		        console.log(row.customer_id);
@@ -159,17 +209,19 @@
 		        this.$data.dialogVisible = true;
 		    },
 		    checkout(tab, event) {
-		        console.log(tab, event);
-		      }
+		        // console.log(tab, event);
+		    }
 	    },
     }
 </script>
 <style lang="scss" scoped>
+
 	.el-table thead{
 		color:#333; 
 	}
 	.el-pagination{
-		margin:20px ;
+		margin:10px;
 	  	float: right;
 	}
+	
 </style>

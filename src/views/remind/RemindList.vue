@@ -4,14 +4,9 @@
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
 			  <el-form-item label="门店选择：">
 			    <el-select v-model="requestParameters.level" placeholder="客户等级">
-			      <el-option label="全部" value="5"></el-option>
-			      <el-option label="新客匿名" value="1"></el-option>
-			      <el-option label="新客VIP" value="2"></el-option>
-			      <el-option label="熟客匿名" value="3"></el-option>
-			      <el-option label="熟客VIP" value="4"></el-option>
+			      <el-option v-for="(item, idx) in allLevels" :label="allLevels[idx].name" :value="allLevels[idx].level"></el-option>
 			    </el-select>
 			  </el-form-item>
-			 
 			  <el-form-item label="进店时间：">
 				<el-date-picker
 			      v-model="value4"
@@ -25,12 +20,9 @@
 			    <el-input v-model="requestParameters.id"></el-input>
 			  </el-form-item>
 			  <el-form-item label="客户等级：">
-			    <el-select v-model="requestParameters.level" placeholder="客户等级">
-			      <el-option label="全部" value="5"></el-option>
-			      <el-option label="新客匿名" value="1"></el-option>
-			      <el-option label="新客VIP" value="2"></el-option>
-			      <el-option label="熟客匿名" value="3"></el-option>
-			      <el-option label="熟客VIP" value="4"></el-option>
+			     <el-select v-model="requestParameters.level" placeholder="客户等级">
+			      <el-option label="全部" value="0" v-if="allLevels.length > 0"></el-option>
+			      <el-option v-for="(item, idx) in allLevels" :label="allLevels[idx].name" :value="allLevels[idx].level"></el-option>
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="消费金额：">
@@ -52,9 +44,9 @@
 			  </el-form-item>
 			  <el-form-item label="性别：">
 			    <el-select v-model="requestParameters.sex" placeholder="性别">
-			      <el-option label="全部" value="3"></el-option>
+			      <el-option label="全部" value="0"></el-option>
 			      <el-option label="男" value="1"></el-option>
-			      <el-option label="女" value="0"></el-option>
+			      <el-option label="女" value="2"></el-option>
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item>
@@ -63,11 +55,11 @@
 			</el-form>
 		</div>
 		<!-- 列表 -->
-		<el-table :data="tableData" border height="380" style="margin:0 auto;width: 1331px;text-align:center;">
+		<el-table :data="tableData" border height="380" style="margin:0 auto;width: 1501px;text-align:center;">
 	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
-		    <el-table-column label="人脸" width="80">
+		    <el-table-column label="人脸" width="60">
 		    	<template slot-scope="scope">
-		           <img :src="scope.row.avatar_path" style="display:block;margin:0 auto;width:80%;">
+		           <img :src="scope.row.avatar_path" style="display:block;margin:0 auto;width:100%;">
 		        </template>
 		    </el-table-column>
 		    <el-table-column prop="customerMerchant.name" label="姓名" width="100"></el-table-column>
@@ -82,37 +74,40 @@
 		    <el-table-column prop="customerMerchant.consume_money" label="消费金额" width="120"></el-table-column>
 		    <el-table-column label="客户等级" width="120">
 		    	<template slot-scope="scope">
-		    		<span v-if="scope.row.is_new === '1' && scope.row.vip_level === '0'">新客匿名</span>
-			    	<span v-if="scope.row.is_new === '1' && scope.row.vip_level === '1'">新客VIP</span>
-			    	<span v-if="scope.row.is_new === '0' && scope.row.vip_level === '0'">熟客匿名</span>
-			    	<span v-if="scope.row.is_new === '0' && scope.row.vip_level === '1'">熟客VIP</span>
+		    		<span v-if="scope.row.is_new == 1 && scope.row.vip_level == 0">新客匿名</span>
+			    	<span v-if="scope.row.is_new == 1 && scope.row.vip_level == 1">新客VIP</span>
+			    	<span v-if="scope.row.is_new == 0 && scope.row.vip_level == 0">熟客匿名</span>
+			    	<span v-if="scope.row.is_new == 0 && scope.row.vip_level == 1">熟客VIP</span>
 		    	</template>
 		    </el-table-column>
-		    <el-table-column prop="store_name" label="进店信息" width="120"></el-table-column>
-		    <el-table-column prop="created_at" label="进店时间" width="160">
+		    <el-table-column prop="store_name" label="进店信息" width="220"></el-table-column>
+		    <el-table-column prop="created_at" label="进店时间" width="200">
 		    	<template slot-scope="scope">
 		    		{{scope.row.created_at | date(4)}}
 		    	</template>
 		    </el-table-column>
 		    <el-table-column prop="device_name" labedateformat('YYYY-MM-DD HH:mm:ss')l="设备信息" width="160"></el-table-column>
-		    <el-table-column fixed="right" label="操作" width="100">
+		    <el-table-column fixed="right" label="操作" width="150">
 			    <template slot-scope="scope">
+			    	<el-button v-if="scope.is_reception===1" @click="" type="text" size="small" style="color:#FF5940;">接待</el-button>
 			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
 			    </template>
 		    </el-table-column>
 	    </el-table>
 
 		<!-- 分页 -->
-		<el-pagination 
-			background
-            class="pagination" 
-            layout="prev, pager, next" 
-            small 
-            @current-change="handleCurrentChange" 
-            :current-page="pagination.currentPage" 
-            :page-size="requestParameters.page_size"
-            :total="pagination.totalCount">
-        </el-pagination>
+		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1501px;">
+			<el-pagination 
+				background
+	            class="pagination" 
+	            layout="prev, pager, next" 
+	            small 
+	            @current-change="handleCurrentChange" 
+	            :current-page="pagination.currentPage" 
+	            :page-size="requestParameters.page_size"
+	            :total="pagination.totalCount">
+	        </el-pagination>
+	    </div>
 
 	  	<!-- 弹窗 -->
 	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;">
@@ -132,25 +127,26 @@
 </template>
 <script>
 	import remindApi from '../../api/remind'
-	import userInfo from '../../components/userInfo'
+	import UserInfo from '../../components/UserInfo'
 	import StoreRecord from '../../components/StoreRecord'
 	import OrderRecord from '../../components/OrderRecord'
     export default {
         name:'remind-list',
         components: {
-		    userInfo,
+		    UserInfo,
 		    StoreRecord,
 		    OrderRecord
 		},
         data(){
             return{
 		        tableData: [],
+		        allLevels:[],
 		        pagination:{
 		        	currentPage:1,
 		        	totalCount:0,
 		        },
 		        dialogVisible:false,//弹窗是否显示
-		        customer_id:'',
+		        customer_id:-1,
 		        activeName: 'first',
 		        value4: ['',''],
 		        requestParameters: {
@@ -170,6 +166,7 @@
         },
         created:function(){
         	this.remindList();
+        	this.getLevels();
         },
         methods: {
         	//列表
@@ -190,6 +187,21 @@
         			
         		})
         	},
+
+        	//用户等级
+        	getLevels(){
+				remindApi.getLevels().then((res) => {
+        			if(res.data.errno === 0){
+						console.log(res) 
+						this.$data.allLevels = res.data.data;
+
+        			}else{
+
+        			}
+        			
+        		})
+        	},
+
         	handleCurrentChange(currentPage) {
 	            console.log(currentPage)
 	            this.$data.requestParameters.page = currentPage;
@@ -197,7 +209,7 @@
 	        },
         	onSubmit() {
         		console.log(this.$data.value4)
-		        // this.remindList();
+		        this.remindList();
 		    },
 		    showDialog(row) {
 		        console.log(row.customer_id);
@@ -217,10 +229,8 @@
 		color:#333; 
 	}
 	.el-pagination{
-		margin:20px ;
+		margin:10px;
 	  	float: right;
 	}
-	.el-table__row{
-		
-	}
+	
 </style>

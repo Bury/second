@@ -34,7 +34,7 @@ export default {
 	    })
 	},
 
-	deleChildLabel (list) {
+	deleLabel (list) {
 	    return new Promise((resolve, reject) => {
 	      axios.post(global.DELE_LABEL,list).then((res) => {
 	        resolve(res)
