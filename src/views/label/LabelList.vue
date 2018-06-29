@@ -7,7 +7,7 @@
 	    	<el-table-column prop="name" label="标签类名" width="320"></el-table-column>
 		    <el-table-column label="操作" width="300">
 			    <template slot-scope="scope">
-			    	<el-button type="primary" plain icon="el-icon-message" circle size="small"
+			    	<el-button type="primary" plain icon="el-icon-more" circle size="small"
 			    		@click="fnGoPage(scope.row)"></el-button>
 			    	<el-button type="warning" plain icon="el-icon-edit" circle size="small"
 			    		@click="fnEdit(scope.row)"></el-button>

@@ -1,7 +1,16 @@
 <template>
 	<div class="device-box">
 		<div class="top-box">
-			<el-form :inline="true" :model="formInline" class="demo-form-inline">
+			<el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
+				<el-form-item label="进店时间：">
+					<el-date-picker
+				      v-model="value4"
+				      type="datetimerange"
+				      range-separator="至"
+				      start-placeholder="开始时间"
+				      end-placeholder="结束时间">
+				    </el-date-picker>
+				</el-form-item>
 				<el-form-item label="设备编号：">
 			    	<el-input v-model="formInline.Id"></el-input>
 			  	</el-form-item>
@@ -11,23 +20,21 @@
 				      <el-option label="区域二" value="beijing"></el-option>
 				    </el-select>
 			  	</el-form-item>
-				<el-form-item label="所属门店">
+				<el-form-item label="进店时间：">
+					<el-date-picker
+				      v-model="value4"
+				      type="datetimerange"
+				      range-separator="至"
+				      start-placeholder="开始时间"
+				      end-placeholder="结束时间">
+				    </el-date-picker>
+				</el-form-item>
+				<el-form-item label="所属门店：">
 				    <el-input v-model="formInline.storeName"></el-input>
 				</el-form-item>
-				<el-form-item label="添加时间：">
-			    	<el-input v-model="formInline.addTimeStart"></el-input>
-			  	</el-form-item>
-			  	<el-form-item label=" 至 ">
-			    	<el-input v-model="formInline.addTimeEnd"></el-input>
-			  	</el-form-item>
-			  	<el-form-item label="启用时间：">
-			    	<el-input v-model="formInline.openTimeStart"></el-input>
-			  	</el-form-item>
-			  	<el-form-item label=" 至 ">
-			    	<el-input v-model="formInline.openTimeEnd"></el-input>
-			  	</el-form-item>
-			    <el-button type="primary" @click="onSubmit">查询</el-button>
-			  </el-form-item>
+				<el-form-item>
+				    <el-button type="primary" @click="onSubmit">查询</el-button>
+				</el-form-item>
 			</el-form>
 		</div>
 		<!-- 列表 -->
