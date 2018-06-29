@@ -1,20 +1,20 @@
 <template>
 	<div class="role-set-page">
 		<div class="top-box">
-			<el-button type="primary" class="add-btn" @click="fnAdd()">新增</el-button>
+			<el-button type="primary" size="small" class="add-btn" @click="fnAdd()">新增</el-button>
 		</div>
-		<el-table :data="tableData" border height="392" style="width:621px;text-align:center;">
+		<el-table :data="tableData" border height="448" style="width:621px;text-align:center;">
 	    	<el-table-column prop="name" label="角色名" width="320"></el-table-column>
 		    <el-table-column label="操作" width="300">
 			    <template slot-scope="scope">
-			    	<el-button type="primary" icon="el-icon-edit" circle size="small"
-			    		@click="fnEdit(scope.row)"></el-button>
-			    	<el-button type="info" icon="el-icon-setting" circle size="small"
+			    	<el-button type="primary" plain icon="el-icon-setting" circle size="small"
 			    		@click="fnSet(scope.row)"></el-button>
-			    	<el-button type="danger" icon="el-icon-delete" circle size="small"
+			    	<el-button type="warning" plain icon="el-icon-edit" circle size="small"
+			    		@click="fnEdit(scope.row)"></el-button>
+			    	<el-button type="danger" plain icon="el-icon-delete" circle size="small"
 			    		@click="fnRemove(scope.row)"></el-button>
 			    </template>
-		    </el-table-column>
+		    </el-table-column> 
 	    </el-table>
 
 	    <!-- 分页 -->
@@ -293,8 +293,8 @@
 	.role-set-page{
 		.top-box{
 			position:relative;
-			margin-bottom:40px;
-			height: 44px;
+			margin-bottom:20px;
+			height: 36px;
 			border-bottom:1px solid #d2d2d2;
 			.add-btn{
 				position: absolute;

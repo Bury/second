@@ -60,7 +60,7 @@
                     <span slot="title">系统设置</span>
                 </template>
                 <router-link :to="{name: 'StoreSet'}">
-                    <el-menu-item index="/StoreSet">门店设置</el-menu-item>
+                    <el-menu-item index="/StoreSet">门店管理</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'RoleSet'}">
                     <el-menu-item index="/RoleSet">角色权限管理</el-menu-item>

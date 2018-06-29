@@ -2,13 +2,9 @@
 	<div class="remind-list-page">
 		<div class="top-box">
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-			  <el-form-item label="门店选择：">
-			    <el-select v-model="requestParameters.level" placeholder="客户等级">
-			      <el-option label="全部" value="0"></el-option>
-			      <el-option label="新客匿名" value="1"></el-option>
-			      <el-option label="新客VIP" value="2"></el-option>
-			      <el-option label="熟客匿名" value="3"></el-option>
-			      <el-option label="熟客VIP" value="4"></el-option>
+			  <el-form-item label="门店选择：" v-if="allStores.length > 0">
+			    <el-select v-model="requestParameters.store_id" placeholder="门店选择">
+			      <el-option v-for="(item, idx) in allStores" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="进店时间：">
@@ -62,7 +58,7 @@
 			</el-form>
 		</div>
 		<!-- 列表 -->
-		<el-table :data="tableData" border height="380" style="margin:0 auto;width: 1501px;text-align:center;">
+		<el-table :data="tableData" border height="380" style="margin:0 auto;width: 1551px;text-align:center;">
 	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
 		    <el-table-column label="人脸" width="60">
 		    	<template slot-scope="scope">
@@ -75,7 +71,7 @@
 		           <span>{{scope.row.gender == 1 ?'男':'女'}}</span>
 		        </template>
 		    </el-table-column>
-		    <el-table-column prop="age" label="年龄" width="50"></el-table-column>
+		    <el-table-column prop="age" label="年龄" width="100"></el-table-column>
 		    <el-table-column prop="customerMerchant.phone" label="手机号" width="110"></el-table-column>
 		    <el-table-column prop="customerMerchant.consume_num" label="消费次数" width="80"></el-table-column>
 		    <el-table-column prop="customerMerchant.consume_money" label="消费金额" width="120"></el-table-column>
@@ -102,7 +98,7 @@
 	    </el-table>
 
 		<!-- 分页 -->
-		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1501px;">
+		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
 			<el-pagination 
 				background
 	            class="pagination" 
@@ -148,6 +144,7 @@
         data(){
             return{
 		        tableData: [],
+		        allStores:[],
 		        pagination:{
 		        	currentPage:1,
 		        	totalCount:0,
@@ -159,6 +156,7 @@
 	                page: 1,
 	                page_size:10,
 	                id:'',
+	                store_id:'',
 	                store_time_start:'',
 	                store_time_end:'',
 	                level:'',
@@ -175,6 +173,7 @@
         },
         created:function(){
         	this.guestList();
+        	this.getStores();
         },
         methods: {
         	//列表
@@ -195,6 +194,20 @@
         			
         		})
         	},
+
+        	//门店
+        	getStores(){
+        		remindApi.getStores().then((res) => {
+        			if(res.data.errno === 0){
+						console.log(res)
+						this.$data.allStores = res.data.data;
+        			}else{
+
+        			}
+        			
+        		})
+        	},
+
 
         	handleCurrentChange(currentPage) {
 	            console.log(currentPage)

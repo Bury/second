@@ -4,6 +4,48 @@
 import axios from 'axios'
 
 export default {
+
+  //门店管理
+  storeList(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GET_STORE_LIST,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  addStore (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.ADD_STORE,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  editStroe (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.EDIT_STORE,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
+  deleStore (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.DELE_STORE,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
+
+
   //角色管理
   roleList (list) {
     return new Promise((resolve, reject) => {

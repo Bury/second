@@ -34,6 +34,12 @@
 				// storeRecords:{}
 			}
 		},
+		watch: {
+	        data() {
+	            // this.$data.storeRecords = this.$props.storeRecords;
+	            console.log(1)
+	        }
+	    },
 		created:function(){
 			
 		},

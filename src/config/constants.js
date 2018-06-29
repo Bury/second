@@ -16,6 +16,8 @@ global.GET_STORE_RECORE = `${SERVER_IP}${COMMON}customer/store-recore`
 global.GET_ORDER_RECORE = `${SERVER_IP}${COMMON}customer/order-recore`
 // post customer/levels 提醒列表用户等级筛选项
 global.GET_LEVELS = `${SERVER_IP}${COMMON}customer/levels`
+// post customer/store-list 门店筛选项
+global.GET_STORES = `${SERVER_IP}${COMMON}customer/store-list`
 
 /*来客列表*/
 // post customer/visitor-list 获取提醒列表
@@ -47,6 +49,17 @@ global.EDIT_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-edit`
 global.DELE_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-dele`
 
 /*个人中心*/
+//1、门店管理
+// psot store/lists 门店列表
+global.GET_STORE_LIST = `${SERVER_IP}${COMMON}store/lists`
+// post store/adds 添加门店
+global.ADD_STORE = `${SERVER_IP}${COMMON}store/adds`
+// post store/edit 编辑门店
+global.EDIT_STORE = `${SERVER_IP}${COMMON}store/edit`
+// post store/dele 删除门店
+global.DELE_STORE = `${SERVER_IP}${COMMON}store/dele`
+
+
 //2、角色管理
 // post role/list 角色列表
 global.GET_ROLE_LIST = `${SERVER_IP}${COMMON}role/list`
