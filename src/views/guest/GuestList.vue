@@ -66,7 +66,7 @@
 	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
 		    <el-table-column label="人脸" width="60">
 		    	<template slot-scope="scope">
-		           <img :src="scope.row.avatar_path" style="display:block;margin:0 auto;width:100%;">
+		           <img :src="scope.row.avatar" style="display:block;margin:0 auto;width:100%;">
 		        </template>
 		    </el-table-column>
 		    <el-table-column prop="customerMerchant.name" label="姓名" width="100"></el-table-column>

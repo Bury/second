@@ -59,7 +59,7 @@
 	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
 		    <el-table-column label="人脸" width="60">
 		    	<template slot-scope="scope">
-		           <img :src="scope.row.avatar_path" style="display:block;margin:0 auto;width:100%;">
+		           <img :src="scope.row.avatar" style="display:block;margin:0 auto;width:100%;">
 		        </template>
 		    </el-table-column>
 		    <el-table-column prop="customerMerchant.name" label="姓名" width="100"></el-table-column>
@@ -195,7 +195,6 @@
         	getLevels(){
 				remindApi.getLevels().then((res) => {
         			if(res.data.errno === 0){
-						console.log(res) 
 						this.$data.allLevels = res.data.data;
 
         			}else{
@@ -206,21 +205,19 @@
         	},
 
         	handleCurrentChange(currentPage) {
-	            console.log(currentPage)
 	            this.$data.requestParameters.page = currentPage;
 	            this.remindList();
 	        },
         	onSubmit() {
-        		console.log(this.$data.value4)
 		        this.remindList();
 		    },
 		    showDialog(row) {
 		        console.log(row.customer_id);
-		        this.personalInfo(row.customer_id);
+		        // this.personalInfo(row.customer_id);
 		        this.$data.activeName = 'first';
 		        this.$data.dialogVisible = true;
 		        this.storeRecord(row.customer_id);
-		        this.orderRecord(row.customer_id);
+		        // this.orderRecord(row.customer_id);
 
 		    },
 
@@ -230,7 +227,6 @@
                     }
                 let qs = require('querystring')
                 remindApi.personalInfo(qs.stringify(list)).then((res) => {
-                    console.log(res)
                     if(res.data.errno === 0){
                         console.log(res.data.data)
                         this.$data.userInfo = res.data.data
@@ -241,10 +237,13 @@
             },
             storeRecord(customerId){
                 let list = {
-                        'customer_id':customerId
+                        'customer_id':customerId,
+                        'page':1,
+                        'page_size': 10
                     }
                 let qs = require('querystring')
                 remindApi.storeRecord(qs.stringify(list)).then((res) => {
+                	console.log(res)
                     if(res.data.errno === 0){
                         console.log(res.data.data)
                         this.$data.storeRecords = res.data.data;
@@ -255,7 +254,9 @@
             },
             orderRecord(customer_id){
                 let list = {
-                        'customer_id':customer_id
+                        'customer_id':customer_id,
+                        'page':1,
+                        'page_size': 10
                     }
                 let qs = require('querystring')
                 remindApi.orderRecord(qs.stringify(list)).then((res) => {

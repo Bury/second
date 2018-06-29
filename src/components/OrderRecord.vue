@@ -39,9 +39,9 @@
 		.store-record-list{
 			.store-record-item{
 				float:left;
-				margin-bottom:20px;
-				padding:20px;
-				width:42%;
+				margin-bottom:10px;
+				padding:5px;
+				width:47%;
 				border:1px solid #d2d2d2;
 				div{
 					margin-bottom:5px;

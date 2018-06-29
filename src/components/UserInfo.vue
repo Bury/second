@@ -10,7 +10,7 @@
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
-                    <img :src="userInfo.avatarPath" alt="人脸图像">
+                    <img :src="userInfo.avatar" alt="人脸图像">
                 </div>
                 <div class="img-id">人脸ID：{{userInfo.id}}</div>
             </div>
