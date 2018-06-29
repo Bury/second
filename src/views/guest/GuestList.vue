@@ -120,13 +120,13 @@
 	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;">
 			<el-tabs v-model="activeName" @tab-click="checkout">
 			    <el-tab-pane label="个人信息" name="first">
-			    	<user-info :customerId="customer_id"></user-info>
+			    	<user-info :userInfo="userInfo"></user-info>
 			    </el-tab-pane>
 			    <el-tab-pane label="到店记录" name="second">
-			    	<store-record :customerId="customer_id"></store-record>
+			    	<store-record :storeRecords="storeRecords"></store-record>
 			    </el-tab-pane>
 			    <el-tab-pane label="订单记录" name="third">
-			    	<order-record :customerId="customer_id"></order-record>
+			    	<order-record :orderRecords="orderRecords"></order-record>
 			    </el-tab-pane>
 			</el-tabs>
 		</el-dialog>
@@ -134,6 +134,7 @@
 </template>
 <script>
 	import guestApi from '../../api/guest'
+	import remindApi from '../../api/remind'
 	import UserInfo from '../../components/UserInfo'
 	import StoreRecord from '../../components/StoreRecord'
 	import OrderRecord from '../../components/OrderRecord'
@@ -152,7 +153,6 @@
 		        	totalCount:0,
 		        },
 		        dialogVisible:false,//弹窗是否显示
-		        customer_id:-1,
 		        activeName: 'first',
 		        value4: ['',''],
 		        requestParameters: {
@@ -166,7 +166,10 @@
 	                gender:'',
 	                consume_money_start:'',
 	                consume_money_end:''
-	            }
+	            },
+	            userInfo:{},
+	            storeRecords:{},
+	            orderRecords:{}
 
             }
         },
@@ -204,10 +207,57 @@
 		    },
 		    showDialog(row) {
 		        console.log(row.customer_id);
-		        this.$data.customer_id = row.customer_id;
+		        this.personalInfo(row.customer_id);
 		        this.$data.activeName = 'first';
 		        this.$data.dialogVisible = true;
+		        this.storeRecord(row.customer_id);
+		        this.orderRecord(row.customer_id);
+
 		    },
+
+		    personalInfo(customerId){
+                let list = {
+                        'customer_id':customerId
+                    }
+                let qs = require('querystring')
+                remindApi.personalInfo(qs.stringify(list)).then((res) => {
+                    console.log(res)
+                    if(res.data.errno === 0){
+                        console.log(res.data.data)
+                        this.$data.userInfo = res.data.data
+                    }else{
+
+                    }
+                })
+            },
+            storeRecord(customerId){
+                let list = {
+                        'customer_id':customerId
+                    }
+                let qs = require('querystring')
+                remindApi.storeRecord(qs.stringify(list)).then((res) => {
+                    if(res.data.errno === 0){
+                        console.log(res.data.data)
+                        this.$data.storeRecords = res.data.data;
+                    }else{
+
+                    }
+                })
+            },
+            orderRecord(customer_id){
+                let list = {
+                        'customer_id':customer_id
+                    }
+                let qs = require('querystring')
+                remindApi.orderRecord(qs.stringify(list)).then((res) => {
+                    if(res.data.errno === 0){
+                        console.log(res.data.data)
+                        this.$data.storeRecords = res.data.data;
+                    }else{
+
+                    }
+                })
+            },
 		    checkout(tab, event) {
 		        // console.log(tab, event);
 		    }

@@ -20,31 +20,18 @@
 	export default{
 		name:'store-record',
 		props:{
-            customerId:Number
+            storeRecords:Object
         },
 		data(){
 			return{
-				storeRecords:{}
+				
 			}
 		},
 		created:function(){
-			this.storeRecord(this.$props.customerId);
+			
 		},
 		methods:{
-			storeRecord(customer_id){
-                let list = {
-                        'customer_id':customer_id
-                    }
-                let qs = require('querystring')
-                remindApi.storeRecord(qs.stringify(list)).then((res) => {
-                    if(res.data.errno === 0){
-                        console.log(res.data.data)
-                        this.$data.storeRecords = res.data.data;
-                    }else{
-
-                    }
-                })
-            }
+			
 		}
 	}
 </script>
