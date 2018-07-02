@@ -132,7 +132,7 @@
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
-		          let list = {
+		            let list = {
 						'id': row.id
 					}
 					let qs = require('querystring')

@@ -36,8 +36,8 @@
                     <span slot="title">标签管理</span>
                 </el-menu-item>
             </router-link>
-            <router-link :to="{name: 'Equipment'}">
-                <el-menu-item index="/Equipment">
+            <router-link :to="{name: 'DeviceList'}">
+                <el-menu-item index="/DeviceList">
                     <i class="el-icon-view"></i>
                     <span slot="title">设备管理</span>
                 </el-menu-item>

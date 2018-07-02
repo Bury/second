@@ -89,7 +89,7 @@
 		    		{{scope.row.created_at | date(4)}}
 		    	</template>
 		    </el-table-column>
-		    <el-table-column prop="device_name" labedateformat('YYYY-MM-DD HH:mm:ss')l="设备信息" width="160"></el-table-column>
+		    <el-table-column prop="device_name" label="设备信息" width="160"></el-table-column>
 		    <el-table-column fixed="right" label="操作" width="150">
 			    <template slot-scope="scope">
 			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
@@ -178,8 +178,8 @@
         methods: {
         	//列表
         	guestList(){
-        		this.$data.store_time_start = this.$data.value4[0];
-	            this.$data.store_time_end = this.$data.value4[1];
+        		this.$data.requestParameters.store_time_start = this.$data.value4[0];
+	            this.$data.requestParameters.store_time_end = this.$data.value4[1];
 			    let qs = require('querystring');
         		guestApi.guestList(qs.stringify(this.$data.requestParameters)).then((res) => {
         			if(res.data.errno === 0){

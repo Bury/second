@@ -48,6 +48,21 @@ global.EDIT_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-edit`
 // post tag/childs-dele 删除
 global.DELE_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-dele`
 
+//设备管理
+// post device/list 按设备
+global.GET_DEVICE_LIST = `${SERVER_IP}${COMMON}device/list`
+// post device/version 
+global.GET_ALL_VERSION = `${SERVER_IP}${COMMON}device/version`
+// post device/camera-depoly 按设备分配
+global.SET_DEPOLY = `${SERVER_IP}${COMMON}device/camera-depoly`
+// post device/edit
+global.EDIT_DEVICE = `${SERVER_IP}${COMMON}device/edit`
+// post device/device-list 按门店
+global.GET_DEVICE_LIST_STORE = `${SERVER_IP}${COMMON}device/device-list`
+// post device/operation 按门店分配
+global.SET_OPERATION = `${SERVER_IP}${COMMON}device/operation`
+
+
 /*个人中心*/
 //1、门店管理
 // psot store/lists 门店列表
@@ -58,6 +73,20 @@ global.ADD_STORE = `${SERVER_IP}${COMMON}store/adds`
 global.EDIT_STORE = `${SERVER_IP}${COMMON}store/edit`
 // post store/dele 删除门店
 global.DELE_STORE = `${SERVER_IP}${COMMON}store/dele`
+
+//账号管理
+// post account/list 账号列表
+global.GET_ACCOUNT_LIST = `${SERVER_IP}${COMMON}account/list`
+// post account/adds 
+global.ADD_ACCOUNT = `${SERVER_IP}${COMMON}account/adds`
+// post account/view 详情
+global.DETAIL_ACCOUNT = `${SERVER_IP}${COMMON}account/view`
+// post account/edit 
+global.EDIT_ACCOUNT = `${SERVER_IP}${COMMON}account/edit`
+// post account/dele 
+global.DELE_ACCOUNT = `${SERVER_IP}${COMMON}account/dele`
+//post account/edit-password 
+global.CHANGEpWD_ACCOUNT = `${SERVER_IP}${COMMON}account/edit-password`
 
 
 //2、角色管理

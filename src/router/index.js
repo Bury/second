@@ -25,9 +25,8 @@ import LabelDetail from '../views/label/LabelDetail'
 
 
 /*设备管理*/
-import Equipment from '../views/equipment/Equipment'
-import EquipmentOfOwner from '../views/equipment/EquipmentOfOwner'
-import StoreDetail from '../views/equipment/StoreDetail'
+import DeviceList from '../views/device/DeviceList'
+import StoreDetail from '../views/device/StoreDetail'
 
 /*****系统设置*****/
 //门店管理
@@ -63,8 +62,7 @@ const router = new Router({
       {path: 'OrderList',name: 'OrderList',component: OrderList},
       {path: 'LabelList',name: 'LabelList',component: LabelList},
       {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
-      {path: 'Equipment',name: 'Equipment',component: Equipment},
-      {path: 'EquipmentOfOwner',name: 'EquipmentOfOwner',component: EquipmentOfOwner},
+      {path: 'DeviceList',name: 'DeviceList',component: DeviceList},
       {path: 'StoreDetail',name: 'StoreDetail',component: StoreDetail},
       {path: 'StoreSet',name:'StoreSet',component:StoreSet},
       {path: 'AccountSet',name:'AccountSet',component:AccountSet},

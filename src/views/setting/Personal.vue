@@ -24,8 +24,8 @@
 		    <el-form-item label="新密码：" prop="newPwd">
 		      <el-input v-model="ruleForm.newPwd" ></el-input>
 		    </el-form-item>
-		    <el-form-item label="确认密码：" prop="reNowPwd">
-		      <el-input v-model="ruleForm.reNowPwd" ></el-input>
+		    <el-form-item label="确认密码：" prop="reNewPwd">
+		      <el-input v-model="ruleForm.reNewPwd" ></el-input>
 		    </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
@@ -57,7 +57,7 @@
             { required: true, message: '请输入新密码：', trigger: 'blur' },
             { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
           ],
-          reNowPwd: [
+          reNewPwd: [
             { required: true, message: '请再次输入密码', trigger: 'blur' },
             {
                 validator: (rule, value, callback) => {
