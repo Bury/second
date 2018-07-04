@@ -34,8 +34,13 @@
 			</el-form>
 		</div>
 		<!-- 列表 -->
-		<el-table :data="tableData" border style="width:1312px;text-align:center;">
+		<el-table :data="tableData" border style="text-align:center;">
 	    	<el-table-column fixed prop="device_id" label="设备编号" width="120"></el-table-column>
+	    	<el-table-column label="设备种类" width="120">
+	    		<template slot-scope="scope">
+	    			{{scope.row.type == 'face' ? '人脸摄像头' : scope.row.type}}
+	    		</template>
+	    	</el-table-column>
 		    <el-table-column prop="version" label="版本" width="100"></el-table-column>
 		    <el-table-column label="添加时间" width="160">
 		    	<template slot-scope="scope">
@@ -53,19 +58,9 @@
 		    	</template>
 		    </el-table-column>
 		    <el-table-column prop="store.name" label="所属门店" width="220"></el-table-column>
-		    <el-table-column label="安装位置" width="160">
-		    	<template slot-scope="scope">
-		    		{{scope.row.locate}} —— {{scope.row.locate_desc}}
-		    	</template>
-		    </el-table-column>
 		    <el-table-column label="分配状态" width="90">
 		    	<template slot-scope="scope">
 		    		{{scope.row.belong_sid == 0 ? '未分配' : '已分配'}}
-		    	</template>
-		    </el-table-column>
-		    <el-table-column prop="status" label="设备状态" width="90">
-		    	<template slot-scope="scope">
-		    		{{scope.row.status == 0 ? '断开' : '正常'}}
 		    	</template>
 		    </el-table-column>
 		    <el-table-column fixed="right" label="操作" width="120">
@@ -91,14 +86,40 @@
 
 		<!-- 分配 -->
 		<el-dialog title="分配" :visible.sync="operationFormVisible">
-			<div style="margin-bottom:20px;"><span style="display:inline-block;width:100px;text-align:center;">设备编号：</span>{{operationForm.device_id}}</div>
-		 	<el-form :model="operationForm" :rules="operationRules" ref="operationForm" label-width="100px" class="demo-ruleForm" style="margin-bottom:50px;">
-			    <el-form-item label="所属门店：" prop="belong_sid">
-			    	<el-select v-model="operationForm.belong_sid" placeholder="请选择">
+			<h3 style="margin-bottom:10px;">基本信息：</h3>
+			<el-table :data="tableData" border style="text-align:center;margin-bottom:30px;">
+		    	<el-table-column prop="device_id" label="设备编号" width="120"></el-table-column>
+			    <el-table-column label="设备种类" width="120">
+			    	<template slot-scope="scope">
+			    		{{scope.row.type == 'face' ? '人脸摄像头' : scope.row.type}}
+			    	</template>
+			    </el-table-column>
+			    <el-table-column label="添加时间" width="160">
+			    	<template slot-scope="scope">
+			    		{{scope.row.created_at | date(4)}}
+			    	</template>
+			    </el-table-column>
+			    <el-table-column label="启用时间" width="160">
+			    	<template slot-scope="scope">
+			    		{{scope.row.start_at | date(4)}}
+			    	</template>
+			    </el-table-column>
+		    </el-table>
+			<h3 style="margin-bottom:10px;">设置：</h3>
+			<el-form :model="operationForm" ref="operationForm" label-width="100px" class="demo-ruleForm" style="margin-bottom:50px;">
+				<el-form-item label="是否启用：">
+			    	<el-select v-model="operationForm.status" placeholder="请选择">
+				        <el-option label="未启用" :value="0"></el-option>
+				        <el-option label="已启用" :value="1"></el-option>
+				    </el-select>
+			    </el-form-item>
+			    <el-form-item label="所属门店：">
+			    	<el-select v-model="operationForm.store_id" placeholder="请选择">
 				        <el-option v-for="(item,idx) in allStores" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
 				    </el-select>
 			    </el-form-item>
 		    </el-form>
+		 	
 		  <div slot="footer" class="dialog-footer">
 		    <el-button @click="operationCancel">取 消</el-button>
 		    <el-button type="primary" @click="operationSubmit">确 定</el-button>
@@ -139,10 +160,9 @@
 	            },
 	            operationFormVisible:false,
 	            operationForm:{
-	            	device_id:'',
-	            	belong_sid:''
+	            	
 	            },
-	            operationRules:{},
+	            
 
 	           
 			}
@@ -193,29 +213,48 @@
 				this.deviceList();
 			},
 			fnOperation(row){
-				this.$data.operationForm.belong_sid = row.store.id;
-				this.$data.operationForm.device_id = row.device_id;
+				this.$data.operationForm = {
+					id:row.id,
+					device_id:row.device_id,
+					type:row.type,
+					created_at:row.created_at,
+					start_at:row.start_at,
+					status:row.is_start,
+					store_id:row.store.id
+				}
         		remindApi.getStores().then((res) => {
         			if(res.data.errno === 0){
 						console.log(res)
 						this.$data.allStores = res.data.data;
-						this.$data.operationFormVisible = true;
+						
         			}else{
 
         			}
         			
         		})
+        		this.$data.operationFormVisible = true;
 			},
 			operationCancel(){
 				this.$data.operationFormVisible = false;
-	            this.$data.operationForm = {
-	            	device_id:'',
-	            	belong_sid:''
-	            };
+				this.$data.operationForm = {
+					id:'',
+					device_id:'',
+					type:'',
+					created_at:'',
+					start_at:'',
+					status:'',
+					store_id:''
+				}
+	            
 			},
 			operationSubmit(){
+				let list = {
+					'id':this.$data.operationForm.id,
+					'status':this.$data.operationForm.status,
+					'store_id':this.$data.operationForm.store_id
+				}
 				let qs = require('querystring');
-        		deviceApi.setDepoly(qs.stringify(this.$data.operationForm)).then((res) => {
+        		deviceApi.setOperation(qs.stringify(list)).then((res) => {
         			if(res.data.errno === 0){
 						console.log(res) 
 						this.deviceList();

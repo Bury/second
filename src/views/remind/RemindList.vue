@@ -89,7 +89,7 @@
 		    <el-table-column prop="device_name" labedateformat('YYYY-MM-DD HH:mm:ss')l="设备信息" width="160"></el-table-column>
 		    <el-table-column fixed="right" label="操作" width="150">
 			    <template slot-scope="scope">
-			    	<el-button v-if="scope.is_reception===1" @click="" type="text" size="small" style="color:#FF5940;">接待</el-button>
+			    	<el-button v-if="scope.row.is_reception == 0" @click="" type="text" size="small" style="color:#FF5940;">未接待</el-button>
 			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
 			    </template>
 		    </el-table-column>

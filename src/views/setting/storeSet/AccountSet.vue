@@ -47,8 +47,10 @@
 			  <el-form-item label="使用人：" prop="desc">
 			    <el-input v-model="editFormData.desc"></el-input>
 			  </el-form-item>
-			  <el-form-item label="角色：" prop="role_name">
-			    <el-input v-model="editFormData.role_name"></el-input>
+			  <el-form-item label="角色：" prop="role_id">
+			    <el-select v-model="editFormData.role_id" placeholder="请选择">
+				    <el-option v-for="(item,idx) in allRole" :label="allRole[idx].name" :value="allRole[idx].id"></el-option>
+				</el-select>
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
@@ -86,7 +88,9 @@
 			    <el-input v-model="addFormData.role_id"></el-input>
 			  </el-form-item>
 			  <el-form-item label="头像：" prop="avatar">
-			    <el-input v-model="addFormData.avatar"></el-input>
+			    <el-input v-model="addFormData.avatar" style="display:none;"></el-input>
+			    <img v-if="addFormData.avatar !== '' " :src="addFormData.avatar" style="display:inline-block;width:60px;height:60px;border:1px solid #ccc;">
+			    <el-button type="primary" size="small" plain>选择头像</el-button>
 			  </el-form-item>
 			  <el-form-item label="初始密码：" prop="password">
 			    <el-input v-model="addFormData.password"></el-input>
@@ -115,9 +119,11 @@
 		        },
 				requestParameters: {
 	                page: 1,
-	                page_size:10
+	                page_size:10,
+	                sid:''
 	            },
 	            editFormVisible:false,
+	            allRole:[],
 	            editFormData:{
 	            	id:'',
 	            	username:'',
@@ -133,7 +139,7 @@
 		          		{ required: true, message: '请输入使用人姓名', trigger: 'blur' },
 		            	{ min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
 		          	],
-		          	role_name:[
+		          	role_id:[
 		          		{ required: true, message: '请选择角色', trigger: 'blur' }
 		          	]
 	            },
@@ -219,6 +225,7 @@
 		methods: {
 			//列表
 			accountList(){
+				this.$data.requestParameters.sid = this.$route.query.StoreId;
 				let qs = require('querystring')
 	    		settingApi.accountList(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
@@ -268,14 +275,17 @@
 		        });
 			},
 			fnEdit(row){
-				console.log(row)
+				console.log(row);
+				this.roleList();
+				this.detailAccount(row.id);
+			},
+			detailAccount(id){
 				let qs = require('querystring')
         		settingApi.detailAccount(qs.stringify({
-        			id:row.id
+        			id:id
         		})).then((res) => {
         			if(res.data.errno === 0){
 						console.log(res)
-						
 						this.$data.editFormData = res.data.data;
 						this.$data.editFormVisible = true;
 
@@ -285,13 +295,24 @@
         			
         		})
 			},
+			roleList(){
+				let qs = require('querystring')
+	    		settingApi.roleList(qs.stringify(this.$data.requestParameters)).then((res) => {
+	    			if(res.data.errno === 0){
+						console.log(res);
+						this.$data.allRole = res.data.data.list;
+	    			}else{
+						this.$message.error(res.data.msg);
+	    			}
+	    		})
+	    	},
 			editCancel(){
 				this.$data.editFormVisible = false;
 				this.$data.editFormData = {
 					id:'',
 					username:'',
 					desc:'',
-					role_name:''
+					role_id:''
 				}
 			},
 			editSubmit(formName){
@@ -307,7 +328,7 @@
 									id:'',
 									username:'',
 									desc:'',
-									role_name:''
+									role_id:''
 								}
 								this.$data.editFormVisible = false;
 

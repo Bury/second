@@ -47,7 +47,7 @@
 		    </el-table-column>
 		    <el-table-column label="人脸" width="80">
 		    	<template slot-scope="scope">
-		           <img :src="scope.row.traffic.avatar" style="display:block;margin:0 auto;width:100%;">
+		           <img :src="scope.row.traffic. avatar" style="display:block;margin:0 auto;width:100%;">
 		        </template>
 		    </el-table-column>
 		    <el-table-column prop="customer_name" label="姓名" width="160"></el-table-column>
@@ -152,6 +152,39 @@
         	onSubmit() {
 		        this.orderList();
 		    },
+		    fnRemove(row){
+				this.$confirm('确认删除该订单：'+row.sn+' ？', '删除提示', {
+		          confirmButtonText: '确定',
+		          cancelButtonText: '取消',
+		          type: 'warning'
+		        }).then(() => {
+		        	let list = {
+						'id': row.id
+					}
+					let qs = require('querystring')
+	        		orderApi.deleOrder(qs.stringify(list)).then((res) => {
+	        			console.log(res)
+	        			if(res.data.errno === 0){
+							console.log(res)
+							this.$message({
+					            type: 'success',
+					            message: '删除成功!'
+					          });
+							this.storeList();
+	        			}else{
+							this.$message.error(res.data.msg);
+	        			}
+	        			
+	        		})
+		            
+		        }).catch(() => {
+		          // this.$message({
+		          //   type: 'info',
+		          //   message: '已取消删除'
+		          // });          
+		        });
+			},
+
 		    
 	    },
     }

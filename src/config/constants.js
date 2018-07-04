@@ -5,6 +5,10 @@
 const SERVER_IP = 'http://test.yy_api.ibetwo.com/'
 const COMMON = 'v1/'
 
+//客流统计
+// post analysis/customer
+global.GET_CUSTOMER = `${SERVER_IP}${COMMON}customer/analysis/customer`
+
 /*提醒列表*/
 // post customer//remind-list 获取提醒列表
 global.GET_REMIND_LIST = `${SERVER_IP}${COMMON}customer/remind-list`
@@ -26,6 +30,8 @@ global.GET_GUEST_LIST = `${SERVER_IP}${COMMON}customer/visitor-list`
 /*订单管理*/
 // post order/list订单列表
 global.GET_ORDER_LIST = `${SERVER_IP}${COMMON}order/list`
+// post order/dele
+global.DELE_OTDER = `${SERVER_IP}${COMMON}order/dele`
 
 /*标签管理*/
 //1、父级

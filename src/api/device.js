@@ -49,4 +49,13 @@ export default {
 	      })
 	    })
 	},
+	setOperation(list){
+		return new Promise((resolve, reject) => {
+	      axios.post(global.SET_OPERATION,list).then((res) => {
+	        resolve(res)
+	      }).catch((err) => {
+	        reject(err)
+	      })
+	    })
+	}
 }

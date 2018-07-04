@@ -54,7 +54,7 @@
                     <el-menu-item index="/EquipmentOfOwner">设备管理店长端</el-menu-item>
                 </router-link>
             </el-submenu> -->
-            <el-submenu index="1-7" style="padding-bottom:200px;">
+            <el-submenu style="padding-bottom:200px;">
                 <template slot="title">
                     <i class="el-icon-setting"></i>
                     <span slot="title">系统设置</span>
@@ -63,7 +63,7 @@
                     <el-menu-item index="/StoreSet">门店管理</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'RoleSet'}">
-                    <el-menu-item index="/RoleSet">角色权限管理</el-menu-item>
+                    <el-menu-item index="/RoleSet">角色管理</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'RemindSet'}">
                     <el-menu-item index="/RemindSet">提醒配置</el-menu-item>
