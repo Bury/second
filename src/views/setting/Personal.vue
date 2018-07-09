@@ -111,6 +111,8 @@
 					if(res.data.errno === 0){
 						userApi.logout().then((res1) => {
 							if(res1.data.errno === 0){
+								localStorage.setItem('knock_knock', '')
+            					localStorage.setItem('username', '')
 								this.$router.replace({
 									name: 'Login'
 								});

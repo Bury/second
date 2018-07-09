@@ -20,10 +20,11 @@
             <div class="user">
                 <el-dropdown trigger="hover" >
                     <span class="el-dropdown-link" style="color:#fff;">
-                      你好，张三<i class="el-icon-caret-bottom el-icon--right"></i>
+                      您好，{{userName}}
+                      <i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown" style="text-align:center;">
-                        <el-dropdown-item divided command="logout" >个人中心</el-dropdown-item>
+                        <el-dropdown-item divided>个人中心</el-dropdown-item>
                         <el-dropdown-item divided command="logout" >退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
@@ -52,6 +53,7 @@ export default {
   },
   data () {
     return {
+        userName:'xxxxx',
         horizontalIndex: '1',
         isCollapse: false,
         leftMenu: {
@@ -61,6 +63,9 @@ export default {
             leftMenu4:false
         }
     }
+  },
+  created: function(){
+    this.$data.userName = localStorage.getItem('username')
   },
   methods: {
     handleSelect(key, keyPath) {

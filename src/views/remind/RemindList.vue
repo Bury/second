@@ -89,7 +89,7 @@
 		    <el-table-column prop="device_name" labedateformat('YYYY-MM-DD HH:mm:ss')l="设备信息" width="160"></el-table-column>
 		    <el-table-column fixed="right" label="操作" width="150">
 			    <template slot-scope="scope">
-			    	<el-button v-if="scope.row.is_reception == 0" @click="" type="text" size="small" style="color:#FF5940;">未接待</el-button>
+			    	<el-button v-if="scope.row.is_reception == 0" @click="isReception(scope.row)" type="text" size="small" style="color:#FF5940;">未接待</el-button>
 			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
 			    </template>
 		    </el-table-column>
@@ -110,18 +110,19 @@
 	    </div>
 
 	  	<!-- 弹窗 -->
-	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;">
+	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;" :before-close="closeChangeMachie">
 			<el-tabs v-model="activeName" @tab-click="checkout">
 			    <el-tab-pane label="个人信息" name="first">
-			    	<user-info :userInfo="userInfo"></user-info>
+			    	<user-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></user-info>
 			    </el-tab-pane>
-			    <el-tab-pane label="到店记录" name="second">
-			    	<store-record :storeRecords="storeRecords"></store-record>
+			    <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
+			    	<store-record :customerId="currentCustomerId"></store-record>
 			    </el-tab-pane>
 			    <el-tab-pane label="订单记录" name="third">
-			    	<order-record :orderRecords="orderRecords"></order-record>
+			    	<order-record :customerId="currentCustomerId" style="min-height:415px;"></order-record>
 			    </el-tab-pane>
 			</el-tabs>
+			
 		</el-dialog>
 	</div>
 </template>
@@ -162,9 +163,8 @@
 	                consume_money_start:'',
 	                consume_money_end:''
 	            },
-	            userInfo:{},
-	            storeRecords:{},
-	            orderRecords:{}
+	            currentCustomerId:'',
+	            showInfoEdit:false
 
 
             }
@@ -230,63 +230,32 @@
 		    },
 		    showDialog(row) {
 		        console.log(row);
-		        this.personalInfo(row.customer_id);
+		        this.$data.showInfoEdit = false;
+		        this.$data.currentCustomerId = row.customer_id;
 		        this.$data.activeName = 'first';
 		        this.$data.dialogVisible = true;
-		        this.storeRecord(row.customer_id);
-		        this.orderRecord(row.customer_id);
 		    },
 
-		    personalInfo(customerId){
-                let list = {
-                        'customer_id':customerId
-                    }
-                let qs = require('querystring')
-                remindApi.personalInfo(qs.stringify(list)).then((res) => {
-                    if(res.data.errno === 0){
-                        console.log(res.data.data)
-                        this.$data.userInfo = res.data.data
-                    }else{
-
-                    }
-                })
-            },
-            storeRecord(customerId){
-                let list = {
-                        'customer_id':customerId,
-                        'page':1,
-                        'page_size': 10
-                    }
-                let qs = require('querystring')
-                remindApi.storeRecord(qs.stringify(list)).then((res) => {
-                	console.log(res)
-                    if(res.data.errno === 0){
-                        console.log(res.data.data)
-                        this.$data.storeRecords = res.data.data;
-                    }else{
-
-                    }
-                })
-            },
-            orderRecord(customer_id){
-                let list = {
-                        'customer_id':customer_id,
-                        'page':1,
-                        'page_size': 10
-                    }
-                let qs = require('querystring')
-                remindApi.orderRecord(qs.stringify(list)).then((res) => {
-                    if(res.data.errno === 0){
-                        console.log(res.data.data)
-                        this.$data.storeRecords = res.data.data;
-                    }else{
-
-                    }
-                })
-            },
 		    checkout(tab, event) {
-		        console.log(tab, event);
-		    }
+		        this.$data.showInfoEdit = false;
+		    },
+		    isReception(row){
+		    	let qs = require('querystring')
+		    	remindApi.isReception(qs.stringify({
+		    		id:row.id
+		    	})).then((res) => {
+                    if(res.data.errno === 0){
+                        this.remindList();
+                    }else{
+
+                    }
+                })
+		    },
+		    closeChangeMachie(done){
+	            done();
+	            // window.location.reload();
+	            this.$data.showInfoEdit = false;
+	        }
 	    },
     }
 </script>
@@ -299,5 +268,6 @@
 		margin:10px;
 	  	float: right;
 	}
+
 	
 </style>

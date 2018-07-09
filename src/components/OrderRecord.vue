@@ -16,18 +16,41 @@
 	export default{
 		name:'order-record',
 		props:{
-            orderRecords:Object
+            customerId:{
+                type:Number
+            }
         },
 		data(){
 			return{
-				
+				orderRecords:{}
 			}
 		},
+		watch: {
+          customerId: function() {
+             this.orderRecord(this.$props.customerId)
+          }
+        },
 		created:function(){
-			
+			this.orderRecord(this.$props.customerId)
 		},
 		methods:{
-			
+			//       
+            orderRecord(customerId){
+                let list = {
+                        'customer_id':customerId,
+                        'page':1,
+                        'page_size': 10
+                    }
+                let qs = require('querystring')
+                remindApi.orderRecord(qs.stringify(list)).then((res) => {
+                    if(res.data.errno === 0){
+                        console.log(res.data.data)
+                        this.$data.orderRecords = res.data.data;
+                    }else{
+
+                    }
+                })
+            },
 		}
 	}
 </script>

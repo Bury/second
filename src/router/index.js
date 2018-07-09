@@ -2,13 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // 模板框架
-import Main from '../views/home/Main'
+import Main from '../views/menu/Main'
 
 // 登录页面
-import Home from '../views/Home'
+import Login from '../views/login/Login'
 
 //客流统计
-import Statistics from '../views/statistics/Statistics'
+import Statistics from '../views/home/Statistics'
 
 //提醒列表
 import RemindList from '../views/remind/RemindList'
@@ -46,31 +46,41 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
+    { path: '/login',name: 'Login',component: Login},
     {
-      path: '/login',
-      name: 'Login',
-      component: Home,
-      meta: { auth: false }
-    },
-    {
-    path: '/',
-    component: Main,
-    children: [
-      {path: '',name: 'Statistics',component: Statistics},
-      {path: 'RemindList',name: 'RemindList',component: RemindList},
-      {path: 'GuestList',name: 'GuestList',component: GuestList},
-      {path: 'OrderList',name: 'OrderList',component: OrderList},
-      {path: 'LabelList',name: 'LabelList',component: LabelList},
-      {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
-      {path: 'DeviceList',name: 'DeviceList',component: DeviceList},
-      {path: 'StoreDetail',name: 'StoreDetail',component: StoreDetail},
-      {path: 'StoreSet',name:'StoreSet',component:StoreSet},
-      {path: 'AccountSet',name:'AccountSet',component:AccountSet},
-      {path: 'RoleSet',name:'RoleSet',component:RoleSet},
-      {path: 'RemindSet',name: 'RemindSet',component: RemindSet},
-      {path: 'OpenTimeSet',name: 'OpenTimeSet',component: OpenTimeSet},
-      {path: 'Personal',name: 'Personal',component: Personal},
-    ]
+      path: '/',
+      meta: { requiresAuth: true },
+      component: Main,
+      children: [
+        {path: '/',name: 'Statistics',component: Statistics},
+        {path: 'RemindList',name: 'RemindList',component: RemindList},
+        {path: 'GuestList',name: 'GuestList',component: GuestList},
+        {path: 'OrderList',name: 'OrderList',component: OrderList},
+        {path: 'LabelList',name: 'LabelList',component: LabelList},
+        {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
+        {path: 'DeviceList',name: 'DeviceList',component: DeviceList},
+        {path: 'StoreDetail',name: 'StoreDetail',component: StoreDetail},
+        {path: 'StoreSet',name:'StoreSet',component:StoreSet},
+        {path: 'AccountSet',name:'AccountSet',component:AccountSet},
+        {path: 'RoleSet',name:'RoleSet',component:RoleSet},
+        {path: 'RemindSet',name: 'RemindSet',component: RemindSet},
+        {path: 'OpenTimeSet',name: 'OpenTimeSet',component: OpenTimeSet},
+        {path: 'Personal',name: 'Personal',component: Personal},
+      ]
   }]
 })
+
+router.beforeEach((to, from, next) => {
+  let knock_knock = window.localStorage.getItem('knock_knock')
+  if (to.matched.some(
+        record => record.meta.requiresAuth)&& (!knock_knock || knock_knock === null)) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+})
+
 export default router

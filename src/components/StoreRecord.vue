@@ -15,6 +15,19 @@
 				</div>
 			</li>
 		</ul>
+		<!-- 分页 -->
+		<div>
+			<el-pagination 
+				background
+	            class="pagination" 
+	            layout="prev, pager, next" 
+	            small 
+	            @current-change="changePage" 
+	            :current-page="userInfoPagination.currentPage" 
+	            :page-size="requestParas.page_size"
+	            :total="userInfoPagination.totalCount">
+	        </el-pagination>
+	    </div>
 	</div>
 </template>
 <script>
@@ -22,28 +35,52 @@
 	export default{
 		name:'store-record',
 		props:{
-            storeRecords:{
-            	type: Object,
-	            default: function() {
-	                return {};
-	            }
+            customerId:{
+                type:Number
             }
         },
 		data(){
 			return{
-				// storeRecords:{}
+				storeRecords:{},
+				userInfoPagination:{
+		        	currentPage:1,
+		        	totalCount:0,
+		        },
+				requestParas: {
+					customer_id:'',
+	                page: 1,
+	                page_size:6
+				}
 			}
 		},
-		watch: {
-	        data() {
-	            // this.$data.storeRecords = this.$props.storeRecords;
-	            console.log(1)
-	        }
-	    },
+		watch:{
+          customerId: function() {
+             this.storeRecord(this.$props.customerId)
+          }
+        },
 		created:function(){
-			
+			this.storeRecord(this.$props.customerId)
 		},
 		methods:{
+			storeRecord(customerId){
+				this.$data.requestParas.customer_id = customerId;
+                let qs = require('querystring')
+                remindApi.storeRecord(qs.stringify(this.$data.requestParas)).then((res) => {
+                	console.log(res)
+                    if(res.data.errno === 0){
+                        console.log(res.data.data)
+                        this.$data.storeRecords = res.data.data;
+                        this.$data.userInfoPagination.currentPage = res.data.data.pagination.currentPage;
+		        		this.$data.userInfoPagination.totalCount = res.data.data.pagination.totalCount;
+                    }else{
+
+                    }
+                })
+            },
+            changePage(currentPage){
+            	this.$data.requestParas.page = currentPage;
+            	this.storeRecord(this.$props.customerId)
+            }
 			
 		}
 	}
@@ -54,6 +91,7 @@
 			padding:20px 0;
 		}
 		.store-record-list{
+			overflow:hidden;
 			.store-record-item{
 				float:left;
 				margin-bottom:10px;
@@ -88,5 +126,9 @@
 
 
 		}
+	}
+	.el-pagination{
+		margin:10px;
+	  	float: right;
 	}
 </style> 

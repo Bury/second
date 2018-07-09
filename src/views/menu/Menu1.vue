@@ -54,7 +54,7 @@
                     <el-menu-item index="/EquipmentOfOwner">设备管理店长端</el-menu-item>
                 </router-link>
             </el-submenu> -->
-            <el-submenu style="padding-bottom:200px;">
+            <el-submenu index="7-1" style="padding-bottom:200px;">
                 <template slot="title">
                     <i class="el-icon-setting"></i>
                     <span slot="title">系统设置</span>

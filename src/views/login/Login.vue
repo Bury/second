@@ -7,23 +7,21 @@
               杭州知己科技有限公司
             </div>-->
             <div class="main">
-              <login></login>
+              <login-form></login-form>
             </div>
           </div>
         </div>
       </div>
-      
-      <!-- <div id="particles-js" class="bg"></div> -->
     </div>
 </template>
 
 <script>
-import Login from '../components/common/Login'
+import LoginForm from './LoginForm'
 
 export default {
   name: 'home',
   components: {
-    Login
+    LoginForm
   },
   data () {
     return {

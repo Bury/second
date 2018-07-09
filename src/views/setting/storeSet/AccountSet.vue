@@ -3,7 +3,7 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdd()">新增</el-button>
 		</div>
-		<el-table :data="tableData" border height="448" style="width:961px;text-align:center;">
+		<el-table :data="tableData" border height="448" style="width:962px;text-align:center;">
 			<el-table-column prop="store_name" label="所属门店" width="220"></el-table-column>
 	    	<el-table-column prop="username" label="账号名" width="160"></el-table-column>
 	    	<el-table-column prop="role_name" label="角色" width="100"></el-table-column>
@@ -76,8 +76,8 @@
 		</el-dialog>
 
 		<!-- 添加 -->
-		<el-dialog title="添加" :visible.sync="addFormVisible">
-		  <el-form :model="addFormData" :rules="addRules" ref="addFormData" label-width="100px" class="demo-ruleForm">
+		<el-dialog :title="!avatarFormVisible? '添加' : '关联头像'" :visible.sync="addFormVisible" :fullscreen="avatarFormVisible" :before-close="closeChange" >
+		  <el-form :model="addFormData" :rules="addRules" ref="addFormData" label-width="100px" class="demo-ruleForm" v-if="!avatarFormVisible" >
 			  <el-form-item label="账号名：" prop="username">
 			    <el-input v-model="addFormData.username"></el-input>
 			  </el-form-item>
@@ -85,12 +85,14 @@
 			    <el-input v-model="addFormData.desc"></el-input>
 			  </el-form-item>
 			  <el-form-item label="角色：" prop="role_id">
-			    <el-input v-model="addFormData.role_id"></el-input>
+			    <el-select v-model="addFormData.role_id" placeholder="请选择">
+				    <el-option v-for="(item,idx) in allRole" :label="allRole[idx].name" :value="allRole[idx].id"></el-option>
+				</el-select>
 			  </el-form-item>
 			  <el-form-item label="头像：" prop="avatar">
 			    <el-input v-model="addFormData.avatar" style="display:none;"></el-input>
 			    <img v-if="addFormData.avatar !== '' " :src="addFormData.avatar" style="display:inline-block;width:60px;height:60px;border:1px solid #ccc;">
-			    <el-button type="primary" size="small" plain>选择头像</el-button>
+			    <el-button type="primary" size="small" plain @click="avatarFormVisible=true">选择头像</el-button>
 			  </el-form-item>
 			  <el-form-item label="初始密码：" prop="password">
 			    <el-input v-model="addFormData.password"></el-input>
@@ -99,17 +101,23 @@
 			    <el-input v-model="addFormData.repassword"></el-input>
 			  </el-form-item>
 		  </el-form>
-		  <div slot="footer" class="dialog-footer">
+		  <div slot="footer" class="dialog-footer" v-if="!avatarFormVisible">
 		    <el-button @click="addCancel">取 消</el-button>
 		    <el-button type="primary" @click="addSubmit('addFormData')">确 定</el-button>
 		  </div>
+		  <guest-list v-if="avatarFormVisible" :avatarFormVisible="avatarFormVisible" @getChildData="getAvatarData"></guest-list>
 		</el-dialog>
+		
 	</div>
 </template>
 <script>
+	import GuestList from '../../guest/GuestList'
 	import settingApi from '../../../api/setting'
 	export default{
 		name:'accoun-set',
+		components: {
+		   GuestList
+		},
 		data(){
 			return{
 				tableData: [],
@@ -177,7 +185,8 @@
 	            	role_id:'',
 	            	avatar:'',
 	            	password:'',
-	            	repassword:''
+	            	repassword:'',
+	            	customer_id:''
 
 	            },
 	            addRules:{
@@ -207,7 +216,7 @@
 	            		{ required: true, message: '请再次输入密码', trigger: 'blur' },
 			            {
 			                validator: (rule, value, callback) => {
-			                    if (value !== this.$data.addRules.password) {
+			                    if (value !== this.$data.addFormData.password) {
 			                        callback(new Error('两次输入密码不一致!'));
 			                    } else {
 			                        callback();
@@ -216,7 +225,8 @@
 			                trigger: 'blur'
 			            }
 	            	]
-	            }
+	            },
+	            avatarFormVisible:false
 			}
 		},
 		created:function(){
@@ -386,52 +396,46 @@
 		        });
 
 			},
+			fnClearAddFormData(){
+				this.$data.addFormData = {
+	            	store_id:'',
+	            	username:'',
+	            	desc:'',
+	            	role_id:'',
+	            	avatar:'',
+	            	password:'',
+	            	repassword:'',
+	            	customer_id:'',
+
+	            };
+			},
 			
 			fnAdd(){
-				this.$data.addFormData = {
-	            	store_id:'',
-	            	username:'',
-	            	desc:'',
-	            	role_id:'',
-	            	avatar:'',
-	            	password:'',
-	            	repassword:''
-
-	            };
+				this.fnClearAddFormData();
+				this.roleList();
 				this.$data.addFormVisible = true;
 			},
+			//头像选择
+			getAvatarData(childData){
+	        	this.$data.avatarFormVisible = false;
+	        	this.$data.addFormData.avatar = childData.avatar;
+	        	this.$data.addFormData.customer_id = childData.customer_id;
+	        },
 			addCancel(){
 				this.$data.addFormVisible = false;
-				this.$data.addFormData = {
-	            	store_id:'',
-	            	username:'',
-	            	desc:'',
-	            	role_id:'',
-	            	avatar:'',
-	            	password:'',
-	            	repassword:''
-
-	            };
+				this.fnClearAddFormData();
 			},
 			addSubmit(formName){
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
 			        if (valid) {
+			        	this.$data.addFormData . store_id = this.$route.query.StoreId;
 						let qs = require('querystring')
 		        		settingApi.addAccount(qs.stringify(this.$data.addFormData)).then((res) => {
 		        			if(res.data.errno === 0){
 								console.log(res)
 								this.accountList();
-								this.$data.addFormData = {
-					            	store_id:'',
-					            	username:'',
-					            	desc:'',
-					            	role_id:'',
-					            	avatar:'',
-					            	password:'',
-					            	repassword:''
-
-					            };
+								this.fnClearAddFormData();
 								this.$data.addFormVisible = false;
 
 		        			}else{
@@ -444,6 +448,16 @@
 		        });
 
 			},
+			closeChange(done){
+	            // done();
+	            if(this.$data.avatarFormVisible){
+	            	this.$data.avatarFormVisible = false;
+	            }else{
+	            	done()
+	            }
+	            
+	        },
+
 			
 		}
 	}

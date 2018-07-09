@@ -8,6 +8,8 @@ import '../static/css/home.css'
 import '../static/css/main.css'
 import '../static/font/iconfont.css'
 
+import http from './api/http.js'
+
 import App from './App'
 import router from './router'
 import axios from 'axios'
@@ -20,6 +22,7 @@ Vue.use(ElementUI)
 Vue.filter('date', filters.dateFilter)
 
 Vue.config.productionTip = false
+
 
 /* eslint-disable no-new */
 new Vue({
