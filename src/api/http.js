@@ -4,10 +4,16 @@ import router from '../router/index'
 axios.interceptors.request.use(function (config) {
     let knock_knock = localStorage.getItem('knock_knock')
     if (knock_knock && knock_knock!==null && knock_knock!=='') {
-                    if(config.method=='post'){
-                config.data['access-token'] = knock_knock;
+            if(config.method=='post'){
+                config.data = {
+                    'access-token' : knock_knock,
+                    ...config.data
+                };            
             }else if(config.method=='get'){
-                config.param['access-token'] = knock_knock;
+                config.param = {
+                    'access-token' : knock_knock,
+                    ...config.params
+                };
             }
         }
     return config;
