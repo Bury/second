@@ -4,7 +4,7 @@
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
 			  <el-form-item label="门店选择：" v-if="allStores.length > 0">
 			    <el-select v-model="requestParameters.store_id" placeholder="门店选择">
-			      <el-option v-for="(item, idx) in allStores" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
+			      <el-option v-for="(item, idx) in allStores" :key="idx" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="进店时间：">
@@ -22,7 +22,7 @@
 			  <el-form-item label="客户等级：" v-if="allLevels.length > 0">
 			     <el-select v-model="requestParameters.level" placeholder="客户等级">
 			      <el-option label="全部" value="0" v-if="allLevels.length > 0"></el-option>
-			      <el-option v-for="(item, idx) in allLevels" :label="allLevels[idx].name" :value="allLevels[idx].level"></el-option>
+			      <el-option v-for="(item, idx) in allLevels" :key="idx" :label="allLevels[idx].name" :value="allLevels[idx].level"></el-option>
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="消费金额：">

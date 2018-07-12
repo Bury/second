@@ -49,7 +49,7 @@
 			  </el-form-item>
 			  <el-form-item label="角色：" prop="role_id">
 			    <el-select v-model="editFormData.role_id" placeholder="请选择">
-				    <el-option v-for="(item,idx) in allRole" :label="allRole[idx].name" :value="allRole[idx].id"></el-option>
+				    <el-option v-for="(item,idx) in allRole" :key="idx" :label="allRole[idx].name" :value="allRole[idx].id"></el-option>
 				</el-select>
 			  </el-form-item>
 		  </el-form>
@@ -86,7 +86,7 @@
 			  </el-form-item>
 			  <el-form-item label="角色：" prop="role_id">
 			    <el-select v-model="addFormData.role_id" placeholder="请选择">
-				    <el-option v-for="(item,idx) in allRole" :label="allRole[idx].name" :value="allRole[idx].id"></el-option>
+				    <el-option v-for="(item,idx) in allRole" :key="idx" :label="allRole[idx].name" :value="allRole[idx].id"></el-option>
 				</el-select>
 			  </el-form-item>
 			  <el-form-item label="头像：" prop="avatar">

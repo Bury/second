@@ -46,7 +46,7 @@
         ruleForm: {
           oldPwd:'',
           newPwd:'',
-          reNowPwd:''
+          reNewPwd:''
         },
         rules: {
           oldPwd: [
@@ -104,7 +104,8 @@
 	        if (valid) {
 	        	let list = {
 					'old_password': this.$data.ruleForm.oldPwd,
-					'new_password':this.$data.ruleForm.newPwd 
+					'new_password':this.$data.ruleForm.newPwd,
+					'new_password2':this.$data.ruleForm.reNewPwd
 				}
 				let qs = require('querystring')
 				userApi.changePWD(qs.stringify(list)).then((res) => {

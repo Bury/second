@@ -2,9 +2,9 @@
 	<div class="remind-list-page">
 		<div class="top-box">
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-			  <el-form-item label="门店选择：" v-if="allStores.length > 0">
+			  <el-form-item label="门店选择：" v-if="allStores">
 			    <el-select v-model="requestParameters.store_id" placeholder="门店选择">
-			      <el-option v-for="(item, idx) in allStores" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
+			      <el-option v-for="(item, idx) in allStores" :key="idx" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="进店时间：">
@@ -149,13 +149,13 @@
 			avatarFormVisible:Boolean
 		},
         data(){
-            return{
-		        tableData: [],
-		        allStores:[],
-		        pagination:{
-		        	currentPage:1,
-		        	totalCount:0,
-		        },
+					return{
+						tableData: [],
+						allStores:[],
+						pagination:{
+							currentPage:1,
+							totalCount:0,
+						},
 		        dialogVisible:false,//弹窗是否显示
 		        activeName: 'first',
 		        value4: ['',''],
@@ -186,14 +186,16 @@
         	//列表
         	guestList(){
         		this.$data.requestParameters.store_time_start = this.$data.value4[0];
-	            this.$data.requestParameters.store_time_end = this.$data.value4[1];
-			    let qs = require('querystring');
+						this.$data.requestParameters.store_time_end = this.$data.value4[1];
+						let qs = require('querystring');
         		guestApi.guestList(qs.stringify(this.$data.requestParameters)).then((res) => {
-        			if(res.data.errno === 0){
-						console.log(res) 
-						this.$data.tableData = res.data.data.list;
-						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
-		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
+        			let result = res.data
+							if(result.errno === 0){
+								console.log('aa')
+								console.log(result.data.list) 
+								this.tableData = result.data.list;
+								this.$data.pagination.currentPage = result.data.pagination.currentPage;
+		        		this.$data.pagination.totalCount = result.data.pagination.totalCount;
 
         			}else{
 
@@ -206,8 +208,7 @@
         	getStores(){
         		remindApi.getStores().then((res) => {
         			if(res.data.errno === 0){
-						console.log(res)
-						this.$data.allStores = res.data.data;
+								this.$data.allStores = res.data.data;
         			}else{
 
         			}
@@ -217,16 +218,13 @@
 
 
         	handleCurrentChange(currentPage) {
-	            console.log(currentPage)
 	            this.$data.requestParameters.page = currentPage;
 	            this.guestList();
 	        },
         	onSubmit() {
-        		console.log(this.$data.value4)
 		        this.guestList();
 		    },
 		    showDialog(row) {
-		        console.log(row);
 		        this.$data.showInfoEdit = false;
 		        this.$data.currentCustomerId = row.customer_id;
 		        this.$data.activeName = 'first';

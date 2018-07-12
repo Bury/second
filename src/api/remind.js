@@ -84,6 +84,16 @@ export default {
         reject(err)
       })
     })
+  },
+
+  getAll(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GET_TREE_FORM, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
   }
 
 }

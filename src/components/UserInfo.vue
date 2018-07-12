@@ -16,7 +16,7 @@
             </div>
             <div class="user-tags">
                 标签： 
-                    <el-tag v-for="(item,key) in userInfo.tag" style="margin-right:10px;">{{userInfo.tag[key].name}}</el-tag>
+                    <el-tag v-for="(item,key) in userInfo.tag" :key="key" style="margin-right:10px;">{{userInfo.tag[key].name}}</el-tag>
             </div>
             <p class="user-remarks">备注： {{userInfo.remark === null ? '暂无备注' : userInfo.remark}}</p>
             <el-button type="primary" plain size="small" class="edit-btn" @click="editUserInfo()">编辑</el-button>
@@ -39,8 +39,11 @@
               <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
               <el-form-item label="类型：">{{editUserInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
               <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
-              <el-form-item label="标签：">
-                <el-input v-model="editUserInfoData.tag_ids"></el-input>
+              <el-form-item label="标签：">{{editUserInfoData.tag}}
+                <div v-for="label in labels" :key="label.id" class="labels">
+                    <div>—— {{label.name}} ——</div>
+                    <span v-for="children in label.children" :key="children.id">{{children.id}}+{{children.name}}</span>
+                </div>
               </el-form-item>
               <el-form-item label="备注：">
                 <el-input type="textarea" v-model="editUserInfoData.remark"></el-input>
@@ -76,6 +79,7 @@
                 infoEdit:false,
                 userInfo:{},
                 editUserInfoData:{},
+                labels:{},
                 UserInfoRules:{
                     name: [
                         { required: true, message: '请输入姓名', trigger: 'blur' },
@@ -109,9 +113,24 @@
         },
         created:function(){
             this.personalInfo(this.$props.customerId)
+            this.getAll(this.$props.customerId)
         },
         methods: {
-            //
+            getAll(customerId){
+                let list = {
+                    'all': '1',
+                    'customer_id': customerId
+                }
+                let qs = require('querystring')
+                remindApi.getAll(qs.stringify(list)).then((res) => {
+                    if(res.data.errno === 0){
+                        this.$data.labels = res.data.data
+                    }else{
+
+                    }
+                })
+            },
+
             personalInfo(customerId){
                 this.$data.infoEdit = this.$props.showInfoEdit;
                 let qs = require('querystring')
@@ -119,7 +138,6 @@
                     'customer_id':customerId
                 })).then((res) => {
                     if(res.data.errno === 0){
-                        console.log(res.data.data)
                         this.$data.userInfo = res.data.data
                     }else{
 
@@ -129,14 +147,12 @@
             editUserInfo(){
                 this.$data.editUserInfoData = this.$data.userInfo;
                 this.$data.infoEdit = true;
-                console.log(this.$props)
             },
             userInfoCancel(){
                 this.$data.infoEdit = false;
             },
             userInfoSubmit(formName){
                 this.$refs[formName].validate((valid) => {
-                    console.log(this.$data.editUserInfoData.customer_id)
                     if (valid) {
                             let qs = require('querystring')
                             remindApi.editPersonalInfo(qs.stringify({
@@ -148,10 +164,8 @@
                                 remark     :this.$data.editUserInfoData.ramark,
                             })).then((res) => {
                                 if(res.data.errno === 0){
-                                    console.log(res.data.data);
                                     this.userInfoCancel();
                                     this.personalInfo(this.$props.customerId)
-                                    
                                 }else{
 
                                 }
@@ -231,6 +245,27 @@
             bottom:15px;
         }
     }
-    
+    .labels{
+        font-size: 12px;
+        div{
+            color:#999;
+        }
+        span{
+            display:inline-block;
+            padding: 0 10px;
+            height: 32px;
+            line-height: 30px;
+            color: #999;
+            border-radius: 4px;
+            box-sizing: border-box;
+            border: 1px solid #999;
+            white-space: nowrap;
+            margin:0 5px 5px 0;
+        }
+        .border{
+            color:#409eff;
+            border: 1px solid #409eff;;
+        }
+    }
   }
 </style>

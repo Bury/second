@@ -42,6 +42,9 @@ global.GET_ORDER_LIST = `${SERVER_IP}${COMMON}order/list`
 global.DELE_OTDER = `${SERVER_IP}${COMMON}order/dele`
 
 /*标签管理*/
+// post /v1/tag/tree-form
+global.GET_TREE_FORM = `${SERVER_IP}${COMMON}tag/tree-form`
+
 //1、父级
 // post tag/list 标签列表
 global.GET_LABEL_LIST = `${SERVER_IP}${COMMON}tag/parent-list`

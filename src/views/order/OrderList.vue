@@ -11,6 +11,15 @@
 			  <el-form-item label="商品名：">
 			    <el-input v-model="requestParameters.goods_name"></el-input>
 			  </el-form-item>
+				<el-form-item label="成交总额：">
+					<el-col :span="11">
+						<el-input v-model="requestParameters.price_start"></el-input>
+					</el-col>
+					<el-col class="line" :span="2">-</el-col>
+					<el-col :span="11">
+						<el-input v-model="requestParameters.price_end"></el-input>
+					</el-col>
+			  </el-form-item>
 			  <el-form-item label="收银时间：">
 				<el-date-picker
 			      v-model="cashTimes"
