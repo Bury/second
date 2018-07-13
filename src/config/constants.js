@@ -32,14 +32,14 @@ global.GET_STORES = `${SERVER_IP}${COMMON}customer/store-list`
 global.IS_RECEPTION = `${SERVER_IP}${COMMON}customer/is-reception`
 
 /*来客列表*/
-// post customer/visitor-list 获取提醒列表
+// post customer/visitor-list 获取来客列表
 global.GET_GUEST_LIST = `${SERVER_IP}${COMMON}customer/visitor-list`
 
 /*订单管理*/
 // post order/list订单列表
 global.GET_ORDER_LIST = `${SERVER_IP}${COMMON}order/list`
 // post order/dele
-global.DELE_OTDER = `${SERVER_IP}${COMMON}order/dele`
+global.DELE_ORDER = `${SERVER_IP}${COMMON}order/dele`
 
 /*标签管理*/
 // post /v1/tag/tree-form

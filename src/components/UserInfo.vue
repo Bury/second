@@ -39,10 +39,10 @@
               <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
               <el-form-item label="类型：">{{editUserInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
               <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
-              <el-form-item label="标签：">{{editUserInfoData.tag}}
+              <el-form-item label="标签：">
                 <div v-for="label in labels" :key="label.id" class="labels">
                     <div>—— {{label.name}} ——</div>
-                    <span v-for="children in label.children" :key="children.id">{{children.id}}+{{children.name}}</span>
+                    <span v-for="children in label.children" :key="children.id">{{children.name}}</span>
                 </div>
               </el-form-item>
               <el-form-item label="备注：">

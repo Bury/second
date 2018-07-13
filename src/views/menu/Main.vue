@@ -23,9 +23,10 @@
                       您好，{{userName}}
                       <i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
-                    <el-dropdown-menu slot="dropdown" style="text-align:center;">
+                    <el-dropdown-menu slot="dropdown" split-button style="text-align:center;">
                         <el-dropdown-item divided>个人中心</el-dropdown-item>
-                        <el-dropdown-item divided command="logout" >退出</el-dropdown-item>
+                        <!--<el-dropdown-item divided @click.native="notice">通知</el-dropdown-item>-->
+                        <el-dropdown-item divided @click.native="logout" >退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
@@ -85,6 +86,9 @@ export default {
     handleClose(key, keyPath) {
         console.log(key, keyPath);
     },
+    logout() {
+        this.$router.replace({name:'Login'})
+    }
   }
 }
 </script>

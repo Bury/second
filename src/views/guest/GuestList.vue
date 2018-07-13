@@ -16,10 +16,13 @@
 			      end-placeholder="结束时间">
 			    </el-date-picker>
 			  </el-form-item>
-			   <el-form-item label="人脸ID：">
-			    <el-input v-model="requestParameters.id"></el-input>
+			  <el-form-item label="消费金额：">
+			    <el-input v-model="requestParameters.consume_money_start"></el-input>
 			  </el-form-item>
-			  <el-form-item label="客户等级：">
+			  <el-form-item label="至">
+			    <el-input v-model="requestParameters.consume_money_end"></el-input>
+			  </el-form-item>
+				<el-form-item label="客户等级：">
 			    <el-select v-model="requestParameters.level" placeholder="客户等级">
 			      <el-option label="全部" value="0"></el-option>
 			      <el-option label="新客匿名" value="1"></el-option>
@@ -27,12 +30,6 @@
 			      <el-option label="熟客匿名" value="3"></el-option>
 			      <el-option label="熟客VIP" value="4"></el-option>
 			    </el-select>
-			  </el-form-item>
-			  <el-form-item label="消费金额：">
-			    <el-input v-model="requestParameters.consume_money_start"></el-input>
-			  </el-form-item>
-			  <el-form-item label="至">
-			    <el-input v-model="requestParameters.consume_money_end"></el-input>
 			  </el-form-item>
 			  <el-form-item label="年龄：">
 			    <el-select v-model="requestParameters.age" placeholder="年龄">
@@ -59,7 +56,7 @@
 		</div>
 		<!-- 列表 -->
 		<el-table :data="tableData" border height="380" style="margin:0 auto;width: 1551px;text-align:center;">
-	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
+	    	<el-table-column fixed type="index" label="序号" width="80"></el-table-column>
 		    <el-table-column label="人脸" width="60">
 		    	<template slot-scope="scope">
 		           <img :src="scope.row.avatar" style="display:block;margin:0 auto;width:100%;">

@@ -2,14 +2,18 @@
 	<div class="guest-list-page">
 		<div class="top-box">
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-			  <el-form-item label="人脸ID：">
-			    <el-input v-model="requestParameters.id"></el-input>
-			  </el-form-item>
 			  <el-form-item label="订单编号：">
 			    <el-input v-model="requestParameters.sn"></el-input>
 			  </el-form-item>
-			  <el-form-item label="商品名：">
-			    <el-input v-model="requestParameters.goods_name"></el-input>
+			  <el-form-item label="材质：">
+			    <el-select v-model="requestParameters.material" placeholder="请选择材质">
+						<el-option  v-for="material in materials" :key="material.id" :label="material.name" :value="material.id"></el-option>
+					</el-select>
+			  </el-form-item>
+				<el-form-item label="款式：">
+			    <el-select v-model="requestParameters.style" placeholder="请选择款式">
+						<el-option  v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
+					</el-select>
 			  </el-form-item>
 				<el-form-item label="成交总额：">
 					<el-col :span="11">
@@ -39,16 +43,24 @@
 			    </el-date-picker>
 			  </el-form-item>
 			  <el-form-item>
-			    <el-button type="primary" @click="onSubmit">查询</el-button>
+			    <el-button type="primary" @click="orderList">查询</el-button>
 			  </el-form-item>
 			</el-form>
 		</div>
 		<!-- 列表 -->
 		<el-table :data="tableData" border style="width: 2298px;text-align:center;">
-	    	<el-table-column fixed prop="id" label="人脸ID" width="75"></el-table-column>
 		    <el-table-column prop="sn" label="订单编号" width="160"></el-table-column>
-		    <el-table-column prop="goods_names" label="商品名" width="160"></el-table-column>
-		    <el-table-column prop="price" label="成交总额" width="120"></el-table-column>
+		    <el-table-column label="材质" width="160">
+					<template slot-scope="scope">
+					<span v-for="good in scope.row.orderGoods" class="margin">{{good.material_name}}</span> 
+		    	</template>
+				</el-table-column>
+				<el-table-column prop="goods_names" label="款式" width="160">
+				<template slot-scope="scope">
+					<span v-for="good in scope.row.orderGoods" class="margin">{{good.style_name}}</span> 
+		    	</template>
+				</el-table-column>
+		    <el-table-column prop="price" label="成交金额" width="120"></el-table-column>
 		    <el-table-column label="收银时间" width="160">
 		    	<template slot-scope="scope">
 		    		{{scope.row.cash_t | date(4)}}
@@ -59,7 +71,8 @@
 		           <img :src="scope.row.traffic. avatar" style="display:block;margin:0 auto;width:100%;">
 		        </template>
 		    </el-table-column>
-		    <el-table-column prop="customer_name" label="姓名" width="160"></el-table-column>
+				<el-table-column fixed prop="id" label="人脸ID" width="75"></el-table-column>
+		    <el-table-column prop="customer_name" label="客户姓名" width="160"></el-table-column>
 		    <el-table-column label="客户等级" width="160">
 		    	<template slot-scope="scope">
 		    		<span v-if="scope.row.traffic.is_new == 1 && scope.row.traffic.vip_level == 0">新客匿名</span>
@@ -98,108 +111,125 @@
 </template>
 <script>
 	import OrderApi from '../../api/order'
-    export default {
-        name:'guest-list',
-        components: {
-		   
+	import remindApi from '../../api/remind'
+	import * as utils from '../../utils/index'
+  export default {
+		name:'guest-list',
+		components: {
 		},
-        data(){
-            return{
-		        tableData: [],
-		        pagination:{
-		        	currentPage:1,
-		        	totalCount:0,
-		        },
-		        cashTimes:['',''],
-		        createdTimes:['',''],
-		        requestParameters: {
-	                page: 1,
-	                page_size:10,
-	                sn:'',
-	                id:'',
-	                goods_name:'',
-	                price_start:'',
-	                price_end:'',
-	                cash_t_start:'',
-	                cash_t_end:'',
-	                created_at_start:'',
-	                created_at_end:''
-	            },
-            }
-        },
-        created: function () {
-		    this.orderList();
+		data(){
+			return{
+				tableData: [],
+				materials:[],
+				styles:[],
+				pagination:{
+					currentPage:1,
+					totalCount:0,
+				},
+				cashTimes:['',''],
+				createdTimes:['',''],
+				requestParameters: {
+						page: 1,
+						page_size:10,
+						sn:'',
+						goods_name:'',
+						price_start:'',
+						price_end:'',
+						cash_t_start:'',
+						cash_t_end:'',
+						created_at_start:'',
+						created_at_end:'',
+						material: '',
+						style: ''
+					},
+				}
 		},
-        methods: {
-        	//列表
-        	orderList(){
-        		this.$data.requestParameters.cash_t_start = this.$data.cashTimes[0];
-        		this.$data.requestParameters.cash_t_end = this.$data.cashTimes[1];
-        		this.$data.requestParameters.created_at_start = this.$data.createdTimes[0];
-        		this.$data.requestParameters.created_at_end = this.$data.createdTimes[1];
-
-        		let qs = require('querystring'); 
-        		OrderApi.orderList(qs.stringify(this.$data.requestParameters)).then((res) => {
-        			if(res.data.errno === 0){
-        				console.log(res.data.data.list)
-        				this.$data.tableData = res.data.data.list;
-        				this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
-		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-        			}else{
-
-        			}
-			        
-			       
-			    })
-        	},
-
-        	handleCurrentChange(currentPage) {
-	            console.log(currentPage)
-	            this.$data.requestParameters.page = currentPage;
-	            this.orderList();
-	        },
-        	onSubmit() {
-		        this.orderList();
-		    },
-		    fnRemove(row){
-				this.$confirm('确认删除该订单：'+row.sn+' ？', '删除提示', {
-		          confirmButtonText: '确定',
-		          cancelButtonText: '取消',
-		          type: 'warning'
-		        }).then(() => {
-		        	let list = {
-						'id': row.id
+		created: function () {
+		 this.orderList();
+		 this.getAll()
+		},
+    methods: {
+			getAll(){
+					let list = {
+							'all': '1',
+							'customer_id': ''
 					}
 					let qs = require('querystring')
-	        		orderApi.deleOrder(qs.stringify(list)).then((res) => {
-	        			console.log(res)
-	        			if(res.data.errno === 0){
-							console.log(res)
-							this.$message({
+					remindApi.getAll(qs.stringify(list)).then((res) => {
+							if(res.data.errno === 0){
+									let labels = res.data.data
+									console.log(labels)
+									for (let i = 0; i < labels.length; i++) {
+										if(labels[i].name === '材质'){
+											this.materials = labels[i].children
+										} else if(labels[i].name === '款式'){
+											this.styles = labels[i].children
+										} else {
+											return false
+										}
+									}
+							}else{
+
+							}
+					})
+			},
+			//列表
+			orderList(){
+				this.$data.requestParameters.cash_t_start = utils.getDateTime(this.$data.cashTimes[0]);
+				this.$data.requestParameters.cash_t_end = utils.getDateTime(this.$data.cashTimes[1]);
+				this.$data.requestParameters.created_at_start = utils.getDateTime(this.$data.createdTimes[0]);
+				this.$data.requestParameters.created_at_end = utils.getDateTime(this.$data.createdTimes[1]);
+				console.log(this.$data.createdTimes[0])
+				let qs = require('querystring'); 
+				OrderApi.orderList(qs.stringify(this.$data.requestParameters)).then((res) => {
+					if(res.data.errno === 0){
+						this.$data.tableData = res.data.data.list;
+						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+						this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
+					}else{
+
+					}
+				})
+      },
+			handleCurrentChange(currentPage) {
+				this.$data.requestParameters.page = currentPage;
+				this.orderList();
+			},
+			fnRemove(row) {
+				this.$confirm('确认删除该订单：'+row.sn+' ？', '删除提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+					}).then(() => {
+							let list = {
+						   'id': row.id
+				    	}
+					    let qs = require('querystring');
+							OrderApi.deleOrder(qs.stringify(list)).then((res) => {
+								if(res.data.errno === 0){
+										this.$message({
 					            type: 'success',
 					            message: '删除成功!'
 					          });
-							this.storeList();
+										this.orderList();
 	        			}else{
-							this.$message.error(res.data.msg);
+										this.$message.error(res.data.msg);
 	        			}
-	        			
-	        		})
-		            
-		        }).catch(() => {
-		          // this.$message({
-		          //   type: 'info',
-		          //   message: '已取消删除'
-		          // });          
-		        });
-			},
-
-		    
-	    },
+						 })
+					}).catch(action => {})
+			  }
+	    }
     }
 </script>
 <style lang="scss" scoped>
 	.el-table thead{
 		color:#333; 
+	}
+	.margin{
+		display:inline-block;
+		margin:0 5px;
+	}
+	.line{
+		text-align:center;
 	}
 </style>

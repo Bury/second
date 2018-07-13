@@ -2,7 +2,7 @@
 	<div class="remind-list-page">
 		<div class="top-box">
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-			  <el-form-item label="门店选择：" v-if="allStores.length > 0">
+			  <el-form-item label="门店选择：" v-if="allStores">
 			    <el-select v-model="requestParameters.store_id" placeholder="门店选择">
 			      <el-option v-for="(item, idx) in allStores" :key="idx" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
 			    </el-select>
@@ -10,26 +10,26 @@
 			  <el-form-item label="进店时间：">
 				<el-date-picker
 			      v-model="value4"
-			      type="datetimerange"
+			      type="daterange"
 			      range-separator="至"
 			      start-placeholder="开始时间"
 			      end-placeholder="结束时间">
 			    </el-date-picker>
 			  </el-form-item>
-			   <el-form-item label="人脸ID：">
+			   <!--<el-form-item label="人脸ID：">
 			    <el-input v-model="requestParameters.id"></el-input>
-			  </el-form-item>
-			  <el-form-item label="客户等级：" v-if="allLevels.length > 0">
-			     <el-select v-model="requestParameters.level" placeholder="客户等级">
-			      <el-option label="全部" value="0" v-if="allLevels.length > 0"></el-option>
-			      <el-option v-for="(item, idx) in allLevels" :key="idx" :label="allLevels[idx].name" :value="allLevels[idx].level"></el-option>
-			    </el-select>
-			  </el-form-item>
+			  </el-form-item>-->
 			  <el-form-item label="消费金额：">
 			    <el-input v-model="requestParameters.consume_money_start"></el-input>
 			  </el-form-item>
 			  <el-form-item label="至">
 			    <el-input v-model="requestParameters.consume_money_end"></el-input>
+			  </el-form-item>
+			  <el-form-item label="客户等级：" v-if="allLevels">
+			     <el-select v-model="requestParameters.level" placeholder="客户等级">
+			      <el-option label="全部" value="0" v-if="allLevels"></el-option>
+			      <el-option v-for="(item, idx) in allLevels" :key="idx" :label="allLevels[idx].name" :value="allLevels[idx].level"></el-option>
+			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="年龄：">
 			    <el-select v-model="requestParameters.age" placeholder="年龄">
@@ -56,7 +56,7 @@
 		</div>
 		<!-- 列表 -->
 		<el-table :data="tableData" border height="380" style="margin:0 auto;width: 1551px;text-align:center;">
-	    	<el-table-column fixed prop="id" label="人脸ID" width="80"></el-table-column>
+	    	<el-table-column fixed type="index" label="序号" width="80"></el-table-column>
 		    <el-table-column label="人脸" width="60">
 		    	<template slot-scope="scope">
 		           <img :src="scope.row.avatar" style="display:block;margin:0 auto;width:100%;">
@@ -96,7 +96,7 @@
 	    </el-table>
 
 		<!-- 分页 -->
-		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
+		<div v-if="tableData" style="margin:0 auto;max-width:1551px;">
 			<el-pagination 
 				background
 	            class="pagination" 
@@ -153,7 +153,6 @@
 		        requestParameters: {
 	                page: 1,
 	                page_size:10,
-	                id:'',
 	                store_id:'',
 	                store_time_start:'',
 	                store_time_end:'',
@@ -182,7 +181,6 @@
 			    let qs = require('querystring')
         		remindApi.remindList(qs.stringify(this.$data.requestParameters)).then((res) => {
         			if(res.data.errno === 0){
-						console.log(res) 
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
 		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
@@ -198,9 +196,7 @@
         	getLevels(){
 				remindApi.getLevels().then((res) => {
         			if(res.data.errno === 0){
-        				console.log(res)
 						this.$data.allLevels = res.data.data;
-
         			}else{
 
         			}
@@ -212,7 +208,6 @@
         	getStores(){
         		remindApi.getStores().then((res) => {
         			if(res.data.errno === 0){
-						console.log(res)
 						this.$data.allStores = res.data.data;
         			}else{
 
@@ -229,7 +224,6 @@
 		        this.remindList();
 		    },
 		    showDialog(row) {
-		        console.log(row);
 		        this.$data.showInfoEdit = false;
 		        this.$data.currentCustomerId = row.customer_id;
 		        this.$data.activeName = 'first';

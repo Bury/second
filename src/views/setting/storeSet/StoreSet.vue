@@ -3,16 +3,17 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdd()" >新增</el-button>
 		</div>
-		<el-table :data="tableData" border height="448" style="width:701px;text-align:center;">
-	    	<el-table-column prop="name" label="门店名" width="220"></el-table-column>
-	    	<el-table-column prop="person_in_charge" label="门店负责人" width="140"></el-table-column>
+		<el-table :data="tableData" border height="448" style="width:821px;text-align:center;">
+	    	<el-table-column prop="name" label="账号名" width="220"></el-table-column>
+	    	<el-table-column prop="person_in_charge" label="姓名" width="140"></el-table-column>
 	    	<el-table-column prop="phone" label="联系方式" width="120"></el-table-column>
+			<el-table-column prop="phone" label="创建时间" width="120"></el-table-column>
 		    <el-table-column label="操作" width="220">
 			    <template slot-scope="scope">
-			    	<el-button type="primary" plain icon="el-icon-more" circle size="small"
-			    		@click="fnGoPage(scope.row)"></el-button>
 			    	<el-button type="warning" plain icon="el-icon-edit" circle size="small"
 			    		@click="fnEdit(scope.row)"></el-button>
+					<el-button type="primary" plain icon="el-icon-view" circle size="small"
+			    		@click="editPass(scope.row)"></el-button>
 			    	<el-button type="danger" plain icon="el-icon-delete" circle size="small"
 			    		@click="fnRemove(scope.row)"></el-button>
 			    </template>
@@ -35,19 +36,40 @@
 	    <!-- 添加、修改 -->
 	    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
 		  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-			  <el-form-item label="门店名称：" prop="name">
+			  <el-form-item label="账号名称：" prop="name">
 			    <el-input v-model="ruleForm.name"></el-input>
 			  </el-form-item>
-			  <el-form-item label="负责人：" prop="person_in_charge">
+			  <el-form-item label="姓名：" prop="person_in_charge">
 			    <el-input v-model="ruleForm.person_in_charge"></el-input>
 			  </el-form-item>
 			  <el-form-item label="联系方式：" prop="phone">
+			    <el-input v-model="ruleForm.phone"></el-input>
+			  </el-form-item>
+			  <el-form-item label="角色：" prop="phone">
+			    <el-input v-model="ruleForm.phone"></el-input>
+			  </el-form-item>
+			  <el-form-item label="头像：" prop="phone">
 			    <el-input v-model="ruleForm.phone"></el-input>
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
 		    <el-button @click="cancel">取 消</el-button>
 		    <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
+		  </div>
+		</el-dialog>
+		 <!-- 修改密码 -->
+		 <el-dialog title="修改密码" :visible.sync="paddwordFormVisible">
+		  <el-form :model="passWord" ref="passWord" label-width="100px" class="demo-ruleForm">
+			  <el-form-item label="新密码">
+			    <el-input v-model="passWord.password"></el-input>
+			  </el-form-item>
+			  <el-form-item label="确认新密码">
+			    <el-input v-model="passWord.repassword"></el-input>
+			  </el-form-item>
+		  </el-form>
+		  <div slot="footer" class="dialog-footer">
+		    <el-button @click="paddwordFormVisible = false">取 消</el-button>
+		    <el-button type="primary" @click="paddwordFormVisible = false">确 定</el-button>
 		  </div>
 		</el-dialog>
 	</div>
@@ -65,10 +87,16 @@
 		        },
 		        dialogTitle:"",
 				dialogFormVisible: false,
+				paddwordFormVisible: false,
+				passWord: {
+					password: '',
+					repassword: ''
+				},
 		        ruleForm: {
-		          	name: '',
+		          	username: '',
 		          	person_in_charge:'',
-		          	phone:''
+		          	phone:'',
+					avatar: ''
 		        },
 		        currentId:'',
 		        rules: {
@@ -159,14 +187,14 @@
 			},
 			fnEdit(row){
 				console.log(row);
-				this.$data.dialogTitle = '门店编辑'; 
+				this.$data.dialogTitle = '账号编辑'; 
 				this.$data.currentId = row.id;
 				this.$data.ruleForm = row;
 				this.$data.dialogFormVisible = true;
 				
 			},
 			fnAdd(){
-				this.$data.dialogTitle = '门店添加';
+				this.$data.dialogTitle = '账号添加';
 				this.$data.currentId = "";
 				this.$data.ruleForm = {
 		          	name: '',
@@ -242,13 +270,8 @@
 			        } 
 		        });
 			},
-			fnGoPage(row){
-				this.$router.push({
-					name: 'AccountSet',
-					query: {
-	                    StoreId: row.id
-	                }
-				});
+			editPass(row){
+				this.paddwordFormVisible = true
 			}
 		}
 	}

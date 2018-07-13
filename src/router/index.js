@@ -40,8 +40,8 @@ import RemindSet from '../views/setting/RemindSet'
 import OpenTimeSet from '../views/setting/OpenTimeSet'
 //个人中心
 import Personal from '../views/setting/Personal'
-
-
+// 通知
+import Notice from '../views/notice/Notice'
 Vue.use(Router)
 
 const router = new Router({
@@ -66,6 +66,7 @@ const router = new Router({
         {path: 'RemindSet',name: 'RemindSet',component: RemindSet},
         {path: 'OpenTimeSet',name: 'OpenTimeSet',component: OpenTimeSet},
         {path: 'Personal',name: 'Personal',component: Personal},
+        {path: 'Notice',name: 'Notice',component: Notice}
       ]
   }]
 })

@@ -1,27 +1,17 @@
 <template>
 	<div class="device-list-page">
-		<div class="top-box">
-			<div class="btn-wrap">
-				<el-button :type="isShow==true ? 'primary' : ''" size="small" @click="isShow=true">按设备</el-button>
-				<el-button :type="isShow==false ? 'primary' : ''" size="small" @click="isShow=false">按门店</el-button>
-			</div>
-		</div>
-		<device v-if="isShow"></device>
-		<store v-if="!isShow"></store>
+		<device></device>
 	</div>
 </template>
 <script>
 	import Device from './Device'
-	import Store from './Store'
 	export default{
 		name:"device-list",
 		components: {
-		    Device,
-		    Store
+		    Device
 		},
 		data(){
 			return{
-				isShow:true
 			}
 		},
 		
