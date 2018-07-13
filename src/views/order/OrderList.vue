@@ -47,6 +47,10 @@
 			  </el-form-item>
 			</el-form>
 		</div>
+		<div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
+			<el-button type="primary">实时录单</el-button>
+			<el-button type="primary" @click="FormVisible = true">创建订单</el-button>
+		</div>
 		<!-- 列表 -->
 		<el-table :data="tableData" border style="width: 2298px;text-align:center;">
 		    <el-table-column prop="sn" label="订单编号" width="160"></el-table-column>
@@ -94,6 +98,21 @@
 		    </el-table-column>
 	    </el-table>
 
+			<!--新建/编辑-->
+			<el-dialog title="新增订单" :visible.sync="FormVisible">
+				<el-form  ref="passWord" label-width="100px" class="demo-ruleForm">
+					<el-form-item label="收银时间：">
+						<el-input></el-input>
+					</el-form-item>
+					<el-form-item label="人脸ID：">
+						<el-input></el-input>
+					</el-form-item>
+				</el-form>
+				<div slot="footer" class="dialog-footer">
+					<el-button @click="FormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="FormVisible = false">确 定</el-button>
+				</div>
+			</el-dialog>
 	    <!-- 分页 -->
 		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
 			<el-pagination 
@@ -141,8 +160,9 @@
 						created_at_end:'',
 						material: '',
 						style: ''
-					},
-				}
+				},
+				FormVisible: false
+			}
 		},
 		created: function () {
 		 this.orderList();
@@ -194,6 +214,10 @@
 			handleCurrentChange(currentPage) {
 				this.$data.requestParameters.page = currentPage;
 				this.orderList();
+			},
+			// 编辑
+			fnEdit (row) {
+				console.log(row)
 			},
 			fnRemove(row) {
 				this.$confirm('确认删除该订单：'+row.sn+' ？', '删除提示', {
