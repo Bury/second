@@ -48,7 +48,7 @@
 			</el-form>
 		</div>
 		<div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
-			<el-button type="primary">实时录单</el-button>
+			<el-button type="primary" @click="realTime">实时录单</el-button>
 			<el-button type="primary" @click="FormVisible = true">创建订单</el-button>
 		</div>
 		<!-- 列表 -->
@@ -56,12 +56,12 @@
 		    <el-table-column prop="sn" label="订单编号" width="160"></el-table-column>
 		    <el-table-column label="材质" width="160">
 					<template slot-scope="scope">
-					<span v-for="good in scope.row.orderGoods" class="margin">{{good.material_name}}</span> 
+					<span v-for="good in scope.row.orderGoods" class="margin">{{good.material_name}}</span>
 		    	</template>
 				</el-table-column>
 				<el-table-column prop="goods_names" label="款式" width="160">
 				<template slot-scope="scope">
-					<span v-for="good in scope.row.orderGoods" class="margin">{{good.style_name}}</span> 
+					<span v-for="good in scope.row.orderGoods" class="margin">{{good.style_name}}</span>
 		    	</template>
 				</el-table-column>
 		    <el-table-column prop="price" label="成交金额" width="120"></el-table-column>
@@ -115,13 +115,13 @@
 			</el-dialog>
 	    <!-- 分页 -->
 		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
-			<el-pagination 
+			<el-pagination
 				background
-	            class="pagination" 
-	            layout="prev, pager, next" 
-	            small 
-	            @current-change="handleCurrentChange" 
-	            :current-page="pagination.currentPage" 
+	            class="pagination"
+	            layout="prev, pager, next"
+	            small
+	            @current-change="handleCurrentChange"
+	            :current-page="pagination.currentPage"
 	            :page-size="requestParameters.page_size"
 	            :total="pagination.totalCount">
 	        </el-pagination>
@@ -200,7 +200,7 @@
 				this.$data.requestParameters.created_at_start = utils.getDateTime(this.$data.createdTimes[0]);
 				this.$data.requestParameters.created_at_end = utils.getDateTime(this.$data.createdTimes[1]);
 				console.log(this.$data.createdTimes[0])
-				let qs = require('querystring'); 
+				let qs = require('querystring');
 				OrderApi.orderList(qs.stringify(this.$data.requestParameters)).then((res) => {
 					if(res.data.errno === 0){
 						this.$data.tableData = res.data.data.list;
@@ -241,13 +241,18 @@
 	        			}
 						 })
 					}).catch(action => {})
-			  }
+			  },
+        //实时录单
+      realTime(){
+        console.log(0);
+        this.$router.push({path:'/realFound'})
+      }
 	    }
     }
 </script>
 <style lang="scss" scoped>
 	.el-table thead{
-		color:#333; 
+		color:#333;
 	}
 	.margin{
 		display:inline-block;

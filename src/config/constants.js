@@ -41,6 +41,17 @@ global.GET_ORDER_LIST = `${SERVER_IP}${COMMON}order/list`
 // post order/dele
 global.DELE_ORDER = `${SERVER_IP}${COMMON}order/dele`
 
+//订单管理/实时录单
+global.POST_ORDER_FACE = `${SERVER_IP}${COMMON}order/face-recognition`
+//订单管理/实时录单/查找手机号
+global.CHECK_USER_PHONE = `${SERVER_IP}${COMMON}order/search-phone`
+//订单管理/实时录单/查找手机号/点击获取验证码
+global.GET_SEND_MSG = `${SERVER_IP}${COMMON}order/send`
+//订单管理/实时录单/查找手机号/点击获取验证码/验证
+global.CHECK_MSG = `${SERVER_IP}${COMMON}order/check-sms`
+//订单管理/实时录单/查找手机号/点击获取验证码/验证/是否是本人
+global.IS_NO_ME = `${SERVER_IP}${COMMON}order/is-me`
+
 /*标签管理*/
 // post /v1/tag/tree-form
 global.GET_TREE_FORM = `${SERVER_IP}${COMMON}tag/tree-form`
@@ -68,7 +79,7 @@ global.DELE_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-dele`
 //设备管理
 // post device/list 按设备
 global.GET_DEVICE_LIST = `${SERVER_IP}${COMMON}device/list`
-// post device/version 
+// post device/version
 global.GET_ALL_VERSION = `${SERVER_IP}${COMMON}device/version`
 // post device/camera-depoly 按设备分配
 global.SET_DEPOLY = `${SERVER_IP}${COMMON}device/camera-depoly`
@@ -94,15 +105,15 @@ global.DELE_STORE = `${SERVER_IP}${COMMON}store/dele`
 //账号管理
 // post account/list 账号列表
 global.GET_ACCOUNT_LIST = `${SERVER_IP}${COMMON}account/list`
-// post account/adds 
+// post account/adds
 global.ADD_ACCOUNT = `${SERVER_IP}${COMMON}account/adds`
 // post account/view 详情
 global.DETAIL_ACCOUNT = `${SERVER_IP}${COMMON}account/view`
-// post account/edit 
+// post account/edit
 global.EDIT_ACCOUNT = `${SERVER_IP}${COMMON}account/edit`
-// post account/dele 
+// post account/dele
 global.DELE_ACCOUNT = `${SERVER_IP}${COMMON}account/dele`
-//post account/edit-password 
+//post account/edit-password
 global.CHANGEpWD_ACCOUNT = `${SERVER_IP}${COMMON}account/edit-password`
 
 
