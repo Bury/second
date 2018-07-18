@@ -413,20 +413,26 @@
           this.getShowVideo = true;
           this.dialogVisible = false;
         },
+        dataURLtoFile(dataurl, filename){
+          var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+              bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+          while(n--){
+              u8arr[n] = bstr.charCodeAt(n);
+          }
+          return new File([u8arr], filename, {type:mime});
+        },
       //  智能识别
         recognition(){
-          console.log(this.$data.takeImages);
           this.mask_b=true;
           this.mask_a=false;
           this.mask_c=false;
           this.ifIsOld=true;
           this.ifIsNew=false;
-        //  请求接口，上传文件（头像）,返回0-新客，1-熟客
-          let list = {
-            'file': this.$data.takeImages
-          };
-          let qs = require('querystring');
-          OrderApi.postFace(qs.stringify(list)).then((res) => {
+          //  请求接口，上传文件（头像）,返回0-新客，1-熟客
+          let file = this.dataURLtoFile(this.$data.takeImages,'testaaa.jpg');
+          let list = new FormData();
+          list.append('file', file);
+          OrderApi.postFace(list).then((res) => {
             console.log(res);
             // if(res.data.errno === 0){
             //

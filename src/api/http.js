@@ -4,7 +4,9 @@ import qs from 'qs'
 axios.interceptors.request.use(function (config) {
     let knock_knock = localStorage.getItem('knock_knock')
     if (knock_knock && knock_knock!==null && knock_knock!=='') {
-            if(config.method=='post'){
+            if(typeof config.data =='object'){
+                config.data.append('access_token',knock_knock);
+            }else if(config.method=='post'){
                 let data = qs.parse(config.data)
                 config.data = qs.stringify({
                     'access_token': knock_knock,

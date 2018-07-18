@@ -24,7 +24,10 @@ export default {
 	},
   postFace(list){
 	  return new Promise((resolve,reject) =>{
-	    axios.post(global.POST_ORDER_FACE,list).then((res) => {
+	    axios.post(global.POST_ORDER_FACE,list,{headers: {
+        'Content-Type': `multipart/form-data;`}}).then((res) => {
+        resolve(res)
+      }).then((res) => {
 	      resolve(res)
       }).catch((err) =>{
         reject(err)
