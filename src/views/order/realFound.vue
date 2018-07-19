@@ -52,39 +52,47 @@
           <div style="display: flex;flex-direction: column;align-items: center" v-show="userOld">
             <div class="showImg">
               <div style="display: flex;flex-direction: column;align-items: center">
-                <img src="http://dev-api.yy.ibetwo.com/upload/2018/07/14/1_1_2_1531568588_1793097984.jpg" alt="" style="width: 20rem;height: 20rem">
+                <img :src="NewRuleForm.images" alt="" style="width: 20rem;height: 20rem">
               </div>
             </div>
-            <el-form :model="ruleForm" :rules="rule" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form :model="NewRuleForm" :rules="rule" ref="NewRuleForm" label-width="100px" class="demo-ruleForm">
               <el-form-item label="姓名:" prop="name" style="width: 30rem">
-                <el-input v-model="ruleForm.name"></el-input>
+                <el-input v-model="NewRuleForm.name" ></el-input>
               </el-form-item>
-              <el-form-item label="手机号:" prop="phone" style="width: 30rem">
-                <el-p v-model="ruleForm.phone">18667034901</el-p>
+              <el-form-item label="手机号:" prop="phone" style="width: 30rem;">
+                <el-input v-model="NewRuleForm.phone" style="width: 15rem" :disabled="true"></el-input>
                 <el-button style="margin-left: 2rem" @click="userOldNoPhone" v-show="ifIsOld">纠错</el-button>
-                <el-p style="margin-left: 2rem;color: red" v-show="ifIsNew">此号码为新号码</el-p>
+                <p style="margin-left: 2rem;color: red" v-show="ifIsNew">此号码为新号码</p>
               </el-form-item>
               <el-form-item label="性别:" prop="sex" style="width: 30rem">
-                <el-p v-model="ruleForm.sex">男</el-p>
+                <el-input v-model="NewRuleForm.sex" :disabled="true"></el-input>
               </el-form-item>
               <el-form-item label="类型:" prop="type" style="width: 30rem">
-                <el-p v-model="ruleForm.type">已购买</el-p>
+                <el-input v-model="NewRuleForm.type" :disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item label="备注:" prop="type" style="width: 30rem">
+                <el-input
+                  type="textarea"
+                  autosize
+                  placeholder="请输入内容"
+                  v-model="NewRuleForm.textarea2">
+                </el-input>
               </el-form-item>
             </el-form>
             <el-row style="margin-top: 3rem">
-              <el-button>上一步</el-button>
+              <el-button @click="backA">上一步</el-button>
               <el-button @click="userOldIs" style="margin-left: 15rem">下一步</el-button>
             </el-row>
           </div>
           <!--有人脸，但是手机号错误-->
           <div v-show="userNew">
             <!--纠错-去数据库查找这个手机号-->
-            <el-form ref="form" :model="form" label-width="80px">
+            <el-form ref="form" :model="form"  :rules="rulesA" label-width="80px">
               <el-form-item style="width: 30rem" v-show="firstNewC">
-                <el-p style="color: red;font-size: 1.2rem">人脸识别该顾客为新顾客，请输入手机号！</el-p>
+                <p style="color: red;font-size: 1.2rem">人脸识别该顾客为新顾客，请输入手机号！</p>
               </el-form-item>
-              <el-form-item label="手机号:" style="width: 30rem;">
-                <el-input v-model="form.newPhone" style="width: 10rem"></el-input>
+              <el-form-item label="手机号:" style="width: 30rem;" prop="newPhone">
+                <el-input v-model="form.newPhone" style="width: 10rem" maxlength="11" @focus="needsC"></el-input>
                 <el-button plain style="float: right" @click="checkoutPhone">查找</el-button>
               </el-form-item>
               <!--数据库找到这个手机号，验证更改信息-->
@@ -128,7 +136,7 @@
               </el-form-item>
             </el-form>
             <el-row style="margin-top: 3rem">
-              <el-button>上一步</el-button>
+              <el-button >上一步</el-button>
               <el-button style="margin-left: 15rem" @click="isNoAndPass">不是本人</el-button>
               <el-button style="margin-left: 5rem" @click="isTrueAndPass">是本人</el-button>
             </el-row>
@@ -137,7 +145,7 @@
 
         </div>
         <!--订单录入-->
-        <div class="get_a" v-show="mask_c" >
+        <div class="get_a" v-show="mask_c" style="text-align: center">
           <div>
             <el-form :inline="true" :model="item"  size="mini" style="text-align: center">
               <div v-for='(item,index) in addProList' v-if="addProList">
@@ -175,19 +183,23 @@
             </div>
           </el-row>
           <!--长传小票-->
-          <el-upload
-            class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList2"
-            list-type="picture">
-            <el-button size="medium" class="getTop_image" type="primary"><i class="el-icon-plus"></i></el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-          </el-upload>
+          <el-row>
+            <el-upload v-model="item.file"
+                       action="http://dev-api.yy.ibetwo.com/v1/user/upload"
+                       list-type="picture-card"
+                       :data="upLoadData"
+                       :on-preview="handlePictureCardPreview"
+                       :on-remove="handleRemove"
+                       :onSuccess="uploadSuccess">
+              <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible">
+              <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+          </el-row>
           <el-row style="margin-top: 3rem">
             <el-button style="margin-left: 15rem;margin-right: 10rem;float: right" @click="allPostM">确认</el-button>
-            <el-button style=" float: right">上一步</el-button>
+            <el-button style=" float: right" @click="backB">上一步</el-button>
           </el-row>
         </div>
       </div>
@@ -203,13 +215,16 @@
       },
       data(){
         return {
+              upLoadData: {
+                access_token: 'X6dMRIwBZD8oUf_Qpr1JeBTIK37iQmzM',
+            },
           materials:[],
           styles:[],
           mask_a:true,
           getShowVideo:true,
           dialogVisible: false,
           mask_b:false,
-          userOld:true,
+          userOld:false,
           userNew:false,
           mask_c:false,
           msgGetNews:false,
@@ -226,6 +241,12 @@
           allMoneyList:[],
           allGoodLenght:'',
           allMoney:'',
+          newNewP:'',
+          newNewQ:'',
+          newNewR:'',
+          oldOT:'',
+          imageListF:[],
+          pushGoods:[],
           ruleForm: {
             name: '',
             phone:'',
@@ -233,10 +254,24 @@
             type:'',
             image:''
           },
+          NewRuleForm:{
+            images:'',
+            name:'',
+            phone:'',
+            sex:'',
+            type:'',
+            textarea2:'',
+          },
           rule:{
             name: [
               // { required: true, message: '请输入活动名称', trigger: 'blur' },
               // { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            ],
+          },
+          rulesA:{
+            newPhone: [
+              { required: true, message: '请输入手机号', trigger: 'blur' },
+              { min: 13, max: 13, message: '长度在13个字符', trigger: 'change' }
             ],
           },
           form:{
@@ -246,14 +281,16 @@
           item: {
             material: '',
             style: '',
-            money:''
+            money:'',
+            file:''
           },
           addProList:[{
             material: '',
             style: '',
             money:''
           }],
-          fileList2: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+          dialogImageUrl: '',
+          dialogVisible: false
         };
       },
       created:function () {
@@ -261,12 +298,13 @@
         // this.postFace();
 
         // this.view();
-        console.log(this.$data.takeImages);
+        console.log(this.$data.NewRuleForm.images);
       },
       mounted:function(){
         this.camera_process();
         // this.dialogVisible = false;
       },
+
       methods:{
         //  调用摄像头
         camera_process(){
@@ -338,20 +376,7 @@
           context.drawImage(video, 0, 0, 480, 320);
           // console.log(context.drawImage);
           image = canvas.toDataURL("image/jpeg");//base64
-          //base64  转 Bolb
-          // function dataURLtoBlob(dataurl) {
-          //   var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-          //     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-          //   while(n--){
-          //     u8arr[n] = bstr.charCodeAt(n);
-          //   }
-          //   return new Blob([u8arr], {type:mime});
-          // }
-          // let blob = dataURLtoBlob(image);
-          // console.log(blob);
-          // var fd = new FormData();
-          // fd.append("image", blob, "image.png");
-          // console.log(this.$data.takeImages);
+
           this.$data.takeImages = image;
           // console.log(this.$data.takeImages)
 
@@ -388,16 +413,16 @@
       //      确认人脸
         get_a:function (){
           console.log('确认人脸');
-          this.mask_a=true;
-          this.mask_b=false;
-          this.mask_c=false;
+          // this.mask_a=true;
+          // this.mask_b=false;
+          // this.mask_c=false;
         },
       //  确认信息
         get_b:function (){
           console.log('确认信息');
-          this.mask_b=true;
-          this.mask_a=false;
-          this.mask_c=false;
+          // this.mask_b=true;
+          // this.mask_a=false;
+          // this.mask_c=false;
         },
         //订单录入
         get_c:function (){
@@ -426,44 +451,97 @@
           this.mask_b=true;
           this.mask_a=false;
           this.mask_c=false;
-          this.ifIsOld=true;
-          this.ifIsNew=false;
+
           //  请求接口，上传文件（头像）,返回0-新客，1-熟客
           let file = this.dataURLtoFile(this.$data.takeImages,'testaaa.jpg');
           let list = new FormData();
           list.append('file', file);
           OrderApi.postFace(list).then((res) => {
             console.log(res);
-            // if(res.data.errno === 0){
-            //
-            // }else{
-            //   this.$message.error(res.data.msg);
-            // }
-          //  模拟判断
-            if(res.data.msg === '人脸不能为空'){
-            //  老用户
-              this.userNew= false;
-              this.userOld = true;
-              this.firstNewC = false;
+            // console.log(res.data.data.avatar)
+            if(res.data.msg === '服务器内部错误'){
+              this.$message({
+                message: '您获取的照片不合法',
+                type: 'warning'
+              });
+              this.mask_b=false;
+              this.mask_a=true;
+              this.mask_c=false;
             }else{
-              //  新用户
-              this.userNew = true;
-              this.userOld = false;
-              // this.firstNewC = true;
+              console.log('获取到照片了');
+              console.log(res.data.errno);
+              if(res.data.errno === 1){
+                this.$data.NewRuleForm.images = res.data.data.avatar;
+                // this.$data.NewRuleForm.phone = res.data.data.avatar;
+                if(res.data.data.gender === 1){
+                  this.$data.NewRuleForm.sex = '男'
+                }else{
+                  this.$data.NewRuleForm.sex = '女'
+                }
+                //  老用户
+                this.userNew= false;
+                this.userOld = true;
+                this.firstNewC = false;
+                this.ifIsOld=true;
+                this.ifIsNew=false;
+                //回显数据
+              }else if(res.data.errno === 0){
+                //  新用户
+                this.userNew = true;
+                this.userOld = false;
+                this.firstNewC =true;
+                this.$data.newNewP = res.data.data.avatar;
+                if(res.data.data.gender === 1){
+                  this.$data.newNewQ = '男'
+                }else{
+                  this.$data.newNewQ = '女'
+                }
+                if(res.data.data.is_new === 0){
+                  this.$data.newNewR = '未购买'
+                }else{
+                  this.$data.newNewR = '已购买'
+                }
+
+              }
             }
-          //  模拟判断 如果是 输入手机号 查询
+
           })
         },
       //  有人脸且手机号正确-走下一步
         userOldIs(){
-          this.mask_c=true;
-          this.mask_b=false;
-          this.mask_a=false;
+          console.log(this.$data.NewRuleForm.textarea2);
+          if(this.$data.NewRuleForm.textarea2 === ''){
+            this.$message({
+              message: '请填写备注信息',
+              type: 'warning'
+            });
+          }else{
+            this.mask_c=true;
+            this.mask_b=false;
+            this.mask_a=false;
+            //不管有没有为新手机号，最终走向消费，传值一次,更一次手机号
+            let list = {
+              'phone': this.$data.form.newPhone,
+              'customer_id':this.$data.faceId,
+            }
+            let qs = require('querystring');
+            OrderApi.addNPhone(qs.stringify(list)).then((res) => {
+              console.log(res);
+
+            });
+          }
+
         },
       //  有人脸但手机号错误-走纠正-验证手机号
         userOldNoPhone(){
           this.userOld = false;
           this.userNew = true;
+        //  清空以前的纠错数据
+          this.$data.form.newPhone = '';
+          this.$data.form.newTakeNum = '';
+          this.phoneIsMySqlA = false;
+          this.phoneIsMySql = false;
+          this.phoneNoMySql = false;
         },
       //  输入手机号点击查找，是否存在数据库
         checkoutPhone(){
@@ -477,17 +555,24 @@
             if(res.data.data.is_not === 0){
             //  该用户已注册
               this.phoneIsMySqlA = true;
-              this.firstNewC =false;
+              // this.firstNewC =false;
               // this.phoneIsMySql = true;
             }else if(res.data.data.is_not === 1){
               //  该用户未注册
               this.phoneNoMySql = true;
 
             }
-            //  模拟判断 如果是 输入手机号 查询
           });
 
         //
+        },
+        //如果查询手机号，突然又修改重新查询，则获取焦点的时候，最新状态
+        needsC(){
+          this.$data.form.newPhone = '';
+          this.$data.form.newTakeNum = '';
+          this.phoneIsMySqlA = false;
+          this.phoneIsMySql = false;
+          this.phoneNoMySql = false;
         },
         //点击获取验证码
         GetSendM(){
@@ -513,7 +598,7 @@
             console.log(res.data.data.avatar);
             this.$data.ruleForm.image = res.data.data.avatar;
             this.$data.ruleForm.name = res.data.data.name;
-            this.$data.ruleForm.phone = res.data.data.phone;
+            this.$data.ruleForm.phone = this.$data.form.newPhone;
             if(res.data.data.gender === 1){
               this.$data.ruleForm.sex = '男'
             }else{
@@ -535,7 +620,7 @@
           console.log(this.$data.faceId);
           let list = {
             'phone': this.$data.form.newPhone,
-            'customer_id':167,
+            'customer_id':this.$data.faceId,
             'is_me':1
           }
           let qs = require('querystring');
@@ -551,23 +636,50 @@
         isNoAndPass(){
           let list = {
             'phone': this.$data.form.newPhone,
-            'customer_id':167,
+            'customer_id':this.$data.faceId,
             'is_me':0
           }
           let qs = require('querystring');
           OrderApi.postMe(qs.stringify(list)).then((res) => {
             console.log(res);
+            console.log(0)
             this.userOld = true;
+            this.ifIsOld = true;
             this.checkoutCallBack = false;
+            //人脸为拍摄人脸
+            console.log(this.$data.newNewP);
+            console.log(this.$data.NewRuleForm.images);
+            this.$data.NewRuleForm.images = this.$data.newNewP;
+            this.$data.NewRuleForm.phone = this.$data.form.newPhone;
+            this.$data.NewRuleForm.sex = this.$data.newNewQ;
+            this.$data.NewRuleForm.type =  this.$data.newNewR
           });
 
         },
       //  查询到的手机号没有在数据库，点击返回信息
         GetNOMysql(){
           this.userOld = true;
-          this.ifIsOld=false;
-          this.ifIsNew=true;
+          this.ifIsOld=true;
+          this.ifIsNew=false;
           this.userNew = false;
+          //人脸为拍摄人脸
+          this.$data.NewRuleForm.images = this.$data.newNewP;
+          this.$data.NewRuleForm.phone = this.$data.form.newPhone;
+          this.$data.NewRuleForm.sex = this.$data.newNewQ;
+          this.$data.NewRuleForm.type =  this.$data.newNewR
+        },
+        //第二步返回第一步
+        backA(){
+          console.log(0)
+          this.mask_a=true;
+          this.mask_b=false;
+          this.mask_c=false;
+        },
+        //第三步返回第二步
+        backB(){
+          this.mask_a=false;
+          this.mask_b=true;
+          this.mask_c=false;
         },
         addAGood(){
            console.log('新增一条');
@@ -611,28 +723,49 @@
         handleRemove(file, fileList) {
           console.log(file, fileList);
         },
-        handlePreview(file) {
-          console.log(file);
+        handlePictureCardPreview(file) {
+          this.dialogImageUrl = file.url;
+          this.dialogVisible = true;
+          console.log(file)
+          console.log(this.dialogImageUrl)
+        },
+        // 上传成功后的回调
+        uploadSuccess (response, file, fileList) {
+          console.log('上传文件', response);
+          console.log(response.data.path)
+          this.$data.imageListF.push(response.data.path);
+          console.log(this.$data.imageListF);
         },
         //最后的计算
         allPostM(){
-          // console.log(this.item.money);
-          // console.log(this.$data.item.money);
-          console.log(this.$data.addProList.length);
-          let m = 0;
+          console.log(this.$data.addProList);
+          let arrAs= {};
           for(let i = 0; i< this.$data.addProList.length; i++){
-            console.log(this.$data.addProList[i].money);
-            m += parseInt(this.$data.addProList[i].money);
-            // this.$data.allMoneyList.push(this.$data.addProList[i].money)
-            console.log(m);
+            arrAs = {
+              'material':this.$data.addProList[i].material,
+              'style':this.$data.addProList[i].style,
+              'price':this.$data.addProList[i].money
+            };
+            this.$data.pushGoods.push(arrAs);
           }
-          console.log(this.$data.allMoneyList);
-          // let m = 0;
-          // for(let j = 0;j< this.$data.allMoneyList.length; j++){
-          //   m += this.$data.allMoneyList[j];
-          //   console.log(m)
-          // }
-
+          console.log(this.$data.pushGoods)
+          let listArry =  this.$data.imageListF.join(',');
+          console.log(listArry);
+          console.log(this.$data.dialogImageUrl)
+          let list = {
+            'goods_info':this.$data.pushGoods,
+            'remark':this.$data.NewRuleForm.textarea2 ,
+            'avatar':listArry,
+            'customer_id':this.$data.faceId,
+          }
+          let qs = require('querystring');
+          OrderApi.addGoods(qs.stringify(list)).then((res) => {
+            console.log(res);
+            this.$message({
+              message: res.data.msg,
+              type: 'warning'
+            });
+          });
 
         }
 

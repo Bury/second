@@ -51,6 +51,12 @@ global.GET_SEND_MSG = `${SERVER_IP}${COMMON}order/send`
 global.CHECK_MSG = `${SERVER_IP}${COMMON}order/check-sms`
 //订单管理/实时录单/查找手机号/点击获取验证码/验证/是否是本人
 global.IS_NO_ME = `${SERVER_IP}${COMMON}order/is-me`
+//订单管理/实时录单/查找手机号/点击获取验证码/验证/是否是本人/但凡是新手机号都走添加
+global.ADD_NEW_PHONE = `${SERVER_IP}${COMMON}order/add-phone`
+//新增消费
+global.ADD_GOODS = `${SERVER_IP}${COMMON}order/adds`
+//图片上传
+global.IMAGS_PUSH = `${SERVER_IP}${COMMON}/user/upload`
 
 /*标签管理*/
 // post /v1/tag/tree-form
