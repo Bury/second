@@ -182,7 +182,7 @@ export default {
         let qs = require('querystring');
         statisticsApi.getFeature(qs.stringify(list)).then((res) => {
             if(res.data.errno === 0){
-                console.log(res)
+                //console.log(res)
                 let thisData = res.data.data;
                 if (thisData) {
                     if(types == 'face'){

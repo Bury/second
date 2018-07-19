@@ -89,16 +89,16 @@
 				    <el-option v-for="(item,idx) in allRole" :key="idx" :label="allRole[idx].name" :value="allRole[idx].id"></el-option>
 				</el-select>
 			  </el-form-item>
-			  <el-form-item label="头像：" prop="avatar">
+			  <!-- <el-form-item label="头像：" prop="avatar">
 			    <el-input v-model="addFormData.avatar" style="display:none;"></el-input>
 			    <img v-if="addFormData.avatar !== '' " :src="addFormData.avatar" style="display:inline-block;width:60px;height:60px;border:1px solid #ccc;">
 			    <el-button type="primary" size="small" plain @click="avatarFormVisible=true">选择头像</el-button>
-			  </el-form-item>
+			  </el-form-item> -->
 			  <el-form-item label="初始密码：" prop="password">
-			    <el-input v-model="addFormData.password"></el-input>
+			    <el-input v-model="addFormData.password" type='password'></el-input>
 			  </el-form-item>
 			  <el-form-item label="确认密码：" prop="repassword">
-			    <el-input v-model="addFormData.repassword"></el-input>
+			    <el-input v-model="addFormData.repassword" type='password'></el-input>
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer" v-if="!avatarFormVisible">
@@ -121,6 +121,11 @@
 		data(){
 			return{
 				tableData: [],
+				newStoreId:'',
+				newCustomerId:{
+					customer_id:'',
+					traffic_id:'',
+				},
 				pagination:{
 		        	currentPage:1,
 		        	totalCount:0,
@@ -187,7 +192,6 @@
 	            	password:'',
 	            	repassword:'',
 	            	customer_id:''
-
 	            },
 	            addRules:{
 	            	store_id:[
@@ -205,9 +209,9 @@
 	            	role_id:[
 	            		{ required: true, message: '请选择角色', trigger: 'blur' },
 	            	],
-	            	avatar:[
-	            		{ required: true, message: '请选择头像', trigger: 'blur' }
-	            	],
+	            	// avatar:[
+	            	// 	{ required: true, message: '请选择头像', trigger: 'blur' }
+	            	// ],
 	            	password:[
 	            		{ required: true, message: '请输入新密码：', trigger: 'blur' },
             			{ min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
@@ -230,16 +234,38 @@
 			}
 		},
 		created:function(){
-			this.accountList();
+			this.getUserInfoR();
+			this.getCustomerID();
 		},
 		methods: {
+			// 获取用户信息
+			getUserInfoR(){
+				let qs = require('querystring');
+	    		settingApi.getUserInfo(qs.stringify(this.$data.requestParameters)).then((res) => {
+					this.$data.newStoreId = res.data.data.user.store_id;
+					this.accountList();
+	    		})
+			},
+			//获取customer_id
+			getCustomerID (){
+				console.log(111);
+				let list = {
+					'traffic_id':this.$data.newCustomerId.traffic_id,
+					'customer_id':this.$data.newCustomerId.customer_id,
+				};
+				let qs = require('querystring');
+	    		settingApi.getCustomerId(qs.stringify(this.$data.newCustomerId)).then((res) => {
+					console.log(res);
+					// this.$data.newStoreId = res.data.data.user.store_id;
+					// this.accountList();
+	    		})
+			},
 			//列表
 			accountList(){
-				this.$data.requestParameters.sid = this.$route.query.StoreId;
+				this.$data.requestParameters.sid = this.$data.newStoreId;
 				let qs = require('querystring')
 	    		settingApi.accountList(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
-						console.log(res);
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
 		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
@@ -305,17 +331,18 @@
         			
         		})
 			},
+			//角色列表
 			roleList(){
 				let qs = require('querystring')
 	    		settingApi.roleList(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
-						console.log(res);
 						this.$data.allRole = res.data.data.list;
 	    			}else{
 						this.$message.error(res.data.msg);
 	    			}
 	    		})
-	    	},
+			},
+			//编辑取消
 			editCancel(){
 				this.$data.editFormVisible = false;
 				this.$data.editFormData = {
@@ -325,6 +352,7 @@
 					role_id:''
 				}
 			},
+			//编辑提交
 			editSubmit(formName){
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
@@ -352,6 +380,7 @@
 		        });
 
 			},
+			//修改密码
 			fnChangePwd(row){
 				console.log(row)
 				this.$data.changePwdFormVisible = true;
@@ -360,7 +389,7 @@
 					password:'',
 	            	repassword:'',
 				}
-			},
+			},			
 			changePwdCancel(){
 				this.$data.changePwdFormVisible = false;
 				this.$data.changePwdFormData = {
@@ -416,11 +445,13 @@
 				this.$data.addFormVisible = true;
 			},
 			//头像选择
-			getAvatarData(childData){
-	        	this.$data.avatarFormVisible = false;
-	        	this.$data.addFormData.avatar = childData.avatar;
-	        	this.$data.addFormData.customer_id = childData.customer_id;
-	        },
+			// getAvatarData(childData){
+	        // 	this.$data.avatarFormVisible = false;
+	        // 	this.$data.addFormData.avatar = childData.avatar;
+	        // 	this.$data.addFormData.customer_id = childData.customer_id;
+	        // },
+			
+			//添加
 			addCancel(){
 				this.$data.addFormVisible = false;
 				this.fnClearAddFormData();
@@ -429,7 +460,7 @@
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
 			        if (valid) {
-			        	this.$data.addFormData . store_id = this.$route.query.StoreId;
+			        	this.$data.addFormData.store_id = this.$data.newStoreId;
 						let qs = require('querystring')
 		        		settingApi.addAccount(qs.stringify(this.$data.addFormData)).then((res) => {
 		        			if(res.data.errno === 0){
