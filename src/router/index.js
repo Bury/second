@@ -18,6 +18,7 @@ import GuestList from '../views/guest/GuestList'
 
 /*订单管理*/
 import OrderList from '../views/order/OrderList'
+import realFound from '../views/order/realFound'
 
 /*标签管理*/
 import LabelList from '../views/label/LabelList'
@@ -40,8 +41,8 @@ import RemindSet from '../views/setting/RemindSet'
 import OpenTimeSet from '../views/setting/OpenTimeSet'
 //个人中心
 import Personal from '../views/setting/Personal'
-// 通知
-import Notice from '../views/notice/Notice'
+
+
 Vue.use(Router)
 
 const router = new Router({
@@ -56,6 +57,7 @@ const router = new Router({
         {path: 'RemindList',name: 'RemindList',component: RemindList},
         {path: 'GuestList',name: 'GuestList',component: GuestList},
         {path: 'OrderList',name: 'OrderList',component: OrderList},
+        {path: 'realFound',name: 'realFound',component: realFound},
         {path: 'LabelList',name: 'LabelList',component: LabelList},
         {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
         {path: 'DeviceList',name: 'DeviceList',component: DeviceList},
@@ -66,7 +68,6 @@ const router = new Router({
         {path: 'RemindSet',name: 'RemindSet',component: RemindSet},
         {path: 'OpenTimeSet',name: 'OpenTimeSet',component: OpenTimeSet},
         {path: 'Personal',name: 'Personal',component: Personal},
-        {path: 'Notice',name: 'Notice',component: Notice}
       ]
   }]
 })

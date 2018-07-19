@@ -22,6 +22,7 @@ export default {
 	      })
 	    })
 	},
+
 	addOrder (list){
 		return new Promise((resolve, reject) => {
 			axios.post(global.ADD_ORDER_LIST,list).then((res) => {
@@ -49,5 +50,86 @@ export default {
 				reject(err)
 			})
 		})
-	}
+	},
+
+	postFace(list){
+	  return new Promise((resolve,reject) =>{
+	    axios.post(global.POST_ORDER_FACE,list,{headers: {
+        'Content-Type': `multipart/form-data;`}}).then((res) => {
+        resolve(res)
+      }).then((res) => {
+	      resolve(res)
+      }).catch((err) =>{
+        reject(err)
+      })
+    })
+  },
+  postPhone(list){
+    return new Promise((resolve,reject) =>{
+      axios.post(global.CHECK_USER_PHONE,list).then((res) => {
+        resolve(res)
+      }).catch((err) =>{
+        reject(err)
+      })
+    })
+  },
+  getMsg(list){
+    return new Promise((resolve,reject) =>{
+      axios.post(global.GET_SEND_MSG,list).then((res) => {
+        resolve(res)
+      }).catch((err) =>{
+        reject(err)
+      })
+    })
+  },
+  checkMsg(list){
+    return new Promise((resolve,reject) =>{
+      axios.post(global.CHECK_MSG,list).then((res) => {
+        resolve(res)
+      }).catch((err) =>{
+        reject(err)
+      })
+    })
+  },
+  postMe(list){
+    return new Promise((resolve,reject) =>{
+      axios.post(global.IS_NO_ME,list).then((res) => {
+        resolve(res)
+      }).catch((err) =>{
+        reject(err)
+      })
+    })
+  },
+  addNPhone(list){
+    return new Promise((resolve,reject) =>{
+      axios.post(global.ADD_NEW_PHONE,list).then((res) => {
+        resolve(res)
+      }).catch((err) =>{
+        reject(err)
+      })
+    })
+  },
+  addGoods(list){
+    return new Promise((resolve,reject) =>{
+      axios.post(global.ADD_GOODS,list).then((res) => {
+        resolve(res)
+      }).catch((err) =>{
+        reject(err)
+      })
+    })
+  },
+
+
 }
+
+  
+
+
+
+
+
+
+
+
+}
+
