@@ -31,16 +31,17 @@ import StoreDetail from '../views/device/StoreDetail'
 
 /*****系统设置*****/
 //门店管理
-import StoreSet from '../views/setting/storeSet/StoreSet'
-import AccountSet from '../views/setting/storeSet/AccountSet'
+
+import User from '../views/user/User'
 //角色管理
-import RoleSet from '../views/setting/RoleSet'
+import Role from '../views/role/Role'
 //提醒设置
-import RemindSet from '../views/setting/RemindSet'
+import StoreRemind from '../views/store/StoreRemind'
 //营业时间设置
-import OpenTimeSet from '../views/setting/OpenTimeSet'
+import StoreTime from '../views/store/StoreTime'
 //个人中心
-import Personal from '../views/setting/Personal'
+import UserPersonal from '../views/user/UserPersonal'
+
 
 
 Vue.use(Router)
@@ -63,11 +64,12 @@ const router = new Router({
         {path: 'DeviceList',name: 'DeviceList',component: DeviceList},
         {path: 'StoreDetail',name: 'StoreDetail',component: StoreDetail},
         {path: 'StoreSet',name:'StoreSet',component:StoreSet},
-        {path: 'AccountSet',name:'AccountSet',component:AccountSet},
-        {path: 'RoleSet',name:'RoleSet',component:RoleSet},
-        {path: 'RemindSet',name: 'RemindSet',component: RemindSet},
-        {path: 'OpenTimeSet',name: 'OpenTimeSet',component: OpenTimeSet},
-        {path: 'Personal',name: 'Personal',component: Personal},
+
+        {path: 'User',name:'User',component:User},
+        {path: 'Role',name:'Role',component:Role},
+        {path: 'StoreRemind',name: 'StoreRemind',component: StoreRemind},
+        {path: 'StoreTime',name: 'StoreTime',component: StoreTime},
+        {path: 'UserPersonal',name: 'UserPersonal',component: UserPersonal},
       ]
   }]
 })
