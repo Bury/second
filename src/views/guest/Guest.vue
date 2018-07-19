@@ -129,6 +129,7 @@
 		</el-dialog>
 	</div>
 </template>
+
 <script>
 	import guestApi from '../../api/guest'
 	import remindApi from '../../api/remind'
@@ -243,6 +244,7 @@
 	    },
     }
 </script>
+
 <style lang="scss" scoped>
 
 	.el-table thead{

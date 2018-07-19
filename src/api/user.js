@@ -45,19 +45,10 @@ export default {
     })
   },
 
+  //重置密码
   password_reset(list){
     return new Promise((resolve, reject) => {
       axios.post(global.USER_PASSWORD_RESET,list).then((res) => {
-        resolve(res)
-      }).catch((err) => {
-        reject(err)
-      })
-    })
-  },
-
-  password_edit (list) {
-    return new Promise((resolve, reject) => {
-      axios.post(global.USER_PASSWORD_EDIT, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)
@@ -75,9 +66,21 @@ export default {
     })
   },
 
-	getUserInfo () {
+  //修改当前登录用户密码
+  password_edit (list) {
     return new Promise((resolve, reject) => {
-      axios.post(global.GET_USER_INFO).then((res) => {
+      axios.post(global.USER_PASSWORD_EDIT, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
+  //获取当前登录用户信息
+	getUserCurrentView () {
+    return new Promise((resolve, reject) => {
+      axios.post(global.USER_CURRENT_VIEW).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)

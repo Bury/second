@@ -110,12 +110,12 @@
 	</div>
 </template>
 <script>
-	import GuestList from '../../guest/GuestList'
-	import userApi from '../../../api/user'
+	//import Guest from '../../guest/Guest'
+	import userApi from '../../api/user'
 	export default{
 		name:'accoun-set',
 		components: {
-		   GuestList
+		   //Guest
 		},
 		data(){
 			return{

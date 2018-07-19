@@ -4,7 +4,7 @@
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdd()" >新增</el-button>
 		</div>
 		<el-table :data="tableData" border height="448" style="width:821px;text-align:center;">
-	    	<el-table-column prop="name" label="帐号名" width="220"></el-table-column>
+	    	<el-table-column prop="name" label="帐号" width="220"></el-table-column>
 	    	<el-table-column prop="person_in_charge" label="姓名" width="140"></el-table-column>
 	    	<el-table-column prop="phone" label="联系方式" width="120"></el-table-column>
 			<el-table-column prop="phone" label="创建时间" width="120"></el-table-column>
@@ -36,7 +36,7 @@
 	    <!-- 添加、修改 -->
 	    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
 		  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-			  <el-form-item label="帐号名称：" prop="name">
+			  <el-form-item label="帐号：" prop="name">
 			    <el-input v-model="ruleForm.name"></el-input>
 			  </el-form-item>
 			  <el-form-item label="姓名：" prop="person_in_charge">
@@ -48,6 +48,7 @@
 			  <el-form-item label="角色：" prop="phone">
 			    <el-input v-model="ruleForm.phone"></el-input>
 			  </el-form-item>
+			  <!--
 			  <el-form-item label="头像：" prop="phone">
 			    <el-upload
 				class="avatar-uploader"
@@ -58,6 +59,7 @@
 				<img v-if="imageUrl" :src="imageUrl" class="avatar">
 				<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 				</el-upload>
+				-->
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
@@ -83,7 +85,7 @@
 	</div>
 </template>
 <script>
-	import settingApi from '../../../api/setting'
+	import settingApi from '../../store/Store'
 	export default{
 		name:'store-set',
 		data(){
@@ -114,7 +116,7 @@
 		            { min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
 		          ],
 		          person_in_charge:[
-		          	{ required: true, message: '请输入负责人姓名', trigger: 'blur' },
+		          	{ required: true, message: '请输入姓名', trigger: 'blur' },
 		            { min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
 		          ],
 		          phone:[
@@ -139,7 +141,7 @@
 			}
 		},
 		created:function(){
-			this.storeList();
+			this.lists();
 		},
 		methods: {
 			// 上传头像
@@ -159,9 +161,9 @@
 				return isJPG && isLt2M;
 			},
 			//列表
-			storeList(){
+			lists(){
 				let qs = require('querystring')
-	    		settingApi.storeList(qs.stringify(this.$data.requestParameters)).then((res) => {
+	    		storeApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
 						console.log(res);
 						this.$data.tableData = res.data.data.list;
@@ -176,11 +178,11 @@
 	    	handleCurrentChange(currentPage) {
 	            console.log(currentPage)
 	            this.$data.requestParameters.page = currentPage;
-	            this.storeList();
+	            this.lists();
 	        },
 
 			fnRemove(row){
-				this.$confirm('确认删除该门店：'+row.name+' ？', '删除提示', {
+				this.$confirm('是否确认要删除此门店：'+row.name+' ？', '删除提示', {
 		          confirmButtonText: '确定',
 		          cancelButtonText: '取消',
 		          type: 'warning'
@@ -189,15 +191,15 @@
 						'id': row.id
 					}
 					let qs = require('querystring')
-	        		settingApi.deleStore(qs.stringify(list)).then((res) => {
+	        		storeApi.dele(qs.stringify(list)).then((res) => {
 	        			console.log(res)
 	        			if(res.data.errno === 0){
 							console.log(res)
 							this.$message({
 					            type: 'success',
-					            message: '删除成功!'
-					          });
-							this.storeList();
+					            message: '操作成功'
+			          		});
+							this.lists();
 	        			}else{
 							this.$message.error(res.data.msg);
 	        			}
@@ -249,10 +251,13 @@
 					          	'phone':this.$data.ruleForm.phone
 							}
 							let qs = require('querystring')
-			        		settingApi.editStore(qs.stringify(list)).then((res) => {
+			        		storeApi.edit(qs.stringify(list)).then((res) => {
 			        			if(res.data.errno === 0){
 									console.log(res)
-									this.roleList();
+									this.$message({
+							            type: 'success',
+							            message: '操作成功'
+					          		});
 									this.$data.currentId = '';
 									this.$data.ruleForm = {
 							          	name: '',
@@ -273,10 +278,14 @@
 					          	'phone':this.$data.ruleForm.phone
 						    }
 						    let qs = require('querystring')
-			        		settingApi.addStore(qs.stringify(list)).then((res) => {
+			        		storeApi.adds(qs.stringify(list)).then((res) => {
 			        			if(res.data.errno === 0){
 									console.log(res)
-									this.storeList();
+									this.$message({
+							            type: 'success',
+							            message: '操作成功'
+					          		});
+									this.lists();
 									this.$data.currentId = '';
 									this.$data.ruleForm = {
 							          	name: '',

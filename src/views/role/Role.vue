@@ -1,14 +1,15 @@
 <template>
 	<div class="role-set-page">
 		<div class="top-box">
-			<el-button type="primary" size="small" class="add-btn" @click="fnAdd()">新增</el-button>
+			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
-		<el-table :data="tableData" border height="448" style="width:621px;text-align:center;">
-	    	<el-table-column prop="name" label="角色名" width="320"></el-table-column>
+		<el-table :data="tableData" border style="width:841px;text-align:center;">
+	    	<el-table-column prop="id" label="ID" width="220"></el-table-column>
+	    	<el-table-column prop="name" label="名称" width="320"></el-table-column>
 		    <el-table-column label="操作" width="300">
 			    <template slot-scope="scope">
 			    	<el-button type="primary" plain icon="el-icon-setting" circle size="small"
-			    		@click="fnSet(scope.row)"></el-button>
+			    		@click="fnPermission(scope.row)"></el-button>
 			    	<el-button type="warning" plain icon="el-icon-edit" circle size="small"
 			    		@click="fnEdit(scope.row)"></el-button>
 			    	<el-button type="danger" plain icon="el-icon-delete" circle size="small"
@@ -34,13 +35,13 @@
 		<!-- 添加、修改 -->
 	    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
 		  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-			  <el-form-item label="角色名：" prop="name">
+			  <el-form-item label="名称：" prop="name">
 			    <el-input v-model="ruleForm.name"></el-input>
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
-		    <el-button @click="cancel">取 消</el-button>
-		    <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
+		    <el-button @click="fnCancel">取 消</el-button>
+		    <el-button type="primary" @click="fnSubmitForm('ruleForm')">确 定</el-button>
 		  </div>
 		</el-dialog>
 
@@ -61,14 +62,15 @@
 			</el-tree>
 		  </div>
 		  <div slot="footer" class="dialog-footer">
-		    <el-button @click="cancel">取 消</el-button>
-		    <el-button type="primary" @click="submitForm2">确 定</el-button>
+		    <el-button @click="fnCancel">取 消</el-button>
+		    <el-button type="primary" @click="fnSubmitForm2">确 定</el-button>
 		  </div>
 		</el-dialog>
 	</div>
 </template>
+
 <script>
-	import settingApi from '../../api/setting'
+	import roleApi from '../../api/Role'
 	export default{
 		name:'role-set',
 		data(){
@@ -87,7 +89,7 @@
 		        currentName:'',
 		        rules: {
 		          name: [
-		            { required: true, message: '请输入角色名', trigger: 'blur' },
+		            { required: true, message: '请输入名称称', trigger: 'blur' },
 		            { min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
 		          ]
 		        },
@@ -102,13 +104,13 @@
 			}
 		},
 		created:function(){
-			this.roleList();
+			this.lists();
 		},
 		methods: {
 			//列表
-			roleList(){
+			lists(){
 				let qs = require('querystring')
-	    		settingApi.roleList(qs.stringify(this.$data.requestParameters)).then((res) => {
+	    		roleApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
 						console.log(res);
 						this.$data.tableData = res.data.data.list;
@@ -123,27 +125,27 @@
 	    	handleCurrentChange(currentPage) {
 	            console.log(currentPage)
 	            this.$data.requestParameters.page = currentPage;
-	            this.roleList();
+	            this.lists();
 	        },
 
 			fnRemove(row){
-				this.$confirm('确认删除该角色：'+row.name+' ？', '删除提示', {
+				this.$confirm('是否确认删除此角色：'+row.name+' ？', '删除提示', {
 		          confirmButtonText: '确定',
-		          cancelButtonText: '取消',
+		          fnCancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
 		          let list = {
 						'id': row.id
 					}
 					let qs = require('querystring')
-	        		settingApi.deleRole(qs.stringify(list)).then((res) => {
+	        		roleApi.dele(qs.stringify(list)).then((res) => {
 	        			if(res.data.errno === 0){
 							console.log(res)
 							this.$message({
 					            type: 'success',
-					            message: '删除成功!'
-					          });
-							this.roleList();
+					            message: '操作成功'
+				          	});
+							this.lists();
 	        			}else{
 							this.$message.error(res.data.msg);
 	        			}
@@ -164,20 +166,20 @@
 				this.$data.dialogFormVisible = true;
 				
 			},
-			fnAdd(){
+			fnAdds(){
 				this.$data.dialogTitle = '添加';
 				this.$data.currentId = "";
 				this.$data.ruleForm.name = "";
 				this.$data.dialogFormVisible = true;
 			},
 			
-			cancel(){
+			fnCancel(){
 				this.$data.dialogFormVisible = false;
 				this.$data.dialogForm2Visible = false;
 				this.$data.ruleForm.name = '';
 				this.$data.currentId = '';
 			},
-			submitForm(formName){
+			fnSubmitForm(formName){
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
 			        if (valid) {
@@ -187,10 +189,14 @@
 								'name':this.$data.ruleForm.name
 							}
 							let qs = require('querystring')
-			        		settingApi.editRole(qs.stringify(list)).then((res) => {
+			        		roleApi.edit(qs.stringify(list)).then((res) => {
 			        			if(res.data.errno === 0){
 									console.log(res)
-									this.roleList();
+									this.$message({
+							            type: 'success',
+							            message: '操作成功'
+						          	});
+									this.lists();
 									this.$data.ruleForm.name = '';
 									this.$data.currentId = '';
 									this.$data.dialogFormVisible = false;
@@ -205,10 +211,14 @@
 						        'name':this.$data.ruleForm.name
 						    }
 						    let qs = require('querystring')
-			        		settingApi.addRole(qs.stringify(list)).then((res) => {
+			        		roleApi.adds(qs.stringify(list)).then((res) => {
 			        			if(res.data.errno === 0){
 									console.log(res)
-									this.roleList();
+									this.$message({
+							            type: 'success',
+							            message: '操作成功'
+						          	});
+									this.lists();
 									this.$data.ruleForm.name = '';
 									this.$data.currentId = '';
 									this.$data.dialogFormVisible = false;
@@ -224,7 +234,9 @@
 		        });
 			},
 
-			fnSet(row){
+			fnPermission(row){
+				alert('暂未开通')
+				return false;
 				this.$data.currentName = row.name;
 				this.$data.currentId = row.id;
 				let list = {
@@ -265,7 +277,7 @@
 				this.$data.dialogForm2Visible = true;
 			},
 
-			submitForm2(){
+			fnSubmitForm2(){
 				this.$data.checkedIds = this.$refs.tree.getCheckedKeys();
 				console.log(this.$data.currentId)
 				console.log(this.$data.checkedIds)

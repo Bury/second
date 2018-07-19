@@ -9,24 +9,21 @@ import Login from '../views/login/Login'
 
 //客流统计
 import Statistics from '../views/home/Statistics'
-
 //提醒列表
-import RemindList from '../views/remind/RemindList'
-
+import Remind from '../views/remind/Remind'
 //来客列表
-import GuestList from '../views/guest/GuestList'
+import Guest from '../views/guest/Guest'
 
 /*订单管理*/
-import OrderList from '../views/order/OrderList'
+import Order from '../views/order/Order'
 import realFound from '../views/order/realFound'
 
 /*标签管理*/
-import LabelList from '../views/label/LabelList'
+import Label from '../views/label/Label'
 import LabelDetail from '../views/label/LabelDetail'
 
-
 /*设备管理*/
-import DeviceList from '../views/device/DeviceList'
+import Device from '../views/device/Device'
 import StoreDetail from '../views/device/StoreDetail'
 
 /*****系统设置*****/
@@ -55,16 +52,13 @@ const router = new Router({
       component: Main,
       children: [
         {path: '/',name: 'Statistics',component: Statistics},
-        {path: 'RemindList',name: 'RemindList',component: RemindList},
-        {path: 'GuestList',name: 'GuestList',component: GuestList},
-        {path: 'OrderList',name: 'OrderList',component: OrderList},
+        {path: 'Remind',name: 'Remind',component: Remind},
+        {path: 'Guest',name: 'Guest',component: Guest},
+        {path: 'Order',name: 'Order',component: Order},
         {path: 'realFound',name: 'realFound',component: realFound},
-        {path: 'LabelList',name: 'LabelList',component: LabelList},
+        {path: 'Label',name: 'Label',component: Label},
         {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
-        {path: 'DeviceList',name: 'DeviceList',component: DeviceList},
-        {path: 'StoreDetail',name: 'StoreDetail',component: StoreDetail},
-        {path: 'StoreSet',name:'StoreSet',component:StoreSet},
-
+        {path: 'Device',name: 'Device',component: Device},
         {path: 'User',name:'User',component:User},
         {path: 'Role',name:'Role',component:Role},
         {path: 'StoreRemind',name: 'StoreRemind',component: StoreRemind},
