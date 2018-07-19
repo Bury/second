@@ -1,6 +1,6 @@
 <template>
 	<div class="left-menu1">
-		<el-menu :default-active="currentMenu" 
+		<el-menu :default-active="currentMenu"
                  class="el-menu-vertical-demo"
                  :collapse="isCollapse && isShow"
                  background-color="#545c64"

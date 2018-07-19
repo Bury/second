@@ -43,7 +43,7 @@
                       end-placeholder="结束日期">
                     </el-date-picker>
               </el-form-item>
-              
+
               <el-form-item>
                     <el-button type="primary" @click="onSubmit">查询</el-button>
               </el-form-item>
@@ -60,12 +60,12 @@
         <ul class="charts-type" v-else>
             <li class="charts-wrap">
                 <div style="padding:10px 0 20px;text-align:center;">
-                    <el-button :type="type == 'line' ? 'primary' : ''" plain size="small" @click="changeTpye('line')">折线图</el-button>
+                   <el-button :type="type == 'line' ? 'primary' : ''" plain size="small" @click="changeTpye('line')">折线图</el-button>
                     <el-button :type="type == 'column' ? 'primary' : ''" plain size="small" @click="changeTpye('column')">柱状图</el-button>
                     <!-- <el-button type="" plain size="small">饼形图</el-button> -->
                 </div>
                 <guest-chart :guestData="guestData" :type="type"></guest-chart>
-               
+
             </li>
             <li class="charts-wrap">
                 <new-old-chart :newOldData="newOldData"></new-old-chart>
@@ -119,7 +119,7 @@ export default {
         year:'',
         userDefined:[],
         ctrlTimeType:[true,false,false,false,false],
-        type:'line',
+        type:'',
         guestData:{},
         newOldData:[],
         vipData:[],
@@ -131,7 +131,7 @@ export default {
             end_time:'',
             store_id:''
         },
-       
+
 
     }
   },
@@ -149,7 +149,7 @@ export default {
             }else{
 
             }
-            
+
         })
     },
 
@@ -227,7 +227,7 @@ export default {
 
             }
         })
-    
+
     },
 
     changeTpye(value){
@@ -280,7 +280,7 @@ export default {
         }
         if(this.$data.ctrlTimeType[3]){
             //年
-            
+
             this.$data.guestParameters.begin_time = utils.getDateTime(this.year);
             this.$data.guestParameters.end_time =  this.getS('2018-12-31 23:59:59');
             this.requestData();
@@ -303,7 +303,7 @@ export default {
         this.getFeature(this.$data.guestParameters, 'gender');
         this.getFeature(this.$data.guestParameters, 'camera');
     }
-    
+
   }
 }
 </script>
@@ -339,5 +339,5 @@ export default {
         color:#999;
     }
 }
-    
+
 </style>
