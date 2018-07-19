@@ -59,8 +59,8 @@
                     <i class="el-icon-setting"></i>
                     <span slot="title">系统设置</span>
                 </template>
-                <router-link :to="{name: 'StoreSet'}">
-                    <el-menu-item index="/StoreSet">账号管理</el-menu-item>
+                <router-link :to="{name: 'AccountSet'}">
+                    <el-menu-item index="/AccountSet">账号管理</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'RoleSet'}">
                     <el-menu-item index="/RoleSet">角色管理</el-menu-item>

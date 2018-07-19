@@ -24,7 +24,7 @@ export default {
       })
     })
   },
-  editStroe (list) {
+  editStore (list) {
     return new Promise((resolve, reject) => {
       axios.post(global.EDIT_STORE,list).then((res) => {
         resolve(res)
@@ -102,11 +102,6 @@ export default {
     })
 
   },
-
-
-
-
-
   //角色管理
   roleList (list) {
     return new Promise((resolve, reject) => {
@@ -210,6 +205,28 @@ export default {
       })
     })
   },
+
+  // 获取登录信息
+  getUserInfo (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.GET_USER_INFO, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  //获取customer_id
+  getCustomerId(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GET_PERSONAL_INFO, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  
 
 
 
