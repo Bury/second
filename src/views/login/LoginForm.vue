@@ -56,7 +56,6 @@ export default {
           let qs = require('querystring');
           userApi.login(qs.stringify(this.$data.loginInfo)).then((res) => {
             if(res.data.errno === 0){
-              console.log(res);
               localStorage.setItem('knock_knock', res.data.data.access_token)
               localStorage.setItem('username', res.data.data.user.username)
               this.$router.replace({name: 'Statistics'})

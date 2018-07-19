@@ -40,6 +40,13 @@ global.GET_GUEST_LIST = `${SERVER_IP}${COMMON}customer/visitor-list`
 global.GET_ORDER_LIST = `${SERVER_IP}${COMMON}order/list`
 // post order/dele
 global.DELE_ORDER = `${SERVER_IP}${COMMON}order/dele`
+/// post order/adds 添加订单
+global.ADD_ORDER_LIST = `${SERVER_IP}${COMMON}order/adds`
+// post order/edit 修改订单
+global.EDIT_ORDER_LIST = `${SERVER_IP}${COMMON}order/edit`
+//post order/search-traffic 查询人脸信息
+global.FINDFACEID_ORDER = `${SERVER_IP}${COMMON}order/search-traffic`
+
 
 /*标签管理*/
 // post /v1/tag/tree-form
