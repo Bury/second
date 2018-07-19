@@ -12,67 +12,55 @@
                     <span slot="title">客流统计</span>
                 </el-menu-item>
             </router-link>
-            <router-link :to="{name: 'RemindList'}">
-                <el-menu-item index="/RemindList">
+            <router-link :to="{name: 'Remind'}">
+                <el-menu-item index="/Remind">
                     <i class="el-icon-bell"></i>
                     <span slot="title">提醒列表</span>
                 </el-menu-item>
             </router-link>
-            <router-link :to="{name: 'GuestList'}">
-                <el-menu-item index="/GuestList">
+            <router-link :to="{name: 'Guest'}">
+                <el-menu-item index="/Guest">
                     <i class="el-icon-service"></i>
                     <span slot="title">来客列表</span>
                 </el-menu-item>
             </router-link>
-            <router-link :to="{name: 'OrderList'}">
-                <el-menu-item index="/OrderList">
+            <router-link :to="{name: 'Order'}">
+                <el-menu-item index="/Order">
                     <i class="el-icon-phone-outline"></i>
                     <span slot="title">订单管理</span>
                 </el-menu-item>
             </router-link>
-            <!--<router-link :to="{name: 'LabelList'}">
-                <el-menu-item index="/LabelList">
+            <!--<router-link :to="{name: 'Label'}">
+                <el-menu-item index="/Label">
                     <i class="el-icon-info"></i>
                     <span slot="title">标签管理</span>
                 </el-menu-item>
             </router-link>-->
-            <router-link :to="{name: 'DeviceList'}">
-                <el-menu-item index="/DeviceList">
+            <router-link :to="{name: 'Device'}">
+                <el-menu-item index="/Device">
                     <i class="el-icon-view"></i>
                     <span slot="title">设备管理</span>
                 </el-menu-item>
             </router-link>
-            <!-- <el-submenu index="1-6">
-                <template slot="title">
-                    <i class="el-icon-view"></i>
-                    <span slot="title">设备管理</span>
-                </template>
-                <router-link :to="{name: 'Equipment'}">
-                    <el-menu-item index="/Equipment">设备管理admin端</el-menu-item>
-                </router-link>
-                <router-link :to="{name: 'EquipmentOfOwner'}">
-                    <el-menu-item index="/EquipmentOfOwner">设备管理店长端</el-menu-item>
-                </router-link>
-            </el-submenu> -->
             <el-submenu index="7-1" style="padding-bottom:200px;">
                 <template slot="title">
                     <i class="el-icon-setting"></i>
                     <span slot="title">系统设置</span>
                 </template>
-                <router-link :to="{name: 'AccountSet'}">
-                    <el-menu-item index="/AccountSet">账号管理</el-menu-item>
+                <router-link :to="{name: 'User'}">
+                    <el-menu-item index="/User">帐号管理</el-menu-item>
                 </router-link>
-                <router-link :to="{name: 'RoleSet'}">
-                    <el-menu-item index="/RoleSet">角色管理</el-menu-item>
+                <router-link :to="{name: 'Role'}">
+                    <el-menu-item index="/Role">角色管理</el-menu-item>
                 </router-link>
-                <router-link :to="{name: 'RemindSet'}">
-                    <el-menu-item index="/RemindSet">提醒配置</el-menu-item>
+                <router-link :to="{name: 'StoreRemind'}">
+                    <el-menu-item index="/StoreRemind">提醒配置</el-menu-item>
                 </router-link>
-                <router-link :to="{name: 'OpenTimeSet'}">
-                    <el-menu-item index="/OpenTimeSet">营业时间设置</el-menu-item>
+                <router-link :to="{name: 'StoreTime'}">
+                    <el-menu-item index="/StoreTime">营业时间设置</el-menu-item>
                 </router-link>
-                <router-link :to="{name: 'Personal'}">
-                    <el-menu-item index="/Personal">个人中心</el-menu-item>
+                <router-link :to="{name: 'UserPersonal'}">
+                    <el-menu-item index="/UserPersonal">个人中心</el-menu-item>
                 </router-link>
             </el-submenu>
         </el-menu>

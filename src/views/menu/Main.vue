@@ -2,7 +2,7 @@
 <template>
     <div class="main-box">
         <div class="header-wrap">
-            <div class="company">鹰眼管理系统</div>
+            <div class="company">鹰眼门店管理系统</div>
             <!-- <div class="top-menu" style="float:left;">
                 <el-menu :default-active="horizontalIndex"
                       class="el-menu-demo"
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import Menu1 from './Menu1'
+import Menu1 from './MenuLeft'
 
 export default {
   name: 'main-box',
@@ -148,7 +148,6 @@ export default {
 
         }
     }
-
     .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 160px;
 
@@ -156,6 +155,4 @@ export default {
     .el-menu{
         border:0;
     }
-    
-
 </style>
