@@ -45,13 +45,19 @@
 </template>
 
 <script>
+
 import Menu1 from './MenuLeft'
 
+import userApi from '../../api/user'
+
 export default {
+
   name: 'main-box',
+
   components: {
     Menu1
   },
+
   data () {
     return {
         userName:'xxxxx',
@@ -65,10 +71,13 @@ export default {
         }
     }
   },
+
   created: function(){
     this.$data.userName = localStorage.getItem('username')
   },
+
   methods: {
+
     handleSelect(key, keyPath) {
         var nowKey = "leftMenu"+key;
         for(var i in this.$data.leftMenu){
@@ -80,17 +89,32 @@ export default {
         }
         
     },
+
     handleOpen(key, keyPath) {
         console.log(key, keyPath);
     },
+
     handleClose(key, keyPath) {
         console.log(key, keyPath);
     },
-    logout() {
-        this.$router.replace({name:'Login'})
+
+    logout(){
+        userApi.logout().then((res) => {
+            if(res.data.errno === 0){
+                alert('退出成功')
+                localStorage.setItem('knock_knock', null)
+                localStorage.setItem('username', '')
+                this.$router.replace({name: 'UserLogin'})
+            }else{
+                //logout failed
+            }
+        });
     }
+
   }
+  
 }
+
 </script>
 
 <style lang="scss" scoped>

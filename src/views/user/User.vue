@@ -3,10 +3,12 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
-		<el-table :data="tableData" border height="448" style="width:962px;text-align:center;">
+		<el-table :data="tableData" border height="448" style="width:1022px;text-align:center;">
+
+			<el-table-column prop="id" label="ID" width="160"></el-table-column>
 	    	<el-table-column prop="username" label="帐号" width="160"></el-table-column>
-	    	<el-table-column prop="role_name" label="角色" width="100"></el-table-column>
-	    	<el-table-column prop="role_desc" label="姓名" width="100"></el-table-column>
+	    	<el-table-column prop="role_name" label="角色" width="160"></el-table-column>
+	    	<el-table-column prop="name" label="姓名" width="160"></el-table-column>
 	    	<el-table-column label="创建时间" width="160">
 	    		<template slot-scope="scope">
 	    			{{scope.row.created_at | date(4)}}
@@ -43,12 +45,12 @@
 			  <el-form-item label="帐号：" prop="username">
 			    <el-input v-model="editFormData.username"></el-input>
 			  </el-form-item>
-			  <el-form-item label="使用人：" prop="desc">
+			  <el-form-item label="姓名：" prop="desc">
 			    <el-input v-model="editFormData.desc"></el-input>
 			  </el-form-item>
 			  <el-form-item label="角色：" prop="role_id">
 			    <el-select v-model="editFormData.role_id" placeholder="请选择">
-				    <el-option v-for="(item,idx) in allRole" :key="idx" :label="allRole[idx].name" :value="allRole[idx].id"></el-option>
+				    <el-option v-for="(item,idx) in allRoles" :key="idx" :label="allRoles[idx].name" :value="allRoles[idx].id"></el-option>
 				</el-select>
 			  </el-form-item>
 		  </el-form>
@@ -77,15 +79,15 @@
 		<!-- 添加 -->
 		<el-dialog :title="!avatarFormVisible? '添加' : '关联头像'" :visible.sync="addFormVisible" :fullscreen="avatarFormVisible" :before-close="closeChange" >
 		  <el-form :model="addFormData" :rules="addRules" ref="addFormData" label-width="100px" class="demo-ruleForm" v-if="!avatarFormVisible" >
-			  <el-form-item label="帐号：" prop="username">
-			    <el-input v-model="addFormData.username"></el-input>
+			  <el-form-item label="姓名：" prop="name">
+			    <el-input v-model="addFormData.name"></el-input>
 			  </el-form-item>
-			  <el-form-item label="使用人：" prop="desc">
-			    <el-input v-model="addFormData.desc"></el-input>
+			  <el-form-item label="手机号码：" prop="telephone">
+			    <el-input v-model="addFormData.telephone"></el-input>
 			  </el-form-item>
 			  <el-form-item label="角色：" prop="role_id">
 			    <el-select v-model="addFormData.role_id" placeholder="请选择">
-				    <el-option v-for="(item,idx) in allRole" :key="idx" :label="allRole[idx].name" :value="allRole[idx].id"></el-option>
+				    <el-option v-for="(item,idx) in allRoles" :key="idx" :label="allRoles[idx].name" :value="allRoles[idx].id"></el-option>
 				</el-select>
 			  </el-form-item>
 			  <!-- <el-form-item label="头像：" prop="avatar">
@@ -93,6 +95,9 @@
 			    <img v-if="addFormData.avatar !== '' " :src="addFormData.avatar" style="display:inline-block;width:60px;height:60px;border:1px solid #ccc;">
 			    <el-button type="primary" size="small" plain @click="avatarFormVisible=true">选择头像</el-button>
 			  </el-form-item> -->
+			  <el-form-item label="帐号：" prop="username">
+			    <el-input v-model="addFormData.username"></el-input>
+			  </el-form-item>
 			  <el-form-item label="初始密码：" prop="password">
 			    <el-input v-model="addFormData.password" type='password'></el-input>
 			  </el-form-item>
@@ -102,7 +107,7 @@
 		  </el-form>
 		  <div slot="footer" class="dialog-footer" v-if="!avatarFormVisible">
 		    <el-button @click="addCancel">取 消</el-button>
-		    <el-button type="primary" @click="addSubmit('addFormData')">确 定</el-button>
+		    <el-button type="primary" @click="fnAddsSubmit('addFormData')">确 定</el-button>
 		  </div>
 		  <guest-list v-if="avatarFormVisible" :avatarFormVisible="avatarFormVisible" @getChildData="getAvatarData"></guest-list>
 		</el-dialog>
@@ -112,6 +117,8 @@
 <script>
 	//import Guest from '../../guest/Guest'
 	import userApi from '../../api/user'
+	import roleApi from '../../api/role'
+
 	export default{
 		name:'accoun-set',
 		components: {
@@ -121,10 +128,12 @@
 			return{
 				tableData: [],
 				newStoreId:'',
+				/*
 				newCustomerId:{
 					customer_id:'',
 					traffic_id:'',
 				},
+				*/
 				pagination:{
 		        	currentPage:1,
 		        	totalCount:0,
@@ -135,7 +144,7 @@
 	                sid:''
 	            },
 	            editFormVisible:false,
-	            allRole:[],
+	            allRoles:[],
 	            editFormData:{
 	            	id:'',
 	            	username:'',
@@ -233,19 +242,23 @@
 			}
 		},
 		created:function(){
-			this.getUserInfoR();
-			this.getCustomerID();
+			//this.getUserInfoR();
+			//this.getCustomerID();
+			this.lists();
 		},
 		methods: {
 			// 获取用户信息
+			/*
 			getUserInfoR(){
 				let qs = require('querystring');
 	    		settingApi.getUserInfo(qs.stringify(this.$data.requestParameters)).then((res) => {
 					this.$data.newStoreId = res.data.data.user.store_id;
-					this.accountList();
+					this.lists();
 	    		})
 			},
+			*/
 			//获取customer_id
+			/*
 			getCustomerID (){
 				console.log(111);
 				let list = {
@@ -256,14 +269,15 @@
 	    		settingApi.getCustomerId(qs.stringify(this.$data.newCustomerId)).then((res) => {
 					console.log(res);
 					// this.$data.newStoreId = res.data.data.user.store_id;
-					// this.accountList();
+					// this.lists();
 	    		})
 			},
+			*/
 			//列表
-			accountList(){
-				this.$data.requestParameters.sid = this.$data.newStoreId;
+			lists(){
+				this.$data.requestParameters.sid = this.$data.store_id;
 				let qs = require('querystring')
-	    		settingApi.accountList(qs.stringify(this.$data.requestParameters)).then((res) => {
+	    		userApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
@@ -296,7 +310,7 @@
 					            type: 'success',
 					            message: '删除成功!'
 					          });
-							this.accountList();
+							this.lists();
 	        			}else{
 							this.$message.error(res.data.msg);
 	        			}
@@ -311,7 +325,7 @@
 			},
 			fnEdit(row){
 				console.log(row);
-				this.roleList();
+				this.roleListsResults();
 				this.detailAccount(row.id);
 			},
 			detailAccount(id){
@@ -331,11 +345,11 @@
         		})
 			},
 			//角色列表
-			roleList(){
+			roleListsResults(){
 				let qs = require('querystring')
-	    		settingApi.roleList(qs.stringify(this.$data.requestParameters)).then((res) => {
+	    		roleApi.lists_resuts(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
-						this.$data.allRole = res.data.data.list;
+						this.$data.allRoles = res.data.data.list;
 	    			}else{
 						this.$message.error(res.data.msg);
 	    			}
@@ -360,7 +374,7 @@
 		        		settingApi.editAccount(qs.stringify(this.$data.editFormData)).then((res) => {
 		        			if(res.data.errno === 0){
 								console.log(res)
-								this.accountList();
+								this.lists();
 								this.$data.editFormData = {
 									id:'',
 									username:'',
@@ -406,7 +420,7 @@
 		        		settingApi.changPwdAccount(qs.stringify(this.$data.changePwdFormData)).then((res) => {
 		        			if(res.data.errno === 0){
 								console.log(res)
-								this.accountList();
+								this.lists();
 								this.$data.changePwdFormData = {
 									id:row.id,
 									password:'',
@@ -424,7 +438,7 @@
 		        });
 
 			},
-			fnClearAddFormData(){
+			fnClearAddsFormData(){
 				this.$data.addFormData = {
 	            	store_id:'',
 	            	username:'',
@@ -439,8 +453,8 @@
 			},
 			
 			fnAdds(){
-				this.fnClearAddFormData();
-				this.roleList();
+				this.fnClearAddsFormData();
+				this.roleListsResults();
 				this.$data.addFormVisible = true;
 			},
 			//头像选择
@@ -453,30 +467,31 @@
 			//添加
 			addCancel(){
 				this.$data.addFormVisible = false;
-				this.fnClearAddFormData();
+				this.fnClearAddsFormData();
 			},
-			addSubmit(formName){
+			fnAddsSubmit(formName){
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
 			        if (valid) {
-			        	this.$data.addFormData.store_id = this.$data.newStoreId;
+			        	this.$data.addFormData.store_id = localStorage.getItem('store_id');
 						let qs = require('querystring')
 		        		settingApi.addAccount(qs.stringify(this.$data.addFormData)).then((res) => {
 		        			if(res.data.errno === 0){
 								console.log(res)
-								this.accountList();
-								this.fnClearAddFormData();
+								this.$message({
+						            type: 'success',
+						            message: '操作成功'
+					          	});
+								this.lists();
+								this.fnClearAddsFormData();
 								this.$data.addFormVisible = false;
 
 		        			}else{
 								this.$message.error(res.data.msg);	
 							}		        			
-		        			
 		        		})
-						
 			        } 
 		        });
-
 			},
 			closeChange(done){
 	            // done();

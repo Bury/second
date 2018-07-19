@@ -5,7 +5,7 @@ import Router from 'vue-router'
 import Main from '../views/menu/Main'
 
 // 登录页面
-import Login from '../views/login/Login'
+import UserLogin from '../views/user/UserLogin'
 
 //客流统计
 import Statistics from '../views/home/Statistics'
@@ -45,7 +45,7 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    { path: '/login',name: 'Login',component: Login},
+    { path: '/login',name: 'UserLogin',component: UserLogin},
     {
       path: '/',
       meta: { requiresAuth: true },

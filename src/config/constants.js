@@ -120,6 +120,7 @@ global.USER_PASSWORD_RESET = `${SERVER_IP}${COMMON}account/edit-password`
 
 //角色管理
 global.ROLE_LISTS = `${SERVER_IP}${COMMON}role/list`
+global.ROLE_LISTS_RESULTS = `${SERVER_IP}${COMMON}role/list_results`
 global.ROLE_ADDS = `${SERVER_IP}${COMMON}role/adds`
 global.ROLE_EDIT = `${SERVER_IP}${COMMON}role/edit`
 global.ROLE_DELE = `${SERVER_IP}${COMMON}role/dele`
