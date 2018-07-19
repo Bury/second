@@ -159,7 +159,7 @@
         <!--订单录入-->
         <div class="get_a" v-show="mask_c" style="text-align: center">
           <div>
-            <el-form :inline="true" :model="item"  size="mini" style="text-align: center">
+            <el-form :inline="true" :model="item" :rules="rulesD" ref="item" size="mini" style="text-align: center">
               <div v-for='(item,index) in addProList' v-if="addProList">
                 <el-form-item label="材质：">
                   <el-select v-model="item.material" placeholder="请选择材质">
@@ -173,7 +173,7 @@
                 </el-form-item>
                 <el-form-item label="成交总额：">
                   <el-col :span="15">
-                    <el-input v-model="item.money" v-on:input="getMoney" value="0"></el-input>
+                    <el-input v-model="item.money" v-on:input="getMoney(item.money)" value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item>
@@ -303,6 +303,11 @@
               { required: true, message: '请输入手机号', trigger: 'blur' },
               { min: 13, max: 13, message: '长度在11个字符', trigger: 'change' }
             ],
+          },
+          rulesD:{
+            money:[
+
+            ]
           },
           form:{
             newPhone:'',
@@ -787,13 +792,14 @@
 
         },
       //  实时计算输入金额
-        getMoney(){
+        getMoney(obj){
+
           console.log(0);
           // console.log(this.$data.requestNewCreate.money);
           let m = 0;
           for(let i = 0; i< this.$data.addProList.length; i++){
             console.log(this.$data.addProList[i].money);
-            m += parseInt(this.$data.addProList[i].money);
+            m += Number(this.$data.addProList[i].money);
             console.log(m);
           }
           this.$data.allGoodLenght =this.$data.addProList.length
