@@ -60,7 +60,7 @@
         <ul class="charts-type" v-else>
             <li class="charts-wrap">
                 <div style="padding:10px 0 20px;text-align:center;">
-                    <el-button :type="type == 'line' ? 'primary' : ''" plain size="small" @click="changeTpye('line')">折线图</el-button>
+                   <el-button :type="type == 'line' ? 'primary' : ''" plain size="small" @click="changeTpye('line')">折线图</el-button>
                     <el-button :type="type == 'column' ? 'primary' : ''" plain size="small" @click="changeTpye('column')">柱状图</el-button>
                     <!-- <el-button type="" plain size="small">饼形图</el-button> -->
                 </div>
@@ -119,7 +119,7 @@ export default {
         year:'',
         userDefined:[],
         ctrlTimeType:[true,false,false,false,false],
-        type:'line',
+        type:'',
         guestData:{},
         newOldData:[],
         vipData:[],
