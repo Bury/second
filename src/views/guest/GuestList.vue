@@ -54,64 +54,75 @@
 			  </el-form-item>
 			</el-form>
 		</div>
-		<!-- 列表 -->
-		<el-table :data="tableData" border height="380" style="margin:0 auto;width: 1551px;text-align:center;">
-	    	<el-table-column fixed type="index" label="序号" width="80"></el-table-column>
-		    <el-table-column label="人脸" width="60">
-		    	<template slot-scope="scope">
-		           <img :src="scope.row.avatar" style="display:block;margin:0 auto;width:100%;">
-		        </template>
-		    </el-table-column>
-		    <el-table-column prop="customerMerchant.name" label="姓名" width="100"></el-table-column>
-		    <el-table-column label="性别" width="50">
-		    	<template slot-scope="scope">
-		           <span>{{scope.row.gender == 1 ?'男':'女'}}</span>
-		        </template>
-		    </el-table-column>
-		    <el-table-column prop="age" label="年龄" width="100"></el-table-column>
-		    <el-table-column prop="customerMerchant.phone" label="手机号" width="110"></el-table-column>
-		    <el-table-column prop="customerMerchant.consume_num" label="消费次数" width="80"></el-table-column>
-		    <el-table-column prop="customerMerchant.consume_money" label="消费金额" width="120"></el-table-column>
-		    <el-table-column label="客户等级" width="120">
-		    	<template slot-scope="scope">
-		    		<span v-if="scope.row.is_new == 1 && scope.row.vip_level == 0">新客匿名</span>
-			    	<span v-if="scope.row.is_new == 1 && scope.row.vip_level == 1">新客VIP</span>
-			    	<span v-if="scope.row.is_new == 0 && scope.row.vip_level == 0">熟客匿名</span>
-			    	<span v-if="scope.row.is_new == 0 && scope.row.vip_level == 1">熟客VIP</span>
-		    	</template>
-		    </el-table-column>
-		    <el-table-column prop="store_name" label="进店信息" width="220"></el-table-column>
-		    <el-table-column prop="created_at" label="进店时间" width="200">
-		    	<template slot-scope="scope">
-		    		{{scope.row.created_at | date(4)}}
-		    	</template>
-		    </el-table-column>
-		    <el-table-column prop="device_name" label="设备信息" width="160"></el-table-column>
-		    <el-table-column fixed="right" label="操作" width="150">
-			    <template slot-scope="scope">
-			    	<el-button type="text" 
-			    		size="small"  
-			    		v-if="avatarFormVisible"
-			    		@click="getAvatar(scope.row)">关联</el-button>
-			        <el-button type="text" size="small" @click="showDialog(scope.row)" >详情备注</el-button>
-			    </template>
-		    </el-table-column>
-	    </el-table>
 
-		<!-- 分页 -->
-		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
-			<el-pagination 
-				background
-	            class="pagination" 
-	            layout="prev, pager, next" 
-	            small 
-	            @current-change="handleCurrentChange" 
-	            :current-page="pagination.currentPage" 
-	            :page-size="requestParameters.page_size"
-	            :total="pagination.totalCount">
-	        </el-pagination>
-		</div>
-		
+    <!--tabel 分页-->
+    <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
+      <el-tab-pane label="来客列表" name="first">
+        <!-- 列表 -->
+        <el-table :data="tableData" border height="380" style="margin:0 auto;width: 1551px;text-align:center;">
+          <el-table-column fixed type="index" label="序号" width="80"></el-table-column>
+          <el-table-column label="人脸" width="60">
+            <template slot-scope="scope">
+              <img :src="scope.row.avatar" style="display:block;margin:0 auto;width:100%;">
+            </template>
+          </el-table-column>
+          <el-table-column prop="customerMerchant.name" label="姓名" width="100"></el-table-column>
+          <el-table-column label="性别" width="50">
+            <template slot-scope="scope">
+              <span>{{scope.row.gender == 1 ?'男':'女'}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="age" label="年龄" width="100"></el-table-column>
+          <el-table-column prop="customerMerchant.phone" label="手机号" width="110"></el-table-column>
+          <el-table-column prop="customerMerchant.consume_num" label="消费次数" width="80"></el-table-column>
+          <el-table-column prop="customerMerchant.consume_money" label="消费金额" width="120"></el-table-column>
+          <el-table-column label="客户等级" width="120">
+            <template slot-scope="scope">
+              <span v-if="scope.row.is_new == 1 && scope.row.vip_level == 0">新客匿名</span>
+              <span v-if="scope.row.is_new == 1 && scope.row.vip_level == 1">新客VIP</span>
+              <span v-if="scope.row.is_new == 0 && scope.row.vip_level == 0">熟客匿名</span>
+              <span v-if="scope.row.is_new == 0 && scope.row.vip_level == 1">熟客VIP</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="store_name" label="进店信息" width="220"></el-table-column>
+          <el-table-column prop="created_at" label="进店时间" width="200">
+            <template slot-scope="scope">
+              {{scope.row.created_at | date(4)}}
+            </template>
+          </el-table-column>
+          <el-table-column prop="device_name" label="设备信息" width="160"></el-table-column>
+          <el-table-column fixed="right" label="操作" width="150">
+            <template slot-scope="scope">
+              <el-button type="text"
+                         size="small"
+                         v-if="avatarFormVisible"
+                         @click="getAvatar(scope.row)">关联</el-button>
+              <el-button type="text" size="small" @click="showDialog(scope.row)" >详情备注</el-button>
+              <el-button type="text" size="small" @click="dissShow(scope.row)" >屏蔽此人</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <!-- 分页 -->
+        <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
+          <el-pagination
+            background
+            class="pagination"
+            layout="prev, pager, next"
+            small
+            @current-change="handleCurrentChange"
+            :current-page="pagination.currentPage"
+            :page-size="requestParameters.page_size"
+            :total="pagination.totalCount">
+          </el-pagination>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="屏蔽列表" name="second">
+
+      </el-tab-pane>
+    </el-tabs>
+
+
 
 	  	<!-- 弹窗 -->
 	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">
@@ -153,6 +164,7 @@
 							currentPage:1,
 							totalCount:0,
 						},
+            activeName2: 'first',
 		        dialogVisible:false,//弹窗是否显示
 		        activeName: 'first',
 		        value4: ['',''],
@@ -189,7 +201,7 @@
         			let result = res.data
 							if(result.errno === 0){
 								console.log('aa')
-								console.log(result.data.list) 
+								console.log(result.data.list)
 								this.tableData = result.data.list;
 								this.$data.pagination.currentPage = result.data.pagination.currentPage;
 		        		this.$data.pagination.totalCount = result.data.pagination.totalCount;
@@ -197,7 +209,7 @@
         			}else{
 
         			}
-        			
+
         		})
         	},
 
@@ -209,7 +221,7 @@
         			}else{
 
         			}
-        			
+
         		})
         	},
 
@@ -227,8 +239,12 @@
 		        this.$data.activeName = 'first';
 		        this.$data.dialogVisible = true;
 		    },
+            //点击屏蔽此人
+          dissShow(row){
+            console.log(row);
+          },
 
-		    
+
 		    checkout(tab, event) {
 		        this.$data.showInfoEdit = false;
 		    },
@@ -239,18 +255,21 @@
 	        },
 	        getAvatar(row){
 	        	this.$emit('getChildData',row);
-	        }
+	        },
+          handleClick(tab, event) {
+            console.log(tab, event);
+          }
 	    },
     }
 </script>
 <style lang="scss" scoped>
 
 	.el-table thead{
-		color:#333; 
+		color:#333;
 	}
 	.el-pagination{
 		margin:10px;
 	  	float: right;
 	}
-	
+
 </style>
