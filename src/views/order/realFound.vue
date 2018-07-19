@@ -4,19 +4,23 @@
       <div class="top-box" style="text-align: center">
         <ul style="display: flex">
           <li @click="get_a">
-            <span class="circles">1</span>
+            <span class="circles" v-show="aa">1</span>
+            <span class="circlesR"  v-show="ab">1</span>
             <p class="circleFont">确认人脸</p>
           </li>
           <li @click="get_b">
-            <span class="circles">2</span>
+            <span class="circles" v-show="ba">2</span>
+            <span class="circlesR" v-show="bb">2</span>
             <p class="circleFont">确认信息</p>
           </li>
           <li @click="get_c">
-            <span class="circles">3</span>
+            <span class="circles" v-show="ca">3</span>
+            <span class="circlesR" v-show="cb">3</span>
             <p class="circleFont">订单录入</p>
           </li>
           <li>
-            <span class="circles">4</span>
+            <span class="circles" v-show="da">4</span>
+            <span class="circlesR" v-show="db">4</span>
             <p class="circleFont">完成</p>
           </li>
         </ul>
@@ -134,6 +138,14 @@
               <el-form-item label="类型:" prop="type" style="width: 30rem">
                 <el-input v-model="ruleForm.type" :disabled="true"></el-input>
               </el-form-item>
+              <el-form-item label="备注:" prop="type" style="width: 30rem">
+                <el-input
+                  type="textarea"
+                  autosize
+                  placeholder="请输入内容"
+                  v-model="ruleForm.textarea2">
+                </el-input>
+              </el-form-item>
             </el-form>
             <el-row style="margin-top: 3rem">
               <el-button >上一步</el-button>
@@ -185,7 +197,7 @@
           <!--长传小票-->
           <el-row>
             <el-upload v-model="item.file"
-                       action="http://dev-api.yy.ibetwo.com/v1/user/upload"
+                       :action="importFileUrl()"
                        list-type="picture-card"
                        :data="upLoadData"
                        :on-preview="handlePictureCardPreview"
@@ -193,9 +205,9 @@
                        :onSuccess="uploadSuccess">
               <i class="el-icon-plus"></i>
             </el-upload>
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
+            <!--<el-dialog :visible.sync="dialogVisible">-->
+              <!--<img width="100%" :src="dialogImageUrl" alt="">-->
+            <!--</el-dialog>-->
           </el-row>
           <el-row style="margin-top: 3rem">
             <el-button style="margin-left: 15rem;margin-right: 10rem;float: right" @click="allPostM">确认</el-button>
@@ -208,6 +220,14 @@
 <script>
   import remindApi from '../../api/remind'
   import OrderApi from '../../api/order'
+  import apiUrl from '../../config/API.js'
+  import router from '../../router/index'
+
+  const SERVER_IP = apiUrl.apiUrl
+  const COMMON = 'v1'
+
+  //图片上传
+  global.IMAGS_PUSH = `${SERVER_IP}${COMMON}/user/upload`
     export default {
         name: "real-found",
       components: {
@@ -215,9 +235,17 @@
       },
       data(){
         return {
-              upLoadData: {
-                access_token: 'X6dMRIwBZD8oUf_Qpr1JeBTIK37iQmzM',
+            upLoadData: {
+                access_token: localStorage.getItem('knock_knock'),
             },
+          aa:true,
+          ab:false,
+          ba:false,
+          bb:true,
+          ca:false,
+          cb:true,
+          da:false,
+          db:true,
           materials:[],
           styles:[],
           mask_a:true,
@@ -247,12 +275,14 @@
           oldOT:'',
           imageListF:[],
           pushGoods:[],
+          pushRemk:'',
           ruleForm: {
             name: '',
             phone:'',
             sex:'',
             type:'',
-            image:''
+            image:'',
+            textarea2:''
           },
           NewRuleForm:{
             images:'',
@@ -271,7 +301,7 @@
           rulesA:{
             newPhone: [
               { required: true, message: '请输入手机号', trigger: 'blur' },
-              { min: 13, max: 13, message: '长度在13个字符', trigger: 'change' }
+              { min: 13, max: 13, message: '长度在11个字符', trigger: 'change' }
             ],
           },
           form:{
@@ -306,6 +336,10 @@
       },
 
       methods:{
+        //  上传图片动态地址
+        importFileUrl(){
+          return global.IMAGS_PUSH
+        },
         //  调用摄像头
         camera_process(){
           //访问用户媒体设备的兼容方法
@@ -427,9 +461,9 @@
         //订单录入
         get_c:function (){
           console.log('订单录入');
-          this.mask_c=true;
-          this.mask_b=false;
-          this.mask_a=false;
+          // this.mask_c=true;
+          // this.mask_b=false;
+          // this.mask_a=false;
         },
         //重拍
         getNewvideo(){
@@ -462,14 +496,24 @@
             if(res.data.msg === '服务器内部错误'){
               this.$message({
                 message: '您获取的照片不合法',
-                type: 'warning'
+                type: 'warning',
+                center: true
               });
               this.mask_b=false;
               this.mask_a=true;
               this.mask_c=false;
             }else{
+                this.aa=false;
+                this.ab=true;
+                this.ba=true;
+                this.bb=false;
+                this.ca=false;
+                this.cb=true;
+                this.da=false;
+                this.db=true;
               console.log('获取到照片了');
               console.log(res.data.errno);
+              this.$data.faceId = res.data.data.customer_id;
               if(res.data.errno === 1){
                 this.$data.NewRuleForm.images = res.data.data.avatar;
                 // this.$data.NewRuleForm.phone = res.data.data.avatar;
@@ -513,12 +557,22 @@
           if(this.$data.NewRuleForm.textarea2 === ''){
             this.$message({
               message: '请填写备注信息',
-              type: 'warning'
+              type: 'warning',
+              center: true
             });
           }else{
             this.mask_c=true;
             this.mask_b=false;
             this.mask_a=false;
+
+            this.aa=false;
+            this.ab=true;
+            this.ba=false;
+            this.bb=true;
+            this.ca=true;
+            this.cb=false;
+            this.da=false;
+            this.db=true;
             //不管有没有为新手机号，最终走向消费，传值一次,更一次手机号
             let list = {
               'phone': this.$data.form.newPhone,
@@ -527,7 +581,12 @@
             let qs = require('querystring');
             OrderApi.addNPhone(qs.stringify(list)).then((res) => {
               console.log(res);
-
+              console.log(res.data.msg)
+              // this.$message({
+              //   message: res.data.msg,
+              //   type: 'warning',
+              //   center: true
+              // });
             });
           }
 
@@ -617,19 +676,36 @@
         },
       //  返回的顾客信息，是本人直接走消费
         isTrueAndPass(){
-          console.log(this.$data.faceId);
-          let list = {
-            'phone': this.$data.form.newPhone,
-            'customer_id':this.$data.faceId,
-            'is_me':1
+          if(this.$data.ruleForm.textarea2 === ''){
+            this.$message({
+              message: '请填写备注信息',
+              type: 'warning',
+              center: true
+            });
+          }else{
+            console.log(this.$data.faceId);
+            let list = {
+              'phone': this.$data.form.newPhone,
+              'customer_id':this.$data.faceId,
+              'is_me':1
+            }
+            let qs = require('querystring');
+            OrderApi.postMe(qs.stringify(list)).then((res) => {
+              console.log(res);
+              this.mask_c=true;
+              this.mask_b=false;
+              this.mask_a=false;
+              this.aa=false;
+              this.ab=true;
+              this.ba=false;
+              this.bb=true;
+              this.ca=true;
+              this.cb=false;
+              this.da=false;
+              this.db=true;
+            });
           }
-          let qs = require('querystring');
-          OrderApi.postMe(qs.stringify(list)).then((res) => {
-            console.log(res);
-            this.mask_c=true;
-            this.mask_b=false;
-            this.mask_a=false;
-          });
+
 
         },
       //  返回的顾客信息不是本人，则显示最开始的顾客信息
@@ -674,12 +750,30 @@
           this.mask_a=true;
           this.mask_b=false;
           this.mask_c=false;
+          this.camera_process();
+          this.aa=true;
+          this.ab=false;
+          this.ba=false;
+          this.bb=true;
+          this.ca=false;
+          this.cb=true;
+          this.da=false;
+          this.db=true;
         },
         //第三步返回第二步
         backB(){
           this.mask_a=false;
           this.mask_b=true;
           this.mask_c=false;
+
+          this.aa=false;
+          this.ab=true;
+          this.ba=true;
+          this.bb=false;
+          this.ca=false;
+          this.cb=true;
+          this.da=false;
+          this.db=true;
         },
         addAGood(){
            console.log('新增一条');
@@ -732,9 +826,24 @@
         // 上传成功后的回调
         uploadSuccess (response, file, fileList) {
           console.log('上传文件', response);
-          console.log(response.data.path)
+          console.log(response.msg)
+
+          // if (response.errno == 1000000 || response.msg=='access-token不能为空' || response.msg=='用户不存在') {
+          //   console.log(0)
+          //   localStorage.setItem('knock_knock', '')
+          //   localStorage.setItem('username', '')
+          //   router.replace({
+          //     path: '/login',
+          //     query: {redirect: router.currentRoute.fullPath}
+          //   })
+          // }else{
+          //
+          // }
+          console.log(response.data.path);
           this.$data.imageListF.push(response.data.path);
           console.log(this.$data.imageListF);
+
+
         },
         //最后的计算
         allPostM(){
@@ -748,14 +857,20 @@
             };
             this.$data.pushGoods.push(arrAs);
           }
-          console.log(this.$data.pushGoods)
+          console.log(this.$data.pushGoods);
+          let sendData = JSON.stringify(this.$data.pushGoods);
+          console.log(sendData);
           let listArry =  this.$data.imageListF.join(',');
           console.log(listArry);
-          console.log(this.$data.dialogImageUrl)
+          if(this.$data.NewRuleForm.textarea2 === ''){
+            this.$data.pushRemk = this.$data.ruleForm.textarea2;
+          }else if(this.$data.ruleForm.textarea2 === ''){
+            this.$data.pushRemk = this.$data.NewRuleForm.textarea2;
+          }
           let list = {
-            'goods_info':this.$data.pushGoods,
-            'remark':this.$data.NewRuleForm.textarea2 ,
-            'avatar':listArry,
+            'goods_info':sendData,
+            'remark':this.$data.pushRemk,
+            'files':listArry,
             'customer_id':this.$data.faceId,
           }
           let qs = require('querystring');
@@ -763,8 +878,17 @@
             console.log(res);
             this.$message({
               message: res.data.msg,
-              type: 'warning'
+              type: 'warning',
+              center: true
             });
+            this.aa=false;
+            this.ab=true;
+            this.ba=false;
+            this.bb=true;
+            this.ca=false;
+            this.cb=true;
+            this.da=true;
+            this.db=false;
           });
 
         }
@@ -785,6 +909,26 @@
     border-radius: 50%;
     background-color: yellow;
   }
+  .circlesR{
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border:1px solid white;
+    text-align: center;
+    line-height: 3rem;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    background-color: #bababa;
+  }
+  /*.v-modal {*/
+    /*position: fixed;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*opacity: 0;*/
+    /*background: #000;*/
+  /*}*/
   .circleFont{
     font-size: 1.6rem;
     margin-top: 1rem;
