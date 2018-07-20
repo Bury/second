@@ -876,7 +876,7 @@
           let list = {
             'goods_info':sendData,
             'remark':this.$data.pushRemk,
-            'files':listArry,
+            'files_web':listArry,
             'customer_id':this.$data.faceId,
           }
           let qs = require('querystring');
