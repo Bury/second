@@ -25,72 +25,73 @@
 </template>
 
 <script>
-  import storeApi from '../../api/store'
-  export default {
-  	name:'open-time-set',
-    data() {
-      return {
-        startTime: '',
-        endTime: ''
-      };
-    },
-    created:function(){
-    	this.fnGetTime();
-    },
-    methods:{
-    	//显示
-    	fnGetTime(){
-    		storeApi.timeView().then((res) => {
-    			if(res.data.errno === 0){
-					console.log(res.data.data);
-					this.$data.startTime = res.data.data.start_time;
-					this.$data.endTime = res.data.data.end_time;
-    			}else{
-					this.$message.error(res.data.msg);
-    			}
-    		})
-    	},
-    	//设置
-    	fnSetTime(){
-    		var startTime = this.$data.startTime;
-    		var endTime = this.$data.endTime;
-    		if(startTime == ''){
-    			this.$message({
-		          message: '请选择开始时间',
-		          type: 'warning',
-		          duration:1000
-		        });
-    			return false;
-    		}
-    		if(endTime == ''){
-    			this.$message({
-		          message: '请选择结束时间',
-		          type: 'warning',
-		          duration:1000
-		        });
-    			return false;
-    		}
-			let list = {
-	        	'start_time' : startTime,
-	        	'end_time'   : endTime
-	    	}
-		    let qs = require('querystring')
-    		storeApi.timeSet(qs.stringify(list)).then((res) => {
-    			if(res.data.errno === 0){
-					console.log(res)
-					this.$message({
-			          message: '营业时间设置成功',
-			          type: 'success',
-			          duration:1500
-			        });
 
-    			}else{
-					this.$message.error(res.data.msg);
-    			}
-    		})
-    	},
-    }
-  }
+	import globalFunctions from '../../config/global_functions'
+
+  	import storeApi from '../../api/store'
+
+	export default {
+
+		name:'open-time-set',
+
+		data() {
+			return {
+				startTime: '',
+				endTime: ''
+			};
+		},
+
+		created:function(){
+			this.fnGetTime();
+		},
+
+		methods:{
+
+			//显示
+			fnGetTime(){
+				storeApi.timeView().then((res) => {
+					if(res.data.errno === 0){
+						console.log(res.data.data);
+						this.$data.startTime = res.data.data.start_time;
+						this.$data.endTime = res.data.data.end_time;
+					}else{
+						this.$message.error(res.data.msg);
+					}
+				})
+			},
+
+			//设置
+			fnSetTime(){
+				var startTime = this.$data.startTime;
+				var endTime = this.$data.endTime;
+				if(startTime == ''){
+			        globalFunctions.functions.success_message(this,'请选择开始时间',1000);
+					return false;
+				}
+				if(endTime == ''){
+			        globalFunctions.functions.success_message(this,'请选择结束时间',1000);
+					return false;
+				}
+				let list = {
+		        	'start_time' : startTime,
+		        	'end_time'   : endTime
+		    	}
+			    let qs = require('querystring')
+				storeApi.timeSet(qs.stringify(list)).then((res) => {
+					if(res.data.errno === 0){
+						console.log(res)
+				        globalFunctions.functions.success_message(this,'操作成功',1500);
+
+					}else{
+						this.$message.error(res.data.msg);
+					}
+				})
+
+			},
+
+		}
+
+	}
 </script>
 <style lang="scss" scoped>
 	.open-time-set-page{

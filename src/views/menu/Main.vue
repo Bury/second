@@ -22,11 +22,11 @@
                     <span class="el-dropdown-link" style="color:#fff;">
                       您好，{{userName}}
                       <i class="el-icon-caret-bottom el-icon--right"></i>
-                    </span>
+                    </span>UserPersonal
                     <el-dropdown-menu slot="dropdown" split-button style="text-align:center;">
-                        <el-dropdown-item divided>个人中心</el-dropdown-item>
+                        <el-dropdown-item divided @click.native="user_current_detail">个人资料</el-dropdown-item>
                         <!--<el-dropdown-item divided @click.native="notice">通知</el-dropdown-item>-->
-                        <el-dropdown-item divided @click.native="logout" >退出</el-dropdown-item>
+                        <el-dropdown-item divided @click.native="logout">退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
@@ -36,7 +36,7 @@
                 <el-radio-button :label="false" v-if="isCollapse">展开</el-radio-button>
                 <el-radio-button :label="true" v-if="!isCollapse">收起</el-radio-button>
             </el-radio-group>
-            <Menu1 v-if="leftMenu.leftMenu1" :isCollapse="isCollapse" :isShow="leftMenu.leftMenu1"></Menu1>
+            <MenuLeft v-if="leftMenu.leftMenu1" :isCollapse="isCollapse" :isShow="leftMenu.leftMenu1"></MenuLeft>
         </div>
         <div class="content-wrap" ref="content" :style="isCollapse ? 'margin-left:70px;' : 'margin-left:160px;'">
             <router-view></router-view>
@@ -46,7 +46,7 @@
 
 <script>
 
-import Menu1 from './MenuLeft'
+import MenuLeft from './MenuLeft'
 
 import userApi from '../../api/user'
 
@@ -55,7 +55,7 @@ export default {
   name: 'main-box',
 
   components: {
-    Menu1
+    MenuLeft
   },
 
   data () {
@@ -104,11 +104,15 @@ export default {
                 alert('退出成功')
                 localStorage.setItem('knock_knock', null)
                 localStorage.setItem('username', '')
-                this.$router.replace({name: 'UserLogin'})
+                this.$router.replace({name: '/'})
             }else{
                 //logout failed
             }
         });
+    },
+
+    user_current_detail(){
+        this.$router.push('/UserCurrentDetail')
     }
 
   }

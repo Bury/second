@@ -18,72 +18,79 @@
 </template>
 
 <script>
-  import storeApi from '../../api/store'
 
-  const typeOptions = ['新客未购买', '新客已购买', '熟客未购买', '熟客已购买'];
-  const typeId = ["1","2","3","4"]
-  export default {
-    data() {
-      return {
-        checkAll: false,
-        checkedType: [],
-        types: typeId,
-        typeVal: typeOptions,
-        isIndeterminate: true
-      };
-    },
-    created:function(){
-        this.fnGetRemind();
-    },
-    methods: {
-        //显示
-        fnGetRemind(){
-            storeApi.remindView().then((res) => {
-                if(res.data.errno === 0){
-                    console.log(res);
-                    this.checkedType = res.data.data.remind_ids.split(",");
-                    if(this.checkedType.length == this.types.length){
-                        this.checkAll = true;
-                        this.isIndeterminate = false;
+    import globalFunctions from '../../config/global_functions'
+
+    import storeApi from '../../api/store'
+
+    const typeOptions = ['新客未购买', '新客已购买', '熟客未购买', '熟客已购买'];
+    const typeId = ["1","2","3","4"]
+    export default {
+
+        data() {
+            return {
+                checkAll: false,
+                checkedType: [],
+                types: typeId,
+                typeVal: typeOptions,
+                isIndeterminate: true
+            };
+        },
+
+        created:function(){
+            this.fnGetRemind();
+        },
+        methods: {
+
+            //显示
+            fnGetRemind(){
+                storeApi.remindView().then((res) => {
+                    if(res.data.errno === 0){
+                        console.log(res);
+                        this.checkedType = res.data.data.remind_ids.split(",");
+                        if(this.checkedType.length == this.types.length){
+                            this.checkAll = true;
+                            this.isIndeterminate = false;
+                        }
+                    }else{
+                        this.$message.error(res.data.msg);
                     }
-                }else{
-                    this.$message.error(res.data.msg);
+                })
+            },
+
+            //设置
+            fnSetRemind(){
+                let list = {
+                        'remind_ids' :  this.checkedType.toString(),
                 }
-            })
-        },
-        //设置
-        fnSetRemind(){
-            let list = {
-                    'remind_ids' :  this.checkedType.toString(),
-                }
-            let qs = require('querystring')
-            storeApi.remindSet(qs.stringify(list)).then((res) => {
-                if(res.data.errno === 0){
-                    console.log(res);
-                    this.$message({
-                      message: '操作成功',
-                      type: 'success',
-                      duration:1500
-                    });
-                    this.fnGetRemind();
-                }else{
-                    this.$message.error(res.data.msg);
-                }
-            })
-        },
-        handleCheckAllChange(val) {
-            this.checkedType = val ? typeId : [];
-            this.isIndeterminate = false;
-            console.log(this.checkedType)
-        },
-        fnChangeType(value) {
-            console.log(value)
-            let checkedCount = value.length;
-            this.checkAll = checkedCount === this.types.length;
-            this.isIndeterminate = checkedCount > 0 && checkedCount < this.types.length;
+                let qs = require('querystring')
+                storeApi.remindSet(qs.stringify(list)).then((res) => {
+                    if(res.data.errno === 0){
+                        console.log(res);
+                        globalFunctions.functions.success_message(this);
+                        this.fnGetRemind();
+                    }else{
+                        this.$message.error(res.data.msg);
+                    }
+                })
+            },
+
+            handleCheckAllChange(val) {
+                this.checkedType = val ? typeId : [];
+                this.isIndeterminate = false;
+                console.log(this.checkedType)
+            },
+
+            fnChangeType(value) {
+                console.log(value)
+                let checkedCount = value.length;
+                this.checkAll = checkedCount === this.types.length;
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.types.length;
+            }
+
         }
-    }
-  };
+
+    };
 </script>
 <style lang="scss" scoped>
   .remind-set-page{

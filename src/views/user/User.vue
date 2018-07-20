@@ -3,12 +3,14 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
-		<el-table :data="tableData" border height="448" style="width:1022px;text-align:center;">
+		<el-table :data="tableData" border height="448" style="width:1342px;text-align:center;">
 
 			<el-table-column prop="id" label="ID" width="160"></el-table-column>
 	    	<el-table-column prop="username" label="帐号" width="160"></el-table-column>
-	    	<el-table-column prop="role_name" label="角色" width="160"></el-table-column>
-	    	<el-table-column prop="name" label="姓名" width="160"></el-table-column>
+	    	<el-table-column prop="role_name" label="岗位" width="160"></el-table-column>
+	    	<el-table-column prop="username_desc" label="姓名" width="160"></el-table-column>
+	    	<el-table-column prop="phone" label="手机" width="160"></el-table-column>
+	    	<el-table-column prop="status" label="状态" width="160"></el-table-column>
 	    	<el-table-column label="创建时间" width="160">
 	    		<template slot-scope="scope">
 	    			{{scope.row.created_at | date(4)}}
@@ -17,7 +19,7 @@
 		    <el-table-column label="操作" width="220">
 			    <template slot-scope="scope">
 			    	<el-button type="primary" plain icon="el-icon-setting" circle size="small"
-			    		@click="fnChangePwd(scope.row)"></el-button>
+			    		@click="fnResetPassword(scope.row)"></el-button>
 			    	<el-button type="warning" plain icon="el-icon-edit" circle size="small"
 			    		@click="fnEdit(scope.row)"></el-button>
 			    	<el-button type="danger" plain icon="el-icon-delete" circle size="small"
@@ -42,16 +44,20 @@
 	    <!-- 编辑 -->
 	    <el-dialog title="编辑" :visible.sync="editFormVisible">
 		  <el-form :model="editFormData" :rules="editRules" ref="editFormData" label-width="100px" class="demo-ruleForm">
-			  <el-form-item label="帐号：" prop="username">
-			    <el-input v-model="editFormData.username"></el-input>
+			  <el-form-item label="岗位：" prop="name">
+			    <el-radio-group v-model="editFormData.role_name">
+				    <el-radio :label="0">店长</el-radio>
+				    <el-radio :label="1">店员</el-radio>
+			 	</el-radio-group>
 			  </el-form-item>
 			  <el-form-item label="姓名：" prop="desc">
 			    <el-input v-model="editFormData.desc"></el-input>
 			  </el-form-item>
-			  <el-form-item label="角色：" prop="role_id">
-			    <el-select v-model="editFormData.role_id" placeholder="请选择">
-				    <el-option v-for="(item,idx) in allRoles" :key="idx" :label="allRoles[idx].name" :value="allRoles[idx].id"></el-option>
-				</el-select>
+			  <el-form-item label="手机：" prop="phone">
+			    <el-input v-model="addFormData.phone"></el-input>
+			  </el-form-item>
+			  <el-form-item label="帐号：" prop="username">
+			    <el-input v-model="editFormData.username"></el-input>
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
@@ -61,79 +67,67 @@
 		</el-dialog>
 
 		<!-- 修改密码 -->
-		<el-dialog title="修改密码" :visible.sync="changePwdFormVisible">
-		  <el-form :model="changePwdFormData" :rules="changePwdRules" ref="changePwdFormData" label-width="100px" class="demo-ruleForm">
-			  <el-form-item label="新密码：" prop="password">
-			    <el-input v-model="changePwdFormData.password"></el-input>
+		<el-dialog title="修改密码" :visible.sync="resetPasswordFormVisible">
+		  <el-form :model="resetPasswordFormData" :rules="resetPasswordRules" ref="resetPasswordFormData" label-width="100px" class="demo-ruleForm">
+			  <el-form-item label="新的密码：" prop="password">
+			    <el-input type="password" v-model="resetPasswordFormData.password"></el-input>
 			  </el-form-item>
 			  <el-form-item label="确认密码：" prop="repassword">
-			    <el-input v-model="changePwdFormData.repassword"></el-input>
+			    <el-input type="password" v-model="resetPasswordFormData.repassword"></el-input>
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
-		    <el-button @click="changePwdCancel">取 消</el-button>
-		    <el-button type="primary" @click="changePwdSubmit('changePwdFormData')">确 定</el-button>
+		    <el-button @click="resetPasswordCancel">取 消</el-button>
+		    <el-button type="primary" @click="fnResetPasswordSubmit('resetPasswordFormData')">确 定</el-button>
 		  </div>
 		</el-dialog>
 
 		<!-- 添加 -->
-		<el-dialog :title="!avatarFormVisible? '添加' : '关联头像'" :visible.sync="addFormVisible" :fullscreen="avatarFormVisible" :before-close="closeChange" >
+		<el-dialog title="添加" :visible.sync="addFormVisible" :fullscreen="avatarFormVisible" :before-close="closeChange" >
 		  <el-form :model="addFormData" :rules="addRules" ref="addFormData" label-width="100px" class="demo-ruleForm" v-if="!avatarFormVisible" >
+			  <el-form-item label="岗位：" prop="role_name">
+			    <el-radio-group v-model="addFormData.role_name">
+				    <el-radio :label="0">店长</el-radio>
+				    <el-radio :label="1">店员</el-radio>
+			 	</el-radio-group>
+			  </el-form-item>
 			  <el-form-item label="姓名：" prop="name">
 			    <el-input v-model="addFormData.name"></el-input>
 			  </el-form-item>
-			  <el-form-item label="手机号码：" prop="telephone">
-			    <el-input v-model="addFormData.telephone"></el-input>
+			  <el-form-item label="手机：" prop="phone">
+			    <el-input v-model="addFormData.phone"></el-input>
 			  </el-form-item>
-			  <el-form-item label="角色：" prop="role_id">
-			    <el-select v-model="addFormData.role_id" placeholder="请选择">
-				    <el-option v-for="(item,idx) in allRoles" :key="idx" :label="allRoles[idx].name" :value="allRoles[idx].id"></el-option>
-				</el-select>
-			  </el-form-item>
-			  <!-- <el-form-item label="头像：" prop="avatar">
-			    <el-input v-model="addFormData.avatar" style="display:none;"></el-input>
-			    <img v-if="addFormData.avatar !== '' " :src="addFormData.avatar" style="display:inline-block;width:60px;height:60px;border:1px solid #ccc;">
-			    <el-button type="primary" size="small" plain @click="avatarFormVisible=true">选择头像</el-button>
-			  </el-form-item> -->
 			  <el-form-item label="帐号：" prop="username">
 			    <el-input v-model="addFormData.username"></el-input>
 			  </el-form-item>
-			  <el-form-item label="初始密码：" prop="password">
+			  <el-form-item label="密码：" prop="password">
 			    <el-input v-model="addFormData.password" type='password'></el-input>
-			  </el-form-item>
-			  <el-form-item label="确认密码：" prop="repassword">
-			    <el-input v-model="addFormData.repassword" type='password'></el-input>
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer" v-if="!avatarFormVisible">
 		    <el-button @click="addCancel">取 消</el-button>
 		    <el-button type="primary" @click="fnAddsSubmit('addFormData')">确 定</el-button>
 		  </div>
-		  <guest-list v-if="avatarFormVisible" :avatarFormVisible="avatarFormVisible" @getChildData="getAvatarData"></guest-list>
 		</el-dialog>
 		
 	</div>
 </template>
 <script>
-	//import Guest from '../../guest/Guest'
+
+	import globalRules from '../../config/global_rules'
+
+	import globalFunctions from '../../config/global_functions'
+
 	import userApi from '../../api/user'
-	import roleApi from '../../api/role'
 
 	export default{
 		name:'accoun-set',
 		components: {
-		   //Guest
+
 		},
 		data(){
 			return{
 				tableData: [],
-				newStoreId:'',
-				/*
-				newCustomerId:{
-					customer_id:'',
-					traffic_id:'',
-				},
-				*/
 				pagination:{
 		        	currentPage:1,
 		        	totalCount:0,
@@ -143,93 +137,46 @@
 	                page_size:10,
 	                sid:''
 	            },
-	            editFormVisible:false,
-	            allRoles:[],
-	            editFormData:{
-	            	id:'',
-	            	username:'',
-	            	desc:'',
-	            	role_name:''
-	            },
-	            editRules:{
-	            	username: [
-		            	{ required: true, message: '请输入帐号称', trigger: 'blur' },
-		            	{ min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
-		          	],
-		          	desc:[
-		          		{ required: true, message: '请输入姓名', trigger: 'blur' },
-		            	{ min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
-		          	],
-		          	role_id:[
-		          		{ required: true, message: '请选择角色', trigger: 'blur' }
-		          	]
-	            },
-	            changePwdFormVisible:false,
-	            changePwdFormData:{
-	            	id:'',
-	            	password:'',
-	            	repassword:'',
-	            },
-	            changePwdRules:{
-	            	new_password:[
-	            		{ required: true, message: '请输入新密码：', trigger: 'blur' },
-            			{ min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
-	            	],
-	            	repassword:[
-	            		{ required: true, message: '请再次输入密码', trigger: 'blur' },
-			            {
-			                validator: (rule, value, callback) => {
-			                    if (value !== this.$data.changePwdFormData.password) {
-			                        callback(new Error('两次输入密码不一致!'));
-			                    } else {
-			                        callback();
-			                    }
-			                },
-			                trigger: 'blur'
-			            }
-          
-	            	]
-	            },
 	            addFormVisible:false,
 	            addFormData:{
-	            	store_id:'',
+	            	name:'',
+	            	phone:'',
 	            	username:'',
-	            	desc:'',
-	            	role_id:'',
-	            	avatar:'',
 	            	password:'',
-	            	repassword:'',
-	            	customer_id:''
 	            },
 	            addRules:{
-	            	store_id:[
-	            		{ required: true, message: '请输入门店名称', trigger: 'blur' },
-		            	{ min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
-	            	],
-	            	username:[
-	            		{ required: true, message: '请输入帐号称', trigger: 'blur' },
-		            	{ min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
-	            	],
-	            	desc:[
-	            		{ required: true, message: '请输入姓名', trigger: 'blur' },
-		            	{ min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
-	            	],
-	            	role_id:[
-	            		{ required: true, message: '请选择角色', trigger: 'blur' },
-	            	],
-	            	// avatar:[
-	            	// 	{ required: true, message: '请选择头像', trigger: 'blur' }
-	            	// ],
-	            	password:[
-	            		{ required: true, message: '请输入新密码：', trigger: 'blur' },
-            			{ min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
-	            	],
+	            	name:globalRules.rules.truename(),
+	            	phone:globalRules.rules.phone(),
+	            	username:globalRules.rules.username(4,20,'请输入帐号'),
+	            	password:globalRules.rules.password(6,20,'请输入密码：'),
+	            },
+	            avatarFormVisible:false,
+	            editFormVisible:false,
+	            editFormData:{
+	            	id:'',
+	            	name:'',
+	            	phone:'',
+	            	username:'',
+	            },
+	            editRules:{
+	            	name:globalRules.rules.truename(),
+		          	phone:globalRules.rules.phone(),
+	            	username: globalRules.rules.username(4,20,'请输入帐号'),
+	            },
+	            resetPasswordFormVisible:false,
+	            resetPasswordFormData:{
+	            	id:'',
+	            	password:'',
+	            	repassword:'',
+	            },
+	            resetPasswordRules:{
+	            	password:globalRules.rules.password(6,20,'请输入当前密码：'),
 	            	repassword:[
 	            		{ required: true, message: '请再次输入密码', trigger: 'blur' },
 			            {
 			                validator: (rule, value, callback) => {
-			                    if (value !== this.$data.addFormData.password) {
-			                        callback(new Error('两次输入密码不一致!'));
+			                    if (value !== this.$data.resetPasswordFormData.password) {
+			                        callback(new Error('两次输入密码不一致'));
 			                    } else {
 			                        callback();
 			                    }
@@ -238,44 +185,18 @@
 			            }
 	            	]
 	            },
-	            avatarFormVisible:false
 			}
 		},
+
 		created:function(){
-			//this.getUserInfoR();
-			//this.getCustomerID();
 			this.lists();
 		},
+
 		methods: {
-			// 获取用户信息
-			/*
-			getUserInfoR(){
-				let qs = require('querystring');
-	    		settingApi.getUserInfo(qs.stringify(this.$data.requestParameters)).then((res) => {
-					this.$data.newStoreId = res.data.data.user.store_id;
-					this.lists();
-	    		})
-			},
-			*/
-			//获取customer_id
-			/*
-			getCustomerID (){
-				console.log(111);
-				let list = {
-					'traffic_id':this.$data.newCustomerId.traffic_id,
-					'customer_id':this.$data.newCustomerId.customer_id,
-				};
-				let qs = require('querystring');
-	    		settingApi.getCustomerId(qs.stringify(this.$data.newCustomerId)).then((res) => {
-					console.log(res);
-					// this.$data.newStoreId = res.data.data.user.store_id;
-					// this.lists();
-	    		})
-			},
-			*/
+
 			//列表
 			lists(){
-				this.$data.requestParameters.sid = this.$data.store_id;
+				this.$data.requestParameters.sid = localStorage.getItem('store_id');
 				let qs = require('querystring')
 	    		userApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
@@ -287,29 +208,26 @@
 	    			}
 	    		})
 	    	},
+
 	    	handleCurrentChange(currentPage) {
 	            console.log(currentPage)
 	            this.$data.requestParameters.page = currentPage;
-	            this.storeList();
 	        },
 
 			fnRemove(row){
-				this.$confirm('确认删除该帐号：'+row.username+' ？', '删除提示', {
+				this.$confirm('是否确认删除此帐号：'+row.username+' ？', '删除提示', {
 		          confirmButtonText: '确定',
 		          cancelButtonText: '取消',
 		          type: 'warning'
 		        }).then(() => {
-		          let list = {
+		          	let list = {
 						'id': row.id
 					}
 					let qs = require('querystring')
-	        		settingApi.deleAccount(qs.stringify(list)).then((res) => {
+	        		userApi.dele(qs.stringify(list)).then((res) => {
 	        			if(res.data.errno === 0){
 							console.log(res)
-							this.$message({
-					            type: 'success',
-					            message: '删除成功!'
-					          });
+				          	globalFunctions.functions.success_message(this);
 							this.lists();
 	        			}else{
 							this.$message.error(res.data.msg);
@@ -323,63 +241,53 @@
 		          // });          
 		        });
 			},
+
 			fnEdit(row){
 				console.log(row);
-				this.roleListsResults();
-				this.detailAccount(row.id);
-			},
-			detailAccount(id){
 				let qs = require('querystring')
-        		settingApi.detailAccount(qs.stringify({
-        			id:id
+        		userApi.view(qs.stringify({
+        			id:row.id
         		})).then((res) => {
         			if(res.data.errno === 0){
 						console.log(res)
 						this.$data.editFormData = res.data.data;
 						this.$data.editFormVisible = true;
-
         			}else{
 						this.$message.error(res.data.msg);	
 					}		        			
-        			
         		})
 			},
-			//角色列表
-			roleListsResults(){
-				let qs = require('querystring')
-	    		roleApi.lists_resuts(qs.stringify(this.$data.requestParameters)).then((res) => {
-	    			if(res.data.errno === 0){
-						this.$data.allRoles = res.data.data.list;
-	    			}else{
-						this.$message.error(res.data.msg);
-	    			}
-	    		})
-			},
+
 			//编辑取消
 			editCancel(){
 				this.$data.editFormVisible = false;
 				this.$data.editFormData = {
 					id:'',
+					name:'',
+					phone:'',
 					username:'',
-					desc:'',
-					role_id:''
+					password:'',
 				}
 			},
+
 			//编辑提交
 			editSubmit(formName){
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
 			        if (valid) {
+			        	this.$data.editFormData.store_id = localStorage.getItem('store_id');
+			        	this.$data.editFormData.role_id = -1;
 						let qs = require('querystring')
-		        		settingApi.editAccount(qs.stringify(this.$data.editFormData)).then((res) => {
+		        		userApi.edit(qs.stringify(this.$data.editFormData)).then((res) => {
 		        			if(res.data.errno === 0){
 								console.log(res)
 								this.lists();
 								this.$data.editFormData = {
 									id:'',
+									name:'',
+									phone:'',
 									username:'',
-									desc:'',
-									role_id:''
+									password:'',
 								}
 								this.$data.editFormVisible = false;
 
@@ -393,41 +301,29 @@
 		        });
 
 			},
+
 			//修改密码
-			fnChangePwd(row){
-				console.log(row)
-				this.$data.changePwdFormVisible = true;
-				this.$data.changePwdFormData = {
-					id:row.id,
-					password:'',
-	            	repassword:'',
-				}
-			},			
-			changePwdCancel(){
-				this.$data.changePwdFormVisible = false;
-				this.$data.changePwdFormData = {
-					id:row.id,
-					password:'',
-	            	repassword:'',
-				}
+			fnResetPassword(row){
+				this.$data.resetPasswordFormVisible = true;
+				this.fnResetPasswordClearData();
+			},		
+
+			resetPasswordCancel(){
+				this.$data.resetPasswordFormVisible = false;
+				this.fnResetPasswordClearData();
 			},
-			changePwdSubmit(formName){
+
+			fnResetPasswordSubmit(formName){
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
 			        if (valid) {
-			        	
 						let qs = require('querystring')
-		        		settingApi.changPwdAccount(qs.stringify(this.$data.changePwdFormData)).then((res) => {
+		        		userApi.password_reset(qs.stringify(this.$data.resetPasswordFormData)).then((res) => {
 		        			if(res.data.errno === 0){
 								console.log(res)
+								globalFunctions.functions.success_message(this);
 								this.lists();
-								this.$data.changePwdFormData = {
-									id:row.id,
-									password:'',
-					            	repassword:'',
-								}
-								this.$data.changePwdFormVisible = false;
-
+								this.$data.resetPasswordFormVisible = false;
 		        			}else{
 								this.$message.error(res.data.msg);	
 							}		        			
@@ -438,52 +334,54 @@
 		        });
 
 			},
-			fnClearAddsFormData(){
-				this.$data.addFormData = {
-	            	store_id:'',
-	            	username:'',
-	            	desc:'',
-	            	role_id:'',
-	            	avatar:'',
-	            	password:'',
-	            	repassword:'',
-	            	customer_id:'',
 
-	            };
+			fnResetPasswordClearData(){
+				this.$data.resetPasswordFormData = {
+					id:'',
+					password:'',
+	            	repassword:'',
+				}
+			},
+
+			fnAddsFormClearData(){
+				this.$data.addFormData = {
+	            	name:'',
+	            	phone:'',
+	            	username:'',
+	            	password:'',
+	            }
 			},
 			
 			fnAdds(){
-				this.fnClearAddsFormData();
-				this.roleListsResults();
+				this.fnAddsFormClearData();
 				this.$data.addFormVisible = true;
 			},
-			//头像选择
-			// getAvatarData(childData){
-	        // 	this.$data.avatarFormVisible = false;
-	        // 	this.$data.addFormData.avatar = childData.avatar;
-	        // 	this.$data.addFormData.customer_id = childData.customer_id;
-	        // },
-			
+
 			//添加
 			addCancel(){
 				this.$data.addFormVisible = false;
-				this.fnClearAddsFormData();
+				this.fnAddsFormClearData();
 			},
+
 			fnAddsSubmit(formName){
+				console.log(this.$data.addFormData.role_name)
+				console.log(this.$data.addFormData.name)
+				console.log(this.$data.addFormData.phone)
+				console.log(this.$data.addFormData.username)
+				console.log(this.$data.addFormData.password)
+				return ;
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
 			        if (valid) {
 			        	this.$data.addFormData.store_id = localStorage.getItem('store_id');
+			        	this.$data.addFormData.role_id = -1;
 						let qs = require('querystring')
-		        		settingApi.addAccount(qs.stringify(this.$data.addFormData)).then((res) => {
+		        		userApi.adds(qs.stringify(this.$data.addFormData)).then((res) => {
 		        			if(res.data.errno === 0){
 								console.log(res)
-								this.$message({
-						            type: 'success',
-						            message: '操作成功'
-					          	});
+					          	globalFunctions.functions.success_message(this);
 								this.lists();
-								this.fnClearAddsFormData();
+								this.fnAddsFormClearData();
 								this.$data.addFormVisible = false;
 
 		        			}else{
@@ -493,6 +391,7 @@
 			        } 
 		        });
 			},
+
 			closeChange(done){
 	            // done();
 	            if(this.$data.avatarFormVisible){

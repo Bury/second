@@ -22,35 +22,39 @@
 </template>
 
 <script>
+
+import globalRules from '../../config/global_rules'
+
 import userApi from '../../api/user.js'
 
 export default {
+
   name: 'login-form',
+
   data () {
+
     return {
+
       loginInfo: {
         username: '',
         password: ''
       },
+
       rules: {
-        username: [
-          { required: true, message: '请填写帐号', trigger: 'blur' },
-        ],
-        password: [
-          { required: true, message: '请填写密码', trigger: 'blur' },
-        ]
+        username: globalRules.rules.username(4,20,'请输入帐号'),
+        password: globalRules.rules.password(6,20,'请输入密码：')
       }
+
     }
-  },
-  created: function () {
 
   },
-  mounted: function () {
-  },
+
   methods: {
+
     reset() {
       this.$refs.loginForm.resetFields();
     },
+
     login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
@@ -65,13 +69,16 @@ export default {
               this.$message.error(res.data.msg);
             }
           })
-          
         } else {
           return false
         }
+
       })
+
     }
+
   },
+
 }
 </script>
 

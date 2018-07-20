@@ -26,18 +26,15 @@ import LabelDetail from '../views/label/LabelDetail'
 import Device from '../views/device/Device'
 import StoreDetail from '../views/device/StoreDetail'
 
-/*****系统设置*****/
-//门店管理
-
 import User from '../views/user/User'
-//角色管理
-import Role from '../views/role/Role'
+import UserCurrentDetail from '../views/user/UserCurrentDetail'
+
+
 //提醒设置
 import StoreRemind from '../views/store/StoreRemind'
 //营业时间设置
 import StoreTime from '../views/store/StoreTime'
-//个人中心
-import UserPersonal from '../views/user/UserPersonal'
+
 
 
 
@@ -45,7 +42,7 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    { path: '/login',name: 'UserLogin',component: UserLogin},
+    { path: '/',name: 'UserLogin',component: UserLogin},
     {
       path: '/',
       meta: { requiresAuth: true },
@@ -60,10 +57,9 @@ const router = new Router({
         {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
         {path: 'Device',name: 'Device',component: Device},
         {path: 'User',name:'User',component:User},
-        {path: 'Role',name:'Role',component:Role},
         {path: 'StoreRemind',name: 'StoreRemind',component: StoreRemind},
         {path: 'StoreTime',name: 'StoreTime',component: StoreTime},
-        {path: 'UserPersonal',name: 'UserPersonal',component: UserPersonal},
+        {path: 'UserCurrentDetail',name: 'UserCurrentDetail',component: UserCurrentDetail},
       ]
   }]
 })

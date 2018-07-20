@@ -103,13 +103,9 @@ global.GET_DEVICE_LIST_STORE = `${SERVER_IP}${COMMON}device/device-list`
 global.SET_OPERATION = `${SERVER_IP}${COMMON}device/operation`
 
 
-//门店管理
-global.STORE_LISTS = `${SERVER_IP}${COMMON}store/lists`
-global.STORE_ADDS = `${SERVER_IP}${COMMON}store/adds`
-global.STORE_EDIT = `${SERVER_IP}${COMMON}store/edit`
-global.STORE_DELE = `${SERVER_IP}${COMMON}store/dele`
-
-//设置
+//*************店员管理
+//岗位列表
+global.ROLE_LISTS_RESULTS = `${SERVER_IP}${COMMON}role/list_results`
 //帐号管理
 global.USER_LISTS = `${SERVER_IP}${COMMON}account/list`
 global.USER_ADDS = `${SERVER_IP}${COMMON}account/adds`
@@ -118,14 +114,9 @@ global.USER_EDIT = `${SERVER_IP}${COMMON}account/edit`
 global.USER_DELE = `${SERVER_IP}${COMMON}account/dele`
 global.USER_PASSWORD_RESET = `${SERVER_IP}${COMMON}account/edit-password`
 
-//角色管理
-global.ROLE_LISTS = `${SERVER_IP}${COMMON}role/list`
-global.ROLE_LISTS_RESULTS = `${SERVER_IP}${COMMON}role/list_results`
-global.ROLE_ADDS = `${SERVER_IP}${COMMON}role/adds`
-global.ROLE_EDIT = `${SERVER_IP}${COMMON}role/edit`
-global.ROLE_DELE = `${SERVER_IP}${COMMON}role/dele`
-global.GET_ALL_PERMISSION = `${SERVER_IP}${COMMON}role/view-permission`
-global.EDIT_PERMISSION = `${SERVER_IP}${COMMON}role/edit-permission`
+global.USER_EDIT_CURRENT = `${SERVER_IP}${COMMON}user/edit`
+
+//*************系统设置
 
 //提醒设置
 global.STORE_REMIND_GET = `${SERVER_IP}${COMMON}store-config/view-remind`
@@ -135,7 +126,8 @@ global.STORE_REMIND_SET = `${SERVER_IP}${COMMON}store-config/remind`
 global.STORE_TIME_GET = `${SERVER_IP}${COMMON}store-config/view-time`
 global.STORE_TIME_SET = `${SERVER_IP}${COMMON}store-config/business-time`
 
-//当前用户
+
+
 global.USER_CURRENT_VIEW = `${SERVER_IP}${COMMON}user/info`
 global.USER_PASSWORD_EDIT = `${SERVER_IP}${COMMON}user/change-password`
 

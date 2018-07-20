@@ -36,7 +36,6 @@ export default {
   mounted: function () {
     // 背景粒子效果
     window.particlesJS.load('particles-js', 'static/js/particles/particles.json')
-
     // 自动设置页面高度
     this.handleResize()
   },
@@ -47,7 +46,6 @@ export default {
     fetchData: function () {
       let pathName = this.$route.name.toLowerCase()
       this.show = pathName
-
       this.handleResize()
     },
     handleResize () {

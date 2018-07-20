@@ -8,8 +8,10 @@
 	    	<el-table-column prop="name" label="名称" width="320"></el-table-column>
 		    <el-table-column label="操作" width="300">
 			    <template slot-scope="scope">
+			    	<!--
 			    	<el-button type="primary" plain icon="el-icon-setting" circle size="small"
 			    		@click="fnPermission(scope.row)"></el-button>
+		    		-->
 			    	<el-button type="warning" plain icon="el-icon-edit" circle size="small"
 			    		@click="fnEdit(scope.row)"></el-button>
 			    	<el-button type="danger" plain icon="el-icon-delete" circle size="small"

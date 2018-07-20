@@ -35,6 +35,16 @@ export default {
     })
   },
 
+  edit_current (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.USER_EDIT_CURRENT,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
   dele (list) {
     return new Promise((resolve, reject) => {
       axios.post(global.USER_DELE,list).then((res) => {

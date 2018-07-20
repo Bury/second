@@ -42,25 +42,22 @@
                     <span slot="title">设备管理</span>
                 </el-menu-item>
             </router-link>
+            <router-link :to="{name: 'User'}">
+                <el-menu-item index="/User">
+                    <i class="el-icon-service"></i>
+                    <span slot="title">店员管理</span>
+                </el-menu-item>
+            </router-link>
             <el-submenu index="7-1" style="padding-bottom:200px;">
                 <template slot="title">
                     <i class="el-icon-setting"></i>
                     <span slot="title">系统设置</span>
                 </template>
-                <router-link :to="{name: 'User'}">
-                    <el-menu-item index="/User">帐号管理</el-menu-item>
-                </router-link>
-                <router-link :to="{name: 'Role'}">
-                    <el-menu-item index="/Role">角色管理</el-menu-item>
-                </router-link>
                 <router-link :to="{name: 'StoreRemind'}">
                     <el-menu-item index="/StoreRemind">提醒配置</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'StoreTime'}">
                     <el-menu-item index="/StoreTime">营业时间设置</el-menu-item>
-                </router-link>
-                <router-link :to="{name: 'UserPersonal'}">
-                    <el-menu-item index="/UserPersonal">个人中心</el-menu-item>
                 </router-link>
             </el-submenu>
         </el-menu>
