@@ -5,7 +5,7 @@
 			<li class="store-record-item" v-for="(item,key) in orderRecords.list">
 				<div>订单编号：{{orderRecords.list[key].sn}}</div>
 				<div>收银时间：{{orderRecords.list[key].cash_t}}</div>
-				<div>商品名：{{orderRecords.list[key].goods_name}}</div>
+				<div>材质款式：{{orderRecords.list[key].goods_name}}</div>
 				<div>成交金额：{{orderRecords.list[key].price}}元</div>
 			</li>
 		</ul>

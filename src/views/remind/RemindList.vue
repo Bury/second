@@ -2,20 +2,11 @@
 	<div class="remind-list-page">
 		<div class="top-box">
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-			  <el-form-item label="门店选择：" v-if="allStores">
+			  <!--<el-form-item label="门店选择：" v-if="allStores">
 			    <el-select v-model="requestParameters.store_id" placeholder="门店选择">
 			      <el-option v-for="(item, idx) in allStores" :key="idx" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
 			    </el-select>
-			  </el-form-item>
-			  <el-form-item label="进店时间：">
-				<el-date-picker
-			      v-model="value4"
-			      type="daterange"
-			      range-separator="至"
-			      start-placeholder="开始时间"
-			      end-placeholder="结束时间">
-			    </el-date-picker>
-			  </el-form-item>
+			  </el-form-item>-->
 			   <!--<el-form-item label="人脸ID：">
 			    <el-input v-model="requestParameters.id"></el-input>
 			  </el-form-item>-->
@@ -43,7 +34,7 @@
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="性别：">
-			    <el-select v-model="requestParameters.sex" placeholder="性别">
+			    <el-select v-model="requestParameters.gender" placeholder="性别">
 			      <el-option label="全部" value="0"></el-option>
 			      <el-option label="男" value="1"></el-option>
 			      <el-option label="女" value="2"></el-option>
@@ -89,7 +80,10 @@
 		    <el-table-column prop="device_name" labedateformat('YYYY-MM-DD HH:mm:ss')l="设备信息" width="160"></el-table-column>
 		    <el-table-column fixed="right" label="操作" width="150">
 			    <template slot-scope="scope">
-			    	<el-button v-if="scope.row.is_reception == 0" @click="isReception(scope.row)" type="text" size="small" style="color:#FF5940;">未接待</el-button>
+			    	<!--<el-button v-if="scope.row.is_reception == 0" @click="isReception(scope.row)" type="text" size="small" style="color:#FF5940;">未接待</el-button>-->
+			    	<el-button v-if="scope.row.is_reception == 0" type="text" size="small" style="color:#FF5940;">未接待</el-button>
+			    	<el-button v-if="scope.row.is_reception == 1" type="text" size="small" style="color:#FF5940;">未备注</el-button>
+			    	<el-button v-if="scope.row.is_reception == 2" type="text" size="small" style="color:#FF5940;">已接待</el-button>
 			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
 			    </template>
 		    </el-table-column>
@@ -113,7 +107,7 @@
 	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;" :before-close="closeChangeMachie">
 			<el-tabs v-model="activeName" @tab-click="checkout">
 			    <el-tab-pane label="个人信息" name="first">
-			    	<user-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></user-info>
+			    	<user-info :customerId="currentCustomerId"  :showInfoEdit="showInfoEdit"></user-info>
 			    </el-tab-pane>
 			    <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
 			    	<store-record :customerId="currentCustomerId"></store-record>
@@ -149,13 +143,10 @@
 		        },
 		        dialogVisible:false,//弹窗是否显示
 		        activeName: 'first',
-		        value4: ['',''],//时间控件
 		        requestParameters: {
 	                page: 1,
 	                page_size:10,
 	                store_id:'',
-	                store_time_start:'',
-	                store_time_end:'',
 	                level:'',
 	                age:'',
 	                gender:'',
@@ -176,15 +167,12 @@
         methods: {
         	//列表
         	remindList(){
-        		this.$data.store_time_start = this.$data.value4[0];
-	            this.$data.store_time_end = this.$data.value4[1];
 			    let qs = require('querystring')
         		remindApi.remindList(qs.stringify(this.$data.requestParameters)).then((res) => {
-        			if(res.data.errno === 0){
+        			if(res.data.errno === 0){  
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
 		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-
         			}else{
 
         			}
@@ -227,7 +215,7 @@
 		        this.$data.showInfoEdit = false;
 		        this.$data.currentCustomerId = row.customer_id;
 		        this.$data.activeName = 'first';
-		        this.$data.dialogVisible = true;
+		        this.$data.dialogVisible = true;	        
 		    },
 
 		    checkout(tab, event) {
@@ -249,6 +237,8 @@
 	            done();
 	            // window.location.reload();
 	            this.$data.showInfoEdit = false;
+	            this.remindList();
+	            
 	        }
 	    },
     }

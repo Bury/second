@@ -6,7 +6,7 @@
                 <li class="user-phone">手机号码： {{userInfo.phone}}</li>
                 <li class="user-sex">性别： {{userInfo.gender == 1 ? '男' : '女'}}</li>
                 <li class="user-age">年龄： {{userInfo.age}}</li>
-                <li class="user-type">类型： {{userInfo.vip_level == 0 ? '普通' : 'VIP'}}</li>
+                <li class="user-type">客户等级： {{userInfo.vip_level == 0 ? '普通' : 'VIP'}}</li>
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
@@ -18,7 +18,7 @@
                 标签： 
                     <el-tag v-for="(item,key) in userInfo.tag" :key="key" style="margin-right:10px;">{{userInfo.tag[key].name}}</el-tag>
             </div>
-            <p class="user-remarks">备注： {{userInfo.remark === null ? '暂无备注' : userInfo.remark}}</p>
+            <p class="user-remarks">备注： {{userInfo.remark === null || userInfo.remark === "" ? '暂无备注' : userInfo.remark}}</p>
             <el-button type="primary" plain size="small" class="edit-btn" @click="editUserInfo()">编辑</el-button>
         </div>
 
@@ -37,8 +37,7 @@
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
-              <el-form-item label="类型：">{{editUserInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
-              <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
+              <el-form-item label="客户等级：">{{editUserInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
               <el-form-item label="标签：">
                 <div v-for="label in labels" :key="label.id" class="labels">
                     <div>—— {{label.name}} ——</div>
@@ -138,6 +137,7 @@
                     'customer_id':customerId
                 })).then((res) => {
                     if(res.data.errno === 0){
+                    	console.log(res.data.data)
                         this.$data.userInfo = res.data.data
                     }else{
 
@@ -161,11 +161,15 @@
                                 phone      :this.$data.editUserInfoData.phone,   
                                 gender     :this.$data.editUserInfoData.gender, 
                                 tag_ids    :this.$data.editUserInfoData.tag_ids,
-                                remark     :this.$data.editUserInfoData.ramark,
+                                remark     :this.$data.editUserInfoData.remark,
                             })).then((res) => {
-                                if(res.data.errno === 0){
-                                    this.userInfoCancel();
-                                    this.personalInfo(this.$props.customerId)
+                                if(res.data.errno === 0){  
+                                	this.$alert('保存成功', '提示', {
+                                      confirmButtonText: '确定'
+                                    });
+                                	
+                                    this.userInfoCancel();                                    
+                                    this.personalInfo(this.$props.customerId)                                    
                                 }else{
 
                                 }
