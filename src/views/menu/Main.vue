@@ -48,16 +48,11 @@
 
 import MenuLeft from './MenuLeft'
 
-import userApi from '../../api/user'
-
 export default {
-
   name: 'main-box',
-
   components: {
     MenuLeft
   },
-
   data () {
     return {
         userName:'xxxxx',
@@ -71,13 +66,10 @@ export default {
         }
     }
   },
-
   created: function(){
     this.$data.userName = localStorage.getItem('username')
   },
-
   methods: {
-
     handleSelect(key, keyPath) {
         var nowKey = "leftMenu"+key;
         for(var i in this.$data.leftMenu){
@@ -89,11 +81,9 @@ export default {
         }
         
     },
-
     handleOpen(key, keyPath) {
         console.log(key, keyPath);
     },
-
     handleClose(key, keyPath) {
         console.log(key, keyPath);
     },
@@ -114,11 +104,8 @@ export default {
     user_current_detail(){
         this.$router.push('/UserCurrentDetail')
     }
-
   }
-  
 }
-
 </script>
 
 <style lang="scss" scoped>

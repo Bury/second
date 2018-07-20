@@ -3,8 +3,8 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
-		<el-table :data="tableData" border height="448" style="width:1342px;text-align:center;">
 
+		<el-table :data="tableData" border height="448" style="width:1342px;text-align:center;">
 			<el-table-column prop="id" label="ID" width="160"></el-table-column>
 	    	<el-table-column prop="username" label="帐号" width="160"></el-table-column>
 	    	<el-table-column prop="role_name" label="岗位" width="160"></el-table-column>
@@ -50,7 +50,7 @@
 				    <el-radio :label="1">店员</el-radio>
 			 	</el-radio-group>
 			  </el-form-item>
-			  <el-form-item label="姓名：" prop="desc">
+			  <el-form-item label="使用人：" prop="desc">
 			    <el-input v-model="editFormData.desc"></el-input>
 			  </el-form-item>
 			  <el-form-item label="手机：" prop="phone">
@@ -106,7 +106,7 @@
 		  </el-form>
 		  <div slot="footer" class="dialog-footer" v-if="!avatarFormVisible">
 		    <el-button @click="addCancel">取 消</el-button>
-		    <el-button type="primary" @click="fnAddsSubmit('addFormData')">确 定</el-button>
+		    <el-button type="primary" @click="addSubmit('addFormData')">确 定</el-button>
 		  </div>
 		</el-dialog>
 		
@@ -198,7 +198,7 @@
 			lists(){
 				this.$data.requestParameters.sid = localStorage.getItem('store_id');
 				let qs = require('querystring')
-	    		userApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
+	    		settingApi.accountList(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
@@ -226,7 +226,6 @@
 					let qs = require('querystring')
 	        		userApi.dele(qs.stringify(list)).then((res) => {
 	        			if(res.data.errno === 0){
-							console.log(res)
 				          	globalFunctions.functions.success_message(this);
 							this.lists();
 	        			}else{
@@ -243,7 +242,6 @@
 			},
 
 			fnEdit(row){
-				console.log(row);
 				let qs = require('querystring')
         		userApi.view(qs.stringify({
         			id:row.id
@@ -281,7 +279,7 @@
 		        		userApi.edit(qs.stringify(this.$data.editFormData)).then((res) => {
 		        			if(res.data.errno === 0){
 								console.log(res)
-								this.lists();
+								this.accountList();
 								this.$data.editFormData = {
 									id:'',
 									name:'',
@@ -320,7 +318,6 @@
 						let qs = require('querystring')
 		        		userApi.password_reset(qs.stringify(this.$data.resetPasswordFormData)).then((res) => {
 		        			if(res.data.errno === 0){
-								console.log(res)
 								globalFunctions.functions.success_message(this);
 								this.lists();
 								this.$data.resetPasswordFormVisible = false;
@@ -334,6 +331,7 @@
 		        });
 
 			},
+
 
 			fnResetPasswordClearData(){
 				this.$data.resetPasswordFormData = {
@@ -387,9 +385,12 @@
 		        			}else{
 								this.$message.error(res.data.msg);	
 							}		        			
+		        			
 		        		})
+						
 			        } 
 		        });
+
 			},
 
 			closeChange(done){

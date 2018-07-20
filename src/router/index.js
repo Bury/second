@@ -5,7 +5,7 @@ import Router from 'vue-router'
 import Main from '../views/menu/Main'
 
 // 登录页面
-import UserLogin from '../views/user/UserLogin'
+import Login from '../views/login/Login'
 
 //客流统计
 import Statistics from '../views/home/Statistics'
@@ -69,7 +69,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(
         record => record.meta.requiresAuth)&& (!knock_knock || knock_knock === null)) {
     next({
-      path: '/login',
+      path: '/UserLogin',
       query: { redirect: to.fullPath }
     })
   } else {

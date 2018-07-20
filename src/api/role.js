@@ -16,16 +16,6 @@ export default {
     })
   },
 
-  lists_resuts (list) {
-    return new Promise((resolve, reject) => {
-      axios.post(global.ROLE_LISTS_RESULTS,list).then((res) => {
-        resolve(res)
-      }).catch((err) => {
-        reject(err)
-      })
-    })
-  },
-
   adds (list) {
     return new Promise((resolve, reject) => {
       axios.post(global.ROLE_ADDS,list).then((res) => {
