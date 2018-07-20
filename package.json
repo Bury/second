@@ -12,6 +12,7 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build": "node build/build.js",
+    "build--dev": "cross-env NODE_ENV=development env_config=dev node build/build.js",
     "build--test": "cross-env NODE_ENV=testing env_config=test node build/build.js",
     "build--prod": "cross-env NODE_ENV=production env_config=prod node build/build.js"
   },
