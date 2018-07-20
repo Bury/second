@@ -101,7 +101,7 @@
 
 			<!--新建/编辑-->
 			<el-dialog :title="dialogTitle" :visible.sync="FormVisible">
-				<el-form :model='formName' ref="formName" label-width="100px" class="demo-ruleForm">
+				<el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
 					<el-form-item label="收银时间：">
 						<el-date-picker
 							v-model="formName.cash_t"
@@ -120,10 +120,10 @@
 									<img :src="faceSearch.avatar" style="display:block;margin:0 auto;width:100%;">
 								</template>
 							</div>
-						</el-form-item>						
+						</el-form-item>
 					</el-form-item>
-					
-					
+
+
 						<div v-for="(item,index) in addProList" :key="index" v-if="addProList">
 								<el-row>
 										<el-col :span='7'>
@@ -138,7 +138,7 @@
 												<el-select v-model="item.style">
 														<el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
 												</el-select>
-										</el-form-item>	
+										</el-form-item>
 										</el-col>
 										<el-col :span='6'>
 										<el-form-item label='成交金额：'>
@@ -158,33 +158,32 @@
 						<div>
 						<el-form-item label=''>
 							<el-button @click='addProduct()'>新增商品</el-button>
-						</el-form-item>	
-						</div>	
+						</el-form-item>
+						</div>
 					</div>
 					<div class="totalAll">
 						<p>共计
 						<input v-model='allNum' id='totalNumber' :disabled='true'/>件,总价
-						<input v-model="totalMoney" id='totalPrice' :disabled='true'/>元</p>
+						<input v-model="totalMoney" id='totalPrice' :disabled='true' prop="priceA"/>元</p>
 					</div>
 					<el-form-item></el-form-item>
 					<el-form-item></el-form-item>
 					<el-form-item></el-form-item>
 					<el-form-item label="小票" v-model="formName.files">
-						<el-upload
-							action="https://jsonplaceholder.typicode.com/posts/"
-							list-type="picture-card"
-							:show-file-list="false"
-							:on-success="handleAvatarSuccess"
-							:before-upload="beforeAvatarUpload"
-							:on-preview="handlePictureCardPreview"
-							:on-remove="handleRemove">
-							<i class="el-icon-plus"></i>
-						</el-upload>
+            <el-upload v-model="item.file"
+                       :action="importFileUrl()"
+                       list-type="picture-card"
+                       :data="upLoadData"
+                       :on-preview="handlePictureCardPreview"
+                       :on-remove="handleRemove"
+                       :onSuccess="uploadSuccess">
+              <i class="el-icon-plus"></i>
+            </el-upload>
 						<el-dialog :visible.sync="dialogVisible">
 							<img width="100%" :src="dialogImageUrl" alt="">
 						</el-dialog>
 					</el-form-item>
-					
+
 				</el-form>
 				<div slot="footer" class="dialog-footer">
 					<el-button @click="cancel(formName)">取 消</el-button>
@@ -210,6 +209,13 @@
 	import OrderApi from '../../api/order'
 	import remindApi from '../../api/remind'
 	import * as utils from '../../utils/index'
+  import apiUrl from '../../config/API.js'
+
+  const SERVER_IP = apiUrl.apiUrl
+  const COMMON = 'v1'
+
+  //图片上传
+  global.IMAGS_PUSH = `${SERVER_IP}${COMMON}/user/upload`
 
   export default {
 		name:'guest-list',
@@ -217,11 +223,15 @@
 		},
 		data(){
 			return{
+        upLoadData: {
+          access_token: localStorage.getItem('knock_knock'),
+        },
+      imageListF:[],
 				allNum:'1',
-				totalMoney:0,	
+				totalMoney:0,
 				faceSearch:{
 					avatar:''
-				},			
+				},
 				searchFace:{
 					id:''
 				},
@@ -247,20 +257,20 @@
 				cashTimes:['',''],
 				cashTime: '',
 				createdTimes:['',''],
-				dialogTitle: '',				
+				dialogTitle: '',
 				requestParameters: {
 						page: 1,
 						page_size:10,
 						sn:'',
 						goods_name:'',
 						price_start:'',
-						price_end:'',						
+						price_end:'',
 						cash_t_start:'',
 						cash_t_end:'',
 						created_at_start:'',
 						created_at_end:'',
 						material: '',
-						style: ''						
+						style: ''
 				},
 				formName:{
 						cash_t:'',
@@ -269,7 +279,10 @@
 						customer_id:'',
 						remark:''
 				},
-				FormVisible: false
+				FormVisible: false,
+        rules:[
+          // priceA:{}
+        ]
 			}
 		},
 		created: function () {
@@ -277,6 +290,28 @@
 		 this.getAll()
 		},
     methods: {
+      //  上传图片动态地址
+      importFileUrl(){
+        return global.IMAGS_PUSH
+      },
+
+      //  上传图片
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+        console.log(file)
+        console.log(this.dialogImageUrl)
+      },
+      // 上传成功后的回调
+      uploadSuccess (response, file, fileList) {
+        console.log('上传文件', response);
+        console.log(response.data.path)
+        this.$data.imageListF.push(response.data.path);
+        console.log(this.$data.imageListF);
+      },
 		handleAvatarSuccess(res, file) {
 				this.imageUrl = URL.createObjectURL(file.raw);
 			},
@@ -352,12 +387,12 @@
 			fnEdit (row) {
 				this.$data.dialogTitle = '订单编辑';
 				this.$data.FormVisible = true;
-				this.$data.cashTime = this.$data.cashTime;				
+				this.$data.cashTime = this.$data.cashTime;
 			},
 			//查询人脸ID
 			findFaceId(){
 				let list = {
-					'id':this.$data.searchFace.id,			
+					'id':this.$data.searchFace.id,
 				}
 				let qs = require('querystring');
 				OrderApi.findFaceId(qs.stringify(list)).then((res) => {
@@ -374,21 +409,21 @@
 					material : null,
 					style : null,
 					price:''
-				}			
+				}
 				this.$data.addProList.push(obj);
-				this.$data.allNum =  this.$data.addProList.length;				
+				this.$data.allNum =  this.$data.addProList.length;
 			},
 			//计算总价
-			inputFun(){	
+			inputFun(){
 				let n = 0;
 				for(let i=0;i<this.$data.addProList.length;i++){
 					if(this.$data.addProList[i].price.replace(/[^\.\d]/g,'')){
 						n += parseInt(this.$data.addProList[i].price);
 					}else{
 						this.$data.addProList[i].price=0;
-					}										
+					}
 				}
-				this.$data.totalMoney = n;				
+				this.$data.totalMoney = n;
 			},
 			//删除商品
 			deleprodect(index){
@@ -396,18 +431,16 @@
 			},
 			//创建新订单
 			submitForm(formName){
-				console.log(formName);
-				console.log(this.$data.addProList);
-				console.log(this.$data.formName.cash_t);
-				console.log(this.$data.dialogImageUrl);
-				console.log(this.$data.searchFace.id);
+        let listArry =  this.$data.imageListF.join(',');
+        let sendData = JSON.stringify(this.$data.addProList);
+        console.log(sendData);
 				let material = this.$data.formName.material;
 				let style = this.$data.formName.style;
 				let list = {
-					'goods_info':this.$data.addProList,
+					'goods_info':sendData,
 					'cash_t':this.$data.formName.cash_t,
 					'remark':'',
-					'files':this.$data.dialogImageUrl,
+					'files':listArry,
 					'customer_id':this.$data.searchFace.id
 				}
 				let qs = require('querystring');
@@ -416,15 +449,15 @@
 					console.log(res);
 				if(res.data.errno === 0){
 					// this.$data.formName = {
-					// 	goods_info: [],
-					// 	cash_t:'',
-					// 	files:[],
-					// 	customer_id:'',
-					// 	remark:''
+						//goods_info: [],
+						// cash_t:'',
+						// files:[],
+						// customer_id:'',
+						// remark:''
 					// };
 					this.$message({
 					    type: 'success',
-						message: '创建成功!'								
+						message: '创建成功!'
 					});
 				this.$data.FormVisible = false;
 	        	}else{
@@ -473,7 +506,7 @@
 				// 		  this.$refs.name.validate();
 				// 	  }
 				//   )
-				  
+
 			  },
 
         //实时录单
@@ -514,7 +547,7 @@
 			}
 		}
 	}
-	
+
 	.addproduct{
 		overflow:hidden;
 		div{
@@ -522,7 +555,7 @@
 		}
 	}
 	.deleprodect{
-		margin-left:20px;		
+		margin-left:20px;
 	}
 </style>
 

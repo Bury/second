@@ -62,8 +62,7 @@ global.IS_NO_ME = `${SERVER_IP}${COMMON}order/is-me`
 global.ADD_NEW_PHONE = `${SERVER_IP}${COMMON}order/add-phone`
 //新增消费
 global.ADD_GOODS = `${SERVER_IP}${COMMON}order/adds`
-//图片上传
-global.IMAGS_PUSH = `${SERVER_IP}${COMMON}/user/upload`
+
 
 /*标签管理*/
 // post /v1/tag/tree-form

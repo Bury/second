@@ -3,7 +3,7 @@
     <vue-highcharts :options="options" ref="guestCharts"></vue-highcharts>
   </div>
 </template>
- 
+
 <script>
 import VueHighcharts from 'vue2-highcharts'
 export default{
@@ -41,7 +41,7 @@ export default{
                 line: {
                     dataLabels: {
                         // 开启数据标签
-                        enabled: true          
+                        enabled: true
                     },
                     // 关闭鼠标跟踪，对应的提示框、点击事件会失效
                     enableMouseTracking: true
@@ -60,12 +60,20 @@ export default{
       getData(value){
         let guestCharts = this.$refs.guestCharts;
         guestCharts.delegateMethod('showLoading', 'Loading...');
+
+        let char_class = this.$refs.options.chart.type;
+
         this.$data.options.chart.type = this.$props.type;
         this.$data.options.xAxis.categories = value.time;
+        console.log(value.time);
         guestCharts.removeSeries();
         setTimeout(() => {
               guestCharts.addSeries({name:' 客流量统计',data: value.sum});
               guestCharts.hideLoading();
+              if((char_class != '') && (char_class != this.$data.options.chart.type)){
+                type : this.options.chart.type
+              }
+
           }, 100)
       },
     }
