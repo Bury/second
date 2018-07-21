@@ -196,15 +196,13 @@
         	//列表
         	guestList(){
         		this.$data.requestParameters.store_time_start = this.$data.value4[0];
-						this.$data.requestParameters.store_time_end = this.$data.value4[1];
-						let qs = require('querystring');
+				this.$data.requestParameters.store_time_end = this.$data.value4[1];
+				let qs = require('querystring');
         		guestApi.guestList(qs.stringify(this.$data.requestParameters)).then((res) => {
-        			let result = res.data
-							if(result.errno === 0){
-								console.log('aa')
-								console.log(result.data.list)
-								this.tableData = result.data.list;
-								this.$data.pagination.currentPage = result.data.pagination.currentPage;
+        		let result = res.data
+					if(result.errno === 0){
+						this.tableData = result.data.list;
+						this.$data.pagination.currentPage = result.data.pagination.currentPage;
 		        		this.$data.pagination.totalCount = result.data.pagination.totalCount;
 
         			}else{
@@ -252,6 +250,7 @@
 		    closeChangeMachie(done){
 	            done();
 	            // window.location.reload();
+	            this.guestList();
 	            this.$data.showInfoEdit = false;
 	        },
 	        getAvatar(row){

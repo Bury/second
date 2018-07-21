@@ -6,7 +6,7 @@
                 <li class="user-phone">手机号码： {{userInfo.phone}}</li>
                 <li class="user-sex">性别： {{userInfo.gender == 1 ? '男' : '女'}}</li>
                 <li class="user-age">年龄： {{userInfo.age}}</li>
-                <li class="user-type">类型： {{userInfo.vip_level == 0 ? '普通' : 'VIP'}}</li>
+                <li class="user-type">客户等级： {{userInfo.vip_level == 0 ? '普通' : 'VIP'}}</li>
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
@@ -37,7 +37,7 @@
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
-              <el-form-item label="类型：">{{editUserInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
+              <el-form-item label="客户等级：">{{editUserInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
               <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
               <el-form-item label="标签：">
                 <div v-for="label in labels" :key="label.id" class="labels">
@@ -72,11 +72,15 @@
             },
             showInfoEdit:{
                 type:Boolean
+            },
+            isremark:{
+            	type:Number
             }
         },
         data() {
             return {
                 infoEdit:false,
+                remarksId:"",
                 userInfo:{},
                 editUserInfoData:{},
                 labels:{},
@@ -107,35 +111,40 @@
         },
         watch: {
           customerId: function() {
-             this.personalInfo(this.$props.customerId)
+             this.personalInfo(this.$props.customerId,this.$data.remarksId)
           },
           
         },
         created:function(){
-            this.personalInfo(this.$props.customerId)
+            this.$data.remarksId =	this.$props.isremark == 0 ? 1 : this.$props.isremark;
+            console.log(this.$data.remarksId)
+            this.personalInfo(this.$props.customerId,this.$data.remarksId)
             this.getAll(this.$props.customerId)
         },
         methods: {
             getAll(customerId){
                 let list = {
-                    'all': '1',
+                    'all': 1,
                     'customer_id': customerId
                 }
                 let qs = require('querystring')
+                console.log(list)
                 remindApi.getAll(qs.stringify(list)).then((res) => {
                     if(res.data.errno === 0){
+                    	console.log(res.data.data)
                         this.$data.labels = res.data.data
                     }else{
-
+                    	
                     }
                 })
             },
 
-            personalInfo(customerId){
+            personalInfo(customerId,isremarkId){
                 this.$data.infoEdit = this.$props.showInfoEdit;
                 let qs = require('querystring')
                 remindApi.personalInfo(qs.stringify({
-                    'customer_id':customerId
+                    'customer_id':customerId,
+                     'traffic_id':isremarkId
                 })).then((res) => {
                     if(res.data.errno === 0){
                         this.$data.userInfo = res.data.data
@@ -154,20 +163,22 @@
             userInfoSubmit(formName){
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                            let qs = require('querystring')
+                            let qs = require('querystring');                            
                             remindApi.editPersonalInfo(qs.stringify({
                                 customer_id:this.$data.editUserInfoData.customer_id,
+                                traffic_id: 2,
                                 name       :this.$data.editUserInfoData.name,    
                                 phone      :this.$data.editUserInfoData.phone,   
                                 gender     :this.$data.editUserInfoData.gender, 
                                 tag_ids    :this.$data.editUserInfoData.tag_ids,
-                                remark     :this.$data.editUserInfoData.ramark,
+                                remark     :this.$data.editUserInfoData.remark,
+                                
                             })).then((res) => {
                                 if(res.data.errno === 0){
                                     this.userInfoCancel();
-                                    this.personalInfo(this.$props.customerId)
+                                    this.personalInfo(this.$props.customerId,2)
                                 }else{
-
+                                	
                                 }
                         })
                     }

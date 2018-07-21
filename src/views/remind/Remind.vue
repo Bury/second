@@ -7,7 +7,7 @@
 			      <el-option v-for="(item, idx) in allStores" :key="idx" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
 			    </el-select>
 			  </el-form-item>
-			  <el-form-item label="进店时间：">
+			  <!--<el-form-item label="进店时间：">
 				<el-date-picker
 			      v-model="value4"
 			      type="daterange"
@@ -15,7 +15,7 @@
 			      start-placeholder="开始时间"
 			      end-placeholder="结束时间">
 			    </el-date-picker>
-			  </el-form-item>
+			  </el-form-item>-->
 			   <!--<el-form-item label="人脸ID：">
 			    <el-input v-model="requestParameters.id"></el-input>
 			  </el-form-item>-->
@@ -28,7 +28,11 @@
 			  <el-form-item label="客户等级：" v-if="allLevels">
 			     <el-select v-model="requestParameters.level" placeholder="客户等级">
 			      <el-option label="全部" value="0" v-if="allLevels"></el-option>
-			      <el-option v-for="(item, idx) in allLevels" :key="idx" :label="allLevels[idx].name" :value="allLevels[idx].level"></el-option>
+			      <el-option label="新客匿名" value="1"></el-option>
+			      <el-option label="新客VIP" value="2"></el-option>
+			      <el-option label="熟客匿名" value="3"></el-option>
+			      <el-option label="熟客VIP" value="4"></el-option>
+			      <!--<el-option v-for="(item, idx) in allLevels" :key="idx" :label="allLevels[idx].name" :value="allLevels[idx].level"></el-option>-->
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="年龄：">
@@ -43,7 +47,7 @@
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="性别：">
-			    <el-select v-model="requestParameters.sex" placeholder="性别">
+			    <el-select v-model="requestParameters.gender" placeholder="性别">
 			      <el-option label="全部" value="0"></el-option>
 			      <el-option label="男" value="1"></el-option>
 			      <el-option label="女" value="2"></el-option>
@@ -89,7 +93,10 @@
 		    <el-table-column prop="device_name" labedateformat('YYYY-MM-DD HH:mm:ss')l="设备信息" width="160"></el-table-column>
 		    <el-table-column fixed="right" label="操作" width="150">
 			    <template slot-scope="scope">
-			    	<el-button v-if="scope.row.is_reception == 0" @click="isReception(scope.row)" type="text" size="small" style="color:#FF5940;">未接待</el-button>
+			    	<!--<el-button v-if="scope.row.is_reception == 0" @click="isReception(scope.row)" type="text" size="small" style="color:#FF5940;">未接待</el-button>-->
+			        <el-button v-if="scope.row.is_reception == 0"  type="text" size="small" style="color:#FF5940;">未接待</el-button>
+			        <el-button v-if="scope.row.is_reception == 1"  type="text" size="small" style="color:#FF5940;">未备注</el-button>
+			        <el-button v-if="scope.row.is_reception == 2"  type="text" size="small" style="color:#FF5940;">已完成</el-button>
 			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
 			    </template>
 		    </el-table-column>
@@ -113,7 +120,7 @@
 	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;" :before-close="closeChangeMachie">
 			<el-tabs v-model="activeName" @tab-click="checkout">
 			    <el-tab-pane label="个人信息" name="first">
-			    	<user-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></user-info>
+			    	<user-info :customerId="currentCustomerId" :isremark="isRemarkId" :showInfoEdit="showInfoEdit"></user-info>
 			    </el-tab-pane>
 			    <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
 			    	<store-record :customerId="currentCustomerId"></store-record>
@@ -149,13 +156,10 @@
 		        },
 		        dialogVisible:false,//弹窗是否显示
 		        activeName: 'first',
-		        value4: ['',''],//时间控件
 		        requestParameters: {
 	                page: 1,
 	                page_size:10,
 	                store_id:'',
-	                store_time_start:'',
-	                store_time_end:'',
 	                level:'',
 	                age:'',
 	                gender:'',
@@ -163,6 +167,7 @@
 	                consume_money_end:''
 	            },
 	            currentCustomerId:'',
+	            isRemarkId:'',
 	            showInfoEdit:false
 
 
@@ -170,17 +175,15 @@
         },
         created:function(){
         	this.remindList();
-        	this.getLevels();
         	this.getStores();
         },
         methods: {
         	//列表
         	remindList(){
-        		this.$data.store_time_start = this.$data.value4[0];
-	            this.$data.store_time_end = this.$data.value4[1];
 			    let qs = require('querystring')
         		remindApi.remindList(qs.stringify(this.$data.requestParameters)).then((res) => {
         			if(res.data.errno === 0){
+        				console.log(res.data.data.list)
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
 		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
@@ -192,10 +195,11 @@
         		})
         	},
 
-        	//用户等级
+        	//用户等级 暂时已去掉，dom里写成固定的用户等级了
         	getLevels(){
 				remindApi.getLevels().then((res) => {
         			if(res.data.errno === 0){
+        				console.log(res.data.data)
 						this.$data.allLevels = res.data.data;
         			}else{
 
@@ -226,6 +230,7 @@
 		    showDialog(row) {
 		        this.$data.showInfoEdit = false;
 		        this.$data.currentCustomerId = row.customer_id;
+		        this.$data.isRemarkId = row.is_reception;
 		        this.$data.activeName = 'first';
 		        this.$data.dialogVisible = true;
 		    },
@@ -248,6 +253,7 @@
 		    closeChangeMachie(done){
 	            done();
 	            // window.location.reload();
+	            this.remindList();
 	            this.$data.showInfoEdit = false;
 	        }
 	    },
