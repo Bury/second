@@ -63,6 +63,8 @@
 	</div>
 </template>
 <script>
+	
+	import globalRules from '../config/global_rules'
     import remindApi from '../api/remind'
     export default {
       	name:'user-info',
@@ -85,27 +87,9 @@
                 editUserInfoData:{},
                 labels:{},
                 UserInfoRules:{
-                    name: [
-                        { required: true, message: '请输入姓名', trigger: 'blur' },
-                        { min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
-                    ],
-                    gender:[
-                        { required: true, message: '请选择性别', trigger: 'blur' },
-                    ],
-                    phone:[
-                        { required: true, message: '请输入手机号码', trigger: 'blur' },
-                        {
-                            validator: (rule, value, callback) => {
-                                if (value.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)) {
-                                    callback();
-                                } else {
-                                    callback("请输入正确的手机号码！");
-                                }
-                            },
-                            trigger: 'blur'
-                        }
-                    ]
-
+                    name:globalRules.rules.user.truename(),
+                    gender:globalRules.rules.user.gender(),
+                    phone:globalRules.rules.user.phone(),
                 }
             };
         },
