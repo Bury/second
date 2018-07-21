@@ -64,6 +64,8 @@
 </template>
 <script>
 
+    import globalRules from '../config/global_rules'
+
     import remindApi from '../api/remind'
 
     import guestApi from '../api/guest'

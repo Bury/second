@@ -144,7 +144,7 @@
 <script>
 	import guestApi from '../../api/guest'
 	import remindApi from '../../api/remind'
-	import guestInfo from '../../components/guestInfo'
+	import guestInfo from '../../components/GuestInfo'
 	import StoreRecord from '../../components/StoreRecord'
 	import OrderRecord from '../../components/OrderRecord'
     export default {

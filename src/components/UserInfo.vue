@@ -63,9 +63,13 @@
 	</div>
 </template>
 <script>
+
     import remindApi from '../api/remind'
+
     export default {
+
       	name:'user-info',
+
         props:{
             customerId:{
                 type:Number
@@ -77,7 +81,9 @@
             	type:Number
             }
         },
+
         data() {
+
             return {
                 infoEdit:false,
                 remarksId:"",
@@ -108,18 +114,24 @@
 
                 }
             };
+
         },
+
         watch: {
           customerId: function() {
-             this.personalInfo(this.$props.customerId,this.$props.traffic)
+             this.getGuestInfo(this.$props.customerId,this.$props.traffic)
           },
-          
         },
+
         created:function(){
-            this.personalInfo(this.$props.customerId,this.$props.traffic)
+            alert(this.$props.customerId)
+            alert(this.$props.traffic)
+            this.getGuestInfo(this.$props.customerId,this.$props.traffic)
             this.getAll(this.$props.customerId)
         },
+
         methods: {
+
             getAll(customerId){
                 let list = {
                     'all': 1,
@@ -135,11 +147,11 @@
                 })
             },
 
-            personalInfo(customerId,trafficId){
+            getGuestInfo(customerId,trafficId){
             	this.$data.infoEdit = this.$props.showInfoEdit;
                 let qs = require('querystring');
                 let personlList ={'customer_id':customerId,'traffic_id':trafficId};
-                remindApi.personalInfo(qs.stringify(personlList)).then((res) => {
+                remindApi.getGuestInfo(qs.stringify(personlList)).then((res) => {
                     if(res.data.errno === 0){
                     	console.log(res.data.data)
                         this.$data.userInfo = res.data.data
@@ -148,13 +160,16 @@
                     }
                 })
             },
+
             editUserInfo(){
                 this.$data.editUserInfoData = this.$data.userInfo;
                 this.$data.infoEdit = true;
             },
+
             userInfoCancel(){
                 this.$data.infoEdit = false;
             },
+
             userInfoSubmit(formName){
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
@@ -171,7 +186,7 @@
                             })).then((res) => {
                                 if(res.data.errno === 0){
                                     this.userInfoCancel();
-                                    this.personalInfo(this.$props.customerId,this.$props.traffic)
+                                    this.getGuestInfo(this.$props.customerId,this.$props.traffic)
                                 }else{
                                 	
                                 }
@@ -179,7 +194,9 @@
                     }
                 })
             }
+
         }
+
     };
 </script>
 <style lang="scss" scoped>
