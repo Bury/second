@@ -136,22 +136,10 @@ export default {
     }
   },
   created:function(){
-    this.getStores();
     this.setData();
 
   },
   methods: {
-    //门店
-    getStores(){
-        remindApi.getStores().then((res) => {
-            if(res.data.errno === 0){
-                this.$data.allStores = res.data.data;
-            }else{
-
-            }
-
-        })
-    },
 
     //时间转为秒
     getS(value){

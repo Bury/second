@@ -48,16 +48,6 @@ export default {
     })
   },
 
-  getStores(){
-    return new Promise((resolve, reject) => {
-      axios.post(global.GET_STORES).then((res) => {
-        resolve(res)
-      }).catch((err) => {
-        reject(err)
-      })
-    })
-  },
-
   isReception(list){
     return new Promise((resolve, reject) => {
       axios.post(global.IS_RECEPTION, list).then((res) => {
