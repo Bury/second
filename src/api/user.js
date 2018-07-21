@@ -88,9 +88,9 @@ export default {
   },
 
   //获取当前登录用户信息
-	getUserCurrentView () {
+	getUserCurrentInfo () {
     return new Promise((resolve, reject) => {
-      axios.post(global.USER_CURRENT_VIEW).then((res) => {
+      axios.post(global.USER_CURRENT_INFO).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)

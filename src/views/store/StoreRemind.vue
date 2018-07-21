@@ -61,7 +61,7 @@
             //设置
             fnSetRemind(){
                 let list = {
-                        'remind_ids' :  this.checkedType.toString(),
+                    'remind_ids' :  this.checkedType.toString(),
                 }
                 let qs = require('querystring')
                 storeApi.remindSet(qs.stringify(list)).then((res) => {

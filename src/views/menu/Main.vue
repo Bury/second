@@ -2,7 +2,7 @@
 <template>
     <div class="main-box">
         <div class="header-wrap">
-            <div class="company">鹰眼门店管理系统</div>
+            <div class="company">鹰眼门店管理系统-{{store_name}}</div>
             <!-- <div class="top-menu" style="float:left;">
                 <el-menu :default-active="horizontalIndex"
                       class="el-menu-demo"
@@ -20,7 +20,7 @@
             <div class="user">
                 <el-dropdown trigger="hover" >
                     <span class="el-dropdown-link" style="color:#fff;">
-                      您好，{{userName}}
+                      您好，{{username}}
                       <i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>UserPersonal
                     <el-dropdown-menu slot="dropdown" split-button style="text-align:center;">
@@ -48,14 +48,22 @@
 
 import MenuLeft from './MenuLeft'
 
+import globalFunctions from '../../config/global_functions'
+
+import userApi from '../../api/user'
+
 export default {
+
   name: 'main-box',
+
   components: {
     MenuLeft
   },
+
   data () {
     return {
-        userName:'xxxxx',
+        store_name:'xxxxxx',
+        username:'xxxxxx',
         horizontalIndex: '1',
         isCollapse: false,
         leftMenu: {
@@ -66,9 +74,12 @@ export default {
         }
     }
   },
+
   created: function(){
-    this.$data.userName = localStorage.getItem('username')
+    this.$data.username = localStorage.getItem('username');
+    this.$data.store_name = localStorage.getItem('username');
   },
+
   methods: {
     handleSelect(key, keyPath) {
         var nowKey = "leftMenu"+key;
@@ -81,30 +92,27 @@ export default {
         }
         
     },
+
     handleOpen(key, keyPath) {
         console.log(key, keyPath);
     },
+
     handleClose(key, keyPath) {
         console.log(key, keyPath);
     },
 
     logout(){
         userApi.logout().then((res) => {
-            if(res.data.errno === 0){
-                alert('退出成功')
-                localStorage.setItem('knock_knock', null)
-                localStorage.setItem('username', '')
-                this.$router.replace({name: '/'})
-            }else{
-                //logout failed
-            }
+            globalFunctions.functions.user.logout(userApi,this.$router,this.$message);
         });
     },
 
     user_current_detail(){
         this.$router.push('/UserCurrentDetail')
     }
+
   }
+
 }
 </script>
 
@@ -157,7 +165,6 @@ export default {
         .left-menu-wrap::-moz-scrollbar {
             // display: none;
         }
-        
         .content-wrap{
             padding:90px 30px 30px;
 

@@ -145,10 +145,10 @@
 	            	password:'',
 	            },
 	            addRules:{
-	            	name:globalRules.rules.truename(),
-	            	phone:globalRules.rules.phone(),
-	            	username:globalRules.rules.username(4,20,'请输入帐号'),
-	            	password:globalRules.rules.password(6,20,'请输入密码：'),
+	            	name:globalRules.rules.user.truename(),
+	            	phone:globalRules.rules.user.phone(),
+	            	username:globalRules.rules.user.username(4,20,'请输入帐号'),
+	            	password:globalRules.rules.user.password(6,20,'请输入密码：'),
 	            },
 	            avatarFormVisible:false,
 	            editFormVisible:false,
@@ -159,9 +159,9 @@
 	            	username:'',
 	            },
 	            editRules:{
-	            	name:globalRules.rules.truename(),
-		          	phone:globalRules.rules.phone(),
-	            	username: globalRules.rules.username(4,20,'请输入帐号'),
+	            	name:globalRules.rules.user.truename(),
+		          	phone:globalRules.rules.user.phone(),
+	            	username: globalRules.rules.user.username(4,20,'请输入帐号'),
 	            },
 	            resetPasswordFormVisible:false,
 	            resetPasswordFormData:{
@@ -170,7 +170,7 @@
 	            	repassword:'',
 	            },
 	            resetPasswordRules:{
-	            	password:globalRules.rules.password(6,20,'请输入当前密码：'),
+	            	password:globalRules.rules.user.password(6,20,'请输入当前密码：'),
 	            	repassword:[
 	            		{ required: true, message: '请再次输入密码', trigger: 'blur' },
 			            {
@@ -198,7 +198,7 @@
 			lists(){
 				this.$data.requestParameters.sid = localStorage.getItem('store_id');
 				let qs = require('querystring')
-	    		settingApi.accountList(qs.stringify(this.$data.requestParameters)).then((res) => {
+	    		userApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
 	    			if(res.data.errno === 0){
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
@@ -226,7 +226,7 @@
 					let qs = require('querystring')
 	        		userApi.dele(qs.stringify(list)).then((res) => {
 	        			if(res.data.errno === 0){
-				          	globalFunctions.functions.success_message(this);
+				          	globalFunctions.functions.message(this,'success');
 							this.lists();
 	        			}else{
 							this.$message.error(res.data.msg);

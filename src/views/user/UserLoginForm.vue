@@ -41,8 +41,8 @@ export default {
       },
 
       rules: {
-        username: globalRules.rules.username(4,20,'请输入帐号'),
-        password: globalRules.rules.password(6,20,'请输入密码：')
+        username: globalRules.rules.user.username(4,20,'请输入帐号'),
+        password: globalRules.rules.user.password(6,20,'请输入密码：')
       }
 
     }
@@ -61,9 +61,10 @@ export default {
           let qs = require('querystring');
           userApi.login(qs.stringify(this.$data.loginInfo)).then((res) => {
             if(res.data.errno === 0){
-              localStorage.setItem('knock_knock', res.data.data.access_token)
-              localStorage.setItem('username', res.data.data.user.username)
-              localStorage.setItem('store_id', res.data.data.user.store_id)
+              localStorage.setItem('knock_knock', res.data.data.access_token);
+              localStorage.setItem('username', res.data.data.user.username);
+              localStorage.setItem('store_id', res.data.data.user.store_id);
+              localStorage.setItem('store_name', res.data.data.user.store_name);
               this.$router.replace({name: 'Statistics'})
             }else{
               this.$message.error(res.data.msg);

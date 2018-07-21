@@ -128,7 +128,7 @@ global.STORE_TIME_SET = `${SERVER_IP}${COMMON}store-config/business-time`
 
 
 
-global.USER_CURRENT_VIEW = `${SERVER_IP}${COMMON}user/info`
+global.USER_CURRENT_INFO = `${SERVER_IP}${COMMON}user/info`
 global.USER_PASSWORD_EDIT = `${SERVER_IP}${COMMON}user/change-password`
 
 global.USER_LOGOUT = `${SERVER_IP}${COMMON}user/logout`
