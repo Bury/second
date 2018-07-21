@@ -89,9 +89,8 @@ global.EDIT_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-edit`
 global.DELE_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-dele`
 
 //设备管理
-// post device/list 按设备
-global.GET_DEVICE_LIST = `${SERVER_IP}${COMMON}device/list`
-// post device/version
+global.DEVICE_LISTS = `${SERVER_IP}${COMMON}device/list`
+
 global.GET_ALL_VERSION = `${SERVER_IP}${COMMON}device/version`
 // post device/camera-depoly 按设备分配
 global.SET_DEPOLY = `${SERVER_IP}${COMMON}device/camera-depoly`
