@@ -190,7 +190,6 @@
         },
         created:function(){
         	this.guestList();
-        	this.getStores();
         },
         methods: {
         	//列表
@@ -214,19 +213,6 @@
 
         		})
         	},
-
-        	//门店
-        	getStores(){
-        		remindApi.getStores().then((res) => {
-        			if(res.data.errno === 0){
-								this.$data.allStores = res.data.data;
-        			}else{
-
-        			}
-
-        		})
-        	},
-
 
         	handleCurrentChange(currentPage) {
 	            this.$data.requestParameters.page = currentPage;
