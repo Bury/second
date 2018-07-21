@@ -14,10 +14,10 @@ global.GET_CUSTOMER = `${SERVER_IP}${COMMON}analysis/customer`
 global.GET_FEATURE = `${SERVER_IP}${COMMON}analysis/feature`
 
 /*提醒列表*/
-// post customer//remind-list 获取提醒列表
-global.GET_REMIND_LIST = `${SERVER_IP}${COMMON}customer/remind-list`
-// post customer/personal-info 个人信息
-global.GET_PERSONAL_INFO = `${SERVER_IP}${COMMON}customer/personal-info`
+global.REMIND_LISTS = `${SERVER_IP}${COMMON}customer/remind-list`
+global.GUEST_INFO = `${SERVER_IP}${COMMON}customer/personal-info`
+
+
 // post customer/edit-personal-info
 global.EDIT_PERSONAL_INFO = `${SERVER_IP}${COMMON}customer/edit-personal-info`
 // post customer/store-recore 到店记录
