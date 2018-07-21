@@ -66,8 +66,8 @@
 		  </div>
 		</el-dialog>
 
-		<!-- 修改密码 -->
-		<el-dialog title="修改密码" :visible.sync="resetPasswordFormVisible">
+		<!-- 重置密码 -->
+		<el-dialog title="重置密码" :visible.sync="resetPasswordFormVisible">
 		  <el-form :model="resetPasswordFormData" :rules="resetPasswordRules" ref="resetPasswordFormData" label-width="100px" class="demo-ruleForm">
 			  <el-form-item label="新的密码：" prop="password">
 			    <el-input type="password" v-model="resetPasswordFormData.password"></el-input>
@@ -121,12 +121,16 @@
 	import userApi from '../../api/user'
 
 	export default{
+
 		name:'accoun-set',
+
 		components: {
 
 		},
+
 		data(){
 			return{
+				targetUserId:0,
 				tableData: [],
 				pagination:{
 		        	currentPage:1,
@@ -300,8 +304,9 @@
 
 			},
 
-			//修改密码
+			//重置密码
 			fnResetPassword(row){
+				this.$data.targetUserId=row.id;
 				this.$data.resetPasswordFormVisible = true;
 				this.fnResetPasswordClearData();
 			},		
@@ -313,12 +318,12 @@
 
 			fnResetPasswordSubmit(formName){
 				this.$refs[formName].validate((valid) => {
-					console.log(valid)
 			        if (valid) {
+			        	this.$data.resetPasswordFormData.id = this.$data.targetUserId;
 						let qs = require('querystring')
 		        		userApi.password_reset(qs.stringify(this.$data.resetPasswordFormData)).then((res) => {
 		        			if(res.data.errno === 0){
-								globalFunctions.functions.success_message(this);
+								globalFunctions.functions.message(this,'success');
 								this.lists();
 								this.$data.resetPasswordFormVisible = false;
 		        			}else{
