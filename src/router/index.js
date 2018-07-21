@@ -24,7 +24,6 @@ import LabelDetail from '../views/label/LabelDetail'
 
 /*设备管理*/
 import Device from '../views/device/Device'
-import StoreDetail from '../views/device/StoreDetail'
 
 import User from '../views/user/User'
 import UserCurrentDetail from '../views/user/UserCurrentDetail'

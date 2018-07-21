@@ -15,25 +15,7 @@ export default {
 	    })
 	},
 
-	allVersion () {
-	    return new Promise((resolve, reject) => {
-	      axios.post(global.GET_ALL_VERSION).then((res) => {
-	        resolve(res)
-	      }).catch((err) => {
-	        reject(err)
-	      })
-	    })
-	},
-	setDepoly(list){
-		return new Promise((resolve, reject) => {
-	      axios.post(global.SET_DEPOLY,list).then((res) => {
-	        resolve(res)
-	      }).catch((err) => {
-	        reject(err)
-	      })
-	    })
-	},
-	editDevice(list){
+	edit(list){
 		return new Promise((resolve, reject) => {
 	      axios.post(global.EDIT_DEVICE,list).then((res) => {
 	        resolve(res)
@@ -42,22 +24,5 @@ export default {
 	      })
 	    })
 	},
-	deviceListStore (list) {
-	    return new Promise((resolve, reject) => {
-	      axios.post(global.GET_DEVICE_LIST_STORE,list).then((res) => {
-	        resolve(res)
-	      }).catch((err) => {
-	        reject(err)
-	      })
-	    })
-	},
-	setOperation(list){
-		return new Promise((resolve, reject) => {
-	      axios.post(global.SET_OPERATION,list).then((res) => {
-	        resolve(res)
-	      }).catch((err) => {
-	        reject(err)
-	      })
-	    })
-	}
+	
 }

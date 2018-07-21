@@ -45,7 +45,7 @@
             <router-link :to="{name: 'User'}">
                 <el-menu-item index="/User">
                     <i class="el-icon-service"></i>
-                    <span slot="title">店员管理</span>
+                    <span slot="title">帐号管理</span>
                 </el-menu-item>
             </router-link>
             <el-submenu index="7-1" style="padding-bottom:200px;">

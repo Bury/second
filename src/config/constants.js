@@ -31,6 +31,9 @@ global.GET_STORES = `${SERVER_IP}${COMMON}customer/store-list`
 // post customer/is-reception 接待
 global.IS_RECEPTION = `${SERVER_IP}${COMMON}customer/is-reception`
 
+
+
+
 /*来客列表*/
 // post customer/visitor-list 获取来客列表
 global.GET_GUEST_LIST = `${SERVER_IP}${COMMON}customer/visitor-list`
@@ -88,21 +91,12 @@ global.EDIT_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-edit`
 // post tag/childs-dele 删除
 global.DELE_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-dele`
 
-//设备管理
+//*************设备管理
 global.DEVICE_LISTS = `${SERVER_IP}${COMMON}device/list`
-
-global.GET_ALL_VERSION = `${SERVER_IP}${COMMON}device/version`
-// post device/camera-depoly 按设备分配
-global.SET_DEPOLY = `${SERVER_IP}${COMMON}device/camera-depoly`
-// post device/edit
 global.EDIT_DEVICE = `${SERVER_IP}${COMMON}device/edit`
-// post device/device-list 按门店
-global.GET_DEVICE_LIST_STORE = `${SERVER_IP}${COMMON}device/device-list`
-// post device/operation 按门店分配
-global.SET_OPERATION = `${SERVER_IP}${COMMON}device/operation`
 
 
-//*************店员管理
+//*************帐号管理
 //岗位列表
 global.ROLE_LISTS_RESULTS = `${SERVER_IP}${COMMON}role/list_results`
 //帐号管理
