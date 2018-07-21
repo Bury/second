@@ -73,7 +73,7 @@
             showInfoEdit:{
                 type:Boolean
             },
-            isremark:{
+            traffic:{
             	type:Number
             }
         },
@@ -111,14 +111,12 @@
         },
         watch: {
           customerId: function() {
-             this.personalInfo(this.$props.customerId,this.$data.remarksId)
+             this.personalInfo(this.$props.customerId,this.$props.traffic)
           },
           
         },
         created:function(){
-            this.$data.remarksId =	this.$props.isremark == 0 ? 1 : this.$props.isremark;
-            console.log(this.$data.remarksId)
-            this.personalInfo(this.$props.customerId,this.$data.remarksId)
+            this.personalInfo(this.$props.customerId,this.$props.traffic)
             this.getAll(this.$props.customerId)
         },
         methods: {
@@ -128,7 +126,6 @@
                     'customer_id': customerId
                 }
                 let qs = require('querystring')
-                console.log(list)
                 remindApi.getAll(qs.stringify(list)).then((res) => {
                     if(res.data.errno === 0){
                     	console.log(res.data.data)
@@ -139,13 +136,11 @@
                 })
             },
 
-            personalInfo(customerId,isremarkId){
-                this.$data.infoEdit = this.$props.showInfoEdit;
-                let qs = require('querystring')
-                remindApi.personalInfo(qs.stringify({
-                    'customer_id':customerId,
-                     'traffic_id':isremarkId
-                })).then((res) => {
+            personalInfo(customerId,trafficId){
+            	this.$data.infoEdit = this.$props.showInfoEdit;
+                let qs = require('querystring');
+                let personlList ={'customer_id':customerId,'traffic_id':trafficId};
+                remindApi.personalInfo(qs.stringify(personlList)).then((res) => {
                     if(res.data.errno === 0){
                         this.$data.userInfo = res.data.data
                     }else{
@@ -166,17 +161,17 @@
                             let qs = require('querystring');                            
                             remindApi.editPersonalInfo(qs.stringify({
                                 customer_id:this.$data.editUserInfoData.customer_id,
-                                traffic_id: 2,
+                                traffic_id: this.$props.traffic,
                                 name       :this.$data.editUserInfoData.name,    
                                 phone      :this.$data.editUserInfoData.phone,   
                                 gender     :this.$data.editUserInfoData.gender, 
                                 tag_ids    :this.$data.editUserInfoData.tag_ids,
                                 remark     :this.$data.editUserInfoData.remark,
-                                
+                            
                             })).then((res) => {
                                 if(res.data.errno === 0){
                                     this.userInfoCancel();
-                                    this.personalInfo(this.$props.customerId,2)
+                                    this.personalInfo(this.$props.customerId,this.$props.traffic)
                                 }else{
                                 	
                                 }
