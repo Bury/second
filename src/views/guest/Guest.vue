@@ -43,7 +43,7 @@
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="性别：">
-			    <el-select v-model="requestParameters.sex" placeholder="性别">
+			    <el-select v-model="requestParameters.gender" placeholder="性别">
 			      <el-option label="全部" value="0"></el-option>
 			      <el-option label="男" value="1"></el-option>
 			      <el-option label="女" value="2"></el-option>
@@ -195,12 +195,15 @@
         methods: {
         	//列表
         	guestList(){
-        		this.$data.requestParameters.store_time_start = this.$data.value4[0];
-				this.$data.requestParameters.store_time_end = this.$data.value4[1];
+        		this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 || '';
+				this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000 || '';
+				
 				let qs = require('querystring');
+				console.log(this.$data.requestParameters)
         		guestApi.guestList(qs.stringify(this.$data.requestParameters)).then((res) => {
         		let result = res.data
 					if(result.errno === 0){
+						console.log(res)
 						this.tableData = result.data.list;
 						this.$data.pagination.currentPage = result.data.pagination.currentPage;
 		        		this.$data.pagination.totalCount = result.data.pagination.totalCount;
