@@ -7,7 +7,7 @@ export default {
 	
 	lists (list) {
     return new Promise((resolve, reject) => {
-      axios.post(global.GET_REMIND_LIST, list).then((res) => {
+      axios.post(global.REMIND_LISTS, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)
@@ -15,15 +15,7 @@ export default {
     })
   },
 
-  personalInfo(customer_id){
-    return new Promise((resolve, reject) => {
-      axios.post(global.GET_PERSONAL_INFO, customer_id).then((res) => {
-        resolve(res)
-      }).catch((err) => {
-        reject(err)
-      })
-    })
-  },
+  
 
   editPersonalInfo(list){
     return new Promise((resolve, reject) => {
