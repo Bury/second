@@ -65,7 +65,7 @@ global.ADD_GOODS = `${SERVER_IP}${COMMON}order/adds`
 
 /*标签管理*/
 // post /v1/tag/tree-form
-global.GET_TREE_FORM = `${SERVER_IP}${COMMON}tag/tree-form`
+global.TAG_LISTS_RESULTS = `${SERVER_IP}${COMMON}tag/tree-form`
 
 //1、父级
 // post tag/list 标签列表

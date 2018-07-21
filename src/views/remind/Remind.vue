@@ -92,12 +92,14 @@
 			    <el-tab-pane label="个人信息" name="first">
 			    	<guest-info :customerId="currentCustomerId"  :traffic="trafficId" :showInfoEdit="showInfoEdit"></guest-info>
 			    </el-tab-pane>
+			    <!--
 			    <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
 			    	<store-record :customerId="currentCustomerId"></store-record>
 			    </el-tab-pane>
 			    <el-tab-pane label="订单记录" name="third">
 			    	<order-record :customerId="currentCustomerId" style="min-height:415px;"></order-record>
 			    </el-tab-pane>
+			    -->
 			</el-tabs>
 			
 		</el-dialog>

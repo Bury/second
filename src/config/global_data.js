@@ -23,8 +23,8 @@ const data={
 		'0':'全部',
 		'1':'男',
 		'2':'女',
-	}
-
+	},
+	
 }
 
 export default {
