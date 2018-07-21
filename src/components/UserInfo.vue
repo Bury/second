@@ -128,7 +128,6 @@
                 let qs = require('querystring')
                 remindApi.getAll(qs.stringify(list)).then((res) => {
                     if(res.data.errno === 0){
-                    	console.log(res.data.data)
                         this.$data.labels = res.data.data
                     }else{
                     	
@@ -142,6 +141,7 @@
                 let personlList ={'customer_id':customerId,'traffic_id':trafficId};
                 remindApi.personalInfo(qs.stringify(personlList)).then((res) => {
                     if(res.data.errno === 0){
+                    	console.log(res.data.data)
                         this.$data.userInfo = res.data.data
                     }else{
 
