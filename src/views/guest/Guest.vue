@@ -128,7 +128,7 @@
 	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">
 			<el-tabs v-model="activeName" @tab-click="checkout">
 			    <el-tab-pane label="个人信息" name="first">
-			    	<user-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></user-info>
+			    	<guest-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></guest-info>
 			    </el-tab-pane>
 			    <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
 			    	<store-record :customerId="currentCustomerId"></store-record>
@@ -144,13 +144,13 @@
 <script>
 	import guestApi from '../../api/guest'
 	import remindApi from '../../api/remind'
-	import UserInfo from '../../components/UserInfo'
+	import guestInfo from '../../components/GuestInfo'
 	import StoreRecord from '../../components/StoreRecord'
 	import OrderRecord from '../../components/OrderRecord'
     export default {
         name:'guest-list',
         components: {
-		    UserInfo,
+		    guestInfo,
 		    StoreRecord,
 		    OrderRecord
 		},
@@ -190,7 +190,6 @@
         },
         created:function(){
         	this.guestList();
-        	this.getStores();
         },
         methods: {
         	//列表
@@ -214,19 +213,6 @@
 
         		})
         	},
-
-        	//门店
-        	getStores(){
-        		remindApi.getStores().then((res) => {
-        			if(res.data.errno === 0){
-								this.$data.allStores = res.data.data;
-        			}else{
-
-        			}
-
-        		})
-        	},
-
 
         	handleCurrentChange(currentPage) {
 	            this.$data.requestParameters.page = currentPage;

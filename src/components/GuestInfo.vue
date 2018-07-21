@@ -2,43 +2,43 @@
 	<div class="user-info-box">
         <div class="user-info-detail" v-if="!infoEdit">
             <ul class="detail-left">
-                <li class="user-name">姓名： {{userInfo.name}}</li>
-                <li class="user-phone">手机号码： {{userInfo.phone}}</li>
-                <li class="user-sex">性别： {{userInfo.gender == 1 ? '男' : '女'}}</li>
-                <li class="user-age">年龄： {{userInfo.age}}</li>
-                <li class="user-type">客户等级： {{userInfo.vip_level == 0 ? '普通' : 'VIP'}}</li>
+                <li class="user-name">姓名： {{guestInfo.name}}</li>
+                <li class="user-phone">手机： {{guestInfo.phone}}</li>
+                <li class="user-sex">性别： {{guestInfo.gender == 1 ? '男' : '女'}}</li>
+                <li class="user-age">年龄： {{guestInfo.age}}</li>
+                <li class="user-type">来客类型： {{guestInfo.vip_level}}</li>
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
-                    <img :src="userInfo.avatar" alt="人脸图像">
+                    <img :src="guestInfo.avatar" alt="人脸图像">
                 </div>
-                <div class="img-id">人脸ID：{{userInfo.id}}</div>
+                <div class="img-id">人脸ID：{{guestInfo.id}}</div>
             </div>
             <div class="user-tags">
                 标签： 
-                    <el-tag v-for="(item,key) in userInfo.tag" :key="key" style="margin-right:10px;">{{userInfo.tag[key].name}}</el-tag>
+                    <el-tag v-for="(item,key) in guestInfo.tag" :key="key" style="margin-right:10px;">{{guestInfo.tag[key].name}}</el-tag>
             </div>
-            <p class="user-remarks">备注： {{userInfo.remark === null ? '暂无备注' : userInfo.remark}}</p>
-            <el-button type="primary" plain size="small" class="edit-btn" @click="editUserInfo()">编辑</el-button>
+            <p class="user-remarks">备注： {{guestInfo.remark === '' ? '暂无' : guestInfo.remark}}</p>
+            <el-button type="primary" plain size="small" class="edit-btn" @click="editGuestInfo()">编辑</el-button>
         </div>
 
         <div class="user-info-edit" v-if="infoEdit">
-           <el-form :model="editUserInfoData" :rules="UserInfoRules" ref="editUserInfoData" label-width="100px" class="demo-editUserInfoData" size="mini" style="float:left;margin-right:50px;width:400px;">
+           <el-form :model="editGuestInfoData" :rules="GuestInfoRules" ref="editGuestInfoData" label-width="100px" class="demo-editGuestInfoData" size="mini" style="float:left;margin-right:50px;width:400px;">
               <el-form-item label="姓名：" prop="name" >
-                <el-input v-model="editUserInfoData.name"></el-input>
+                <el-input v-model="editGuestInfoData.name"></el-input>
               </el-form-item>
               <el-form-item label="手机号" prop="phone">
-                <el-input v-model="editUserInfoData.phone"></el-input>
+                <el-input v-model="editGuestInfoData.phone"></el-input>
               </el-form-item>
               <el-form-item label="性别：" prop="gender">
-                <el-radio-group v-model="editUserInfoData.gender">
+                <el-radio-group v-model="editGuestInfoData.gender">
                   <el-radio :label="1">男</el-radio>
                   <el-radio :label="0">女</el-radio>
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
-              <el-form-item label="客户等级：">{{editUserInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
-              <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
+              <el-form-item label="年龄：" >{{editGuestInfoData.age}}</el-form-item>
+              <el-form-item label="来客类型：">{{editGuestInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
+              <el-form-item label="年龄：" >{{editGuestInfoData.age}}</el-form-item>
               <el-form-item label="标签：">
                 <div v-for="label in labels" :key="label.id" class="labels">
                     <div>—— {{label.name}} ——</div>
@@ -46,30 +46,29 @@
                 </div>
               </el-form-item>
               <el-form-item label="备注：">
-                <el-input type="textarea" v-model="editUserInfoData.remark"></el-input>
+                <el-input type="textarea" v-model="editGuestInfoData.remark"></el-input>
               </el-form-item>
           </el-form>
           <div class="img-box">
             <div class="img-wrap">
-                <img :src="editUserInfoData.avatar" alt="人脸图像">
+                <img :src="editGuestInfoData.avatar" alt="人脸图像">
             </div>
-            <div class="img-id">人脸ID：{{editUserInfoData.id}}</div>
+            <div class="img-id">人脸ID：{{editGuestInfoData.id}}</div>
           </div>
-          <el-row class="userInfoEdit-wrap">
-                <el-button plain size="small" @click="userInfoCancel">取消</el-button>
-                <el-button type="primary" plain size="small" @click="userInfoSubmit('editUserInfoData')">确定</el-button>
+          <el-row class="guestInfoEdit-wrap">
+                <el-button plain size="small" @click="guestInfoCancel">取消</el-button>
+                <el-button type="primary" plain size="small" @click="guestInfoSubmit('editGuestInfoData')">确定</el-button>
           </el-row>
         </div>
 	</div>
 </template>
 <script>
-<<<<<<< HEAD
-	
-	import globalRules from '../config/global_rules'
-=======
 
->>>>>>> e7d661b5f812b7024e36cdc15e996027ac562180
+    import globalRules from '../config/global_rules'
+
     import remindApi from '../api/remind'
+
+    import guestApi from '../api/guest'
 
     export default {
 
@@ -88,15 +87,21 @@
         },
 
         data() {
+
             return {
                 infoEdit:false,
                 remarksId:"",
-                userInfo:{},
-                editUserInfoData:{},
+                guestInfo:{},
+                editGuestInfoData:{},
                 labels:{},
-                UserInfoRules:{
-                    name:globalRules.rules.user.truename(),
-                    gender:globalRules.rules.user.gender(),
+                GuestInfoRules:{
+                    name: [
+                        { required: true, message: '请输入姓名', trigger: 'blur' },
+                        { min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
+                    ],
+                    gender:[
+                        { required: true, message: '请选择性别', trigger: 'blur' },
+                    ],
                     phone:globalRules.rules.user.phone(),
                 }
             };
@@ -110,8 +115,6 @@
         },
 
         created:function(){
-            alert(this.$props.customerId)
-            alert(this.$props.traffic)
             this.getGuestInfo(this.$props.customerId,this.$props.traffic)
             this.getAll(this.$props.customerId)
         },
@@ -126,6 +129,7 @@
                 let qs = require('querystring')
                 remindApi.getAll(qs.stringify(list)).then((res) => {
                     if(res.data.errno === 0){
+                    	console.log(res.data.data)
                         this.$data.labels = res.data.data
                     }else{
                     	
@@ -137,41 +141,40 @@
             	this.$data.infoEdit = this.$props.showInfoEdit;
                 let qs = require('querystring');
                 let personlList ={'customer_id':customerId,'traffic_id':trafficId};
-                remindApi.getGuestInfo(qs.stringify(personlList)).then((res) => {
+                guestApi.getGuestInfo(qs.stringify(personlList)).then((res) => {
                     if(res.data.errno === 0){
-                    	console.log(res.data.data)
-                        this.$data.userInfo = res.data.data
+                        this.$data.guestInfo = res.data.data
                     }else{
 
                     }
                 })
             },
 
-            editUserInfo(){
-                this.$data.editUserInfoData = this.$data.userInfo;
+            editGuestInfo(){
+                this.$data.editGuestInfoData = this.$data.guestInfo;
                 this.$data.infoEdit = true;
             },
 
-            userInfoCancel(){
+            guestInfoCancel(){
                 this.$data.infoEdit = false;
             },
 
-            userInfoSubmit(formName){
+            guestInfoSubmit(formName){
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                             let qs = require('querystring');                            
                             remindApi.editPersonalInfo(qs.stringify({
-                                customer_id:this.$data.editUserInfoData.customer_id,
+                                customer_id:this.$data.editGuestInfoData.customer_id,
                                 traffic_id: this.$props.traffic,
-                                name       :this.$data.editUserInfoData.name,    
-                                phone      :this.$data.editUserInfoData.phone,   
-                                gender     :this.$data.editUserInfoData.gender, 
-                                tag_ids    :this.$data.editUserInfoData.tag_ids,
-                                remark     :this.$data.editUserInfoData.remark,
+                                name       :this.$data.editGuestInfoData.name,    
+                                phone      :this.$data.editGuestInfoData.phone,   
+                                gender     :this.$data.editGuestInfoData.gender, 
+                                tag_ids    :this.$data.editGuestInfoData.tag_ids,
+                                remark     :this.$data.editGuestInfoData.remark,
                             
                             })).then((res) => {
                                 if(res.data.errno === 0){
-                                    this.userInfoCancel();
+                                    this.guestInfoCancel();
                                     this.getGuestInfo(this.$props.customerId,this.$props.traffic)
                                 }else{
                                 	
@@ -248,7 +251,7 @@
             }
             
         }
-        .userInfoEdit-wrap{
+        .guestInfoEdit-wrap{
             position: absolute;
             right:0;
             bottom:15px;

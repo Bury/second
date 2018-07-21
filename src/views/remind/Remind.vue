@@ -30,8 +30,8 @@
 			</el-form>
 		</div>
 		<!-- 列表 -->
-		<el-table :data="tableData" border height="380" style="margin:0 auto;width: 1551px;text-align:center;">
-	    	<el-table-column fixed type="index" label="序号" width="80"></el-table-column>
+		<el-table :data="tableData" border height="700px" style="margin:0 auto;width: 1511px;text-align:center;">
+	    	<el-table-column fixed type="index" label="ID" width="80"></el-table-column>
 		    <el-table-column label="人脸" width="60">
 		    	<template slot-scope="scope">
 		           <img :src="scope.row.avatar" style="display:block;margin:0 auto;width:100%;">
@@ -49,7 +49,7 @@
 		    <el-table-column prop="customerMerchant.consume_money" label="消费金额" width="120"></el-table-column>
 		    <el-table-column label="来客类型" width="120">
 		    	<template slot-scope="scope">
-			    	<span>{{scope.row.vip_level}}</span>
+			    	<span>{{scope.row.comeinfoboughtinfo}}</span>
 		    	</template>
 		    </el-table-column>
 		    <el-table-column prop="store_name" label="进店信息" width="220"></el-table-column>
@@ -59,10 +59,13 @@
 		    	</template>
 		    </el-table-column>
 		    <el-table-column prop="device_name" labedateformat('YYYY-MM-DD HH:mm:ss')l="设备信息" width="160"></el-table-column>
+		    <el-table-column label="接待状态" width="120">
+		    	<template slot-scope="scope">
+		    		<el-button v-if="scope.row.is_reception == 0"  type="text" size="small" style="color:#FF5940;">未接待</el-button>
+		    	</template>
+		    </el-table-column>
 		    <el-table-column fixed="right" label="操作" width="150">
 			    <template slot-scope="scope">
-			    	<!--<el-button v-if="scope.row.is_reception == 0" @click="isReception(scope.row)" type="text" size="small" style="color:#FF5940;">未接待</el-button>-->
-			        <el-button v-if="scope.row.is_reception == 0"  type="text" size="small" style="color:#FF5940;">未接待</el-button>
 			        <el-button v-if="scope.row.is_reception == 1"  type="text" size="small" style="color:#FF5940;">未备注</el-button>
 			        <el-button @click="showDialog(scope.row)" type="text" size="small">详情备注</el-button>
 			    </template>
@@ -87,7 +90,7 @@
 	  	<el-dialog :visible.sync="dialogVisible" style="min-width:1200px;" :before-close="closeChangeMachie">
 			<el-tabs v-model="activeName" @tab-click="checkout">
 			    <el-tab-pane label="个人信息" name="first">
-			    	<user-info :customerId="currentCustomerId"  :traffic="trafficId" :showInfoEdit="showInfoEdit"></user-info>
+			    	<guest-info :customerId="currentCustomerId"  :traffic="trafficId" :showInfoEdit="showInfoEdit"></guest-info>
 			    </el-tab-pane>
 			    <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
 			    	<store-record :customerId="currentCustomerId"></store-record>
@@ -106,7 +109,9 @@
 	import global_functions from '../../config/global_functions'
 
 	import remindApi from '../../api/remind'
-	import UserInfo from '../../components/UserInfo'
+
+	import GuestInfo from '../../components/GuestInfo'
+
 	//import StoreRecord from '../../components/StoreRecord'
 	//import OrderRecord from '../../components/OrderRecord'
 
@@ -115,7 +120,7 @@
         name:'remind-list',
 
         components: {
-		    UserInfo,
+		    GuestInfo,
 		    //StoreRecord,
 		    //OrderRecord
 		},
@@ -159,6 +164,10 @@
 			    let qs = require('querystring')
         		remindApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
         			if(res.data.errno === 0){
+        				var i='';
+        				for (i in res.data.data.list){
+						    res.data.data.list[i].comeinfoboughtinfo=global_functions.functions.guest.getComeInfoBoughtInfo(res.data.data.list[i].is_new,res.data.data.list[i].vip_level);
+						}
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
 		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;

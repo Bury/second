@@ -4,7 +4,7 @@
 import axios from 'axios'
 
 export default {
-	
+	//ZANSH
 	guestList (list) {
     return new Promise((resolve, reject) => {
       axios.post(global.GET_GUEST_LIST, list).then((res) => {
@@ -13,6 +13,16 @@ export default {
         reject(err)
       })
     })
-  }
+  },
+
+  getGuestInfo (list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_INFO, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
 
 }
