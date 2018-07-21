@@ -2,56 +2,27 @@
 	<div class="remind-list-page">
 		<div class="top-box">
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-			  <el-form-item label="门店选择：" v-if="allStores">
-			    <el-select v-model="requestParameters.store_id" placeholder="门店选择">
-			      <el-option v-for="(item, idx) in allStores" :key="idx" :label="allStores[idx].name" :value="allStores[idx].id"></el-option>
-			    </el-select>
-			  </el-form-item>
-			  <!--<el-form-item label="进店时间：">
-				<el-date-picker
-			      v-model="value4"
-			      type="daterange"
-			      range-separator="至"
-			      start-placeholder="开始时间"
-			      end-placeholder="结束时间">
-			    </el-date-picker>
-			  </el-form-item>-->
-			   <!--<el-form-item label="人脸ID：">
-			    <el-input v-model="requestParameters.id"></el-input>
-			  </el-form-item>-->
 			  <el-form-item label="消费金额：">
 			    <el-input v-model="requestParameters.consume_money_start"></el-input>
 			  </el-form-item>
 			  <el-form-item label="至">
 			    <el-input v-model="requestParameters.consume_money_end"></el-input>
 			  </el-form-item>
-			  <el-form-item label="客户等级：" v-if="allLevels">
-			     <el-select v-model="requestParameters.level" placeholder="客户等级">
-			      <el-option label="全部" value="0" v-if="allLevels"></el-option>
-			      <el-option label="新客匿名" value="1"></el-option>
-			      <el-option label="新客VIP" value="2"></el-option>
-			      <el-option label="熟客匿名" value="3"></el-option>
-			      <el-option label="熟客VIP" value="4"></el-option>
-			      <!--<el-option v-for="(item, idx) in allLevels" :key="idx" :label="allLevels[idx].name" :value="allLevels[idx].level"></el-option>-->
+			  <el-form-item label="来客类型：">
+			     <el-select v-model="requestParameters.level" placeholder="来客类型">
+			      <el-option v-for="(item, idx) in allGuestClass" :key="idx" :label="item" :value="idx"></el-option>
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="年龄：">
 			    <el-select v-model="requestParameters.age" placeholder="年龄">
-			      <el-option label="全部" value="0"></el-option>
-			      <el-option label="20岁以下" value="1"></el-option>
-			      <el-option label="20-29岁" value="2"></el-option>
-			      <el-option label="30-39岁" value="3"></el-option>
-			      <el-option label="40-49岁" value="4"></el-option>
-			      <el-option label="50-59岁" value="5"></el-option>
-			      <el-option label="60岁以上" value="6"></el-option>
+			      <el-option v-for="(item, idx) in allAgeScope" :key="idx" :label="item" :value="idx"></el-option>
 			    </el-select>
 			  </el-form-item>
 			  <el-form-item label="性别：">
 			    <el-select v-model="requestParameters.gender" placeholder="性别">
-			      <el-option label="全部" value="0"></el-option>
-			      <el-option label="男" value="1"></el-option>
-			      <el-option label="女" value="2"></el-option>
+			      <el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>
 			    </el-select>
+			    
 			  </el-form-item>
 			  <el-form-item>
 			    <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -76,12 +47,9 @@
 		    <el-table-column prop="customerMerchant.phone" label="手机号" width="110"></el-table-column>
 		    <el-table-column prop="customerMerchant.consume_num" label="消费次数" width="80"></el-table-column>
 		    <el-table-column prop="customerMerchant.consume_money" label="消费金额" width="120"></el-table-column>
-		    <el-table-column label="客户等级" width="120">
+		    <el-table-column label="来客类型" width="120">
 		    	<template slot-scope="scope">
-		    		<span v-if="scope.row.is_new == 1 && scope.row.vip_level == 0">新客匿名</span>
-			    	<span v-if="scope.row.is_new == 1 && scope.row.vip_level == 1">新客VIP</span>
-			    	<span v-if="scope.row.is_new == 0 && scope.row.vip_level == 0">熟客匿名</span>
-			    	<span v-if="scope.row.is_new == 0 && scope.row.vip_level == 1">熟客VIP</span>
+			    	<span>{{scope.row.vip_level}}</span>
 		    	</template>
 		    </el-table-column>
 		    <el-table-column prop="store_name" label="进店信息" width="220"></el-table-column>
@@ -134,22 +102,31 @@
 	</div>
 </template>
 <script>
+	import global_data from '../../config/global_data'
+
+	import global_functions from '../../config/global_functions'
+
 	import remindApi from '../../api/remind'
 	import UserInfo from '../../components/UserInfo'
-	import StoreRecord from '../../components/StoreRecord'
-	import OrderRecord from '../../components/OrderRecord'
+	//import StoreRecord from '../../components/StoreRecord'
+	//import OrderRecord from '../../components/OrderRecord'
+
     export default {
+
         name:'remind-list',
+
         components: {
 		    UserInfo,
-		    StoreRecord,
-		    OrderRecord
+		    //StoreRecord,
+		    //OrderRecord
 		},
+
         data(){
             return{
 		        tableData: [],
-		        allLevels:[],
-		        allStores:[],
+		        allGuestClass:global_data.data.guest_class,
+		        allAgeScope:global_data.data.age_scope,
+		        allGenderScope:global_data.data.gender_scope,
 		        pagination:{
 		        	currentPage:1,
 		        	totalCount:0,
@@ -159,8 +136,8 @@
 		        requestParameters: {
 	                page: 1,
 	                page_size:10,
-	                store_id:'',
 	                level:'',
+	                store_id:'',
 	                age:'',
 	                gender:'',
 	                consume_money_start:'',
@@ -173,60 +150,37 @@
 
             }
         },
+
         created:function(){
-        	this.remindList();
-        	this.getStores();
+        	this.lists();
         },
+
         methods: {
-        	//列表
-        	remindList(){
+
+        	lists(){
 			    let qs = require('querystring')
-        		remindApi.remindList(qs.stringify(this.$data.requestParameters)).then((res) => {
+			    //this.$data.requestParameters.store_id=localStorage.getItem('store_id');
+        		remindApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
         			if(res.data.errno === 0){
         				console.log(res.data.data.list)
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
 		        		this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-
         			}else{
 
         			}
-        			
-        		})
-        	},
-
-        	//用户等级 暂时已去掉，dom里写成固定的用户等级了
-        	getLevels(){
-				remindApi.getLevels().then((res) => {
-        			if(res.data.errno === 0){
-        				console.log(res.data.data)
-						this.$data.allLevels = res.data.data;
-        			}else{
-
-        			}
-        			
-        		})
-        	},
-
-        	//门店
-        	getStores(){
-        		remindApi.getStores().then((res) => {
-        			if(res.data.errno === 0){
-						this.$data.allStores = res.data.data;
-        			}else{
-
-        			}
-        			
         		})
         	},
 
         	handleCurrentChange(currentPage) {
 	            this.$data.requestParameters.page = currentPage;
-	            this.remindList();
+	            this.lists();
 	        },
+
         	onSubmit() {
-		        this.remindList();
+		        this.lists();
 		    },
+
 		    showDialog(row) {
 		        this.$data.showInfoEdit = false;
 		        this.$data.currentCustomerId = row.customer_id;
@@ -238,29 +192,32 @@
 		    checkout(tab, event) {
 		        this.$data.showInfoEdit = false;
 		    },
+
 		    isReception(row){
 		    	let qs = require('querystring')
 		    	remindApi.isReception(qs.stringify({
 		    		id:row.id
 		    	})).then((res) => {
                     if(res.data.errno === 0){
-                        this.remindList();
+                        this.lists();
                     }else{
 
                     }
                 })
 		    },
+
 		    closeChangeMachie(done){
 	            done();
 	            // window.location.reload();
-	            this.remindList();
+	            this.lists();
 	            this.$data.showInfoEdit = false;
 	        }
+
 	    },
+
     }
 </script>
 <style lang="scss" scoped>
-
 	.el-table thead{
 		color:#333; 
 	}
@@ -268,6 +225,4 @@
 		margin:10px;
 	  	float: right;
 	}
-
-	
 </style>

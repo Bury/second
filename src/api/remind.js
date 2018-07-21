@@ -5,7 +5,7 @@ import axios from 'axios'
 
 export default {
 	
-	remindList (list) {
+	lists (list) {
     return new Promise((resolve, reject) => {
       axios.post(global.GET_REMIND_LIST, list).then((res) => {
         resolve(res)
@@ -49,16 +49,6 @@ export default {
   orderRecord(list){
     return new Promise((resolve, reject) => {
       axios.post(global.GET_ORDER_RECORE, list).then((res) => {
-        resolve(res)
-      }).catch((err) => {
-        reject(err)
-      })
-    })
-  },
-
-  getLevels(){
-    return new Promise((resolve, reject) => {
-      axios.post(global.GET_LEVELS).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)

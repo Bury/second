@@ -24,8 +24,6 @@ global.EDIT_PERSONAL_INFO = `${SERVER_IP}${COMMON}customer/edit-personal-info`
 global.GET_STORE_RECORE = `${SERVER_IP}${COMMON}customer/store-recore`
 // post customer/order-recore 订单记录
 global.GET_ORDER_RECORE = `${SERVER_IP}${COMMON}customer/order-recore`
-// post customer/levels 提醒列表用户等级筛选项
-global.GET_LEVELS = `${SERVER_IP}${COMMON}customer/levels`
 // post customer/store-list 门店筛选项
 global.GET_STORES = `${SERVER_IP}${COMMON}customer/store-list`
 // post customer/is-reception 接待

@@ -1,6 +1,6 @@
 <template>
 	<div class="remind-set-page">
-        <h3 class="top-box">提醒配置</h3>
+        <h3 class="top-box">来客提醒配置</h3>
         <div class="all-box">
             <el-checkbox :indeterminate="isIndeterminate" 
             v-model="checkAll"

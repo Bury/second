@@ -15,7 +15,7 @@
             <router-link :to="{name: 'Remind'}">
                 <el-menu-item index="/Remind">
                     <i class="el-icon-bell"></i>
-                    <span slot="title">提醒列表</span>
+                    <span slot="title">来客提醒</span>
                 </el-menu-item>
             </router-link>
             <router-link :to="{name: 'Guest'}">
@@ -54,10 +54,10 @@
                     <span slot="title">系统设置</span>
                 </template>
                 <router-link :to="{name: 'StoreRemind'}">
-                    <el-menu-item index="/StoreRemind">提醒配置</el-menu-item>
+                    <el-menu-item index="/StoreRemind">来客提醒</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'StoreTime'}">
-                    <el-menu-item index="/StoreTime">营业时间设置</el-menu-item>
+                    <el-menu-item index="/StoreTime">营业时间</el-menu-item>
                 </router-link>
             </el-submenu>
         </el-menu>
