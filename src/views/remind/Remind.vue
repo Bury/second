@@ -136,7 +136,6 @@
 	                page: 1,
 	                page_size:10,
 	                level:'',
-	                store_id:'',
 	                age:'',
 	                gender:'',
 	                consume_money_start:'',
@@ -158,7 +157,6 @@
 
         	lists(){
 			    let qs = require('querystring')
-			    //this.$data.requestParameters.store_id=localStorage.getItem('store_id');
         		remindApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
         			if(res.data.errno === 0){
 						this.$data.tableData = res.data.data.list;

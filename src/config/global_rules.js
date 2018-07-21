@@ -1,5 +1,14 @@
 const rules={
 
+	common:{
+		id(len_min,len_max,text){
+			return [
+	    		{ required: true, message: text, trigger: 'blur' },
+	        	{ min: len_min, max: len_max, message: '长度在 4 到 20 个字符', trigger: 'blur' }
+	    	]
+		},
+	},
+
 	user:{
 
 		username(len_min,len_max,text){

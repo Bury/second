@@ -96,7 +96,7 @@ global.EDIT_DEVICE = `${SERVER_IP}${COMMON}device/edit`
 
 //*************帐号管理
 //岗位列表
-global.ROLE_LISTS_RESULTS = `${SERVER_IP}${COMMON}role/list_results`
+global.ROLE_LISTS_RESULTS = `${SERVER_IP}${COMMON}role/list`
 //帐号管理
 global.USER_LISTS = `${SERVER_IP}${COMMON}account/list`
 global.USER_ADDS = `${SERVER_IP}${COMMON}account/adds`

@@ -8,7 +8,7 @@
 			<el-table-column prop="id" label="ID" width="160"></el-table-column>
 	    	<el-table-column prop="username" label="帐号" width="160"></el-table-column>
 	    	<el-table-column prop="role_name" label="岗位" width="160"></el-table-column>
-	    	<el-table-column prop="username_desc" label="姓名" width="160"></el-table-column>
+	    	<el-table-column prop="truename" label="姓名" width="160"></el-table-column>
 	    	<el-table-column prop="phone" label="手机" width="160"></el-table-column>
 	    	<el-table-column prop="status" label="状态" width="160"></el-table-column>
 	    	<el-table-column label="创建时间" width="160">
@@ -44,17 +44,16 @@
 	    <!-- 编辑 -->
 	    <el-dialog title="编辑" :visible.sync="editFormVisible">
 		  <el-form :model="editFormData" :rules="editRules" ref="editFormData" label-width="100px" class="demo-ruleForm">
-			  <el-form-item label="岗位：" prop="name">
-			    <el-radio-group v-model="editFormData.role_name">
-				    <el-radio :label="0">店长</el-radio>
-				    <el-radio :label="1">店员</el-radio>
-			 	</el-radio-group>
+			  <el-form-item label="岗位：" prop="role_id">
+			 	<el-select v-model="editFormData.role_id" placeholder="岗位">
+			      <el-option v-for="(item, idx) in allRoles" :key="idx" :label="item.name" :value="item.id"></el-option>
+			    </el-select>
 			  </el-form-item>
-			  <el-form-item label="使用人：" prop="desc">
-			    <el-input v-model="editFormData.desc"></el-input>
+			  <el-form-item label="姓名：" prop="truename">
+			    <el-input v-model="editFormData.truename"></el-input>
 			  </el-form-item>
 			  <el-form-item label="手机：" prop="phone">
-			    <el-input v-model="addFormData.phone"></el-input>
+			    <el-input v-model="editFormData.phone"></el-input>
 			  </el-form-item>
 			  <el-form-item label="帐号：" prop="username">
 			    <el-input v-model="editFormData.username"></el-input>
@@ -85,14 +84,13 @@
 		<!-- 添加 -->
 		<el-dialog title="添加" :visible.sync="addFormVisible" :fullscreen="avatarFormVisible" :before-close="closeChange" >
 		  <el-form :model="addFormData" :rules="addRules" ref="addFormData" label-width="100px" class="demo-ruleForm" v-if="!avatarFormVisible" >
-			  <el-form-item label="岗位：" prop="role_name">
-			    <el-radio-group v-model="addFormData.role_name">
-				    <el-radio :label="0">店长</el-radio>
-				    <el-radio :label="1">店员</el-radio>
-			 	</el-radio-group>
+			  <el-form-item label="岗位：" prop="role_id">
+			 	<el-select v-model="addFormData.role_id" placeholder="岗位">
+			      <el-option v-for="(item, idx) in allRoles" :key="idx" :label="item.name" :value="item.id"></el-option>
+			    </el-select>
 			  </el-form-item>
-			  <el-form-item label="姓名：" prop="name">
-			    <el-input v-model="addFormData.name"></el-input>
+			  <el-form-item label="姓名：" prop="truename">
+			    <el-input v-model="addFormData.truename"></el-input>
 			  </el-form-item>
 			  <el-form-item label="手机：" prop="phone">
 			    <el-input v-model="addFormData.phone"></el-input>
@@ -106,7 +104,7 @@
 		  </el-form>
 		  <div slot="footer" class="dialog-footer" v-if="!avatarFormVisible">
 		    <el-button @click="addCancel">取 消</el-button>
-		    <el-button type="primary" @click="addSubmit('addFormData')">确 定</el-button>
+		    <el-button type="primary" @click="fnAddsSubmit('addFormData')">确 定</el-button>
 		  </div>
 		</el-dialog>
 		
@@ -120,6 +118,8 @@
 
 	import userApi from '../../api/user'
 
+	import roleApi from '../../api/role'
+
 	export default{
 
 		name:'accoun-set',
@@ -130,6 +130,7 @@
 
 		data(){
 			return{
+				allRoles:'',
 				targetUserId:0,
 				tableData: [],
 				pagination:{
@@ -143,12 +144,14 @@
 	            },
 	            addFormVisible:false,
 	            addFormData:{
-	            	name:'',
+	            	role_id:'',
+	            	truename:'',
 	            	phone:'',
 	            	username:'',
 	            	password:'',
 	            },
 	            addRules:{
+	            	//role_id:globalRules.rules.common.id(),
 	            	name:globalRules.rules.user.truename(),
 	            	phone:globalRules.rules.user.phone(),
 	            	username:globalRules.rules.user.username(4,20,'请输入帐号'),
@@ -158,7 +161,7 @@
 	            editFormVisible:false,
 	            editFormData:{
 	            	id:'',
-	            	name:'',
+	            	truename:'',
 	            	phone:'',
 	            	username:'',
 	            },
@@ -197,6 +200,17 @@
 		},
 
 		methods: {
+
+			getRoles(){
+				roleApi.lists_results().then((res) => {
+	    			if(res.data.errno === 0){
+	    				console.log(res.data.data)
+						this.$data.allRoles=res.data.data;
+	    			}else{
+						this.$message.error(res.data.msg);
+	    			}
+	    		})
+			},
 
 			//列表
 			lists(){
@@ -253,6 +267,7 @@
         			if(res.data.errno === 0){
 						console.log(res)
 						this.$data.editFormData = res.data.data;
+						this.getRoles();
 						this.$data.editFormVisible = true;
         			}else{
 						this.$message.error(res.data.msg);	
@@ -265,7 +280,7 @@
 				this.$data.editFormVisible = false;
 				this.$data.editFormData = {
 					id:'',
-					name:'',
+					truename:'',
 					phone:'',
 					username:'',
 					password:'',
@@ -277,19 +292,17 @@
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
 			        if (valid) {
-			        	this.$data.editFormData.store_id = localStorage.getItem('store_id');
-			        	this.$data.editFormData.role_id = -1;
 						let qs = require('querystring')
 		        		userApi.edit(qs.stringify(this.$data.editFormData)).then((res) => {
 		        			if(res.data.errno === 0){
-								console.log(res)
-								this.accountList();
+								globalFunctions.functions.message(this,'success');
+								this.lists();
 								this.$data.editFormData = {
 									id:'',
-									name:'',
+									role_id:'',
+									truename:'',
 									phone:'',
 									username:'',
-									password:'',
 								}
 								this.$data.editFormVisible = false;
 
@@ -337,7 +350,6 @@
 
 			},
 
-
 			fnResetPasswordClearData(){
 				this.$data.resetPasswordFormData = {
 					id:'',
@@ -348,7 +360,7 @@
 
 			fnAddsFormClearData(){
 				this.$data.addFormData = {
-	            	name:'',
+	            	truename:'',
 	            	phone:'',
 	            	username:'',
 	            	password:'',
@@ -357,6 +369,7 @@
 			
 			fnAdds(){
 				this.fnAddsFormClearData();
+				this.getRoles();
 				this.$data.addFormVisible = true;
 			},
 
@@ -367,22 +380,14 @@
 			},
 
 			fnAddsSubmit(formName){
-				console.log(this.$data.addFormData.role_name)
-				console.log(this.$data.addFormData.name)
-				console.log(this.$data.addFormData.phone)
-				console.log(this.$data.addFormData.username)
-				console.log(this.$data.addFormData.password)
-				return ;
 				this.$refs[formName].validate((valid) => {
 					console.log(valid)
 			        if (valid) {
-			        	this.$data.addFormData.store_id = localStorage.getItem('store_id');
-			        	this.$data.addFormData.role_id = -1;
 						let qs = require('querystring')
 		        		userApi.adds(qs.stringify(this.$data.addFormData)).then((res) => {
 		        			if(res.data.errno === 0){
 								console.log(res)
-					          	globalFunctions.functions.success_message(this);
+					          	globalFunctions.functions.message(this,'success');
 								this.lists();
 								this.fnAddsFormClearData();
 								this.$data.addFormVisible = false;
@@ -392,7 +397,6 @@
 							}		        			
 		        			
 		        		})
-						
 			        } 
 		        });
 
