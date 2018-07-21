@@ -59,8 +59,7 @@ const rules={
 	                	trigger: 'blur'
 	            	}
 	        	]
-		},
-        
+		},        
         
         //姓名验证
 		truename(){

@@ -88,7 +88,6 @@
         },
 
         data() {
-
             return {
                 infoEdit:false,
                 remarksId:"",

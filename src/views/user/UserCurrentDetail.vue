@@ -87,13 +87,13 @@
 		      	passwordRepeat: [
 		        	{ required: true, message: '请再次输入密码', trigger: 'blur' },
 			        {
-			            validator: (rule, value, callback) => {
+			             validator: (rule, value, callback) => {
 			                if (value !== this.$data.passwordEditForm.passwordCurrent) {
 			                    callback(new Error('两次输入密码不一致!'));
 			                } else {
 			                    callback();
 			                }
-			            },
+			             },
 			            trigger: 'blur'
 			        }
 		      	]
