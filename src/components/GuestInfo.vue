@@ -6,7 +6,7 @@
                 <li class="user-phone">手机： {{guestInfo.phone}}</li>
                 <li class="user-sex">性别： {{guestInfo.gender == 1 ? '男' : '女'}}</li>
                 <li class="user-age">年龄： {{guestInfo.age}}</li>
-                <li class="user-type">来客类型： {{guestInfo.vip_level == 0 ? '普通' : 'VIP'}}</li>
+                <li class="user-type">来客类型： {{guestInfo.vip_level}}</li>
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
@@ -18,7 +18,7 @@
                 标签： 
                     <el-tag v-for="(item,key) in guestInfo.tag" :key="key" style="margin-right:10px;">{{guestInfo.tag[key].name}}</el-tag>
             </div>
-            <p class="user-remarks">备注： {{guestInfo.remark === null ? '暂无备注' : guestInfo.remark}}</p>
+            <p class="user-remarks">备注： {{guestInfo.remark === '' ? '暂无' : guestInfo.remark}}</p>
             <el-button type="primary" plain size="small" class="edit-btn" @click="editGuestInfo()">编辑</el-button>
         </div>
 
