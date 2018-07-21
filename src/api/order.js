@@ -118,6 +118,16 @@ export default {
       })
     })
   },
-  
+  //订单显示
+  orderView (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.VIEW_ORDER,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
 }
 
