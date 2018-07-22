@@ -12,12 +12,6 @@
                     <span slot="title">客流统计</span>
                 </el-menu-item>
             </router-link>
-            <router-link :to="{name: 'Remind'}">
-                <el-menu-item index="/Remind">
-                    <i class="el-icon-bell"></i>
-                    <span slot="title">来客提醒</span>
-                </el-menu-item>
-            </router-link>
             <router-link :to="{name: 'Guest'}">
                 <el-menu-item index="/Guest">
                     <i class="el-icon-service"></i>

@@ -30,9 +30,9 @@ import UserCurrentDetail from '../views/user/UserCurrentDetail'
 
 
 //提醒设置
-import StoreRemind from '../views/store/StoreRemind'
+import StoreRemind from '../views/settings/StoreRemind'
 //营业时间设置
-import StoreTime from '../views/store/StoreTime'
+import StoreTime from '../views/settings/StoreTime'
 
 
 

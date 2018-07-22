@@ -27,13 +27,6 @@ global.GET_ORDER_RECORE = `${SERVER_IP}${COMMON}customer/order-recore`
 // post customer/is-reception 接待
 global.IS_RECEPTION = `${SERVER_IP}${COMMON}customer/is-reception`
 
-
-
-
-/*来客列表*/
-// post customer/visitor-list 获取来客列表
-global.GET_GUEST_LIST = `${SERVER_IP}${COMMON}customer/visitor-list`
-
 /*订单管理*/
 // post order/list订单列表
 global.GET_ORDER_LIST = `${SERVER_IP}${COMMON}order/list`
@@ -63,29 +56,8 @@ global.ADD_NEW_PHONE = `${SERVER_IP}${COMMON}order/add-phone`
 global.ADD_GOODS = `${SERVER_IP}${COMMON}order/adds`
 
 
-/*标签管理*/
-// post /v1/tag/tree-form
-global.TAG_LISTS_RESULTS = `${SERVER_IP}${COMMON}tag/tree-form`
-
-//1、父级
-// post tag/list 标签列表
-global.GET_LABEL_LIST = `${SERVER_IP}${COMMON}tag/parent-list`
-// post tag/parent-adds 添加
-global.ADD_LABEL = `${SERVER_IP}${COMMON}tag/parent-adds`
-// post tag/parent-edit 修改
-global.EDIT_LABEL = `${SERVER_IP}${COMMON}tag/parent-edit`
-// post tag/parent-dele 删除
-global.DELE_LABEL = `${SERVER_IP}${COMMON}tag/parent-dele`
-
-//2、子级
-// post tag/childs-list 标签列表
-global.GET_CHILD_LABEL_LIST = `${SERVER_IP}${COMMON}tag/childs-list`
-// post tag/childs-adds 添加
-global.ADD_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-adds`
-// post tag/childs-edit 修改
-global.EDIT_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-edit`
-// post tag/childs-dele 删除
-global.DELE_CHILD_LABEL = `${SERVER_IP}${COMMON}tag/childs-dele`
+//*************来客列表
+global.GUEST_LISTS = `${SERVER_IP}${COMMON}customer/visitor-list`
 
 //*************设备管理
 global.DEVICE_LISTS = `${SERVER_IP}${COMMON}device/list`
@@ -114,7 +86,6 @@ global.STORE_REMIND_SET = `${SERVER_IP}${COMMON}store-config/remind`
 //营业时间设置
 global.STORE_TIME_GET = `${SERVER_IP}${COMMON}store-config/view-time`
 global.STORE_TIME_SET = `${SERVER_IP}${COMMON}store-config/business-time`
-
 
 
 global.USER_CURRENT_INFO = `${SERVER_IP}${COMMON}user/info`
