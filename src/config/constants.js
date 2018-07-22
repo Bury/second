@@ -47,6 +47,8 @@ global.ADD_ORDER_LIST = `${SERVER_IP}${COMMON}order/adds`
 global.EDIT_ORDER_LIST = `${SERVER_IP}${COMMON}order/edit`
 //post order/search-traffic 查询人脸信息
 global.FINDFACEID_ORDER = `${SERVER_IP}${COMMON}order/search-traffic`
+//post  order/view 显示订单
+global.VIEW_ORDER = `${SERVER_IP}${COMMON}order/view`
 
 
 //订单管理/实时录单

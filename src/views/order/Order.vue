@@ -7,11 +7,13 @@
 			  </el-form-item>
 			  <el-form-item label="材质：">
 			    <el-select v-model="requestParameters.material" placeholder="请选择材质">
+            <el-option label="全部" value="">全部</el-option>
 						<el-option  v-for="material in materials" :key="material.id" :label="material.name" :value="material.id"></el-option>
 					</el-select>
 			  </el-form-item>
 				<el-form-item label="款式：">
 			    <el-select v-model="requestParameters.style" placeholder="请选择款式">
+            <el-option label="全部" value="">全部</el-option>
 						<el-option  v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
 					</el-select>
 			  </el-form-item>
@@ -54,7 +56,7 @@
 		</div>
 		<!-- 列表 -->
 		<el-table :data="tableData" border style="width: 2298px;text-align:center;">
-		    <el-table-column prop="sn" label="订单编号" width="160"></el-table-column>
+		    <el-table-column fixed prop="sn" label="订单编号" width="170"></el-table-column>
 		    <el-table-column label="材质" width="160">
 					<template slot-scope="scope">
 					<span v-for="good in scope.row.orderGoods" class="margin">{{good.material_name}}</span>
@@ -76,14 +78,14 @@
 		           <img :src="scope.row.traffic. avatar" style="display:block;margin:0 auto;width:100%;">
 		        </template>
 		    </el-table-column>
-			<el-table-column fixed prop="id" label="人脸ID" width="75"></el-table-column>
+			<el-table-column  prop="id" label="人脸ID" width="75"></el-table-column>
 		    <el-table-column prop="customer_name" label="客户姓名" width="160"></el-table-column>
 		    <el-table-column label="客户等级" width="160">
 		    	<template slot-scope="scope">
-		    		<span v-if="scope.row.traffic.is_new == 1 && scope.row.traffic.vip_level == 0">新客匿名</span>
-			    	<span v-if="scope.row.traffic.is_new == 1 && scope.row.traffic.vip_level == 1">新客VIP</span>
-			    	<span v-if="scope.row.traffic.is_new == 0 && scope.row.traffic.vip_level == 0">熟客匿名</span>
-			    	<span v-if="scope.row.traffic.is_new == 0 && scope.row.traffic.vip_level == 1">熟客VIP</span>
+		    		<span v-if="scope.row.traffic.is_new == 1 && scope.row.traffic.vip_level == 0">熟客未购买</span>
+			    	<span v-if="scope.row.traffic.is_new == 1 && scope.row.traffic.vip_level == 1">新客已购买</span>
+			    	<span v-if="scope.row.traffic.is_new == 0 && scope.row.traffic.vip_level == 0">熟客未购买</span>
+			    	<span v-if="scope.row.traffic.is_new == 0 && scope.row.traffic.vip_level == 1">熟客已购买</span>
 		    	</template>
 		    </el-table-column>
 		    <el-table-column label="创建时间" width="160">
@@ -98,99 +100,188 @@
 			    </template>
 		    </el-table-column>
 	    </el-table>
+    <!--新建订单-->
+    <el-dialog title="新建订单" :visible.sync="FormVisible">
+      <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="收银时间：" prop="cash_t">
+          <el-date-picker
+            v-model="formName.cash_t"
+            type="datetime"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="人脸ID：" :model="searchFace" prop="faceID">
+          <el-row>
+            <el-col :span='20'><el-input v-model="searchFace.id"></el-input></el-col>
+            <el-col :span='2'><el-button @click="findFaceId()">查询</el-button></el-col>
+          </el-row>
+          <el-form-item :data="faceSearch">
+            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
+              <template>
+                <img :src="faceSearch.avatar" style="display:block;margin:0 auto;width:100%;">
+              </template>
+            </div>
+          </el-form-item>
+        </el-form-item>
+        <div v-for="(item,index) in addProList" :key="index" v-if="addProList" :rules="rules">
+          <el-row>
+            <el-col :span='7'>
+              <el-form-item label="材质：" prop="material">
+                <el-select	v-model='item.material'>
+                  <el-option  v-for="material in materials" :key="material.id" :label="material.name" :value="material.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span='7'>
+              <el-form-item label="款式：" prop="style">
+                <el-select v-model="item.style">
+                  <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span='6'>
+              <el-form-item label='成交金额：' prop="price" >
+                <el-input v-model='item.price'  v-on:input='editInputFun()' ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span='1'>
+              <div  class='deleproduct'>
+                <div>
+                  <el-button @click='deleProduct(index)'>删除</el-button>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="addproduct">
+          <div>
+            <el-form-item label=''>
+              <el-button @click='addProduct()'>新增商品</el-button>
+            </el-form-item>
+          </div>
+        </div>
+        <div class="totalAll">
+          <p>共计
+            <input v-model='allNum' class='totalNumber' :disabled='true'/>件,总价
+            <input v-model="totalMoney" class='totalPrice' :disabled='true' />元
+          </p>
+        </div>
+        <el-form-item></el-form-item>
+        <el-form-item></el-form-item>
+        <el-form-item></el-form-item>
+        <el-form-item label="小票" v-model="formName.files_web">
+          <el-upload v-model="item.file"
+                     :action="importFileUrl()"
+                     list-type="picture-card"
+                     :data="upLoadData"
+                     :on-preview="handlePictureCardPreview"
+                     :on-remove="handleRemove"
+                     :onSuccess="uploadSuccess">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
+        </el-form-item>
 
-			<!--新建/编辑-->
-			<el-dialog :title="dialogTitle" :visible.sync="FormVisible">
-				<el-form :model='formName' ref="formName" label-width="100px" class="demo-ruleForm">
-					<el-form-item label="收银时间：">
-						<el-date-picker
-							v-model="formName.cash_t"
-							type="datetime"
-							placeholder="选择日期时间">
-						</el-date-picker>
-					</el-form-item>
-					<el-form-item label="人脸ID：" :model="searchFace">
-						<el-row>
-						<el-col :span='20'><el-input v-model="searchFace.id"></el-input></el-col>
-						<el-col :span='2'><el-button @click="findFaceId()">查询</el-button></el-col>
-						</el-row>
-						<el-form-item :data="faceSearch">
-							<div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
-								<template>
-									<img :src="faceSearch.avatar" style="display:block;margin:0 auto;width:100%;">
-								</template>
-							</div>
-						</el-form-item>						
-					</el-form-item>
-					
-					
-						<div v-for="(item,index) in addProList" :key="index" v-if="addProList">
-								<el-row>
-										<el-col :span='7'>
-										<el-form-item label="材质：">
-										<el-select	v-model='item.material'>
-												<el-option  v-for="material in materials" :key="material.id" :label="material.name" :value="material.id"></el-option>
-										</el-select>
-										</el-form-item>
-										</el-col>
-										<el-col :span='7'>
-										<el-form-item label="款式：" >
-												<el-select v-model="item.style">
-														<el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
-												</el-select>
-										</el-form-item>	
-										</el-col>
-										<el-col :span='6'>
-										<el-form-item label='成交金额：'>
-												<el-input v-model='item.price'  v-on:input='inputFun()' ></el-input>
-										</el-form-item>
-										</el-col>
-										<el-col :span='1'>
-										<div  class='deleprodect'>
-											<div>
-												<el-button @click='deleprodect(index)'>删除</el-button>
-											</div>
-										</div>
-										</el-col>
-								</el-row>
-						</div>
-					<div class="addproduct">
-						<div>
-						<el-form-item label=''>
-							<el-button @click='addProduct()'>新增商品</el-button>
-						</el-form-item>	
-						</div>	
-					</div>
-					<div class="totalAll">
-						<p>共计
-						<input v-model='allNum' id='totalNumber' :disabled='true'/>件,总价
-						<input v-model="totalMoney" id='totalPrice' :disabled='true'/>元</p>
-					</div>
-					<el-form-item></el-form-item>
-					<el-form-item></el-form-item>
-					<el-form-item></el-form-item>
-					<el-form-item label="小票" v-model="formName.files">
-						<el-upload
-							action="https://jsonplaceholder.typicode.com/posts/"
-							list-type="picture-card"
-							:show-file-list="false"
-							:on-success="handleAvatarSuccess"
-							:before-upload="beforeAvatarUpload"
-							:on-preview="handlePictureCardPreview"
-							:on-remove="handleRemove">
-							<i class="el-icon-plus"></i>
-						</el-upload>
-						<el-dialog :visible.sync="dialogVisible">
-							<img width="100%" :src="dialogImageUrl" alt="">
-						</el-dialog>
-					</el-form-item>
-					
-				</el-form>
-				<div slot="footer" class="dialog-footer">
-					<el-button @click="cancel(formName)">取 消</el-button>
-					<el-button type="primary" @click="submitForm(formName)">确 定</el-button>
-				</div>
-			</el-dialog>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancel(formName)">取 消</el-button>
+        <el-button type="primary" @click="submitForm(formName)">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!--编辑-->
+    <el-dialog title="编辑" :visible.sync="editVisible">
+      <el-form  :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="收银时间：" prop="cash_t">
+          <el-date-picker
+            v-model="editForm.cash_t"
+            type="datetime"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="人脸ID：" :model="editForm.traffic.id" prop="faceID">
+          <el-row>
+            <el-col :span='20'><el-input v-model="editForm.traffic.id"></el-input></el-col>
+            <el-col :span='2'><el-button @click="editFindFaceId()">查询</el-button></el-col>
+          </el-row>
+          <el-form-item :data="faceSearch">
+            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
+              <template>
+                <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;">
+              </template>
+            </div>
+          </el-form-item>
+        </el-form-item>
+
+
+        <div v-for="(item,index) in editForm.orderGoods" :key="index" v-if="editForm.orderGoods" :rules="rules">
+          <el-row>
+            <el-col :span='7'>
+              <el-form-item label="材质：" prop="material">
+                <el-select	v-model='item.material'>
+                  <el-option  v-for="material in materials" :key="material.id" :label="material.name" :value="material.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span='7'>
+              <el-form-item label="款式：" prop="style">
+                <el-select v-model="item.style">
+                  <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span='6'>
+              <el-form-item label='成交金额：' prop="price" >
+                <el-input v-model='item.price'  v-on:input='inputFun()' ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span='1'>
+              <div  class='deleproduct'>
+                <div>
+                  <el-button @click='editDeleProduct(index)'>删除</el-button>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="addproduct">
+          <div>
+            <el-form-item label=''>
+              <el-button @click='editAddProduct()'>新增商品</el-button>
+            </el-form-item>
+          </div>
+        </div>
+        <div class="totalAll">
+          <p>共计
+            <input v-model='editAllNum' class='totalNumber' :disabled='true'/>件,总价
+            <input v-model="editForm.price" class='totalPrice' :disabled='true' />元
+          </p>
+        </div>
+        <el-form-item></el-form-item>
+        <el-form-item></el-form-item>
+        <el-form-item></el-form-item>
+        <el-form-item label="小票" v-model="editForm.avatar">
+          <el-upload v-model="item.file"
+                     :action="importFileUrl()"
+                     list-type="picture-card"
+                     :data="upLoadData"
+                     :on-preview="handlePictureCardPreview"
+                     :on-remove="handleRemove"
+                     :onSuccess="uploadSuccess">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelE(editForm)">取 消</el-button>
+        <el-button type="primary" @click="EditFormSubmit(editForm)">确 定</el-button>
+      </div>
+    </el-dialog>
 	    <!-- 分页 -->
 		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
 			<el-pagination
@@ -210,6 +301,13 @@
 	import OrderApi from '../../api/order'
 	import remindApi from '../../api/remind'
 	import * as utils from '../../utils/index'
+  import apiUrl from '../../config/API.js'
+
+  const SERVER_IP = apiUrl.apiUrl
+  const COMMON = 'v1'
+
+  //图片上传
+  global.IMAGS_PUSH = `${SERVER_IP}${COMMON}/user/upload`
 
   export default {
 		name:'guest-list',
@@ -217,270 +315,463 @@
 		},
 		data(){
 			return{
-				allNum:'1',
-				totalMoney:0,	
-				faceSearch:{
-					avatar:''
-				},			
-				searchFace:{
-					id:''
-				},
-				addProList:[{
-					material : null,
-					style : null,
-					price:''
-				}],
-				item:{
-					material : '',
-					style : '',
-					price:''
-				},
-				dialogImageUrl: '',
-        		dialogVisible: false,
-				tableData: [],
-				materials:[],
-				styles:[],
-				pagination:{
-					currentPage:1,
-					totalCount:0,
-				},
-				cashTimes:['',''],
-				cashTime: '',
-				createdTimes:['',''],
-				dialogTitle: '',				
-				requestParameters: {
-						page: 1,
-						page_size:10,
-						sn:'',
-						goods_name:'',
-						price_start:'',
-						price_end:'',						
-						cash_t_start:'',
-						cash_t_end:'',
-						created_at_start:'',
-						created_at_end:'',
-						material: '',
-						style: ''						
-				},
-				formName:{
-						cash_t:'',
-						goods_info:[],
-						files:[],
-						customer_id:'',
-						remark:''
-				},
-				FormVisible: false
-			}
+        upLoadData: {
+          access_token: localStorage.getItem('knock_knock'),
+        },
+        imageListF:[],
+        allNum:'1',
+        totalMoney:0,
+        faceSearch:{
+          avatar:'',
+          customer_id:'',
+        },
+        searchFace:{
+          id:'',
+        },
+        addProList:[{
+          material : null,
+          style : null,
+          price:''
+        }],
+        item:{
+          material : '',
+          style : '',
+          price:''
+        },
+        dialogImageUrl: '',
+        dialogVisible: false,
+        tableData: [],
+        materials:[],
+        styles:[],
+        pagination:{
+          currentPage:1,
+          totalCount:0,
+        },
+        cashTimes:['',''],
+        cashTime: '',
+        createdTimes:['',''],
+        dialogTitle: '',
+        requestParameters: {
+          page: 1,
+          page_size:10,
+          sn:'',
+          goods_name:'',
+          price_start:'',
+          price_end:'',
+          cash_t_start:'',
+          cash_t_end:'',
+          created_at_start:'',
+          created_at_end:'',
+          material: '',
+          style: ''
+        },
+        formName:{
+          cash_t:'',
+          goods_info:[],
+          files_web:'',
+          customer_id:'',
+          remark:''
+        },
+        editForm:{
+          traffic:{
+            id:'',
+            avatar:'',
+          },
+          orderGoods:[],
+          cash_t:'',
+          avatar:'',
+          price:'',
+        },
+        editAllNum:'',
+        FormVisible: false,
+        editVisible:false,
+        rules:{
+          cash_t: [
+            { required: true,message: '请选择创建时间', trigger: 'blur' }
+          ],
+          faceID:[
+            { message: '请输入人脸信息', trigger: 'blur' }
+          ],
+          material: [
+            { message: '请选择材质信息', trigger: 'blur' }
+          ],
+          style:[
+            { message: '请选择款式信息', trigger: 'blur' },
+          ],
+          price:[
+            {required: true,message: '请输入商品价格', trigger: 'blur'},
+          ],
+        },
+      }
 		},
 		created: function () {
 		 this.orderList();
-		 this.getAll()
+		 this.getAll();
 		},
     methods: {
-		handleAvatarSuccess(res, file) {
-				this.imageUrl = URL.createObjectURL(file.raw);
-			},
-			beforeAvatarUpload(file) {
-				const isJPG = file.type === 'image/jpeg';
-				const isLt2M = file.size / 1024 / 1024 < 2;
+      //  上传图片动态地址
+      importFileUrl(){
+        return global.IMAGS_PUSH
+      },
 
-				if (!isJPG) {
-				this.$message.error('上传头像图片只能是 JPG 格式!');
-				}
-				if (!isLt2M) {
-				this.$message.error('上传头像图片大小不能超过 2MB!');
-				}
-				return isJPG && isLt2M;
-			},
-			getAll(){
-					let list = {
-							'all': '1',
-							'customer_id': ''
-					}
-					let qs = require('querystring')
-					remindApi.getAll(qs.stringify(list)).then((res) => {
-							if(res.data.errno === 0){
-									let labels = res.data.data;
-									for (let i = 0; i < labels.length; i++) {
-										if(labels[i].name === '材质'){
-											this.materials = labels[i].children
-										} else if(labels[i].name === '款式'){
-											this.styles = labels[i].children
-										} else {
-											return false
-										}
-									}
-							}else{
+      //  上传图片
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+        console.log(file)
+        console.log(this.dialogImageUrl)
+      },
+      // 上传成功后的回调
+      uploadSuccess (response, file, fileList) {
+        console.log('上传文件', response);
+        console.log(response.data.path)
+        this.$data.imageListF.push(response.data.path);
+        console.log(this.$data.imageListF);
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
 
-							}
-					})
-			},
-			handleRemove(file, fileList) {
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
+      getAll(){
+        let list = {
+          'all': '1',
+          'customer_id': ''
+        }
+        let qs = require('querystring')
+        remindApi.getAll(qs.stringify(list)).then((res) => {
+          if(res.data.errno === 0){
+            let labels = res.data.data;
+            for (let i = 0; i < labels.length; i++) {
+              if(labels[i].name === '材质'){
+                this.materials = labels[i].children
+              } else if(labels[i].name === '款式'){
+                this.styles = labels[i].children
+              } else {
+                return false
+              }
+            }
+          }else{
+
+          }
+        })
+      },
+      handleRemove(file, fileList) {
         console.log(file, fileList);
       },
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-			//列表
-			orderList(){
-				this.$data.requestParameters.cash_t_start = utils.getDateTime(this.$data.cashTimes[0]);
-				this.$data.requestParameters.cash_t_end = utils.getDateTime(this.$data.cashTimes[1]);
-				this.$data.requestParameters.created_at_start = utils.getDateTime(this.$data.createdTimes[0]);
-				this.$data.requestParameters.created_at_end = utils.getDateTime(this.$data.createdTimes[1]);
-				console.log(this.$data.createdTimes[0])
-				let qs = require('querystring');
-				OrderApi.orderList(qs.stringify(this.$data.requestParameters)).then((res) => {
-					if(res.data.errno === 0){
-						this.$data.tableData = res.data.data.list;
-						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
-						this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-					}else{
-
-					}
-				})
+      //列表显示
+      orderView(){
+        let qs = require('querystring');
+        OrderApi.orderView(qs.stringify(this.$data.requestParameters)).then((res) => {
+          if(res.data.errno === 0){
+            this.$data.tableData = res.data.data.list;
+            console.log(this.$data.tableData)
+            this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+            this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
+          }else{
+          }
+        })
       },
-			handleCurrentChange(currentPage) {
-				this.$data.requestParameters.page = currentPage;
-				this.orderList();
-			},
-			addNewList(){
-				this.$data.FormVisible = true;
-				this.$data.dialogTitle = '新增订单';
-			},
-			// 编辑
-			fnEdit (row) {
-				this.$data.dialogTitle = '订单编辑';
-				this.$data.FormVisible = true;
-				this.$data.cashTime = this.$data.cashTime;				
-			},
-			//查询人脸ID
-			findFaceId(){
-				let list = {
-					'id':this.$data.searchFace.id,			
-				}
-				let qs = require('querystring');
-				OrderApi.findFaceId(qs.stringify(list)).then((res) => {
-				if(res.data.errno === 0){
-					this.$data.faceSearch.avatar = res.data.data.avatar;
-	        	}else{
-					this.$message.error(res.data.msg);
-	        	}
-				})
-			},
-			//添加商品
-			addProduct(){
-				let obj = {
-					material : null,
-					style : null,
-					price:''
-				}			
-				this.$data.addProList.push(obj);
-				this.$data.allNum =  this.$data.addProList.length;				
-			},
-			//计算总价
-			inputFun(){	
-				let n = 0;
-				for(let i=0;i<this.$data.addProList.length;i++){
-					if(this.$data.addProList[i].price.replace(/[^\.\d]/g,'')){
-						n += parseInt(this.$data.addProList[i].price);
-					}else{
-						this.$data.addProList[i].price=0;
-					}										
-				}
-				this.$data.totalMoney = n;				
-			},
-			//删除商品
-			deleprodect(index){
-				this.$data.addProList.splice(index,1);
-			},
-			//创建新订单
-			submitForm(formName){
-				console.log(formName);
-				console.log(this.$data.addProList);
-				console.log(this.$data.formName.cash_t);
-				console.log(this.$data.dialogImageUrl);
-				console.log(this.$data.searchFace.id);
-				let material = this.$data.formName.material;
-				let style = this.$data.formName.style;
-				let list = {
-					'goods_info':this.$data.addProList,
-					'cash_t':this.$data.formName.cash_t,
-					'remark':'',
-					'files':this.$data.dialogImageUrl,
-					'customer_id':this.$data.searchFace.id
-				}
-				let qs = require('querystring');
-				OrderApi.addOrder(qs.stringify(list)).then((res) => {
-					console.log(list);
-					console.log(res);
-				if(res.data.errno === 0){
-					// this.$data.formName = {
-					// 	goods_info: [],
-					// 	cash_t:'',
-					// 	files:[],
-					// 	customer_id:'',
-					// 	remark:''
-					// };
-					this.$message({
-					    type: 'success',
-						message: '创建成功!'								
-					});
-				this.$data.FormVisible = false;
-	        	}else{
-					this.$message.error(res.data.msg);
-	        	}
-				})
-			},
-			//删除
-			fnRemove(row) {
-				this.$confirm('确认删除该订单：'+row.sn+' ？', '删除提示', {
-						confirmButtonText: '确定',
-						cancelButtonText: '取消',
-						type: 'warning'
-					}).then(() => {
-							let list = {
-						   'id': row.id
-				    	}
-					    let qs = require('querystring');
-							OrderApi.deleOrder(qs.stringify(list)).then((res) => {
-								if(res.data.errno === 0){
-										this.$message({
-					            type: 'success',
-					            message: '删除成功!'
-					          });
-										this.orderList();
-	        			}else{
-										this.$message.error(res.data.msg);
-	        			}
-						 })
-					}).catch(action => {})
-			  },
+      //列表
+      orderList(){
+        this.$data.requestParameters.cash_t_start = utils.getDateTime(this.$data.cashTimes[0]);
+        this.$data.requestParameters.cash_t_end = utils.getDateTime(this.$data.cashTimes[1]);
+        this.$data.requestParameters.created_at_start = utils.getDateTime(this.$data.createdTimes[0]);
+        this.$data.requestParameters.created_at_end = utils.getDateTime(this.$data.createdTimes[1]);
+        let qs = require('querystring');
+        OrderApi.orderList(qs.stringify(this.$data.requestParameters)).then((res) => {
+          if(res.data.errno === 0){
+            this.$data.tableData = res.data.data.list;
+            this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+            this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
+          }else{
 
-			  //取消
-			  cancel(name){
-				  console.log(name);
-				this.$data.formName = {
-						cash_t:'',
-						goods_info:[],
-						files:[],
-						customer_id:'',
-						remark:''
-				};
-				  this.$data.dialogVisible = false;
-				//   this.$nextTick(
-				// 	  function(){
-				// 		  this.$refs.name.validate();
-				// 	  }
-				//   )
-				  
-			  },
+          }
+        })
+      },
+      handleCurrentChange(currentPage) {
+        this.$data.requestParameters.page = currentPage;
+        this.orderList();
+      },
+      //新增订单显示
+      addNewList(){
+        this.$data.FormVisible = true;
+      },
+      // 编辑显示列表
+      fnEdit (row) {
+        this.$data.editVisible = true;
+        this.orderView(row.id);
+      },
+      orderView(id){
+        let qs = require('querystring')
+        OrderApi.orderView(qs.stringify({id:id,})).then((res) => {
+          if(res.data.errno === 0){
+            console.log(res.data.data);
+            this.$data.editForm = res.data.data;
+            console.log(utils.getDateTime(res.data.data.cash_t))
+            // this.$data.editForm.cash_t = utils.getDateTime(res.data.data.cash_t);
+            this.$data.editVisible = true;
+            this.$data.editAllNum = this.$data.editForm.orderGoods.length;
+          }else{
+            this.$message.error(res.data.msg);
+          }
+        })
+      },
+      //编辑计算总价
+      editInputFun(){
+        let n = 0;
+        for(let i=0;i<this.$data.editForm.orderGoods.length;i++){
+          if(this.$data.editForm.orderGoods[i].price.replace(/[^\.\d]/g,'')){
+            n += parseInt(this.$data.editForm.orderGoods[i].price);
+          }else{
+            this.$data.editForm.orderGoods[i].price=0;
+          }
+        }
+        this.$data.editForm.price = n;
+      },
+      //编辑添加商品
+      editAddProduct(){
+        let obj = {
+          material : null,
+          style : null,
+          price:''
+        }
+        this.$data.editForm.orderGoods.push(obj);
+        this.$data.editAllNum =  this.$data.editForm.orderGoods.length;
+      },
+      //编辑删除商品
+      editDeleProduct(index){
+        this.$data.editForm.orderGoods.splice(index,1);
+        let n = 0;
+        for(let i=0;i<this.$data.editForm.orderGoods.length;i++){
+          if(this.$data.editForm.orderGoods[i].price.replace(/[^\.\d]/g,'')){
+            n += parseInt(this.$data.editForm.orderGoods[i].price);
+          }else{
+            this.$data.editForm.orderGoods[i].price=0;
+          }
+        }
+        this.$data.editForm.price = n;
+        this.$data.editAllNum =  this.$data.editForm.orderGoods.length;
+      },
+      //编辑查询人脸信息
+      editFindFaceId(){
+        let list = {
+          'id':this.$data.editForm.traffic.id,
+        }
+        let qs = require('querystring');
+        OrderApi.findFaceId(qs.stringify(list)).then((res) => {
+          if(res.data.errno === 0){
+            this.$data.editForm.traffic.avatar = res.data.data.avatar;
+            this.$data.editForm.traffic.customer_id = res.data.data.customer_id;
+          }else{
+            this.$message.error(res.data.msg);
+          }
+        })
+      },
+      //编辑提交，取消
+      EditFormSubmit(editForm){
+        let listArry =  this.$data.imageListF.join(',');
+        let sendData = JSON.stringify(this.$data.addProList);
+        let list = {
+          'goods_info':sendData,
+          'cash_t':this.$data.formName.cash_t,
+          'remark':'',
+          'files_web':listArry,
+          'customer_id':this.$data.faceSearch.customer_id
+        }
+        let qs = require('querystring');
+        OrderApi.addOrder(qs.stringify(list)).then((res) => {
+          if(res.data.errno === 0){
+            this.orderList();
+            this.$data.formName = {
+              goods_info: [],
+              cash_t:'',
+              files_web:'',
+              customer_id:'',
+              remark:''
+            };
+            this.$message({
+              type: 'success',
+              message: '创建成功!'
+            });
+            this.$data.editVisible = false;
+          }else{
+            this.$message.error(res.data.msg);
+          }
+        })
+      },
+      cancelE(editFrom){
+        this.$data.editVisible = false;
+      },
+      //删除
+      fnRemove(row) {
+        this.$confirm('确认删除该订单：'+row.sn+' ？', '删除提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let list = {
+            'id': row.id
+          }
+          let qs = require('querystring');
+          OrderApi.deleOrder(qs.stringify(list)).then((res) => {
+            if(res.data.errno === 0){
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.orderList();
+            }else{
+              this.$message.error(res.data.msg);
+            }
+          })
+        }).catch(action => {})
+      },
+      //查询人脸ID
+      findFaceId(){
+        let list = {
+          'id':this.$data.searchFace.id,
+        }
+        let qs = require('querystring');
+        OrderApi.findFaceId(qs.stringify(list)).then((res) => {
+          if(res.data.errno === 0){
+            this.$data.faceSearch.avatar = res.data.data.avatar;
+            this.$data.faceSearch.customer_id = res.data.data.customer_id;
+            // this.$data.faceSearch.customer_id
+            console.log(this.$data.faceSearch.customer_id,22222)
+          }else{
+            this.$message.error(res.data.msg);
+          }
+        })
+      },
+      //添加商品
+      addProduct(){
+        let obj = {
+          material : null,
+          style : null,
+          price:''
+        }
+        this.$data.addProList.push(obj);
+        this.$data.allNum =  this.$data.addProList.length;
+      },
+      //计算总价
+      inputFun(){
+        let n = 0;
+        for(let i=0;i<this.$data.addProList.length;i++){
+          if(this.$data.addProList[i].price.replace(/[^\.\d]/g,'')){
+            n += parseInt(this.$data.addProList[i].price);
+          }else{
+            this.$data.addProList[i].price=0;
+          }
+        }
+        this.$data.totalMoney = n;
+      },
+      //添加订单--删除商品
+      deleProduct(index){
+        this.$data.addProList.splice(index,1);
+        let n = 0;
+        for(let i=0;i<this.$data.addProList.length;i++){
+          if(this.$data.addProList[i].price.replace(/[^\.\d]/g,'')){
+            n += parseInt(this.$data.addProList[i].price);
+          }else{
+            this.$data.addProList[i].price=0;
+          }
+        }
+        this.$data.totalMoney = n;
+        this.$data.allNum =  this.$data.addProList.length;
+      },
+      //创建新订单
+      submitForm(formName){
+        let listArry =  this.$data.imageListF.join(',');
+        let sendData = JSON.stringify(this.$data.addProList);
+        let list = {
+          'goods_info':sendData,
+          'cash_t':this.$data.formName.cash_t,
+          'remark':'',
+          'files_web':listArry,
+          'customer_id':this.$data.faceSearch.customer_id
+        }
+        let qs = require('querystring');
+        OrderApi.addOrder(qs.stringify(list)).then((res) => {
+          if(res.data.errno === 0){
+            this.orderList();
+            this.$data.formName = {
+              goods_info: [],
+              cash_t:'',
+              files_web:'',
+              customer_id:'',
+              remark:''
+            };
+            this.$message({
+              type: 'success',
+              message: '创建成功!'
+            });
+            this.$data.FormVisible = false;
+          }else{
+            this.$message.error(res.data.msg);
+          }
+        })
+      },
+      //删除
+      fnRemove(row) {
+        this.$confirm('确认删除该订单：'+row.sn+' ？', '删除提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let list = {
+            'id': row.id
+          }
+          let qs = require('querystring');
+          OrderApi.deleOrder(qs.stringify(list)).then((res) => {
+            if(res.data.errno === 0){
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.orderList();
+            }else{
+              this.$message.error(res.data.msg);
+            }
+          })
+        }).catch(action => {})
+      },
 
-        //实时录单
+      //取消
+      cancel(name){
+        console.log(name);
+        this.$data.formName = {
+          cash_t:'',
+          goods_info:[],
+          files:[],
+          customer_id:'',
+          remark:''
+        };
+        this.$data.dialogVisible = false;
+      },
+
+      //实时录单
       realTime(){
         console.log(0);
         this.$router.push({path:'/realFound'})
-      }
+      },
 
 	    }
     }
@@ -502,11 +793,12 @@
 		P{
 			float:right;
 			font-weight:700;
-			#totalNumber, #totalPrice{
+			.totalNumber, .totalPrice{
 				padding:0;
 				margin:0 3px;
-				width:50px;
-				height:24px;
+				width:100px;
+				height:40px;
+        border-radius: 3px;
 				border:0;
 				background: #eee;
 				border: 1px solid #999;
@@ -514,15 +806,15 @@
 			}
 		}
 	}
-	
+
 	.addproduct{
 		overflow:hidden;
 		div{
 			float:right;
 		}
 	}
-	.deleprodect{
-		margin-left:20px;		
+	.deleproduct{
+		margin-left:20px;
 	}
 </style>
 
