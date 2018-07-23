@@ -26,7 +26,7 @@ export default{
             },
             requestParameters: {
                 page: 1,
-                page_size:10,
+                page_size:20,
                 sid:''
             },
             addFormVisible:false,
@@ -116,8 +116,8 @@ export default{
         },
 
         handleCurrentChange(currentPage) {
-            console.log(currentPage)
             this.$data.requestParameters.page = currentPage;
+            this.lists();
         },
 
         fnRemove(row){
@@ -296,6 +296,38 @@ export default{
             }
             
         },
+
+        fnStatusUpdate(id,status){
+            this.$confirm('是否确认更改此帐号的状态？', '信息提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                if(status==1){
+                    status=0;
+                }else{
+                    status=1;
+                }
+                let list = {
+                    'id': id,
+                    'status':status
+                }
+                let qs = require('querystring')
+                userApi.status_update(qs.stringify(list)).then((res) => {
+                    if(res.data.errno === 0){
+                        globalFunctions.functions.message(this,'success');
+                        this.lists();
+                    }else{
+                        this.$message.error(res.data.msg);
+                    }
+                })
+            }).catch(() => {
+                // this.$message({
+                //   type: 'info',
+                //   message: '已取消删除'
+                // });          
+            });
+        }
         
     }
     

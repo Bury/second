@@ -56,6 +56,7 @@
 		</div>
 		<!-- 列表 -->
 		<el-table :data="tableData" border style="width:98%;text-align:center;">
+        <el-table-column fixed prop="id" label="序号" width="80"></el-table-column>
 		    <el-table-column fixed prop="sn" label="订单编号" width="170"></el-table-column>
 		    <el-table-column label="材质" width="160">
 					<template slot-scope="scope">
@@ -352,7 +353,7 @@
         dialogTitle: '',
         requestParameters: {
           page: 1,
-          page_size:10,
+          page_size:20,
           sn:'',
           goods_name:'',
           price_start:'',

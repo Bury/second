@@ -15,19 +15,6 @@ export default {
     })
   },
 
-
-
-  editPersonalInfo(list){
-    return new Promise((resolve, reject) => {
-      axios.post(global.EDIT_PERSONAL_INFO, list).then((res) => {
-        resolve(res)
-      }).catch((err) => {
-        reject(err)
-      })
-    })
-  },
-
-
   storeRecord(list){
     return new Promise((resolve, reject) => {
       axios.post(global.GET_STORE_RECORE, list).then((res) => {

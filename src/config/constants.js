@@ -17,15 +17,9 @@ global.GET_FEATURE = `${SERVER_IP}${COMMON}analysis/feature`
 
 /*提醒列表*/
 global.REMIND_LISTS = `${SERVER_IP}${COMMON}customer/remind-list`
-global.GUEST_INFO = `${SERVER_IP}${COMMON}customer/personal-info`
 
 
-// post customer/edit-personal-info
-global.EDIT_PERSONAL_INFO = `${SERVER_IP}${COMMON}customer/edit-personal-info`
-// post customer/store-recore 到店记录
-global.GET_STORE_RECORE = `${SERVER_IP}${COMMON}customer/store-recore`
-// post customer/order-recore 订单记录
-global.GET_ORDER_RECORE = `${SERVER_IP}${COMMON}customer/order-recore`
+
 // post customer/is-reception 接待
 global.IS_RECEPTION = `${SERVER_IP}${COMMON}customer/is-reception`
 
@@ -62,6 +56,13 @@ global.ADD_GOODS = `${SERVER_IP}${COMMON}order/adds`
 
 //*************来客列表
 global.GUEST_LISTS = `${SERVER_IP}${COMMON}customer/visitor-list`
+global.GUEST_EDIT = `${SERVER_IP}${COMMON}customer/edit-personal-info`
+global.GUEST_VIEW = `${SERVER_IP}${COMMON}customer/personal-info`
+
+// post customer/store-recore 到店记录
+global.GET_STORE_RECORE = `${SERVER_IP}${COMMON}customer/store-recore`
+// post customer/order-recore 订单记录
+global.GET_ORDER_RECORE = `${SERVER_IP}${COMMON}customer/order-recore`
 
 //*************设备管理
 global.DEVICE_LISTS = `${SERVER_IP}${COMMON}device/list`
@@ -78,6 +79,7 @@ global.USER_VIEW = `${SERVER_IP}${COMMON}account/view`
 global.USER_EDIT = `${SERVER_IP}${COMMON}account/edit`
 global.USER_DELE = `${SERVER_IP}${COMMON}account/dele`
 global.USER_PASSWORD_RESET = `${SERVER_IP}${COMMON}account/edit-password`
+global.USER_STATUS_UPDATE = `${SERVER_IP}${COMMON}account/update-status`
 
 global.USER_EDIT_CURRENT = `${SERVER_IP}${COMMON}user/edit`
 

@@ -35,23 +35,18 @@ export default {
                 currentPage:1,
                 totalCount:0,
             },
-
+            activeName1: 'first',
             activeName2: 'first',
             dialogVisible:false,//弹窗是否显示
-            activeName: 'first',
             value4: ['',''],
             requestParameters: {
                 page: 1,
-                page_size:10,
-                id:'',
-                store_id:'',
-                store_time_start:'',
-                store_time_end:'',
-                level:'',
+                page_size:20,
+                visit_time_start:'',
+                visit_time_end:'',
+                //level:'',
                 age:'',
                 gender:'',
-                consume_money_start:'',
-                consume_money_end:''
             },
             currentCustomerId:'',
             showInfoEdit:false
@@ -66,11 +61,11 @@ export default {
 
         //列表
         lists(){
-            this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 || '';
-            this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000 || '';
+            // this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 || '';
+            // this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000 || '';
             
             let qs = require('querystring');
-            console.log(this.$data.requestParameters)
+            // console.log(this.$data.requestParameters)
             guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 let result = res.data;
                 if(result.errno === 0){
@@ -97,7 +92,7 @@ export default {
         showDialog(row) {
             this.$data.showInfoEdit = false;
             this.$data.currentCustomerId = row.customer_id;
-            this.$data.activeName = 'first';
+            this.$data.activeName1 = 'first';
             this.$data.dialogVisible = true;
         },
 

@@ -140,7 +140,7 @@
 		        activeName: 'first',
 		        requestParameters: {
 	                page: 1,
-	                page_size:10,
+	                page_size:20,
 	                level:'',
 	                age:'',
 	                gender:'',
@@ -167,7 +167,7 @@
         			if(res.data.errno === 0){
         				var i='';
         				for (i in res.data.data.list){
-						    res.data.data.list[i].comeinfoboughtinfo=global_functions.functions.guest.getComeInfoBoughtInfo(res.data.data.list[i].is_new,res.data.data.list[i].vip_level);
+						    res.data.data.list[i].comeinfoboughtinfo=global_functions.functions.guest.getVisitInfoBoughtInfo(res.data.data.list[i].is_new,res.data.data.list[i].vip_level);
 						}
 						this.$data.tableData = res.data.data.list;
 						this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
