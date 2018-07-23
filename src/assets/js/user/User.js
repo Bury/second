@@ -298,28 +298,35 @@ export default{
         },
 
         fnStatusUpdate(id,status){
-            if(id=='' || id==null){
-                alert('参数id不能为空');
-                return ;
-            }
-            if(status==1){
-                status=0;
-            }else{
-                status=1;
-            }
-            let list = {
-                'id': id,
-                'status':status
-            }
-            let qs = require('querystring')
-            userApi.status_update(qs.stringify(list)).then((res) => {
-                if(res.data.errno === 0){
-                    globalFunctions.functions.message(this,'success');
-                    this.lists();
+            this.$confirm('是否确认更改此帐号的状态？', '信息提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                if(status==1){
+                    status=0;
                 }else{
-                    this.$message.error(res.data.msg);
+                    status=1;
                 }
-            })
+                let list = {
+                    'id': id,
+                    'status':status
+                }
+                let qs = require('querystring')
+                userApi.status_update(qs.stringify(list)).then((res) => {
+                    if(res.data.errno === 0){
+                        globalFunctions.functions.message(this,'success');
+                        this.lists();
+                    }else{
+                        this.$message.error(res.data.msg);
+                    }
+                })
+            }).catch(() => {
+                // this.$message({
+                //   type: 'info',
+                //   message: '已取消删除'
+                // });          
+            });
         }
         
     }
