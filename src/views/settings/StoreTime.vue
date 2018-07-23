@@ -1,5 +1,7 @@
 <template>
-	<div class="open-time-set-page">
+  <div>
+    <div class="left"></div>
+	  <div class="open-time-set-page">
 		<h3 class="top-box">营业时间设置</h3>
 		<div class="time-box">
 			<el-time-select placeholder="开始时间" v-model="startTime"
@@ -9,7 +11,7 @@
 		      end: '23:59',
 		      maxTime: endTime}">
 	  		</el-time-select>
-	  		<span style="padding:0 10px;">至</span> 
+	  		<span style="padding:0 10px;">至</span>
 			<el-time-select placeholder="结束时间" v-model="endTime"
 			    :picker-options="{
 			      start: '00:00',
@@ -22,6 +24,8 @@
 			<el-button type="primary" class="save-btn" @click="fnSetTime">保存</el-button>
 		</div>
 	</div>
+    <div class="right"></div>
+  </div>
 </template>
 
 <script src="@/assets/js/settings/StoreTime.js"></script>
