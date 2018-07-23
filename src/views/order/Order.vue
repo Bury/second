@@ -141,7 +141,7 @@
             </el-col>
             <el-col :span='6'>
               <el-form-item label='成交金额：' prop="price" >
-                <el-input v-model='item.price'  v-on:input='editInputFun()' ></el-input>
+                <el-input v-model='item.price'  v-on:input='inputFun()' ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span='1'>
@@ -213,8 +213,6 @@
             </div>
           </el-form-item>
         </el-form-item>
-
-
         <div v-for="(item,index) in editForm.orderGoods" :key="index" v-if="editForm.orderGoods" :rules="rules">
           <el-row>
             <el-col :span='7'>
@@ -233,7 +231,7 @@
             </el-col>
             <el-col :span='6'>
               <el-form-item label='成交金额：' prop="price" >
-                <el-input v-model='item.price'  v-on:input='inputFun()' ></el-input>
+                <el-input v-model='item.price'  v-on:input='editInputFun()' ></el-input>
               </el-form-item>
             </el-col>
             <el-col :span='1'>
@@ -262,13 +260,18 @@
         <el-form-item></el-form-item>
         <el-form-item></el-form-item>
         <el-form-item label="小票" v-model="editForm.avatar">
+          <div :model="editForm.avatar" :visible.sync="editImgVisible">
+            <div class="editImg" v-for="item in editForm.avatar">
+              <img :src="item" width="100%"/>
+            </div>
+          </div>
           <el-upload v-model="item.file"
                      :action="importFileUrl()"
                      list-type="picture-card"
                      :data="upLoadData"
-                     :on-preview="handlePictureCardPreview"
-                     :on-remove="handleRemove"
-                     :onSuccess="uploadSuccess">
+                     :on-preview="editHandlePictureCardPreview"
+                     :on-remove="editHandleRemove"
+                     :onSuccess="editUploadSuccess">
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
@@ -313,7 +316,7 @@
 		name:'guest-list',
 		components: {
 		},
-		data(){
+		data() {
 			return{
         upLoadData: {
           access_token: localStorage.getItem('knock_knock'),
@@ -383,6 +386,9 @@
           price:'',
         },
         editAllNum:'',
+        editImgAvatar:[],
+        editRequestParameters:[],
+        editImgVisible:false,
         FormVisible: false,
         editVisible:false,
         rules:{
@@ -413,38 +419,17 @@
       importFileUrl(){
         return global.IMAGS_PUSH
       },
-
-      //  上传图片
+      // 新增 上传图片
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
-        console.log(file)
-        console.log(this.dialogImageUrl)
       },
       // 上传成功后的回调
       uploadSuccess (response, file, fileList) {
-        console.log('上传文件', response);
-        console.log(response.data.path)
         this.$data.imageListF.push(response.data.path);
-        console.log(this.$data.imageListF);
-      },
-      handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
       },
       getAll(){
         let list = {
@@ -469,25 +454,22 @@
           }
         })
       },
-      handleRemove(file, fileList) {
+      //编辑--上传图片的删除、添加地址
+      editHandleRemove(file, fileList) {
         console.log(file, fileList);
       },
-      handlePictureCardPreview(file) {
+      editHandlePictureCardPreview(file) {
+        console.log(file,11111);
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
       },
-      //列表显示
-      orderView(){
-        let qs = require('querystring');
-        OrderApi.orderView(qs.stringify(this.$data.requestParameters)).then((res) => {
-          if(res.data.errno === 0){
-            this.$data.tableData = res.data.data.list;
-            console.log(this.$data.tableData)
-            this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
-            this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-          }else{
-          }
-        })
+      // 编辑上传图片成功后的回调
+      editUploadSuccess (response, file, fileList) {
+        for(let i=0;i<this.$data.editForm.avatar.length;i++){
+          this.$data.editImgAvatar.push(this.$data.editForm.avatar[i]);
+        }
+        this.$data.editImgAvatar.push(response.data.fullpath);
+        // console.log(this.$data.editImgAvatar);
       },
       //列表
       orderList(){
@@ -525,10 +507,23 @@
           if(res.data.errno === 0){
             console.log(res.data.data);
             this.$data.editForm = res.data.data;
-            console.log(utils.getDateTime(res.data.data.cash_t))
+            // console.log(utils.getDateTime(res.data.data.cash_t))
             // this.$data.editForm.cash_t = utils.getDateTime(res.data.data.cash_t);
             this.$data.editVisible = true;
             this.$data.editAllNum = this.$data.editForm.orderGoods.length;
+            if(this.$data.editForm.avatar != null){
+              this.$data.editImgVisible = true;
+            }else{
+              this.$data.editImgVisible = false;
+            }
+            for(let i=0;i<this.$data.editForm.orderGoods.length;i++){
+              let obj = {
+                'material':this.$data.editForm.orderGoods[i].material,
+                'style': this.$data.editForm.orderGoods[i].style,
+                'price':this.$data.editForm.orderGoods[i].price,
+              };
+              this.$data.editRequestParameters.push(obj);
+            }
           }else{
             this.$message.error(res.data.msg);
           }
@@ -587,17 +582,26 @@
       },
       //编辑提交，取消
       EditFormSubmit(editForm){
-        let listArry =  this.$data.imageListF.join(',');
-        let sendData = JSON.stringify(this.$data.addProList);
+        let listArry = '';
+        if(this.$data.editImgAvatar.length == 0){
+          listArry = this.$data.editForm.avatar.join(',');
+        }else{
+          listArry =  this.$data.editImgAvatar.join(',');
+        }
+
+        console.log(this.$data.editForm.orderGoods);
+        console.log(this.$data.editRequestParameters,1111)
         let list = {
-          'goods_info':sendData,
-          'cash_t':this.$data.formName.cash_t,
+          'id': this.$data.editForm.id,
+          'goods_info':this.$data.editRequestParameters,
+          'cash_t':this.$data.editForm.cash_t,
           'remark':'',
-          'files_web':listArry,
-          'customer_id':this.$data.faceSearch.customer_id
+          'files_web':this.$data.editForm.avatar,
+          'avatar':listArry,
+          'customer_id':this.$data.editForm.traffic.customer_id
         }
         let qs = require('querystring');
-        OrderApi.addOrder(qs.stringify(list)).then((res) => {
+        OrderApi.editOrder(qs.stringify(list)).then((res) => {
           if(res.data.errno === 0){
             this.orderList();
             this.$data.formName = {
@@ -609,7 +613,7 @@
             };
             this.$message({
               type: 'success',
-              message: '创建成功!'
+              message: '修改成功!'
             });
             this.$data.editVisible = false;
           }else{
@@ -816,6 +820,16 @@
 	.deleproduct{
 		margin-left:20px;
 	}
+  .editImg{
+    width: 150px;
+    height:150px;
+    border-radius:3px;
+    display: inline-block;
+    border: 1px solid #eee;
+    padding: 15px;
+    box-sizing:border-box;
+    margin-right: 15px;
+  }
 </style>
 
 
