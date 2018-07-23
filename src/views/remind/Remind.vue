@@ -2,14 +2,14 @@
 	<div class="remind-list-page">
 		<div class="top-box">
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-			  <el-form-item label="消费金额：">
-			    <el-input v-model="requestParameters.consume_money_start"></el-input>
-			  </el-form-item>
+				<el-form-item label="消费金额：">
+			    	<el-input v-model="requestParameters.consume_money_start"></el-input>
+			  	</el-form-item>
 			  <el-form-item label="至">
 			    <el-input v-model="requestParameters.consume_money_end"></el-input>
 			  </el-form-item>
 			  <el-form-item label="来客类型：">
-			     <el-select v-model="requestParameters.level" placeholder="来客类型">
+				<el-select v-model="requestParameters.level" placeholder="来客类型">
 			      <el-option v-for="(item, idx) in allGuestClass" :key="idx" :label="item" :value="idx"></el-option>
 			    </el-select>
 			  </el-form-item>
@@ -22,7 +22,6 @@
 			    <el-select v-model="requestParameters.gender" placeholder="性别">
 			      <el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>
 			    </el-select>
-			    
 			  </el-form-item>
 			  <el-form-item>
 			    <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -92,12 +91,14 @@
 			    <el-tab-pane label="个人信息" name="first">
 			    	<guest-info :customerId="currentCustomerId"  :traffic="trafficId" :showInfoEdit="showInfoEdit"></guest-info>
 			    </el-tab-pane>
+			    <!--
 			    <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
 			    	<store-record :customerId="currentCustomerId"></store-record>
 			    </el-tab-pane>
 			    <el-tab-pane label="订单记录" name="third">
 			    	<order-record :customerId="currentCustomerId" style="min-height:415px;"></order-record>
 			    </el-tab-pane>
+			    -->
 			</el-tabs>
 			
 		</el-dialog>
@@ -112,8 +113,8 @@
 
 	import GuestInfo from '../../components/GuestInfo'
 
-	//import StoreRecord from '../../components/StoreRecord'
-	//import OrderRecord from '../../components/OrderRecord'
+	//import GuestVisitedRecord from '../../components/GuestVisitedRecord'
+	//import GuestOrderRecord from '../../components/GuestOrderRecord'
 
     export default {
 
@@ -121,8 +122,8 @@
 
         components: {
 		    GuestInfo,
-		    //StoreRecord,
-		    //OrderRecord
+		    //GuestVisitedRecord,
+		    //GuestOrderRecord
 		},
 
         data(){
@@ -222,12 +223,3 @@
 
     }
 </script>
-<style lang="scss" scoped>
-	.el-table thead{
-		color:#333; 
-	}
-	.el-pagination{
-		margin:10px;
-	  	float: right;
-	}
-</style>

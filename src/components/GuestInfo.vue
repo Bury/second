@@ -6,7 +6,7 @@
                 <li class="user-phone">手机： {{guestInfo.phone}}</li>
                 <li class="user-sex">性别： {{guestInfo.gender == 1 ? '男' : '女'}}</li>
                 <li class="user-age">年龄： {{guestInfo.age}}</li>
-                <li class="user-type">来客类型： {{guestInfo.vip_level}}</li>
+                <li class="user-type">来客类型：{{guestInfo.is_new_to_text}} {{guestInfo.vip_level}}</li>
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
@@ -64,11 +64,17 @@
 </template>
 <script>
 
+    import globalData from '../config/global_data'
+
     import globalRules from '../config/global_rules'
 
+    import globalFunctions from '../config/global_functions'
+     
     import remindApi from '../api/remind'
 
     import guestApi from '../api/guest'
+
+    import tagApi from '../api/tag'
 
     export default {
 
@@ -116,18 +122,18 @@
 
         created:function(){
             this.getGuestInfo(this.$props.customerId,this.$props.traffic)
-            this.getAll(this.$props.customerId)
+            this.getTagListsResults(this.$props.customerId)
         },
 
         methods: {
 
-            getAll(customerId){
+            getTagListsResults(customerId){
                 let list = {
                     'all': 1,
                     'customer_id': customerId
                 }
                 let qs = require('querystring')
-                remindApi.getAll(qs.stringify(list)).then((res) => {
+                tagApi.lists_results(qs.stringify(list)).then((res) => {
                     if(res.data.errno === 0){
                     	console.log(res.data.data)
                         this.$data.labels = res.data.data
@@ -143,7 +149,9 @@
                 let personlList ={'customer_id':customerId,'traffic_id':trafficId};
                 guestApi.getGuestInfo(qs.stringify(personlList)).then((res) => {
                     if(res.data.errno === 0){
-                        this.$data.guestInfo = res.data.data
+                        var is_new=this.$data.guestInfo.is_new;
+                        this.$set(res.data.data, 'is_new_to_text', globalFunctions.functions.guest.getComeInfo(is_new));
+                        this.$data.guestInfo = res.data.data;
                     }else{
 
                     }

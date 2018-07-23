@@ -8,7 +8,7 @@ if (process.env.NODE_ENV == 'development') {
    apiUrl = "http://dev-api.yy.ibetwo.com/";
    DEBUG = true;
 }else if(process.env.NODE_ENV == 'production'){
-   apiUrl = "http://dev-api.yy.ibetwo.com/";
+   apiUrl = "http://api.yy.ibetwo.com/";
    DEBUG = false;
 }else if(process.env.NODE_ENV == 'testing'){
    apiUrl = "http://test-api.yy.ibetwo.com/";
