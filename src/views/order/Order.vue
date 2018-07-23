@@ -1,5 +1,5 @@
 <template>
-	<div class="guest-list-page">
+	  <div class="guest-list-page">
 		<div class="top-box">
 			<el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
 			  <el-form-item label="订单编号：">
@@ -55,7 +55,7 @@
 			<el-button type="primary" @click="addNewList()">创建订单</el-button>
 		</div>
 		<!-- 列表 -->
-		<el-table :data="tableData" border style="width: 2298px;text-align:center;">
+		<el-table :data="tableData" border style="width:98%;text-align:center;">
 		    <el-table-column fixed prop="sn" label="订单编号" width="170"></el-table-column>
 		    <el-table-column label="材质" width="160">
 					<template slot-scope="scope">
@@ -305,13 +305,10 @@
 	import remindApi from '../../api/remind'
 	import * as utils from '../../utils/index'
   import apiUrl from '../../config/API.js'
-
   const SERVER_IP = apiUrl.apiUrl
   const COMMON = 'v1'
-
   //图片上传
   global.IMAGS_PUSH = `${SERVER_IP}${COMMON}/user/upload`
-
   export default {
 		name:'guest-list',
 		components: {
@@ -505,8 +502,13 @@
         OrderApi.orderView(qs.stringify({id:id,})).then((res) => {
           if(res.data.errno === 0){
             this.$data.editForm = res.data.data;
-            // this.$data.editForm.cash_t = '141414'
-            this.$data.editForm.cash_t = utils.getDateTime(res.data.data.cash_t);
+            let a = new Date(res.data.data.cash_t);
+            console.log(a)
+            console.log(res.data.data.cash_t);
+            // console.log( this.$data.editForm.cash_t )
+            let n = res.data.data.cash_t
+             n.format("YYYY-MM-DD HH:mm:ss");
+            console.log(n)
             this.$data.editVisible = true;
             this.$data.editAllNum = this.$data.editForm.orderGoods.length;
             if(this.$data.editForm.avatar != null){
@@ -599,13 +601,6 @@
         OrderApi.editOrder(qs.stringify(list)).then((res) => {
           if(res.data.errno === 0){
             this.orderList();
-            this.$data.formName = {
-              goods_info: [],
-              cash_t:'',
-              files_web:'',
-              customer_id:'',
-              remark:''
-            };
             this.$message({
               type: 'success',
               message: '修改成功!'
@@ -776,55 +771,59 @@
     }
 </script>
 <style lang="scss" scoped>
-	.el-table thead{
-		color:#333;
-	}
-	.margin{
-		display:inline-block;
-		margin:0 5px;
-	}
-	.line{
-		text-align:center;
-	}
+    .guest-list-page{
+      .el-table thead{
+        color:#333;
+      }
+      .margin{
+        display:inline-block;
+        margin:0 5px;
+      }
+      .line{
+        text-align:center;
+      }
 
-	.totalAll{
-		overflow:hidden;
-		P{
-			float:right;
-			font-weight:700;
-			.totalNumber, .totalPrice{
-				padding:0;
-				margin:0 3px;
-				width:100px;
-				height:40px;
-        border-radius: 3px;
-				border:0;
-				background: #eee;
-				border: 1px solid #999;
-				text-align:center;
-			}
-		}
-	}
+      .totalAll{
+        overflow:hidden;
+        P{
+          float:right;
+          font-weight:700;
+          .totalNumber, .totalPrice{
+            padding:0;
+            margin:0 3px;
+            width:100px;
+            height:40px;
+            border-radius: 3px;
+            border:0;
+            background: #eee;
+            border: 1px solid #999;
+            text-align:center;
+          }
+        }
+      }
 
-	.addproduct{
-		overflow:hidden;
-		div{
-			float:right;
-		}
-	}
-	.deleproduct{
-		margin-left:20px;
-	}
-  .editImg{
-    width: 150px;
-    height:150px;
-    border-radius:3px;
-    display: inline-block;
-    border: 1px solid #eee;
-    padding: 15px;
-    box-sizing:border-box;
-    margin-right: 15px;
-  }
+      .addproduct{
+        overflow:hidden;
+        div{
+          float:right;
+        }
+      }
+      .deleproduct{
+        margin-left:20px;
+      }
+      .editImg{
+        width: 150px;
+        height:150px;
+        border-radius:3px;
+        display: inline-block;
+        border: 1px solid #eee;
+        padding: 15px;
+        box-sizing:border-box;
+        margin-right: 15px;
+      }
+    }
+
+
 </style>
 
 

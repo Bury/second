@@ -39,10 +39,10 @@
 
     <!--tabel 分页-->
     <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
-    
+
       <el-tab-pane label="来客列表" name="first">
         <!-- 列表 -->
-        <el-table :data="tableData" border height="680" style="margin:0 auto;width: 1231px;text-align:center;">
+        <el-table :data="tableData" border height="680" style="margin:0 auto;width: 96%;text-align:center;">
           <el-table-column fixed type="index" label="ID" width="80">
           </el-table-column>
           <el-table-column label="人脸" width="60">
@@ -108,7 +108,7 @@
           <el-tab-pane label="个人信息" name="first">
             <guest-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></guest-info>
           </el-tab-pane>
-          
+
       </el-tabs>
     </el-dialog>
 

@@ -152,7 +152,7 @@ export default {
         let qs = require('querystring');
         statisticsApi.getCustomer(qs.stringify(parameters)).then((res) => {
             if(res.data.errno === 0){
-                // console.log(res)
+                console.log(res.data.data)
                 this.$data.guestData = res.data.data;
             }else{
 
@@ -232,7 +232,7 @@ export default {
 
 
     changeTimeType(tab, event){
-        console.log(tab.index)
+        // console.log(tab.index)
         var nowIdx = tab.index;
         this.$data.ctrlTimeType = [false,false,false,false,false];
         this.$data.ctrlTimeType[nowIdx] = true;
@@ -247,15 +247,18 @@ export default {
     setData(){
         if(this.$data.ctrlTimeType[0]){
             //日
-            this.$data.guestParameters.begin_time = this.getS('2018-07-09 00:00:00');
-            this.$data.guestParameters.end_time =  this.getS('2018-07-09 23:59:59');
+          // let day = new Date()
+          console.log(this.$data.day);
+            this.$data.guestParameters.begin_time = this.getS('2018-07-23 00:00:00');
+            this.$data.guestParameters.end_time =  this.getS('2018-07-23 23:59:59');
             this.requestData();
             return false;
         }
         if(this.$data.ctrlTimeType[1]){
             //周
+          console.log(this.week);
             this.$data.guestParameters.begin_time = utils.getDateTime(this.week);
-            this.$data.guestParameters.end_time =  this.getS('2018-07-15 23:59:59');
+            this.$data.guestParameters.end_time =  this.getS('2018-07-30 23:59:59');
             this.requestData();
             return false;
         }
