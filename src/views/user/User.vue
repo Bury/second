@@ -10,7 +10,11 @@
 	    	<el-table-column prop="role_name" label="岗位" width="160"></el-table-column>
 	    	<el-table-column prop="truename" label="姓名" width="160"></el-table-column>
 	    	<el-table-column prop="phone" label="手机" width="160"></el-table-column>
-	    	<el-table-column prop="status" label="状态" width="160"></el-table-column>
+	    	<el-table-column prop="status" label="状态" width="160">
+					<template slot-scope="scope" >
+						<span @click=fnStatusUpdate(scope.row.id,scope.row.status)>{{scope.row.status == 1 ? '正常' : '禁用'}}</span>
+					</template>
+				</el-table-column>
 	    	<el-table-column label="创建时间" width="160">
 	    		<template slot-scope="scope">
 	    			{{scope.row.created_at | date(4)}}

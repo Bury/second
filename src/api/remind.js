@@ -15,7 +15,6 @@ export default {
     })
   },
 
-
   storeRecord(list){
     return new Promise((resolve, reject) => {
       axios.post(global.GET_STORE_RECORE, list).then((res) => {

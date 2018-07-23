@@ -24,263 +24,58 @@
         </div>
 
         <div class="user-info-edit" v-if="infoEdit">
-           <el-form :model="editGuestInfoData" :rules="GuestInfoRules" ref="editGuestInfoData" label-width="100px" class="demo-editGuestInfoData" size="mini" style="float:left;margin-right:50px;width:400px;">
-              <el-form-item label="姓名：" prop="name" >
-                <el-input v-model="editGuestInfoData.name"></el-input>
-              </el-form-item>
-              <el-form-item label="手机：" prop="phone">
-                <el-input v-model="editGuestInfoData.phone"></el-input>
-              </el-form-item>
-              <el-form-item label="性别：" prop="gender">
-                <el-radio-group v-model="editGuestInfoData.gender">
-                  <el-radio :label="1">男</el-radio>
-                  <el-radio :label="0">女</el-radio>
+            <el-form :model="editGuestInfoData" :rules="GuestInfoRules" ref="editGuestInfoData" label-width="100px" class="demo-editGuestInfoData" size="mini" style="float:left;margin-right:50px;width:400px;">
+                <el-form-item label="姓名：" prop="name">
+                    <el-input v-model="editGuestInfoData.name"></el-input>
+                </el-form-item>
+                <el-form-item label="手机：" prop="phone">
+                    <el-input v-model="editGuestInfoData.phone"></el-input>
+                </el-form-item>
+                <el-form-item label="性别：" prop="gender">
+                    <el-radio-group v-model="editGuestInfoData.gender">
+                        <el-radio :label="1">男</el-radio>
+                        <el-radio :label="0">女</el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item label="年龄：" prop="age">
+                    <el-input v-model="editGuestInfoData.age"></el-input>
+                </el-form-item>
+                <el-form-item label="新客/熟客：">
+                <el-radio-group v-model="editGuestInfoData.is_new">
+                    <el-radio :label="1">新客</el-radio>
+                    <el-radio :label="0">熟客</el-radio>
                 </el-radio-group>
-              </el-form-item>
-              <el-form-item label="年龄：" >{{editGuestInfoData.age}}</el-form-item>
-              <el-form-item label="来客类型：">{{editGuestInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
-              <el-form-item label="年龄：" >{{editGuestInfoData.age}}</el-form-item>
-              <el-form-item label="标签：">
-                <div v-for="label in labels" :key="label.id" class="labels">
-                    <div>—— {{label.name}} ——</div>
-                    <span v-for="children in label.children" :key="children.id">{{children.name}}</span>
-                </div>
-              </el-form-item>
-              <el-form-item label="备注：">
-                <el-input type="textarea" v-model="editGuestInfoData.remark"></el-input>
-              </el-form-item>
-          </el-form>
-          <div class="img-box">
+                </el-form-item>
+                <el-form-item label="未购买/已购买：">
+                    <el-radio-group v-model="editGuestInfoData.vip_level">
+                    <el-radio :label="1">未购买</el-radio>
+                    <el-radio :label="0">已购买</el-radio>
+                </el-radio-group>
+                </el-form-item>
+                <el-form-item label="标签：">
+                    <div v-for="label in labels" :key="label.id" class="labels">
+                        <div>—— {{label.name}} ——</div>
+                        <span v-for="children in label.children" :key="children.id">{{children.name}}</span>
+                    </div>
+                </el-form-item>
+                <el-form-item label="备注：">
+                    <el-input type="textarea" v-model="editGuestInfoData.remark"></el-input>
+                </el-form-item>
+            </el-form>
+            <div class="img-box">
             <div class="img-wrap">
                 <img :src="editGuestInfoData.avatar" alt="人脸图像">
             </div>
             <div class="img-id">人脸ID：{{editGuestInfoData.id}}</div>
-          </div>
-          <el-row class="guestInfoEdit-wrap">
+            </div>
+            <el-row class="guestInfoEdit-wrap">
                 <el-button plain size="small" @click="guestInfoCancel">取消</el-button>
                 <el-button type="primary" plain size="small" @click="guestInfoEditSubmit('editGuestInfoData')">确定</el-button>
-          </el-row>
+            </el-row>
         </div>
 	</div>
 </template>
-<script>
 
-import globalData from '@/config/global_data'
+<script src="@/assets/js/guest/GuestInfo.js"></script>
 
-import globalRules from '@/config/global_rules'
-
-import globalFunctions from '@/config/global_functions'
-    
-import guestApi from '@/api/guest'
-
-import tagApi from '@/api/tag'
-
-    export default {
-
-      	name:'user-info',
-
-        props:{
-            customerId:{
-                type:Number
-            },
-            showInfoEdit:{
-                type:Boolean
-            },
-            traffic:{
-            	type:Number
-            }
-        },
-
-        data() {
-
-            return {
-                infoEdit:false,
-                remarksId:"",
-                guestInfo:{},
-                editGuestInfoData:{},
-                labels:{},
-                GuestInfoRules:{
-                    name: globalRules.rules.user.truename(),
-                    gender:globalRules.rules.user.gender(),
-                    phone:globalRules.rules.user.phone(),
-                }
-            };
-
-        },
-
-        watch: {
-          customerId: function() {
-             this.view(this.$props.customerId)
-          },
-        },
-
-        created:function(){
-            this.view(this.$props.customerId)
-            //this.getTagListsResults(this.$props.customerId)
-        },
-
-        methods: {
-
-            getTagListsResults(customerId){
-                let list = {
-                    'all': 1,
-                    'customer_id': customerId
-                }
-                let qs = require('querystring')
-                tagApi.lists_results(qs.stringify(list)).then((res) => {
-                    if(res.data.errno === 0){
-                    	console.log(res.data.data)
-                        this.$data.labels = res.data.data
-                    }else{
-                    	
-                    }
-                })
-            },
-
-            view(customerId){
-            	this.$data.infoEdit = this.$props.showInfoEdit;
-                let qs = require('querystring');
-                let list ={'customer_id':customerId};
-                guestApi.view(qs.stringify(list)).then((res) => {
-                    if(res.data.errno === 0){
-                        var is_new=this.$data.guestInfo.is_new;
-                        var vip_level=this.$data.guestInfo.vip_level;
-                        this.$set(res.data.data, 'is_new_to_text', globalFunctions.functions.guest.getVisitInfo(is_new));
-                        this.$set(res.data.data, 'is_bought_to_text', globalFunctions.functions.guest.getBoughtInfo(vip_level));
-                        this.$data.guestInfo = res.data.data;
-                    }else{
-
-                    }
-                })
-            },
-
-            editGuestInfo(){
-                this.$data.editGuestInfoData = this.$data.guestInfo;
-                this.$data.infoEdit = true;
-            },
-
-            guestInfoCancel(){
-                this.$data.infoEdit = false;
-            },
-
-            guestInfoEditSubmit(formName){
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                            let qs = require('querystring');                            
-                            guestApi.edit(qs.stringify({
-                                customer_id:this.$data.editGuestInfoData.customer_id,
-                                traffic_id: this.$props.traffic,
-                                name       :this.$data.editGuestInfoData.name,    
-                                phone      :this.$data.editGuestInfoData.phone,   
-                                gender     :this.$data.editGuestInfoData.gender, 
-                                tag_ids    :this.$data.editGuestInfoData.tag_ids,
-                                remark     :this.$data.editGuestInfoData.remark,
-                            })).then((res) => {
-                                if(res.data.errno === 0){
-                                    this.guestInfoCancel();
-                                    this.view(this.$props.customerId)
-                                }else{
-                                	
-                                }
-                        })
-                    }
-                })
-            }
-
-        }
-
-    };
-</script>
-<style lang="scss" scoped>
-  .user-info-box{
-    position: relative;
-    padding:20px 0;
-    .user-info-detail{
-        margin:0 auto;
-        width: 450px;
-        overflow:hidden;
-        .detail-left{
-            float: left;
-        }
-        .img-box{
-            float: right;
-            width: 160px;
-            height: 130px;
-            text-align:center;
-            .img-wrap{
-                width:100px;
-                img{
-                    width:100%;
-                }
-            }
-            .img-id{
-                line-height:30px;
-            }
-            
-        }
-        .detail-left li,.user-tags,.user-remarks{
-            margin-bottom:10px;
-        }
-        .user-tags{
-            line-height:40px;
-        }
-        .user-tags,.user-remarks{
-            clear:both;
-            overflow:hidden;
-        }
-        .user-remarks{margin-bottom:40px;line-height:24px;}
-    }
-    .edit-btn{
-        position: absolute;
-        right:0;
-        bottom:0;
-    }
-    .user-info-edit{
-        position: relative;
-        overflow:hidden;
-        .img-box{
-            float: left;
-            width: 160px;
-            height: 130px;
-            text-align:center;
-            .img-wrap{
-                width:100px;
-                img{
-                    width:100%;
-                }
-            }
-            .img-id{
-                line-height:30px;
-            }
-            
-        }
-        .guestInfoEdit-wrap{
-            position: absolute;
-            right:0;
-            bottom:15px;
-        }
-    }
-    .labels{
-        font-size: 12px;
-        div{
-            color:#999;
-        }
-        span{
-            display:inline-block;
-            padding: 0 10px;
-            height: 32px;
-            line-height: 30px;
-            color: #999;
-            border-radius: 4px;
-            box-sizing: border-box;
-            border: 1px solid #999;
-            white-space: nowrap;
-            margin:0 5px 5px 0;
-        }
-        .border{
-            color:#409eff;
-            border: 1px solid #409eff;;
-        }
-    }
-  }
-</style>
+<style lang="scss" scoped src="@/assets/css/guest/GuestInfo.scss">

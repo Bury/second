@@ -296,6 +296,31 @@ export default{
             }
             
         },
+
+        fnStatusUpdate(id,status){
+            if(id=='' || id==null){
+                alert('参数id不能为空');
+                return ;
+            }
+            if(status==1){
+                status=0;
+            }else{
+                status=1;
+            }
+            let list = {
+                'id': id,
+                'status':status
+            }
+            let qs = require('querystring')
+            userApi.status_update(qs.stringify(list)).then((res) => {
+                if(res.data.errno === 0){
+                    globalFunctions.functions.message(this,'success');
+                    this.lists();
+                }else{
+                    this.$message.error(res.data.msg);
+                }
+            })
+        }
         
     }
     

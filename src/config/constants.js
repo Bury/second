@@ -79,6 +79,7 @@ global.USER_VIEW = `${SERVER_IP}${COMMON}account/view`
 global.USER_EDIT = `${SERVER_IP}${COMMON}account/edit`
 global.USER_DELE = `${SERVER_IP}${COMMON}account/dele`
 global.USER_PASSWORD_RESET = `${SERVER_IP}${COMMON}account/edit-password`
+global.USER_STATUS_UPDATE = `${SERVER_IP}${COMMON}account/update-status`
 
 global.USER_EDIT_CURRENT = `${SERVER_IP}${COMMON}user/edit`
 
