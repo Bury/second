@@ -71,7 +71,7 @@ const rules={
 		                    if (value.match(/^[a-zA-Z\u4e00-\u9fa5]{2,8}$/)){
 		                        callback();
 		                    } else {
-		                        callback("只能是汉子或英文2-8位");
+		                        callback("请输入2-8位汉字或英文");
 		                    }
 	                	},
 	                	trigger: 'blur'

@@ -61,9 +61,15 @@
           </el-table-column>
           <el-table-column prop="customerMerchant.phone" label="手机" width="110">
           </el-table-column>
-          <el-table-column prop="customerMerchant.consume_num" label="新客/熟客" width="110">
+          <el-table-column prop="customerMerchant.is_new" label="新客/熟客" width="110">
+            <template slot-scope="scope">
+              <span>{{scope.row.is_new == 1 ?'新客':'熟客'}}</span>
+            </template>
           </el-table-column>
-          <el-table-column prop="customerMerchant.consume_num" label="未购买/已购买" width="110">
+          <el-table-column prop="customerMerchant.vip_level" label="未购买/已购买" width="110">
+            <template slot-scope="scope">
+              <span>{{scope.row.vip_level == 1 ?'已购买':'未购买'}}</span>
+            </template>
           </el-table-column>
           <el-table-column prop="device_name" label="拍摄位置" width="160">
           </el-table-column>
@@ -104,7 +110,7 @@
 
     <!-- 弹窗 -->
     <el-dialog :visible.sync="dialogVisible" style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">
-      <el-tabs v-model="activeName" @tab-click="checkout">
+      <el-tabs v-model="activeName1" @tab-click="checkout">
           <el-tab-pane label="个人信息" name="first">
             <guest-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></guest-info>
           </el-tab-pane>

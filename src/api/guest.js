@@ -15,9 +15,19 @@ export default {
     })
   },
 
-  getGuestInfo (list){
+  edit(list){
     return new Promise((resolve, reject) => {
-      axios.post(global.GUEST_INFO, list).then((res) => {
+      axios.post(global.GUEST_EDIT, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
+  view (list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_VIEW, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)

@@ -102,14 +102,12 @@
 
         watch: {
           customerId: function() {
-             this.getGuestInfo(this.$props.customerId,this.$props.traffic)
+             this.view(this.$props.customerId)
           },
         },
 
         created:function(){
-            alert(this.$props.customerId)
-            alert(this.$props.traffic)
-            this.getGuestInfo(this.$props.customerId,this.$props.traffic)
+            this.view(this.$props.customerId)
             this.getAll(this.$props.customerId)
         },
 
@@ -133,8 +131,8 @@
             getGuestInfo(customerId,trafficId){
             	this.$data.infoEdit = this.$props.showInfoEdit;
                 let qs = require('querystring');
-                let personlList ={'customer_id':customerId,'traffic_id':trafficId};
-                remindApi.getGuestInfo(qs.stringify(personlList)).then((res) => {
+                let personlList ={'customer_id':customerId};
+                guestApi.view(qs.stringify(personlList)).then((res) => {
                     if(res.data.errno === 0){
                     	console.log(res.data.data)
                         this.$data.userInfo = res.data.data
@@ -169,7 +167,7 @@
                             })).then((res) => {
                                 if(res.data.errno === 0){
                                     this.userInfoCancel();
-                                    this.getGuestInfo(this.$props.customerId,this.$props.traffic)
+                                    this.view(this.$props.customerId)
                                 }else{
                                 	
                                 }

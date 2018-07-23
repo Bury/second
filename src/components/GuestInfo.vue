@@ -6,7 +6,8 @@
                 <li class="user-phone">手机： {{guestInfo.phone}}</li>
                 <li class="user-sex">性别： {{guestInfo.gender == 1 ? '男' : '女'}}</li>
                 <li class="user-age">年龄： {{guestInfo.age}}</li>
-                <li class="user-type">来客类型：{{guestInfo.is_new_to_text}} {{guestInfo.vip_level}}</li>
+                <li class="user-type">新客/熟客：{{guestInfo.is_new_to_text}}</li>
+                <li class="user-type">未购买/已购买：{{guestInfo.is_bought_to_text}}</li>
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
@@ -16,7 +17,7 @@
             </div>
             <div class="user-tags">
                 标签： 
-                    <el-tag v-for="(item,key) in guestInfo.tag" :key="key" style="margin-right:10px;">{{guestInfo.tag[key].name}}</el-tag>
+                <el-tag v-for="(item,key) in guestInfo.tag" :key="key" style="margin-right:10px;">{{guestInfo.tag[key].name}}</el-tag>
             </div>
             <p class="user-remarks">备注： {{guestInfo.remark === '' ? '暂无' : guestInfo.remark}}</p>
             <el-button type="primary" plain size="small" class="edit-btn" @click="editGuestInfo()">编辑</el-button>
@@ -27,7 +28,7 @@
               <el-form-item label="姓名：" prop="name" >
                 <el-input v-model="editGuestInfoData.name"></el-input>
               </el-form-item>
-              <el-form-item label="手机号" prop="phone">
+              <el-form-item label="手机：" prop="phone">
                 <el-input v-model="editGuestInfoData.phone"></el-input>
               </el-form-item>
               <el-form-item label="性别：" prop="gender">
@@ -57,24 +58,22 @@
           </div>
           <el-row class="guestInfoEdit-wrap">
                 <el-button plain size="small" @click="guestInfoCancel">取消</el-button>
-                <el-button type="primary" plain size="small" @click="guestInfoSubmit('editGuestInfoData')">确定</el-button>
+                <el-button type="primary" plain size="small" @click="guestInfoEditSubmit('editGuestInfoData')">确定</el-button>
           </el-row>
         </div>
 	</div>
 </template>
 <script>
 
-    import globalData from '../config/global_data'
+import globalData from '@/config/global_data'
 
-    import globalRules from '../config/global_rules'
+import globalRules from '@/config/global_rules'
 
-    import globalFunctions from '../config/global_functions'
-     
-    import remindApi from '../api/remind'
+import globalFunctions from '@/config/global_functions'
+    
+import guestApi from '@/api/guest'
 
-    import guestApi from '../api/guest'
-
-    import tagApi from '../api/tag'
+import tagApi from '@/api/tag'
 
     export default {
 
@@ -101,13 +100,8 @@
                 editGuestInfoData:{},
                 labels:{},
                 GuestInfoRules:{
-                    name: [
-                        { required: true, message: '请输入姓名', trigger: 'blur' },
-                        { min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
-                    ],
-                    gender:[
-                        { required: true, message: '请选择性别', trigger: 'blur' },
-                    ],
+                    name: globalRules.rules.user.truename(),
+                    gender:globalRules.rules.user.gender(),
                     phone:globalRules.rules.user.phone(),
                 }
             };
@@ -116,13 +110,13 @@
 
         watch: {
           customerId: function() {
-             this.getGuestInfo(this.$props.customerId,this.$props.traffic)
+             this.view(this.$props.customerId)
           },
         },
 
         created:function(){
-            this.getGuestInfo(this.$props.customerId,this.$props.traffic)
-            this.getTagListsResults(this.$props.customerId)
+            this.view(this.$props.customerId)
+            //this.getTagListsResults(this.$props.customerId)
         },
 
         methods: {
@@ -143,14 +137,16 @@
                 })
             },
 
-            getGuestInfo(customerId,trafficId){
+            view(customerId){
             	this.$data.infoEdit = this.$props.showInfoEdit;
                 let qs = require('querystring');
-                let personlList ={'customer_id':customerId,'traffic_id':trafficId};
-                guestApi.getGuestInfo(qs.stringify(personlList)).then((res) => {
+                let list ={'customer_id':customerId};
+                guestApi.view(qs.stringify(list)).then((res) => {
                     if(res.data.errno === 0){
                         var is_new=this.$data.guestInfo.is_new;
-                        this.$set(res.data.data, 'is_new_to_text', globalFunctions.functions.guest.getComeInfo(is_new));
+                        var vip_level=this.$data.guestInfo.vip_level;
+                        this.$set(res.data.data, 'is_new_to_text', globalFunctions.functions.guest.getVisitInfo(is_new));
+                        this.$set(res.data.data, 'is_bought_to_text', globalFunctions.functions.guest.getBoughtInfo(vip_level));
                         this.$data.guestInfo = res.data.data;
                     }else{
 
@@ -167,11 +163,11 @@
                 this.$data.infoEdit = false;
             },
 
-            guestInfoSubmit(formName){
+            guestInfoEditSubmit(formName){
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                             let qs = require('querystring');                            
-                            remindApi.editPersonalInfo(qs.stringify({
+                            guestApi.edit(qs.stringify({
                                 customer_id:this.$data.editGuestInfoData.customer_id,
                                 traffic_id: this.$props.traffic,
                                 name       :this.$data.editGuestInfoData.name,    
@@ -179,11 +175,10 @@
                                 gender     :this.$data.editGuestInfoData.gender, 
                                 tag_ids    :this.$data.editGuestInfoData.tag_ids,
                                 remark     :this.$data.editGuestInfoData.remark,
-                            
                             })).then((res) => {
                                 if(res.data.errno === 0){
                                     this.guestInfoCancel();
-                                    this.getGuestInfo(this.$props.customerId,this.$props.traffic)
+                                    this.view(this.$props.customerId)
                                 }else{
                                 	
                                 }
