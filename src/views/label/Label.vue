@@ -70,7 +70,7 @@
 		        },
 		        requestParameters: {
 	                page: 1,
-	                page_size:10
+	                page_size:20
 	            }
 		       
 			}

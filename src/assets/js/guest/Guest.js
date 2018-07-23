@@ -41,7 +41,7 @@ export default {
             value4: ['',''],
             requestParameters: {
                 page: 1,
-                page_size:10,
+                page_size:20,
                 visit_time_start:'',
                 visit_time_end:'',
                 //level:'',
