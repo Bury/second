@@ -1,10 +1,10 @@
 /**
- * 提醒列表 
+ * 提醒列表
  */
 import axios from 'axios'
 
 export default {
-	
+
 	lists (list) {
     return new Promise((resolve, reject) => {
       axios.post(global.REMIND_LISTS, list).then((res) => {
@@ -15,7 +15,7 @@ export default {
     })
   },
 
-  
+
 
   editPersonalInfo(list){
     return new Promise((resolve, reject) => {
@@ -57,5 +57,14 @@ export default {
       })
     })
   },
-  
+  getAll(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GET_ALL, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
 }

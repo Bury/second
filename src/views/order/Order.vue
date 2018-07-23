@@ -75,7 +75,7 @@
 		    </el-table-column>
 		    <el-table-column label="人脸" width="80">
 		    	<template slot-scope="scope">
-		           <img :src="scope.row.traffic. avatar" style="display:block;margin:0 auto;width:100%;">
+		           <img :src="scope.row.traffic.avatar" style="display:block;margin:0 auto;width:100%;">
 		        </template>
 		    </el-table-column>
 			<el-table-column  prop="id" label="人脸ID" width="75"></el-table-column>
@@ -351,7 +351,6 @@
           totalCount:0,
         },
         cashTimes:['',''],
-        cashTime: '',
         createdTimes:['',''],
         dialogTitle: '',
         requestParameters: {
@@ -381,7 +380,7 @@
             avatar:'',
           },
           orderGoods:[],
-          cash_t:'',
+          cash_t:'15151515',
           avatar:'',
           price:'',
         },
@@ -505,10 +504,9 @@
         let qs = require('querystring')
         OrderApi.orderView(qs.stringify({id:id,})).then((res) => {
           if(res.data.errno === 0){
-            console.log(res.data.data);
             this.$data.editForm = res.data.data;
-            // console.log(utils.getDateTime(res.data.data.cash_t))
-            // this.$data.editForm.cash_t = utils.getDateTime(res.data.data.cash_t);
+            // this.$data.editForm.cash_t = '141414'
+            this.$data.editForm.cash_t = utils.getDateTime(res.data.data.cash_t);
             this.$data.editVisible = true;
             this.$data.editAllNum = this.$data.editForm.orderGoods.length;
             if(this.$data.editForm.avatar != null){
@@ -588,9 +586,6 @@
         }else{
           listArry =  this.$data.editImgAvatar.join(',');
         }
-
-        console.log(this.$data.editForm.orderGoods);
-        console.log(this.$data.editRequestParameters,1111)
         let list = {
           'id': this.$data.editForm.id,
           'goods_info':this.$data.editRequestParameters,

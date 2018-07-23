@@ -7,6 +7,8 @@ import apiUrl from './API.js'
 const SERVER_IP = apiUrl.apiUrl
 const COMMON = 'v1/'
 
+//post  tag/tree-form
+global.GET_ALL = `${SERVER_IP}${COMMON}tag/tree-form`
 //客流统计
 // post analysis/customer
 global.GET_CUSTOMER = `${SERVER_IP}${COMMON}analysis/customer`
