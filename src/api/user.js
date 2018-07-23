@@ -76,6 +76,16 @@ export default {
     })
   },
 
+  status_update(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.USER_STATUS_UPDATE,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
   //修改当前登录用户密码
   password_edit (list) {
     return new Promise((resolve, reject) => {

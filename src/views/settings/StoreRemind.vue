@@ -1,8 +1,10 @@
 <template>
-	<div class="remind-set-page">
+  <div>
+    <div class="left"></div>
+	  <div class="remind-set-page">
         <h3 class="top-box">来客提醒配置</h3>
         <div class="all-box">
-            <el-checkbox :indeterminate="isIndeterminate" 
+            <el-checkbox :indeterminate="isIndeterminate"
             v-model="checkAll"
             @change="handleCheckAllChange">全选</el-checkbox>
         </div>
@@ -15,6 +17,8 @@
             <el-button type="primary" class="save-btn" @click="fnSetRemind">保存</el-button>
         </div>
 	</div>
+    <div class="right"></div>
+  </div>
 </template>
 
 <script src="@/assets/js/settings/StoreRemind.js"></script>

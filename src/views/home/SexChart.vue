@@ -3,7 +3,7 @@
     <vue-highcharts :options="options" ref="sexCharts"></vue-highcharts>
   </div>
 </template>
- 
+
 <script>
 import VueHighcharts from 'vue2-highcharts'
 export default{
@@ -30,7 +30,7 @@ export default{
             },
             colors:[
                 '#FFC200',
-                '#57B4F7', 
+                '#57B4F7',
             ],
             series: []
           }
@@ -43,6 +43,7 @@ export default{
     },
     methods: {
       getData(value){
+        console.log(value)
         let sexCharts = this.$refs.sexCharts;
         sexCharts.delegateMethod('showLoading', 'Loading...');
         sexCharts.removeSeries();
@@ -51,7 +52,7 @@ export default{
               sexCharts.hideLoading();
           }, 100)
       },
-      
+
     }
 }
 </script>

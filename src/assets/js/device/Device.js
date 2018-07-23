@@ -16,7 +16,7 @@ export default{
             editLocationDesc:'',
             requestParameters: {
                 page: 1,
-                page_size:10,
+                page_size:20,
             },
             editFormVisible:false,
             noText: false,
@@ -49,6 +49,7 @@ export default{
                 this.noText = true
             } else {
                 this.editForm.locate_desc = this.$data.editLocationDesc
+                this.editForm.locate_desc = ''
                 this.noText = false
             }
         },
@@ -79,6 +80,7 @@ export default{
                 locate_desc: row.locate_desc
             },
             this.locate_changed();
+            //this.$refs.locate_select.focus()
             this.$data.editFormVisible = true;
         },
 
@@ -116,3 +118,6 @@ export default{
     }
 
 }
+
+
+
