@@ -63,12 +63,9 @@
 	</div>
 </template>
 <script>
-<<<<<<< HEAD
 	
-	import globalRules from '../config/global_rules'
-=======
-
->>>>>>> e7d661b5f812b7024e36cdc15e996027ac562180
+    import globalRules from '../config/global_rules'
+    
     import remindApi from '../api/remind'
 
     export default {
