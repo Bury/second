@@ -6,6 +6,8 @@ import guestApi from '@/api/guest'
 
 import guestInfo from '@/components/GuestInfo'
 
+import HiddenList from '@/views/guest/HiddenList'
+
 // import GuestVisitedRecord from '@/components/GuestVisitedRecord'
 
 // import GuestOrderRecord from '@/components/GuestOrderRecord'
@@ -16,6 +18,7 @@ export default {
 
     components: {
         guestInfo,
+        HiddenList,
         // GuestVisitedRecord,
         // GuestOrderRecord
     },
@@ -40,6 +43,8 @@ export default {
             dialogVisible:false,//弹窗是否显示
             activeName: 'first',
             value4: ['',''],
+            topBoxSow:true,
+            updateCount:0,
             requestParameters: {
                 page: 1,
                 page_size:10,
@@ -70,11 +75,9 @@ export default {
             this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000 || '';
             
             let qs = require('querystring');
-            console.log(this.$data.requestParameters)
             guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 let result = res.data;
                 if(result.errno === 0){
-                    console.log(res)
                     var i='';
                     this.tableData = result.data.list;
                     this.$data.pagination.currentPage = result.data.pagination.currentPage;
@@ -103,8 +106,14 @@ export default {
 
         //点击屏蔽此人
         filter_process(row){
-            alert('暂未实现')
-            console.log(row);
+        	 let qs = require('querystring');
+             guestApi.guestHidden(qs.stringify({id:row.customer_id,is_hidden:1 })).then((res) => {
+             	if(res.data.errno === 0){
+             		this.lists();
+             	}else{
+             		this.$message(res.data.msg);
+             	}             	
+             })
         },
 
         checkout(tab, event) {
@@ -123,7 +132,13 @@ export default {
         },
 
         handleClick(tab, event) {
-        console.log(tab, event);
+          this.$data.updateCount++;
+          if(tab.index ===  "1"){
+          	 this.$data.topBoxSow = false
+          }else{
+          	 this.$data.topBoxSow = true
+          	 this.lists();
+          }
         }
 
     },

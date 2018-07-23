@@ -1,6 +1,6 @@
 <template>
 	<div class="remind-list-page">
-    <div class="top-box">
+    <div class="top-box" v-show="topBoxSow">
 			  <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
           <el-form-item label="进店时间：">
             <el-date-picker
@@ -96,7 +96,7 @@
       </el-tab-pane>
 
       <el-tab-pane label="屏蔽列表" name="second">
-
+            <hidden-list :updateHidden="updateCount"></hidden-list>
       </el-tab-pane>
 
     </el-tabs>

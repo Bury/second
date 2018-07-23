@@ -60,6 +60,10 @@ global.ADD_GOODS = `${SERVER_IP}${COMMON}order/adds`
 
 //*************来客列表
 global.GUEST_LISTS = `${SERVER_IP}${COMMON}customer/visitor-list`
+//来客列表屏蔽动作
+global.GUEST_HIDDEN = `${SERVER_IP}${COMMON}customer/do-hidden`
+//屏蔽列表
+global.GUEST_HIDDEN_LIST = `${SERVER_IP}${COMMON}customer/hidden-list`
 
 //*************设备管理
 global.DEVICE_LISTS = `${SERVER_IP}${COMMON}device/list`
