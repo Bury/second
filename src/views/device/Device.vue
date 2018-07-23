@@ -4,10 +4,14 @@
 			<div class="device-box">
 				<!-- 列表 -->
 				<el-table :data="tableData" border style="text-align:center;">
-					<el-table-column prop="id" label="ID"></el-table-column>
+					<el-table-column prop="id" label="序号"></el-table-column>
 			    	<el-table-column prop="device_id" label="编号"></el-table-column>
 				    <el-table-column prop="version" label="版本"></el-table-column>
-				    <el-table-column prop="locate" label="类型"></el-table-column>
+				    <el-table-column prop="locate" label="类型">
+						<template slot-scope="scope">
+						<span>{{scope.row.locate == 'other' ?'其他':'收银'}}</span>
+						</template>
+					</el-table-column>
 				    <el-table-column label="位置" width="160">
 				    	<template slot-scope="scope">
 				    		{{scope.row.locate_desc}}

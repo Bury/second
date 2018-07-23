@@ -43,7 +43,7 @@
       <el-tab-pane label="来客列表" name="first">
         <!-- 列表 -->
         <el-table :data="tableData" border height="680" style="margin:0 auto;width: 1231px;text-align:center;">
-          <el-table-column fixed type="index" label="ID" width="80">
+          <el-table-column fixed type="index" label="序号" width="80">
           </el-table-column>
           <el-table-column label="人脸" width="60">
             <template slot-scope="scope">
