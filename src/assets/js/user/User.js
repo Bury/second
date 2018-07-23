@@ -116,8 +116,8 @@ export default{
         },
 
         handleCurrentChange(currentPage) {
-            console.log(currentPage)
             this.$data.requestParameters.page = currentPage;
+            this.lists();
         },
 
         fnRemove(row){

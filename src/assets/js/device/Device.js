@@ -79,6 +79,8 @@ export default{
                 locate_desc: row.locate_desc
             },
             this.locate_changed();
+            alert('sfsdf')
+            this.$refs.locate_select.focus()
             this.$data.editFormVisible = true;
         },
 
@@ -116,3 +118,6 @@ export default{
     }
 
 }
+
+
+

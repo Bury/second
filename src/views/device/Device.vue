@@ -47,7 +47,7 @@
 				<el-dialog title="编辑" :visible.sync="editFormVisible">
 				 	<el-form :model="editForm" :rules="editRules" ref="editForm" label-width="100px" class="demo-ruleForm" style="margin-bottom:50px;">
 					    <el-form-item label="类型：">
-					    	<el-select v-model="editForm.locate" placeholder="请选择">
+					    	<el-select v-model="editForm.locate" placeholder="请选择" ref="locate_select">
 						        <el-option label="收银" value="cashier"></el-option>
 						        <el-option label="其他" value="other"></el-option>
 						    </el-select>
