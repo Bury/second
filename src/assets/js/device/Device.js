@@ -49,6 +49,7 @@ export default{
                 this.noText = true
             } else {
                 this.editForm.locate_desc = this.$data.editLocationDesc
+                this.editForm.locate_desc = ''
                 this.noText = false
             }
         },
@@ -79,8 +80,7 @@ export default{
                 locate_desc: row.locate_desc
             },
             this.locate_changed();
-            alert('sfsdf')
-            this.$refs.locate_select.focus()
+            //this.$refs.locate_select.focus()
             this.$data.editFormVisible = true;
         },
 
