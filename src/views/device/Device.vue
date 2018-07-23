@@ -113,8 +113,8 @@
 				    <el-button type="primary" @click="editSubmit('editForm')">确 定</el-button>
 				  </div>
 				</el-dialog>
-			</div>
 		</template>
+  </div>
   </div>
 </template>
 
