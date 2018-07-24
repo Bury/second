@@ -60,8 +60,11 @@
 			  <el-form-item label="手机：" prop="phone">
 			    <el-input v-model="editFormData.phone"></el-input>
 			  </el-form-item>
-			  <el-form-item label="帐号：" prop="username">
-			    <el-input v-model="editFormData.username"></el-input>
+			  <el-form-item label="状态：" prop="status">
+			    <el-radio-group v-model="editFormData.status">
+							<el-radio :label="1">正常</el-radio>
+							<el-radio :label="0">禁用</el-radio>
+					</el-radio-group>
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
