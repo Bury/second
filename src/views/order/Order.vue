@@ -503,20 +503,10 @@
         OrderApi.orderView(qs.stringify({id:id,})).then((res) => {
           if(res.data.errno === 0){
             this.$data.editForm = res.data.data;
-            let a = new Date(res.data.data.cash_t);
-            console.log(a)
+            console.log(res.data.data);
             console.log(res.data.data.cash_t);
-            // console.log( this.$data.editForm.cash_t )
-            let n = res.data.data.cash_t
-             n.format("YYYY-MM-DD HH:mm:ss");
-            console.log(n)
+            console.log(this.moment(res.data.data.cash_t).format('YYYY-MM-DD  HH:mm:ss'));
             this.$data.editVisible = true;
-            this.$data.editAllNum = this.$data.editForm.orderGoods.length;
-            if(this.$data.editForm.avatar != null){
-              this.$data.editImgVisible = true;
-            }else{
-              this.$data.editImgVisible = false;
-            }
             for(let i=0;i<this.$data.editForm.orderGoods.length;i++){
               let obj = {
                 'material':this.$data.editForm.orderGoods[i].material,
@@ -525,6 +515,14 @@
               };
               this.$data.editRequestParameters.push(obj);
             }
+            this.$data.editAllNum = this.$data.editForm.orderGoods.length;
+            if(this.$data.editForm.avatar != null){
+              console.log(12121212);
+              this.$data.editImgVisible = true;
+            }else{
+              this.$data.editImgVisible = false;
+            }
+
           }else{
             this.$message.error(res.data.msg);
           }
@@ -589,6 +587,7 @@
         }else{
           listArry =  this.$data.editImgAvatar.join(',');
         }
+        console.log(this.$data.editRequestParameters);
         let list = {
           'id': this.$data.editForm.id,
           'goods_info':this.$data.editRequestParameters,
