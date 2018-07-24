@@ -103,13 +103,22 @@ export default {
         //点击屏蔽此人
         filter_process(row){
         	 let qs = require('querystring');
-             guestApi.guestHidden(qs.stringify({id:row.customer_id,is_hidden:1 })).then((res) => {
-             	if(res.data.errno === 0){
+        	 
+        	 this.$confirm('是否屏蔽此人？','提示',{
+        	 	confirmButtonText:'确认',
+        	 	cancelButtonText:'取消',
+        	 	type:'warning'
+        	 }).then(() => {
+        	 	guestApi.guestHidden(qs.stringify({id:row.customer_id,is_hidden:1 })).then((res) => {
+             	   if(res.data.errno === 0){
              		this.lists();
-             	}else{
+             		this.$message('屏蔽成功');
+             	   }else{
              		this.$message(res.data.msg);
-             	}             	
-             })
+             	   }             	
+                })
+        	 })
+             
         },
 
         checkout(tab, event) {

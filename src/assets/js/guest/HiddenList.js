@@ -43,7 +43,6 @@ import global_functions from '@/config/global_functions'
             let qs = require('querystring');
             guestApi.guestHiddenList(qs.stringify(this.$data.requestParameters)).then((res) => {
                 let result = res.data;
-                console.log(res)
                 if(res.data.errno === 0){
                 	this.tableData = res.data.data.list;
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
@@ -62,13 +61,22 @@ import global_functions from '@/config/global_functions'
         //点击撤销屏蔽
         return_process(row){
             let qs = require('querystring');
-             guestApi.guestHidden(qs.stringify({id:row.id,is_hidden:0 })).then((res) => {
-             	if(res.data.errno === 0){
+            this.$confirm('是否撤销屏蔽？','提示',{
+        	 	confirmButtonText:'确认',
+        	 	cancelButtonText:'取消',
+        	 	type:'warning'
+        	 }).then(()=>{
+        	 	guestApi.guestHidden(qs.stringify({id:row.id,is_hidden:0 })).then((res) => {
+             	  if(res.data.errno === 0){
              		this.lists();
-             	}else{
+             		this.$message('撤销成功');
+             	  }else{
              		this.$message(res.data.msg);
-             	}             	
-             })
+             	  }             	
+                })
+        	 })
+            
+             
         }
 
     },
