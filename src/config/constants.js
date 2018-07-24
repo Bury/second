@@ -69,8 +69,8 @@ global.TAG_LISTS_RESULTS = `${SERVER_IP}${COMMON}tag/tree-form`
 
 //到店记录
 global.GuestVisitedRecordLists = `${SERVER_IP}${COMMON}customer/store-recore`
-//订单记录
-global.GET_ORDER_RECORE = `${SERVER_IP}${COMMON}customer/order-recore`
+//来客订单记录
+global.ORDER_LISTS_USER_RESULTS = `${SERVER_IP}${COMMON}customer/order-recore`
 
 
 //*************设备管理

@@ -122,6 +122,10 @@
 			    	<guest-visited-record :customerId="currentCustomerId"></guest-visited-record>
 			    </el-tab-pane>
 
+          <el-tab-pane label="订单记录" name="third">
+			    	<guest-order-record :customerId="currentCustomerId" style="min-height:415px;"></guest-order-record>
+			    </el-tab-pane>
+
       </el-tabs>
     </el-dialog>
 

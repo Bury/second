@@ -2,7 +2,7 @@ import guestVisitedRecordApi from '@/api/guest_visited_record'
 
 export default{
 
-    name:'store-record',
+    name:'guest-visited-record',
 
     props:{
         customerId:{

@@ -25,15 +25,7 @@ export default {
     })
   },
 
-  orderRecord(list){
-    return new Promise((resolve, reject) => {
-      axios.post(global.GET_ORDER_RECORE, list).then((res) => {
-        resolve(res)
-      }).catch((err) => {
-        reject(err)
-      })
-    })
-  },
+
 
   isReception(list){
     return new Promise((resolve, reject) => {

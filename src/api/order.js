@@ -129,5 +129,15 @@ export default {
     })
   },
 
+  listsUserResults(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.ORDER_LISTS_USER_RESULTS, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
 }
 
