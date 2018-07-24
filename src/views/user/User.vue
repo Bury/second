@@ -3,8 +3,8 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
-
-		<el-table :data="tableData" border height="448" style="width:1342px;text-align:center;">
+    <div style="width: 98%;margin: 0 auto; text-align: center;">
+		  <el-table :data="tableData" border height="448" style="width:1342px;text-align:center;">
 			<el-table-column prop="id" label="序号" width="160"></el-table-column>
 	    	<el-table-column prop="username" label="帐号" width="160"></el-table-column>
 	    	<el-table-column prop="role_name" label="岗位" width="160"></el-table-column>
@@ -31,16 +31,17 @@
 			    </template>
 		    </el-table-column>
 	    </el-table>
+    </div>
 
 	    <!-- 分页 -->
 	    <div v-if="tableData.length > 0" style="margin:0 auto;width:961px;">
-	    	<el-pagination 
+	    	<el-pagination
 				background
-	            class="pagination" 
-	            layout="prev, pager, next" 
-	            small 
-	            @current-change="handleCurrentChange" 
-	            :current-page="pagination.currentPage" 
+	            class="pagination"
+	            layout="prev, pager, next"
+	            small
+	            @current-change="handleCurrentChange"
+	            :current-page="pagination.currentPage"
 	            :page-size="requestParameters.page_size"
 	            :total="pagination.totalCount">
 	        </el-pagination>
@@ -112,7 +113,7 @@
 		    <el-button type="primary" @click="fnAddsSubmit('addFormData')">确 定</el-button>
 		  </div>
 		</el-dialog>
-		
+
 	</div>
 </template>
 

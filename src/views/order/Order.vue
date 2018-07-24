@@ -55,7 +55,8 @@
 			<el-button type="primary" @click="addNewList()">创建订单</el-button>
 		</div>
 		<!-- 列表 -->
-		<el-table :data="tableData" border style="width:98%;text-align:center;">
+      <div style="text-align: center;width: 98%;margin: 0 auto;">
+		    <el-table :data="tableData" border >
         <el-table-column fixed prop="id" label="序号" width="80"></el-table-column>
 		    <el-table-column fixed prop="sn" label="订单编号" width="170"></el-table-column>
 		    <el-table-column label="材质" width="160">
@@ -101,6 +102,7 @@
 			    </template>
 		    </el-table-column>
 	    </el-table>
+      </div>
     <!--新建订单-->
     <el-dialog title="新建订单" :visible.sync="FormVisible">
       <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
@@ -141,7 +143,7 @@
               </el-form-item>
             </el-col>
             <el-col :span='6'>
-              <el-form-item label='成交金额：' prop="price" >
+              <el-form-item label='成交金额：'>
                 <el-input v-model='item.price'  v-on:input='inputFun()' ></el-input>
               </el-form-item>
             </el-col>
@@ -462,11 +464,10 @@
       },
       // 编辑上传图片成功后的回调
       editUploadSuccess (response, file, fileList) {
-        for(let i=0;i<this.$data.editForm.avatar.length;i++){
-          this.$data.editImgAvatar.push(this.$data.editForm.avatar[i]);
-        }
-        this.$data.editImgAvatar.push(response.data.fullpath);
-        // console.log(this.$data.editImgAvatar);
+          for(let i=0;i<this.$data.editForm.avatar.length;i++){
+            this.$data.editImgAvatar.push(this.$data.editForm.avatar[i]);
+          }
+          this.$data.editImgAvatar.push(response.data.fullpath);
       },
       //列表
       orderList(){
@@ -503,9 +504,9 @@
         OrderApi.orderView(qs.stringify({id:id,})).then((res) => {
           if(res.data.errno === 0){
             this.$data.editForm = res.data.data;
-            console.log(res.data.data);
-            console.log(res.data.data.cash_t);
-            console.log(this.moment(res.data.data.cash_t).format('YYYY-MM-DD  HH:mm:ss'));
+            // console.log(res.data.data);
+            // console.log(res.data.data.cash_t);
+            // console.log(this.moment(res.data.data.cash_t).format('YYYY-MM-DD  HH:mm:ss'));
             this.$data.editVisible = true;
             for(let i=0;i<this.$data.editForm.orderGoods.length;i++){
               let obj = {
@@ -517,7 +518,6 @@
             }
             this.$data.editAllNum = this.$data.editForm.orderGoods.length;
             if(this.$data.editForm.avatar != null){
-              console.log(12121212);
               this.$data.editImgVisible = true;
             }else{
               this.$data.editImgVisible = false;
@@ -583,14 +583,14 @@
       EditFormSubmit(editForm){
         let listArry = '';
         if(this.$data.editImgAvatar.length == 0){
-          listArry = this.$data.editForm.avatar.join(',');
+          listArry = '';
         }else{
           listArry =  this.$data.editImgAvatar.join(',');
         }
-        console.log(this.$data.editRequestParameters);
+        let sendA = JSON.stringify(this.$data.editRequestParameters);
         let list = {
           'id': this.$data.editForm.id,
-          'goods_info':this.$data.editRequestParameters,
+          'goods_info':sendA,
           'cash_t':this.$data.editForm.cash_t,
           'remark':'',
           'files_web':this.$data.editForm.avatar,

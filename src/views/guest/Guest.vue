@@ -42,7 +42,8 @@
 
       <el-tab-pane label="来客列表" name="first">
         <!-- 列表 -->
-        <el-table :data="tableData" border height="680" style="margin:0 auto;width: 96%;text-align:center;">
+        <div style="width: 96%;margin:0 auto;text-align:center;">
+          <el-table :data="tableData" border height="680" style="margin:0 auto;text-align:center;">
           <el-table-column fixed type="index" label="序号" width="80">
           </el-table-column>
           <el-table-column label="人脸" width="60">
@@ -85,7 +86,7 @@
             </template>
           </el-table-column>
         </el-table>
-
+        </div>
         <!-- 分页 -->
         <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
           <el-pagination
