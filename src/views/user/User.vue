@@ -1,10 +1,10 @@
-<<<<<<< HEAD
 <template>
 	<div class="store-set-page">
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
-    <div style="width: 98%;margin: 0 auto; text-align: center;">
+    <div style="display: flex;text-align: center">
+      <el-col :span="24">
 		  <el-table :data="tableData" border height="448">
 			<el-table-column prop="id" label="序号" width="160"></el-table-column>
 	    	<el-table-column prop="username" label="帐号" width="160"></el-table-column>
@@ -32,6 +32,7 @@
 			    </template>
 		    </el-table-column>
 	    </el-table>
+      </el-col>
     </div>
 
 	    <!-- 分页 -->

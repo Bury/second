@@ -55,7 +55,8 @@
 			<el-button type="primary" @click="addNewList()">创建订单</el-button>
 		</div>
 		<!-- 列表 -->
-      <div style="text-align: center;width: 98%;margin: 0 auto;">
+      <div style="display: flex;text-align: center">
+        <el-col :span="24">
 		    <el-table :data="tableData" border >
         <el-table-column fixed prop="id" label="序号" width="80"></el-table-column>
 		    <el-table-column fixed prop="sn" label="订单编号" width="170"></el-table-column>
@@ -102,6 +103,7 @@
 			    </template>
 		    </el-table-column>
 	    </el-table>
+        </el-col>
       </div>
     <!--新建订单-->
     <el-dialog title="新建订单" :visible.sync="FormVisible">
