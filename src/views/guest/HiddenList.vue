@@ -22,7 +22,7 @@
 			</el-table-column>
 			<el-table-column prop="customerMerchant.consume_num" label="新客/熟客" width="110">
 			</el-table-column>
-			<el-table-column prop="customerMerchant.consume_num" label="未购买/已购买" width="110">
+			<el-table-column prop="customerMerchant.consume_num" label="未购/已购" width="110">
 			</el-table-column>
 			<el-table-column prop="created_at" label="进店时间" width="200">
 				<template slot-scope="scope">
@@ -50,4 +50,5 @@
 		</div>
 	</div>
 </template>
+
 <script src="@/assets/js/guest/HiddenList.js"></script>

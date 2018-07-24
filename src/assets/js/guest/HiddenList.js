@@ -1,8 +1,8 @@
 import global_functions from '@/config/global_functions'
 
-    import guestApi from '@/api/guest'
-    
-    export default {
+import guestApi from '@/api/guest'
+
+export default {
 
     name:'shield-list',
 
@@ -67,15 +67,14 @@ import global_functions from '@/config/global_functions'
         	 	type:'warning'
         	 }).then(()=>{
         	 	guestApi.guestHidden(qs.stringify({id:row.id,is_hidden:0 })).then((res) => {
-             	  if(res.data.errno === 0){
-             		this.lists();
-             		this.$message({message:'撤销成功',type:"success"});
-             	  }else{
-             		this.$message(res.data.msg);
-             	  }             	
+                    if(res.data.errno === 0){
+                        this.lists();
+                        this.$message({message:'撤销成功',type:"success"});
+                    }else{
+                        this.$message(res.data.msg);
+                    }             	
                 })
         	 })
-            
              
         }
 

@@ -105,7 +105,9 @@ export default {
                             name:this.$data.editGuestInfoData.name,    
                             phone:this.$data.editGuestInfoData.phone,   
                             gender:this.$data.editGuestInfoData.gender, 
+                            age:this.$data.editGuestInfoData.age, 
                             tag_ids:this.$data.editGuestInfoData.tag_ids,
+                            vip_level:this.$data.editGuestInfoData.vip_level,
                             remark:this.$data.editGuestInfoData.remark,
                         })).then((res) => {
                             if(res.data.errno === 0){

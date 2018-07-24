@@ -119,7 +119,6 @@
 	</div>
 </template>
 
-
 <script src="@/assets/js/user/User.js"></script>
 
 <style lang="scss" scoped src="@/assets/css/user/User.scss">

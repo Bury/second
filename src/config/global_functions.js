@@ -45,7 +45,7 @@ const functions={
 	guest:{
 		getVisitInfoBoughtInfo(is_new,is_bought){
 			var guest_come_info=is_new==1?'新客':'熟客';
-			var guest_bought_info=is_new==1?'已购买':'未购买';
+			var guest_bought_info=is_bought==1?'已购':'未购';
 			return guest_come_info+guest_bought_info;
 		},
 
@@ -54,7 +54,7 @@ const functions={
 		},
 
 		getBoughtInfo(cate){
-			return cate==1?'已购买':'未购买';
+			return cate==1?'已购':'未购';
 		}
 	}
 	
