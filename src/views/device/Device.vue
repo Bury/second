@@ -1,8 +1,8 @@
 <template>
-  <div>
     <div class="device-list-page">
       <template>
-        <div class="device-box">
+        <div style="display: flex;text-align: center">
+          <el-col :span="22">
           <!-- 列表 -->
           <el-table :data="tableData" border style="text-align:center;">
             <el-table-column prop="id" label="序号"></el-table-column>
@@ -29,7 +29,8 @@
                 </template>
               </el-table-column>
             </el-table>
-  </div>
+          </el-col>
+        </div>
 				<!-- 编辑 -->
 				<el-dialog title="编辑" :visible.sync="editFormVisible">
 				 	<el-form :model="editForm" :rules="editRules" ref="editForm" label-width="100px" class="demo-ruleForm" style="margin-bottom:50px;">
@@ -50,7 +51,6 @@
 				</el-dialog>
 		</template>
     </div>
-  </div>
 </template>
 
 <script src="@/assets/js/device/Device.js"></script>

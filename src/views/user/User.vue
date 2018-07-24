@@ -3,8 +3,9 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
-
-		<el-table :data="tableData" border height="448" style="width:1342px;text-align:center;">
+    <div style="display: flex;text-align: center">
+      <el-col :span="24">
+		  <el-table :data="tableData" border height="448">
 			<el-table-column prop="id" label="序号" width="160"></el-table-column>
 	    	<el-table-column prop="username" label="帐号" width="160"></el-table-column>
 	    	<el-table-column prop="role_name" label="岗位" width="160"></el-table-column>
@@ -31,16 +32,18 @@
 			    </template>
 		    </el-table-column>
 	    </el-table>
+      </el-col>
+    </div>
 
 	    <!-- 分页 -->
 	    <div v-if="tableData.length > 0" style="margin:0 auto;width:961px;">
-	    	<el-pagination 
+	    	<el-pagination
 				background
-	            class="pagination" 
-	            layout="prev, pager, next" 
-	            small 
-	            @current-change="handleCurrentChange" 
-	            :current-page="pagination.currentPage" 
+	            class="pagination"
+	            layout="prev, pager, next"
+	            small
+	            @current-change="handleCurrentChange"
+	            :current-page="pagination.currentPage"
 	            :page-size="requestParameters.page_size"
 	            :total="pagination.totalCount">
 	        </el-pagination>
@@ -60,11 +63,8 @@
 			  <el-form-item label="手机：" prop="phone">
 			    <el-input v-model="editFormData.phone"></el-input>
 			  </el-form-item>
-			  <el-form-item label="状态：" prop="status">
-			    <el-radio-group v-model="editFormData.status">
-							<el-radio :label="1">正常</el-radio>
-							<el-radio :label="0">禁用</el-radio>
-					</el-radio-group>
+			  <el-form-item label="帐号：" prop="username">
+			    <el-input v-model="editFormData.username"></el-input>
 			  </el-form-item>
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
@@ -115,7 +115,7 @@
 		    <el-button type="primary" @click="fnAddsSubmit('addFormData')">确 定</el-button>
 		  </div>
 		</el-dialog>
-		
+
 	</div>
 </template>
 
