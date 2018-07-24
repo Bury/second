@@ -42,6 +42,7 @@ Vue.use(Router)
 const router = new Router({
   routes: [
     { path: '/',name: 'UserLogin',component: UserLogin},
+    { path: '/UserLogin',name: 'UserLogin',component: UserLogin},
     {
       path: '/',
       meta: { requiresAuth: true },
@@ -68,7 +69,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(
         record => record.meta.requiresAuth)&& (!knock_knock || knock_knock === null)) {
     next({
-      path: '/login',
+      path: '/UserLogin',
       query: { redirect: to.fullPath }
     })
   } else {
