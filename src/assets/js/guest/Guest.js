@@ -112,7 +112,7 @@ export default {
         	 	guestApi.guestHidden(qs.stringify({id:row.customer_id,is_hidden:1 })).then((res) => {
              	   if(res.data.errno === 0){
              		this.lists();
-             		this.$message('屏蔽成功');
+             		this.$message({message:'屏蔽成功',type:"success"});
              	   }else{
              		this.$message(res.data.msg);
              	   }             	
