@@ -52,7 +52,9 @@
                 <el-form-item label="标签：">
                     <div v-for="label in labels" :key="label.id" class="labels">
                         <div>—— {{label.name}} ——</div>
-                        <span v-for="children in label.children" :key="children.id">{{children.name}}</span>
+                        <el-checkbox-group v-model="ids" size="small">
+                            <el-checkbox v-for="children in label.children" :key="children.id" :label="children.id" border>{{children.name}}</el-checkbox>
+                        </el-checkbox-group>
                     </div>
                 </el-form-item>
                 <el-form-item label="备注：">
