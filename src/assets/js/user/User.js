@@ -48,14 +48,13 @@ export default{
             editFormVisible:false,
             editFormData:{
                 id:'',
+                role_id:'',
                 truename:'',
                 phone:'',
-                username:'',
             },
             editRules:{
                 name:globalRules.rules.user.truename(),
                 phone:globalRules.rules.user.phone(),
-                username: globalRules.rules.user.username(4,20,'请输入帐号'),
             },
             resetPasswordFormVisible:false,
             resetPasswordFormData:{
@@ -168,10 +167,10 @@ export default{
             this.$data.editFormVisible = false;
             this.$data.editFormData = {
                 id:'',
+                role_id:'',
                 truename:'',
                 phone:'',
-                username:'',
-                password:'',
+                status:''
             }
         },
 
@@ -181,6 +180,8 @@ export default{
                 console.log(valid)
                 if (valid) {
                     let qs = require('querystring')
+                    alert(this.$data.editFormData.status)
+                    // this.$data.editFormData.status=this.$data.editFormData.status?1:0;
                     userApi.edit(qs.stringify(this.$data.editFormData)).then((res) => {
                         if(res.data.errno === 0){
                             globalFunctions.functions.message(this,'success');
@@ -190,7 +191,7 @@ export default{
                                 role_id:'',
                                 truename:'',
                                 phone:'',
-                                username:'',
+                                status:''
                             }
                             this.$data.editFormVisible = false;
 
@@ -327,6 +328,10 @@ export default{
                 //   message: '已取消删除'
                 // });          
             });
+        },
+
+        changeSwitch (data) {
+            console.log(this.$data.editFormData.status)
         }
         
     }

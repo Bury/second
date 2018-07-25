@@ -63,8 +63,6 @@
 			  <el-form-item label="手机：" prop="phone">
 			    <el-input v-model="editFormData.phone"></el-input>
 			  </el-form-item>
-		  </el-form>
-			<el-form :model="editFormData" :rules="rules" ref="editFormData" label-width="100px" class="demo-ruleForm">
 			  <el-form-item label="状态：" prop="status">
 			    <template slot-scope="scope">
 			        <el-switch
@@ -72,10 +70,12 @@
 			          on-color="#00A854"
 			          on-text="启动"
 			          on-value="1"
+								active-value="1"
 			          off-color="#F04134"
 			          off-text="禁止"
-			          off-value="0"
-			          @change="changeSwitch()">
+			          off-value="0" 
+								inactive-value="0"
+								@change="changeSwitch()">
 			        </el-switch>
 			  	</template>
 			  </el-form-item>

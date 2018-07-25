@@ -9,8 +9,6 @@ import UserLogin from '../views/user/UserLogin'
 
 //客流统计
 import Statistics from '../views/home/Statistics'
-//提醒列表
-import Remind from '../views/remind/Remind'
 //来客列表
 import Guest from '../views/guest/Guest'
 
@@ -27,7 +25,6 @@ import Device from '../views/device/Device'
 
 import User from '../views/user/User'
 import UserCurrentDetail from '../views/user/UserCurrentDetail'
-
 
 //提醒设置
 import StoreRemind from '../views/settings/StoreRemind'
@@ -49,7 +46,6 @@ const router = new Router({
       component: Main,
       children: [
         {path: '/',name: 'Statistics',component: Statistics},
-        {path: 'Remind',name: 'Remind',component: Remind},
         {path: 'Guest',name: 'Guest',component: Guest},
         {path: 'Order',name: 'Order',component: Order},
         {path: 'realFound',name: 'realFound',component: realFound},
