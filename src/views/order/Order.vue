@@ -64,26 +64,32 @@
       <div style="display: flex;text-align: center">
         <el-col :span="24">
 		    <el-table :data="tableData" border >
-        <el-table-column fixed prop="id" label="序号" width="80"></el-table-column>
-		    <el-table-column fixed prop="sn" label="编号" width="170"></el-table-column>
-		    <el-table-column label="材质/款式" width="160">
-					<template slot-scope="scope">
-					<span v-for="good in scope.row.orderGoods" class="margin">[{{good.material_name}}/{{good.style_name}}]</span>
-		    	</template>
-				</el-table-column>
-		    <el-table-column prop="price" label="金额" width="120"></el-table-column>
-		    
-		    <el-table-column label="客户" width="240">
+          <el-table-column fixed prop="id" label="序号" width="80"></el-table-column>
+          <el-table-column fixed prop="sn" label="编号" width="170"></el-table-column>
+          <el-table-column label="材质/款式" width="160">
+            <template slot-scope="scope">
+            <span v-for="good in scope.row.orderGoods" class="margin">[{{good.material_name}}/{{good.style_name}}]</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="price" label="金额" width="120"></el-table-column>
+
+          <el-table-column label="客户" width="240">
+            <template slot-scope="scope">
+              <div style="float:left;width:45%;">
+                <img :src="scope.row.traffic.avatar" style="width:100%;">
+              </div>
+              <div style="float:left;width:55%;padding-left:15px;text-align:left">
+                ID:{{scope.row.traffic.id}}<br/>
+                姓名:{{scope.row.customer_name}}<br/>
+                类型:{{scope.row.traffic.is_new == 1 ?'新客':'熟客'}}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column  prop="Id" label="人脸ID" width="75">
           <template slot-scope="scope">
-            <div style="float:left;width:45%;">
-              <img :src="scope.row.traffic.avatar" style="width:100%;">
-            </div>
-            <div style="float:left;width:55%;padding-left:15px;text-align:left">
-              ID:{{scope.row.traffic.id}}<br/>
-              姓名:{{scope.row.customer_name}}
-              类型:{{scope.row.traffic.is_new == 1 ?'新客':'熟客'}}
-            </div>
+            {{scope.row.traffic.id}}
           </template>
+<<<<<<< HEAD
 		    </el-table-column>
 			<el-table-column  prop="Id" label="人脸ID" width="75">
         <template slot-scope="scope">
@@ -103,12 +109,29 @@
 		    	</template>
 		    </el-table-column>
 		    <el-table-column fixed="right" label="操作" width="150">
+=======
+        </el-table-column>
+          <el-table-column prop="customer_name" label="客户姓名" width="160"></el-table-column>
+          <el-table-column label="客户等级" width="160">
+          <el-table-column label="收银时间" width="160">
+            <template slot-scope="scope">
+              {{scope.row.cash_t | date(4)}}
+            </template>
+          </el-table-column>
+          <el-table-column label="创建时间" width="160">
+            <template slot-scope="scope">
+              {{scope.row.created_at | date(4)}}
+            </template>
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" width="150">
+>>>>>>> 5cf1e108e10b16dafc0feea2cea80e8845a794f5
 			    <template slot-scope="scope">
 			        <el-button @click="fnEdit(scope.row)" type="text" size="small">编辑</el-button>
 			        <el-button @click="fnRemove(scope.row)" type="text" size="small">删除</el-button>
 			    </template>
 		    </el-table-column>
-	    </el-table>
+          </el-table-column>
+	      </el-table>
         </el-col>
       </div>
     <!--新建订单-->
