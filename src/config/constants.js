@@ -63,6 +63,7 @@ global.GUEST_HIDDEN_LIST = `${SERVER_IP}${COMMON}customer/hidden-list`
 
 global.GUEST_EDIT = `${SERVER_IP}${COMMON}customer/edit-personal-info`
 global.GUEST_VIEW = `${SERVER_IP}${COMMON}customer/personal-info`
+global.GUEST_DEL = `${SERVER_IP}${COMMON}customer/del`
 
 //标签数据
 global.TAG_LISTS_RESULTS = `${SERVER_IP}${COMMON}tag/tree-form`

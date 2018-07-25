@@ -1,5 +1,5 @@
 /**
- * 来客列表 
+ * 来客列表
  */
 import axios from 'axios'
 
@@ -34,7 +34,15 @@ export default {
       })
     })
   },
-  
+  del (list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_DEL, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
   //屏蔽动作
   guestHidden (list){
     return new Promise((resolve, reject) => {
@@ -45,7 +53,7 @@ export default {
       })
     })
   },
-  
+
   //屏蔽列表
   guestHiddenList (list){
     return new Promise((resolve, reject) => {
@@ -56,5 +64,7 @@ export default {
       })
     })
   },
+
+
 
 }

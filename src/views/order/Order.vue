@@ -80,11 +80,18 @@
             </div>
             <div style="float:left;width:55%;padding-left:15px;text-align:left">
               ID:{{scope.row.traffic.id}}<br/>
-              姓名:{{scope.row.customer_name}}</br/>
+              姓名:{{scope.row.customer_name}}
               类型:{{scope.row.traffic.is_new == 1 ?'新客':'熟客'}}
             </div>
           </template>
 		    </el-table-column>
+			<el-table-column  prop="Id" label="人脸ID" width="75">
+        <template slot-scope="scope">
+          {{scope.row.traffic.id}}
+        </template>
+      </el-table-column>
+		    <el-table-column prop="customer_name" label="客户姓名" width="160"></el-table-column>
+		    <el-table-column label="客户等级" width="160">
         <el-table-column label="收银时间" width="160">
 		    	<template slot-scope="scope">
 		    		{{scope.row.cash_t | date(4)}}
@@ -285,8 +292,8 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelE(editForm)">取 消</el-button>
-        <el-button type="primary" @click="EditFormSubmit(editForm)">确 定</el-button>
+        <el-button @click="cancelE()">取 消</el-button>
+        <el-button type="primary" @click="EditFormSubmit()">确 定</el-button>
       </div>
     </el-dialog>
 	    <!-- 分页 -->

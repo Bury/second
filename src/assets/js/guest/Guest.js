@@ -8,9 +8,9 @@ import guestInfo from '@/components/GuestInfo'
 
 import HiddenList from '@/views/guest/HiddenList'
 
-import GuestVisitedRecord from '@/components/GuestVisitedRecord'
+// import GuestVisitedRecord from '@/components/GuestVisitedRecord'
 
-import GuestOrderRecord from '@/components/GuestOrderRecord'
+// import GuestOrderRecord from '@/components/GuestOrderRecord'
 
 export default {
 
@@ -19,8 +19,8 @@ export default {
     components: {
         guestInfo,
         HiddenList,
-        GuestVisitedRecord,
-        GuestOrderRecord
+        // GuestVisitedRecord,
+        // GuestOrderRecord
     },
 
     props:{
@@ -68,7 +68,7 @@ export default {
         lists(){
             // this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 || '';
             // this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000 || '';
-            
+
             let qs = require('querystring');
 
             guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
@@ -103,7 +103,7 @@ export default {
         //点击屏蔽此人
         filter_process(row){
         	 let qs = require('querystring');
-        	 
+
         	 this.$confirm('是否屏蔽此人？','提示',{
         	 	confirmButtonText:'确认',
         	 	cancelButtonText:'取消',
@@ -115,16 +115,39 @@ export default {
              		this.$message({message:'屏蔽成功',type:"success"});
              	   }else{
              		this.$message(res.data.msg);
-             	   }             	
+             	   }
                 })
         	 })
-             
+
         },
 
         checkout(tab, event) {
             this.$data.showInfoEdit = false;
         },
-
+        //删除
+      dele_process(row) {
+        this.$confirm('确认删除该来客信息：'+row.id+' ？', '删除提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let list = {
+            'id': row.id
+          }
+          let qs = require('querystring');
+          guestApi.del(qs.stringify(list)).then((res) => {
+            if(res.data.errno === 0){
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              this.lists();
+            }else{
+              this.$message.error(res.data.msg);
+            }
+          })
+        }).catch(action => {})
+      },
         closeChangeMachie(done){
             done();
             // window.location.reload();
