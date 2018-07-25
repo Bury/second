@@ -29,7 +29,7 @@ axios.interceptors.response.use(function (res) {
             localStorage.setItem('knock_knock', '')
             localStorage.setItem('username', '')
             router.replace({
-                path: '/login',
+                path: '/UserLogin',
                 query: {redirect: router.currentRoute.fullPath}
             })
         }
@@ -39,7 +39,7 @@ axios.interceptors.response.use(function (res) {
             localStorage.setItem('knock_knock', '')
             localStorage.setItem('username', '')
             router.replace({
-                path: '/login',
+                path: '/UserLogin',
                 query: {redirect: router.currentRoute.fullPath}
             })
         }

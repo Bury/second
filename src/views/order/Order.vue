@@ -81,7 +81,11 @@
 		           <img :src="scope.row.traffic.avatar" style="display:block;margin:0 auto;width:100%;">
 		        </template>
 		    </el-table-column>
-			<el-table-column  prop="id" label="人脸ID" width="75"></el-table-column>
+			<el-table-column  prop="Id" label="人脸ID" width="75">
+        <template slot-scope="scope">
+          {{scope.row.traffic.id}}
+        </template>
+      </el-table-column>
 		    <el-table-column prop="customer_name" label="客户姓名" width="160"></el-table-column>
 		    <el-table-column label="客户等级" width="160">
 		    	<template slot-scope="scope">
@@ -286,8 +290,8 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelE(editForm)">取 消</el-button>
-        <el-button type="primary" @click="EditFormSubmit(editForm)">确 定</el-button>
+        <el-button @click="cancelE()">取 消</el-button>
+        <el-button type="primary" @click="EditFormSubmit()">确 定</el-button>
       </div>
     </el-dialog>
 	    <!-- 分页 -->
@@ -405,15 +409,16 @@
           style:[
             { message: '请选择款式信息', trigger: 'blur' },
           ],
-          price:[
-            {required: true,message: '请输入商品价格', trigger: 'blur'},
-          ],
+          // price:[
+          //   {required: true,message: '请输入商品价格', trigger: 'blur'},
+          // ],
         },
       }
 		},
 		created: function () {
 		 this.orderList();
 		 this.getAll();
+
 		},
     methods: {
       //  上传图片动态地址
@@ -500,35 +505,40 @@
       fnEdit (row) {
         this.$data.editVisible = true;
         this.orderView(row.id);
+        this.editList(row.orderGoods);
+
       },
       orderView(id){
         let qs = require('querystring')
         OrderApi.orderView(qs.stringify({id:id,})).then((res) => {
           if(res.data.errno === 0){
             this.$data.editForm = res.data.data;
-            // console.log(res.data.data);
-            // console.log(res.data.data.cash_t);
-            // console.log(this.moment(res.data.data.cash_t).format('YYYY-MM-DD  HH:mm:ss'));
             this.$data.editVisible = true;
-            for(let i=0;i<this.$data.editForm.orderGoods.length;i++){
-              let obj = {
-                'material':this.$data.editForm.orderGoods[i].material,
-                'style': this.$data.editForm.orderGoods[i].style,
-                'price':this.$data.editForm.orderGoods[i].price,
-              };
-              this.$data.editRequestParameters.push(obj);
-            }
+            // console.log(res.data.data.cash_t);
+            let s = this.moment(1532511781).format("YYYY-MM-DD HH:mm:ss");
+            console.log(s);
+            console.log(this.moment(1532509629).format('YYYY-MM-DD HH:mm:ss'))
             this.$data.editAllNum = this.$data.editForm.orderGoods.length;
             if(this.$data.editForm.avatar != null){
               this.$data.editImgVisible = true;
             }else{
               this.$data.editImgVisible = false;
             }
-
           }else{
             this.$message.error(res.data.msg);
           }
         })
+      },
+      editList(orderGoods){
+        for(let i=0;i<orderGoods.length;i++){
+          let obj = {
+            'material':orderGoods[i].material,
+            'style': orderGoods[i].style,
+            'price':orderGoods[i].price,
+          };
+          this.$data.editRequestParameters.push(obj);
+        }
+        console.log(this.$data.editRequestParameters);
       },
       //编辑计算总价
       editInputFun(){
@@ -582,7 +592,8 @@
         })
       },
       //编辑提交，取消
-      EditFormSubmit(editForm){
+      EditFormSubmit(){
+        console.log(this.$data.editRequestParameters)
         let listArry = '';
         if(this.$data.editImgAvatar.length == 0){
           listArry = '';
@@ -602,6 +613,17 @@
         let qs = require('querystring');
         OrderApi.editOrder(qs.stringify(list)).then((res) => {
           if(res.data.errno === 0){
+            this.$data.editForm ={
+              traffic:{
+                id:'',
+                avatar:'',
+              },
+              orderGoods:[],
+              cash_t:'',
+              avatar:'',
+              price:'',
+            }
+            console.log(this.$data.editForm);
             this.orderList();
             this.$message({
               type: 'success',
@@ -613,8 +635,19 @@
           }
         })
       },
-      cancelE(editFrom){
+      cancelE(){
         this.$data.editVisible = false;
+        this.$data.editForm ={
+          traffic:{
+            id:'',
+            avatar:'',
+          },
+          orderGoods:[],
+            cash_t:'',
+            avatar:'',
+            price:'',
+        }
+        console.log(this.$data.editForm)
       },
       //删除
       fnRemove(row) {

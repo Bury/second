@@ -70,9 +70,9 @@
             <li class="charts-wrap">
                 <new-old-chart :newOldData="newOldData"></new-old-chart>
             </li>
-            <li class="charts-wrap">
-                <vip-chart :vipData="vipData"></vip-chart>
-            </li>
+            <!--<li class="charts-wrap">-->
+                <!--<vip-chart :vipData="vipData"></vip-chart>-->
+            <!--</li>-->
             <li class="charts-wrap">
                 <age-chart :ageData="ageData"></age-chart>
             </li>
