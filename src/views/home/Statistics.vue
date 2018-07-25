@@ -51,37 +51,6 @@
             </el-tabs>
         </div>
         <div class="noData" v-if="noData">暂无数据~</div>
-<<<<<<< HEAD
-        <ul class="charts-type" v-else>
-            <li class="charts-wrap">
-                <div style="padding:10px 0 20px;text-align:center;">
-                   <el-button :type="type == 'line' ? 'primary' : ''" plain size="small" @click="changeTpye('line')">折线图</el-button>
-                    <el-button :type="type == 'column' ? 'primary' : ''" plain size="small" @click="changeTpye('column')">柱状图</el-button>
-                    <!-- <el-button type="" plain size="small">饼形图</el-button> -->
-                </div>
-                <guest-chart :guestData="guestData" :type="type"></guest-chart>
-
-            </li>
-            <li class="charts-wrap">
-                <new-old-chart :newOldData="newOldData"></new-old-chart>
-            </li>
-            <!--<li class="charts-wrap">-->
-                <!--<vip-chart :vipData="vipData"></vip-chart>-->
-            <!--</li>-->
-            <li class="charts-wrap">
-                <age-chart :ageData="ageData"></age-chart>
-            </li>
-            <li class="charts-wrap">
-                <sex-chart :sexData="sexData"></sex-chart>
-            </li>
-            <li class="charts-wrap">
-                <device-chart :deviceData="deviceData"></device-chart>
-            </li>
-
-        </ul>
-
-    </div>
-=======
             <ul class="charts-type" v-else>
                 <li class="charts-wrap">
                     <div style="padding:10px 0 20px;text-align:center;">
@@ -111,7 +80,6 @@
                 -->
             </ul>
         </div>
->>>>>>> a2f027475025607945fd5b139d313c8aff33d897
 </template>
 
 <script src="@/assets/js/statistics/Statistics.js"></script>
