@@ -64,6 +64,7 @@ global.GUEST_HIDDEN_LIST = `${SERVER_IP}${COMMON}customer/hidden-list`
 
 global.GUEST_EDIT = `${SERVER_IP}${COMMON}customer/edit-personal-info`
 global.GUEST_VIEW = `${SERVER_IP}${COMMON}customer/personal-info`
+global.GUEST_DEL = `${SERVER_IP}${COMMON}customer/del`
 
 // post customer/store-recore 到店记录
 global.GET_STORE_RECORE = `${SERVER_IP}${COMMON}customer/store-recore`
