@@ -5,7 +5,7 @@
 			<li class="store-record-item" v-for="(item,key) in orderRecords.list">
 				<div>订单编号：{{orderRecords.list[key].sn}}</div>
 				<div>收银时间：{{orderRecords.list[key].cash_t}}</div>
-				<div>材质款式：<span v-for="goods in orderRecords.list[key].orderGoods">&nbsp;[{{goods.material_name}}-{{goods.style_name}}]&nbsp;</span></div>
+				<div>材质款式：<span v-for="goods in orderRecords.list[key].orderGoods">&nbsp;[{{goods.material_name}}/{{goods.style_name}}]&nbsp;</span></div>
 				<div>成交金额：{{orderRecords.list[key].price}}元</div>
 			</li>
 		</ul>

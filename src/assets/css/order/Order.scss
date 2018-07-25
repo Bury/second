@@ -1,0 +1,49 @@
+.guest-list-page{
+  .el-table thead{
+    color:#333;
+  }
+  .margin{
+    display:inline-block;
+    margin:0 5px;
+  }
+  .line{
+    text-align:center;
+  }
+  .totalAll{
+    overflow:hidden;
+    P{
+      float:right;
+      font-weight:700;
+      .totalNumber, .totalPrice{
+        padding:0;
+        margin:0 3px;
+        width:100px;
+        height:40px;
+        border-radius: 3px;
+        border:0;
+        background: #eee;
+        border: 1px solid #999;
+        text-align:center;
+      }
+    }
+  }
+  .addproduct{
+    overflow:hidden;
+    div{
+      float:right;
+    }
+  }
+  .deleproduct{
+    margin-left:20px;
+  }
+  .editImg{
+    width: 150px;
+    height:150px;
+    border-radius:3px;
+    display: inline-block;
+    border: 1px solid #eee;
+    padding: 15px;
+    box-sizing:border-box;
+    margin-right: 15px;
+  }
+}

@@ -8,7 +8,7 @@
 		  <el-table :data="tableData" border height="448">
 			<el-table-column prop="id" label="序号" width="160"></el-table-column>
 	    	<el-table-column prop="username" label="帐号" width="160"></el-table-column>
-	    	<el-table-column prop="role_name" label="岗位" width="160"></el-table-column>
+	    	<el-table-column prop="storeRole.name" label="岗位" width="160"></el-table-column>
 	    	<el-table-column prop="truename" label="姓名" width="160"></el-table-column>
 	    	<el-table-column prop="phone" label="手机" width="160"></el-table-column>
 	    	<el-table-column prop="status" label="状态" width="160">
@@ -63,10 +63,23 @@
 			  <el-form-item label="手机：" prop="phone">
 			    <el-input v-model="editFormData.phone"></el-input>
 			  </el-form-item>
-			  <el-form-item label="帐号：" prop="username">
-			    <el-input v-model="editFormData.username"></el-input>
-			  </el-form-item>
 		  </el-form>
+			<el-form :model="editFormData" :rules="rules" ref="editFormData" label-width="100px" class="demo-ruleForm">
+			  <el-form-item label="状态：" prop="status">
+			    <template slot-scope="scope">
+			        <el-switch
+			          v-model="editFormData.status"
+			          on-color="#00A854"
+			          on-text="启动"
+			          on-value="1"
+			          off-color="#F04134"
+			          off-text="禁止"
+			          off-value="0"
+			          @change="changeSwitch()">
+			        </el-switch>
+			  	</template>
+			  </el-form-item>
+			</el-form>
 		  <div slot="footer" class="dialog-footer">
 		    <el-button @click="editCancel">取 消</el-button>
 		    <el-button type="primary" @click="editSubmit('editFormData')">确 定</el-button>

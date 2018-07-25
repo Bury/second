@@ -19,8 +19,8 @@ import Order from '../views/order/Order'
 import realFound from '../views/order/realFound'
 
 /*标签管理*/
-import Label from '../views/label/Label'
-import LabelDetail from '../views/label/LabelDetail'
+// import Label from '../views/label/Label'
+// import LabelDetail from '../views/label/LabelDetail'
 
 /*设备管理*/
 import Device from '../views/device/Device'
@@ -53,8 +53,6 @@ const router = new Router({
         {path: 'Guest',name: 'Guest',component: Guest},
         {path: 'Order',name: 'Order',component: Order},
         {path: 'realFound',name: 'realFound',component: realFound},
-        {path: 'Label',name: 'Label',component: Label},
-        {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
         {path: 'Device',name: 'Device',component: Device},
         {path: 'User',name:'User',component:User},
         {path: 'StoreRemind',name: 'StoreRemind',component: StoreRemind},
@@ -63,6 +61,11 @@ const router = new Router({
       ]
   }]
 })
+/*
+
+{path: 'Label',name: 'Label',component: Label},
+        {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
+        */
 
 router.beforeEach((to, from, next) => {
   let knock_knock = window.localStorage.getItem('knock_knock')

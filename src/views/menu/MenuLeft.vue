@@ -48,10 +48,10 @@
                     <span slot="title">系统设置</span>
                 </template>
                 <router-link :to="{name: 'StoreRemind'}">
-                    <el-menu-item index="/StoreRemind">来客提醒</el-menu-item>
+                    <el-menu-item index="/StoreRemind">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;来客提醒</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'StoreTime'}">
-                    <el-menu-item index="/StoreTime">营业时间</el-menu-item>
+                    <el-menu-item index="/StoreTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;营业时间</el-menu-item>
                 </router-link>
             </el-submenu>
         </el-menu>
