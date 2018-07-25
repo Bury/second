@@ -164,16 +164,31 @@ export default {
         setData(){
             if(this.$data.ctrlTimeType[0]){
                 //日
-                // let day = new Date()
+                let dayCurrent = new Date()
                 // console.log(this.$data.day);
-                this.$data.guestParameters.begin_time = this.getS('2018-07-23 00:00:00');
-                this.$data.guestParameters.end_time =  this.getS('2018-07-23 23:59:59');
+
+                var padDate=function(va){
+                    va=va<10?'0'+va:va;
+                    return va
+                }
+
+                var value=new Date();
+                var year=value.getFullYear();
+                var month=padDate(value.getMonth()+1);
+                var day=padDate(value.getDate());
+
+                var dayCurrentBegTime=year+'-'+month+'-'+day+'00:00:00';
+                var dayCurrentEndTime=year+'-'+month+'-'+day+'23:59:59';
+
+                this.$data.guestParameters.begin_time = this.getS(dayCurrentBegTime);
+                this.$data.guestParameters.end_time =  this.getS(dayCurrentEndTime);
                 this.requestData();
                 return false;
             }
             if(this.$data.ctrlTimeType[1]){
                 //周
                 // console.log(this.week);
+                // alert(this.week)
                 this.$data.guestParameters.begin_time = utils.getDateTime(this.week);
                 this.$data.guestParameters.end_time =  this.getS('2018-07-30 23:59:59');
                 this.requestData();
@@ -188,7 +203,6 @@ export default {
             }
             if(this.$data.ctrlTimeType[3]){
                 //年
-
                 this.$data.guestParameters.begin_time = utils.getDateTime(this.year);
                 this.$data.guestParameters.end_time =  this.getS('2018-12-31 23:59:59');
                 this.requestData();
@@ -198,7 +212,7 @@ export default {
                 //自定义
                 this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
                 this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
-                this.requestData();
+                this.requestData();  
                 return false;
             }
 

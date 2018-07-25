@@ -82,7 +82,7 @@
             <template slot-scope="scope">
               <el-button type="text" size="small" @click="showDialog(scope.row)" >详情备注</el-button>
               <el-button type="text" size="small" @click="filter_process(scope.row)" >屏蔽此人</el-button>
-              <el-button type="text" size="small" @click="dele_process(scope.row)" >删除</el-button>
+              <el-button type="text" size="small" @click="dele(scope.row)" >删除</el-button>
             </template>
           </el-table-column>
         </el-table>

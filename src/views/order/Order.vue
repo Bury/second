@@ -17,7 +17,13 @@
 						<el-option  v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
 					</el-select>
 			  </el-form-item>
-				<el-form-item label="金额：">
+        <el-form-item label="新客/熟客：">
+          <el-select v-model="requestParameters.level" placeholder="新客/熟客">
+              <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
+            </el-select>
+        </el-form-item>
+        <br/>
+        <el-form-item label="金额：">
 					<el-col :span="11">
 						<el-input v-model="requestParameters.price_start"></el-input>
 					</el-col>
@@ -26,11 +32,6 @@
 						<el-input v-model="requestParameters.price_end"></el-input>
 					</el-col>
 			  </el-form-item>
-        <el-form-item label="新客/熟客：">
-          <el-select v-model="requestParameters.level" placeholder="新客/熟客">
-              <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
-            </el-select>
-          </el-form-item>
 			  <el-form-item label="收银时间：">
 				<el-date-picker
 			      v-model="cashTimes"
@@ -50,15 +51,14 @@
 			    </el-date-picker>
 			  </el-form-item>
 			  <el-form-item>
-			    <el-button type="primary" @click="orderList">查询</el-button>
+			    <el-button type="primary" @click="lists">查询</el-button>
 			  </el-form-item>
 			</el-form>
 		</div>
 		<div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
-			<el-button type="primary" @click="realTime">实时录单</el-button>
+			<el-button type="primary" @click="orderLive">实时录单</el-button>
 			<el-button type="primary" @click="addNewList()">创建订单</el-button>
 		</div>
-
 
 		<!-- 列表 -->
       <div style="display: flex;text-align: center">
@@ -105,6 +105,7 @@
 	      </el-table>
         </el-col>
       </div>
+
     <!--新建订单-->
     <el-dialog title="新建订单" :visible.sync="FormVisible">
       <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">

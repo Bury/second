@@ -9,20 +9,18 @@ import UserLogin from '../views/user/UserLogin'
 
 //客流统计
 import Statistics from '../views/home/Statistics'
+
 //来客列表
 import Guest from '../views/guest/Guest'
 
-/*订单管理*/
+//订单管理
 import Order from '../views/order/Order'
-import realFound from '../views/order/realFound'
+import OrderLive from '../views/order/OrderLive'
 
-/*标签管理*/
-// import Label from '../views/label/Label'
-// import LabelDetail from '../views/label/LabelDetail'
-
-/*设备管理*/
+//设备管理
 import Device from '../views/device/Device'
 
+//帐号管理
 import User from '../views/user/User'
 import UserCurrentDetail from '../views/user/UserCurrentDetail'
 
@@ -48,7 +46,7 @@ const router = new Router({
         {path: '/',name: 'Statistics',component: Statistics},
         {path: 'Guest',name: 'Guest',component: Guest},
         {path: 'Order',name: 'Order',component: Order},
-        {path: 'realFound',name: 'realFound',component: realFound},
+        {path: 'OrderLive',name: 'OrderLive',component: OrderLive},
         {path: 'Device',name: 'Device',component: Device},
         {path: 'User',name:'User',component:User},
         {path: 'StoreRemind',name: 'StoreRemind',component: StoreRemind},
@@ -57,11 +55,6 @@ const router = new Router({
       ]
   }]
 })
-/*
-
-{path: 'Label',name: 'Label',component: Label},
-        {path: 'LabelDetail',name: 'LabelDetail',component: LabelDetail},
-        */
 
 router.beforeEach((to, from, next) => {
   let knock_knock = window.localStorage.getItem('knock_knock')
