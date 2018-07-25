@@ -91,7 +91,7 @@
         </template>
       </el-table-column>
 		    <el-table-column prop="customer_name" label="客户姓名" width="160"></el-table-column>
-		    <el-table-column label="客户等级" width="160">
+		    <el-table-column label="客户等级" width="160"></el-table-column>
         <el-table-column label="收银时间" width="160">
 		    	<template slot-scope="scope">
 		    		{{scope.row.cash_t | date(4)}}
