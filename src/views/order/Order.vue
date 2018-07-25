@@ -64,14 +64,14 @@
       <div style="display: flex;text-align: center">
         <el-col :span="24">
 		    <el-table :data="tableData" border >
-          <el-table-column fixed prop="id" label="序号" width="80"></el-table-column>
-          <el-table-column fixed prop="sn" label="编号" width="170"></el-table-column>
-          <el-table-column label="材质/款式" width="160">
+          <el-table-column fixed prop="id" label="序号" width="80px"></el-table-column>
+          <el-table-column fixed prop="sn" label="编号"></el-table-column>
+          <el-table-column label="材质/款式">
             <template slot-scope="scope">
             <span v-for="good in scope.row.orderGoods" class="margin">[{{good.material_name}}/{{good.style_name}}]</span>
             </template>
           </el-table-column>
-          <el-table-column prop="price" label="金额" width="120"></el-table-column>
+          <el-table-column prop="price" label="金额"></el-table-column>
 
           <el-table-column label="客户" width="240">
             <template slot-scope="scope">
@@ -85,17 +85,17 @@
               </div>
             </template>
           </el-table-column>
-        <el-table-column label="收银时间" width="160">
+        <el-table-column label="收银时间">
 		    	<template slot-scope="scope">
 		    		{{scope.row.cash_t | date(4)}}
 		    	</template>
 		    </el-table-column>
-		    <el-table-column label="创建时间" width="160">
+		    <el-table-column label="创建时间">
 		    	<template slot-scope="scope">
 		    		{{scope.row.created_at | date(4)}}
 		    	</template>
 		    </el-table-column>
-		    <el-table-column fixed="right" label="操作" width="150">
+		    <el-table-column label="操作" width="120px">
 			    <template slot-scope="scope">
 			        <el-button @click="fnEdit(scope.row)" type="text" size="small">编辑</el-button>
 			        <el-button @click="fnRemove(scope.row)" type="text" size="small">删除</el-button>
