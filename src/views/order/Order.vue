@@ -73,18 +73,14 @@
 				</el-table-column>
 		    <el-table-column prop="price" label="金额" width="120"></el-table-column>
 		    
-		    <el-table-column label="客户" width="140">
+		    <el-table-column label="客户" width="240">
           <template slot-scope="scope">
-            <div>
-              <img :src="scope.row.traffic.avatar" style="display:block;margin:0 auto;width:100%;">
+            <div style="float:left;width:45%;">
+              <img :src="scope.row.traffic.avatar" style="width:100%;">
             </div>
-            <div>
-              ID:{{scope.row.traffic.id}}
-            </div>
-            <div>
-              姓名:{{scope.row.customer_name}}
-            </div>
-            <div>
+            <div style="float:left;width:55%;padding-left:15px;text-align:left">
+              ID:{{scope.row.traffic.id}}<br/>
+              姓名:{{scope.row.customer_name}}</br/>
               类型:{{scope.row.traffic.is_new == 1 ?'新客':'熟客'}}
             </div>
           </template>

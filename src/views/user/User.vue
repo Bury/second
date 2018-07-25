@@ -23,7 +23,7 @@
 	    	</el-table-column>
 		    <el-table-column label="操作" width="220">
 			    <template slot-scope="scope">
-			    	<el-button type="primary" plain icon="el-icon-setting" circle size="small"
+			    	<el-button type="primary" plain icon="el-icon-view" circle size="small"
 			    		@click="fnResetPassword(scope.row)"></el-button>
 			    	<el-button type="warning" plain icon="el-icon-edit" circle size="small"
 			    		@click="fnEdit(scope.row)"></el-button>
@@ -63,21 +63,8 @@
 			  <el-form-item label="手机：" prop="phone">
 			    <el-input v-model="editFormData.phone"></el-input>
 			  </el-form-item>
-			  <el-form-item label="状态：" prop="status">
-			    <template slot-scope="scope">
-			        <el-switch
-			          v-model="editFormData.status"
-			          on-color="#00A854"
-			          on-text="启动"
-			          on-value="1"
-								active-value="1"
-			          off-color="#F04134"
-			          off-text="禁止"
-			          off-value="0" 
-								inactive-value="0"
-								@change="changeSwitch()">
-			        </el-switch>
-			  	</template>
+				<el-form-item label="状态" prop="phone">
+			    <el-switch v-model="editFormData.status" on-color="#00A854" off-color="#F04134"></el-switch>
 			  </el-form-item>
 			</el-form>
 		  <div slot="footer" class="dialog-footer">

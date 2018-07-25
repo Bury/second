@@ -33,6 +33,7 @@ export default{
             addFormData:{
                 role_id:'',
                 truename:'',
+                username: '',
                 phone:'',
                 username:'',
                 password:'',
@@ -51,6 +52,7 @@ export default{
                 role_id:'',
                 truename:'',
                 phone:'',
+                status:''
             },
             editRules:{
                 name:globalRules.rules.user.truename(),
@@ -84,6 +86,7 @@ export default{
 
     created:function(){
         this.lists();
+        this.getRoles()
     },
 
     methods: {
@@ -147,19 +150,13 @@ export default{
         },
 
         fnEdit(row){
-            let qs = require('querystring')
-            userApi.view(qs.stringify({
-                id:row.id
-            })).then((res) => {
-                if(res.data.errno === 0){
-                    console.log(res)
-                    this.$data.editFormData = res.data.data;
-                    this.getRoles();
-                    this.$data.editFormVisible = true;
-                }else{
-                    this.$message.error(res.data.msg);	
-                }		        			
-            })
+            this.$data.editFormVisible = true;
+            this.editFormData.id = row.id
+            this.editFormData.role_id = row.role_id
+            this.editFormData.truename = row.truename
+            this.editFormData.username = row.username
+            this.editFormData.phone = row.phone
+            this.editFormData.status =row.status === 1 ? true : false
         },
 
         //编辑取消
@@ -180,8 +177,7 @@ export default{
                 console.log(valid)
                 if (valid) {
                     let qs = require('querystring')
-                    alert(this.$data.editFormData.status)
-                    // this.$data.editFormData.status=this.$data.editFormData.status?1:0;
+                    this.$data.editFormData.status = this.$data.editFormData.status? 1 : 0;
                     userApi.edit(qs.stringify(this.$data.editFormData)).then((res) => {
                         if(res.data.errno === 0){
                             globalFunctions.functions.message(this,'success');
