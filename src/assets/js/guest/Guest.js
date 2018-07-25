@@ -8,9 +8,9 @@ import guestInfo from '@/components/GuestInfo'
 
 import HiddenList from '@/views/guest/HiddenList'
 
-// import GuestVisitedRecord from '@/components/GuestVisitedRecord'
+import GuestVisitedRecord from '@/components/GuestVisitedRecord'
 
-// import GuestOrderRecord from '@/components/GuestOrderRecord'
+import GuestOrderRecord from '@/components/GuestOrderRecord'
 
 export default {
 
@@ -19,8 +19,8 @@ export default {
     components: {
         guestInfo,
         HiddenList,
-        // GuestVisitedRecord,
-        // GuestOrderRecord
+        GuestVisitedRecord,
+        GuestOrderRecord
     },
 
     props:{
