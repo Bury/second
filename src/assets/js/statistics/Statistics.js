@@ -70,7 +70,7 @@ export default {
             let qs = require('querystring');
             statisticsApi.getCustomer(qs.stringify(parameters)).then((res) => {
                 if(res.data.errno === 0){
-                    console.log(res.data.data)
+                    // console.log(res.data.data)
                     this.$data.guestData = res.data.data;
                 }else{
 
@@ -165,7 +165,7 @@ export default {
             if(this.$data.ctrlTimeType[0]){
                 //日
                 // let day = new Date()
-                console.log(this.$data.day);
+                // console.log(this.$data.day);
                 this.$data.guestParameters.begin_time = this.getS('2018-07-23 00:00:00');
                 this.$data.guestParameters.end_time =  this.getS('2018-07-23 23:59:59');
                 this.requestData();
@@ -173,7 +173,7 @@ export default {
             }
             if(this.$data.ctrlTimeType[1]){
                 //周
-                console.log(this.week);
+                // console.log(this.week);
                 this.$data.guestParameters.begin_time = utils.getDateTime(this.week);
                 this.$data.guestParameters.end_time =  this.getS('2018-07-30 23:59:59');
                 this.requestData();

@@ -36,7 +36,7 @@ export default{
     },
     methods: {
       getData(value){
-        console.log(value)
+        // console.log(value)
         let guestGenderCharts = this.$refs.guestGenderCharts;
         guestGenderCharts.delegateMethod('showLoading', 'Loading...');
         guestGenderCharts.removeSeries();

@@ -68,14 +68,20 @@ export default{
 
     methods: {
         getData(value){
-            console.log(value);
+            // console.log(value);
             let guestCharts = this.$refs.guestCharts;
             guestCharts.delegateMethod('showLoading', 'Loading...');
             // let chart_class = this.$data.options.chart.type;
             // this.$data.options.chart.type = this.$props.type;
             // this.$data.options.xAxis.categories = value.time;
             // console.log(value.time);
-            guestCharts.removeSeries();
+
+
+            // guestCharts.removeSeries();//删除所有
+            if(guestCharts.getChart().series[0]!=undefined){
+                guestCharts.getChart().series[0].remove(true);//删除单个
+            }
+
             setTimeout(() => {
                 var chart_class_text_string='';
                 if(this.$props.chartClass=='' || this.$props.chartClass=='line'){
@@ -89,6 +95,7 @@ export default{
                 guestCharts.addSeries({name:' 客流量统计',data: value.sum});
                 guestCharts.hideLoading();
 
+                // console.log(guestCharts.getChart().series)
                 guestCharts.getChart().series[0].update({
                     type: this.$data.options.chart.type
                 })
