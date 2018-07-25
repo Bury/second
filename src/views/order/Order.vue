@@ -85,19 +85,6 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column  prop="Id" label="人脸ID" width="75">
-          <template slot-scope="scope">
-            {{scope.row.traffic.id}}
-          </template>
-<<<<<<< HEAD
-		    </el-table-column>
-			<el-table-column  prop="Id" label="人脸ID" width="75">
-        <template slot-scope="scope">
-          {{scope.row.traffic.id}}
-        </template>
-      </el-table-column>
-		    <el-table-column prop="customer_name" label="客户姓名" width="160"></el-table-column>
-		    <el-table-column label="客户等级" width="160"></el-table-column>
         <el-table-column label="收银时间" width="160">
 		    	<template slot-scope="scope">
 		    		{{scope.row.cash_t | date(4)}}
@@ -109,22 +96,6 @@
 		    	</template>
 		    </el-table-column>
 		    <el-table-column fixed="right" label="操作" width="150">
-=======
-        </el-table-column>
-          <el-table-column prop="customer_name" label="客户姓名" width="160"></el-table-column>
-          <el-table-column label="客户等级" width="160">
-          <el-table-column label="收银时间" width="160">
-            <template slot-scope="scope">
-              {{scope.row.cash_t | date(4)}}
-            </template>
-          </el-table-column>
-          <el-table-column label="创建时间" width="160">
-            <template slot-scope="scope">
-              {{scope.row.created_at | date(4)}}
-            </template>
-          </el-table-column>
-          <el-table-column fixed="right" label="操作" width="150">
->>>>>>> 5cf1e108e10b16dafc0feea2cea80e8845a794f5
 			    <template slot-scope="scope">
 			        <el-button @click="fnEdit(scope.row)" type="text" size="small">编辑</el-button>
 			        <el-button @click="fnRemove(scope.row)" type="text" size="small">删除</el-button>
