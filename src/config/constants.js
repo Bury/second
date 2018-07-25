@@ -11,8 +11,8 @@ const COMMON = 'v1/'
 //客流统计
 // post analysis/customer
 global.GET_CUSTOMER = `${SERVER_IP}${COMMON}analysis/customer`
-// post analysis/feature
-global.GET_FEATURE = `${SERVER_IP}${COMMON}analysis/feature`
+
+global.StatisticsFeature = `${SERVER_IP}${COMMON}analysis/feature`
 
 /*提醒列表*/
 global.REMIND_LISTS = `${SERVER_IP}${COMMON}customer/remind-list`

@@ -4,15 +4,15 @@ import statisticsApi from '@/api/statistics'
 
 import GuestChart from '@/views/statistics/GuestChart'
 
-// import NewOldChart from './NewOldChart'
+import GuestVisitedInfoChart from '@/views/statistics/GuestVisitedInfoChart'
 
-// import VipChart from './VipChart'
+import GuestBoughtInfoChart from '@/views/statistics/GuestBoughtInfoChart'
 
-// import AgeChart from './AgeChart'
+import GuestAgeChart from '@/views/statistics/GuestAgeChart'
 
-// import SexChart from './SexChart'
+import GuestGenderChart from '@/views/statistics/GuestGenderChart'
 
-// import DeviceChart from './DeviceChart'
+import GuestFromChart from '@/views/statistics/GuestFromChart'
 
 import * as utils from '@/utils/index'
 
@@ -22,11 +22,11 @@ export default {
 
     components: {
         GuestChart,
-        // NewOldChart,
-        // VipChart,
-        // AgeChart,
-        // SexChart,
-        // DeviceChart
+        GuestVisitedInfoChart,
+        GuestBoughtInfoChart,
+        GuestAgeChart,
+        GuestGenderChart,
+        GuestFromChart
     },
 
     data () {
@@ -41,11 +41,11 @@ export default {
             ctrlTimeType:[true,false,false,false,false],
             chartClass:'',
             guestData:{},
-            newOldData:[],
-            vipData:[],
+            guestVisitedInfoData:[],
+            guestBoughtInfoData:[],
             ageData:[],
-            sexData:[],
-            deviceData:[],
+            guestGenderData:[],
+            guestFromData:[],
             guestParameters:{
                 begin_time:'',
                 end_time:'',
@@ -79,14 +79,14 @@ export default {
         },
 
         //特征
-        getFeature(parameters, types){
+        statisticsFeature(parameters, types){
             let list = {
                 begin_time: parameters.begin_time,
                 end_time: parameters.end_time,
                 feature: types
             }
             let qs = require('querystring');
-            statisticsApi.getFeature(qs.stringify(list)).then((res) => {
+            statisticsApi.statisticsFeature(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     //console.log(res)
                     let thisData = res.data.data;
@@ -96,14 +96,14 @@ export default {
                             for(var i=0; i<thisData.face.length; i++){
                                 newData.push([thisData.face[i],thisData.sum[i]])
                             }
-                            this.$data.newOldData = newData;
+                            this.$data.guestVisitedInfoData = newData;
                         }
-                        if(types == 'vip'){
+                        if(types == 'buy'){
                             let newData = [];
-                            for(var i=0; i<thisData.vip.length; i++){
-                                newData.push([thisData.vip[i],thisData.sum[i]])
+                            for(var i=0; i<thisData.buy.length; i++){
+                                newData.push([thisData.buy[i],thisData.sum[i]])
                             }
-                            this.$data.vipData = newData;
+                            this.$data.guestBoughtInfoData = newData;
                         }
                         if(types == 'age'){
                             let newData = [];
@@ -117,14 +117,14 @@ export default {
                             for(var i=0; i<thisData.gender.length; i++){
                                 newData.push([thisData.gender[i],thisData.sum[i]])
                             }
-                            this.$data.sexData = newData;
+                            this.$data.guestGenderData = newData;
                         }
                         if(types == 'camera'){
                             let newData = [];
                             for(var i=0; i<thisData.camera.length; i++){
                                 newData.push([thisData.camera[i],thisData.sum[i]])
                             }
-                            this.$data.deviceData = newData;
+                            this.$data.guestFromData = newData;
                         }
                     } else {
                         this.noData = true
@@ -206,11 +206,11 @@ export default {
 
         requestData(){
             this.getCustomer(this.$data.guestParameters);
-            // this.getFeature(this.$data.guestParameters, 'face');
-            // this.getFeature(this.$data.guestParameters, 'vip');
-            // this.getFeature(this.$data.guestParameters, 'age');
-            // this.getFeature(this.$data.guestParameters, 'gender');
-            // this.getFeature(this.$data.guestParameters, 'camera');
+            this.statisticsFeature(this.$data.guestParameters, 'face');
+            this.statisticsFeature(this.$data.guestParameters, 'buy');
+            this.statisticsFeature(this.$data.guestParameters, 'age');
+            this.statisticsFeature(this.$data.guestParameters, 'gender');
+            this.statisticsFeature(this.$data.guestParameters, 'camera');
         }
 
     }

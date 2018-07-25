@@ -54,30 +54,28 @@
             <ul class="charts-type" v-else>
                 <li class="charts-wrap">
                     <div style="padding:10px 0 20px;text-align:center;">
-                    <el-button :chartClasstype="chartClass == 'line' ? 'primary' : ''" plain size="small" @click="switchChart('line')">折线图</el-button>
+                    <el-button :chartClass="chartClass == 'line' ? 'primary' : ''" plain size="small" @click="switchChart('line')">折线图</el-button>
                         <el-button :chartClass="chartClass == 'column' ? 'primary' : ''" plain size="small" @click="switchChart('column')">柱状图</el-button>
                         <!-- <el-button chartClass="" plain size="small">饼形图</el-button> -->
                     </div>
                     <guest-chart :guestData="guestData" :chartClass="chartClass"></guest-chart>
-
                 </li>
-                <!--
+                
                 <li class="charts-wrap">
-                    <new-old-chart :newOldData="newOldData"></new-old-chart>
-                </li>
-                <li class="charts-wrap">
-                    <vip-chart :vipData="vipData"></vip-chart>
+                    <guest-visited-info-chart :guestVisitedInfoData="guestVisitedInfoData"></guest-visited-info-chart>
                 </li>
                 <li class="charts-wrap">
-                    <age-chart :ageData="ageData"></age-chart>
+                    <guest-bought-info-chart :guestBoughtInfoData="guestBoughtInfoData"></guest-bought-info-chart>
                 </li>
                 <li class="charts-wrap">
-                    <sex-chart :sexData="sexData"></sex-chart>
+                    <guest-age-chart :ageData="ageData"></guest-age-chart>
                 </li>
                 <li class="charts-wrap">
-                    <device-chart :deviceData="deviceData"></device-chart>
+                    <guest-gender-chart :guestGenderData="guestGenderData"></guest-gender-chart>
                 </li>
-                -->
+                <li class="charts-wrap">
+                    <guest-from-chart :guestFromData="guestFromData"></guest-from-chart>
+                </li>
             </ul>
         </div>
 </template>
