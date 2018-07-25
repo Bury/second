@@ -7,8 +7,7 @@ import apiUrl from './API.js'
 const SERVER_IP = apiUrl.apiUrl
 const COMMON = 'v1/'
 
-//post  tag/tree-form
-global.GET_ALL = `${SERVER_IP}${COMMON}tag/tree-form`
+
 //客流统计
 // post analysis/customer
 global.GET_CUSTOMER = `${SERVER_IP}${COMMON}analysis/customer`
@@ -66,10 +65,13 @@ global.GUEST_EDIT = `${SERVER_IP}${COMMON}customer/edit-personal-info`
 global.GUEST_VIEW = `${SERVER_IP}${COMMON}customer/personal-info`
 global.GUEST_DEL = `${SERVER_IP}${COMMON}customer/del`
 
-// post customer/store-recore 到店记录
-global.GET_STORE_RECORE = `${SERVER_IP}${COMMON}customer/store-recore`
-// post customer/order-recore 订单记录
-global.GET_ORDER_RECORE = `${SERVER_IP}${COMMON}customer/order-recore`
+//标签数据
+global.TAG_LISTS_RESULTS = `${SERVER_IP}${COMMON}tag/tree-form`
+
+//到店记录
+global.GuestVisitedRecordLists = `${SERVER_IP}${COMMON}customer/store-recore`
+//来客订单记录
+global.ORDER_LISTS_USER_RESULTS = `${SERVER_IP}${COMMON}customer/order-recore`
 
 
 //*************设备管理

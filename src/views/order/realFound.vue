@@ -839,7 +839,7 @@
         //   localStorage.setItem('knock_knock', '')
         //   localStorage.setItem('username', '')
         //   router.replace({
-        //     path: '/login',
+        //     path: '/UserLogin',
         //     query: {redirect: router.currentRoute.fullPath}
         //   })
         // }else{

@@ -48,10 +48,10 @@
                     <span slot="title">系统设置</span>
                 </template>
                 <router-link :to="{name: 'StoreRemind'}">
-                    <el-menu-item index="/StoreRemind">来客提醒</el-menu-item>
+                    <el-menu-item index="/StoreRemind" style="padding-left:53px;">来客提醒</el-menu-item>
                 </router-link>
                 <router-link :to="{name: 'StoreTime'}">
-                    <el-menu-item index="/StoreTime">营业时间</el-menu-item>
+                    <el-menu-item index="/StoreTime" style="padding-left:53px;">营业时间</el-menu-item>
                 </router-link>
             </el-submenu>
         </el-menu>
@@ -81,11 +81,5 @@
         }
     }
 </script>
-<style>
-	.el-menu-vertical-demo:not(.el-menu--collapse) {
-        width: 160px;
-    }
-    .el-menu{
-        border:0;
-    }
-</style>
+
+<style lang="scss" scoped src="@/assets/css/menu/MenuLeft.scss">

@@ -27,10 +27,13 @@ export default {
     data() {
 
         return {
+            active:[],
+            checked:false,
             infoEdit:false,
             remarksId:"",
             guestInfo:{},
             editGuestInfoData:{},
+            ids:[],
             labels:{},
             GuestInfoRules:{
                 name: globalRules.rules.user.truename(),
@@ -53,7 +56,7 @@ export default {
     },
 
     methods: {
-
+        //标签
         getTagListsResults(customerId){
             let list = {
                 'all': 1,
@@ -81,6 +84,14 @@ export default {
                     this.$set(res.data.data, 'is_new_to_text', globalFunctions.functions.guest.getVisitInfo(is_new));
                     this.$set(res.data.data, 'is_bought_to_text', globalFunctions.functions.guest.getBoughtInfo(vip_level));
                     this.$data.guestInfo = res.data.data;
+                    let tagLabel = res.data.data.tag
+                    if (tagLabel) {
+                        for (let i = 0; i<tagLabel.length; i++){
+                            this.ids.push(tagLabel[i].id)
+                        }
+                    } else {
+                        return false;
+                    }
                 }else{
 
                 }
@@ -94,6 +105,7 @@ export default {
 
         guestInfoCancel(){
             this.$data.infoEdit = false;
+            this.ids = []
         },
 
         guestInfoEditSubmit(formName){
@@ -105,7 +117,9 @@ export default {
                             name:this.$data.editGuestInfoData.name,    
                             phone:this.$data.editGuestInfoData.phone,   
                             gender:this.$data.editGuestInfoData.gender, 
-                            tag_ids:this.$data.editGuestInfoData.tag_ids,
+                            age:this.$data.editGuestInfoData.age, 
+                            tag_ids:this.ids.join(","),
+                            vip_level:this.$data.editGuestInfoData.vip_level,
                             remark:this.$data.editGuestInfoData.remark,
                         })).then((res) => {
                             if(res.data.errno === 0){

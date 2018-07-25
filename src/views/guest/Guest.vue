@@ -16,8 +16,8 @@
               <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="未购买/已购买：">
-          <el-select v-model="requestParameters.level" placeholder="未购买/已购买">
+          <el-form-item label="未购/已购：">
+          <el-select v-model="requestParameters.level" placeholder="未购/已购">
               <el-option v-for="(item, idx) in allGuestBoughtClass" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
@@ -61,16 +61,14 @@
           </el-table-column>
           <el-table-column prop="age" label="年龄" width="100">
           </el-table-column>
-          <el-table-column prop="customerMerchant.phone" label="手机" width="110">
-          </el-table-column>
           <el-table-column prop="customerMerchant.is_new" label="新客/熟客" width="110">
             <template slot-scope="scope">
               <span>{{scope.row.is_new == 1 ?'新客':'熟客'}}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="customerMerchant.vip_level" label="未购买/已购买" width="110">
+          <el-table-column prop="customerMerchant.vip_level" label="未购/已购" width="110">
             <template slot-scope="scope">
-              <span>{{scope.row.vip_level == 1 ?'已购买':'未购买'}}</span>
+              <span>{{scope.row.vip_level == 1 ?'已购':'未购'}}</span>
             </template>
           </el-table-column>
           <el-table-column prop="device_name" label="拍摄位置" width="160">
@@ -118,6 +116,14 @@
           <el-tab-pane label="个人信息" name="first">
             <guest-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></guest-info>
           </el-tab-pane>
+
+          <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
+			    	<guest-visited-record :customerId="currentCustomerId"></guest-visited-record>
+			    </el-tab-pane>
+
+          <el-tab-pane label="订单记录" name="third">
+			    	<guest-order-record :customerId="currentCustomerId" style="min-height:415px;"></guest-order-record>
+			    </el-tab-pane>
 
       </el-tabs>
     </el-dialog>

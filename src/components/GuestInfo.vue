@@ -7,7 +7,7 @@
                 <li class="user-sex">性别： {{guestInfo.gender == 1 ? '男' : '女'}}</li>
                 <li class="user-age">年龄： {{guestInfo.age}}</li>
                 <li class="user-type">新客/熟客：{{guestInfo.is_new_to_text}}</li>
-                <li class="user-type">未购买/已购买：{{guestInfo.is_bought_to_text}}</li>
+                <li class="user-type">未购/已购：{{guestInfo.is_bought_to_text}}</li>
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
@@ -41,21 +41,20 @@
                     <el-input v-model="editGuestInfoData.age"></el-input>
                 </el-form-item>
                 <el-form-item label="新客/熟客：">
-                <el-radio-group v-model="editGuestInfoData.is_new">
-                    <el-radio :label="1">新客</el-radio>
-                    <el-radio :label="0">熟客</el-radio>
-                </el-radio-group>
+                    {{editGuestInfoData.is_new_to_text}}
                 </el-form-item>
-                <el-form-item label="未购买/已购买：">
+                <el-form-item label="未购/已购：">
                     <el-radio-group v-model="editGuestInfoData.vip_level">
-                    <el-radio :label="1">未购买</el-radio>
-                    <el-radio :label="0">已购买</el-radio>
+                    <el-radio :label="0">未购</el-radio>
+                    <el-radio :label="1">已购</el-radio>
                 </el-radio-group>
                 </el-form-item>
                 <el-form-item label="标签：">
                     <div v-for="label in labels" :key="label.id" class="labels">
                         <div>—— {{label.name}} ——</div>
-                        <span v-for="children in label.children" :key="children.id">{{children.name}}</span>
+                        <el-checkbox-group v-model="ids" size="small">
+                            <el-checkbox v-for="children in label.children" :key="children.id" :label="children.id" border>{{children.name}}</el-checkbox>
+                        </el-checkbox-group>
                     </div>
                 </el-form-item>
                 <el-form-item label="备注：">

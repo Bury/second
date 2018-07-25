@@ -33,6 +33,7 @@ export default{
             addFormData:{
                 role_id:'',
                 truename:'',
+                username: '',
                 phone:'',
                 username:'',
                 password:'',
@@ -48,14 +49,14 @@ export default{
             editFormVisible:false,
             editFormData:{
                 id:'',
+                role_id:'',
                 truename:'',
                 phone:'',
-                username:'',
+                status:''
             },
             editRules:{
                 name:globalRules.rules.user.truename(),
                 phone:globalRules.rules.user.phone(),
-                username: globalRules.rules.user.username(4,20,'请输入帐号'),
             },
             resetPasswordFormVisible:false,
             resetPasswordFormData:{
@@ -85,6 +86,7 @@ export default{
 
     created:function(){
         this.lists();
+        this.getRoles()
     },
 
     methods: {
@@ -148,19 +150,13 @@ export default{
         },
 
         fnEdit(row){
-            let qs = require('querystring')
-            userApi.view(qs.stringify({
-                id:row.id
-            })).then((res) => {
-                if(res.data.errno === 0){
-                    console.log(res)
-                    this.$data.editFormData = res.data.data;
-                    this.getRoles();
-                    this.$data.editFormVisible = true;
-                }else{
-                    this.$message.error(res.data.msg);	
-                }		        			
-            })
+            this.$data.editFormVisible = true;
+            this.editFormData.id = row.id
+            this.editFormData.role_id = row.role_id
+            this.editFormData.truename = row.truename
+            this.editFormData.username = row.username
+            this.editFormData.phone = row.phone
+            this.editFormData.status =row.status === 1 ? true : false
         },
 
         //编辑取消
@@ -168,10 +164,10 @@ export default{
             this.$data.editFormVisible = false;
             this.$data.editFormData = {
                 id:'',
+                role_id:'',
                 truename:'',
                 phone:'',
-                username:'',
-                password:'',
+                status:''
             }
         },
 
@@ -181,6 +177,7 @@ export default{
                 console.log(valid)
                 if (valid) {
                     let qs = require('querystring')
+                    this.$data.editFormData.status = this.$data.editFormData.status? 1 : 0;
                     userApi.edit(qs.stringify(this.$data.editFormData)).then((res) => {
                         if(res.data.errno === 0){
                             globalFunctions.functions.message(this,'success');
@@ -190,7 +187,7 @@ export default{
                                 role_id:'',
                                 truename:'',
                                 phone:'',
-                                username:'',
+                                status:''
                             }
                             this.$data.editFormVisible = false;
 
@@ -327,6 +324,10 @@ export default{
                 //   message: '已取消删除'
                 // });          
             });
+        },
+
+        changeSwitch (data) {
+            console.log(this.$data.editFormData.status)
         }
         
     }
