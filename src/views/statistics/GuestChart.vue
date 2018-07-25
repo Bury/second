@@ -4,4 +4,4 @@
   </div>
 </template>
 
-<script src="@/assets/js/statistics/guest_chart.js"></script>
+<script src="@/assets/js/statistics/GuestChart.js"></script>

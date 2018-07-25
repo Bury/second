@@ -14,7 +14,7 @@ import GuestChart from '@/views/statistics/GuestChart'
 
 // import DeviceChart from './DeviceChart'
 
-// import * as utils from '../../utils/index'
+import * as utils from '@/utils/index'
 
 export default {
     
@@ -39,7 +39,7 @@ export default {
             year:'',
             userDefined:[],
             ctrlTimeType:[true,false,false,false,false],
-            type:'',
+            chartClass:'',
             guestData:{},
             newOldData:[],
             vipData:[],
@@ -49,7 +49,6 @@ export default {
             guestParameters:{
                 begin_time:'',
                 end_time:'',
-                store_id:''
             },
         }
     },
@@ -84,7 +83,6 @@ export default {
             let list = {
                 begin_time: parameters.begin_time,
                 end_time: parameters.end_time,
-                store_id: parameters.store_id,
                 feature: types
             }
             let qs = require('querystring');
@@ -138,9 +136,9 @@ export default {
 
         },
 
-        changeTpye(value){
+        switchChart(value){
             // console.log(value)
-            this.$data.type = value;
+            this.$data.chartClass = value;
             this.setData();
         },
 
@@ -149,15 +147,16 @@ export default {
             this.setData();
         },
 
-        changeTimeType(tab, event){
-            // console.log(tab.index)
+        /*
+        统计类型切换
+        */
+        cateChanged(tab, event){
             var nowIdx = tab.index;
             this.$data.ctrlTimeType = [false,false,false,false,false];
             this.$data.ctrlTimeType[nowIdx] = true;
             this.$data.guestParameters = {
                 begin_time:'',
                 end_time:'',
-                store_id:''
             }
             this.setData();
         },
@@ -207,11 +206,11 @@ export default {
 
         requestData(){
             this.getCustomer(this.$data.guestParameters);
-            this.getFeature(this.$data.guestParameters, 'face');
-            this.getFeature(this.$data.guestParameters, 'vip');
-            this.getFeature(this.$data.guestParameters, 'age');
-            this.getFeature(this.$data.guestParameters, 'gender');
-            this.getFeature(this.$data.guestParameters, 'camera');
+            // this.getFeature(this.$data.guestParameters, 'face');
+            // this.getFeature(this.$data.guestParameters, 'vip');
+            // this.getFeature(this.$data.guestParameters, 'age');
+            // this.getFeature(this.$data.guestParameters, 'gender');
+            // this.getFeature(this.$data.guestParameters, 'camera');
         }
 
     }

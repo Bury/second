@@ -42,7 +42,7 @@
                     <el-button type="primary" @click="onSubmit">查询</el-button>
                 </el-form-item>
             </el-form>
-            <el-tabs v-model="timeType" type="card" @tab-click="changeTimeType">
+            <el-tabs v-model="timeType" type="card" @tab-click="cateChanged">
                 <el-tab-pane label="日统计" name="day"></el-tab-pane>
                 <el-tab-pane label="周统计" name="week"></el-tab-pane>
                 <el-tab-pane label="月统计" name="month"></el-tab-pane>
@@ -54,13 +54,14 @@
             <ul class="charts-type" v-else>
                 <li class="charts-wrap">
                     <div style="padding:10px 0 20px;text-align:center;">
-                    <el-button :type="type == 'line' ? 'primary' : ''" plain size="small" @click="changeTpye('line')">折线图</el-button>
-                        <el-button :type="type == 'column' ? 'primary' : ''" plain size="small" @click="changeTpye('column')">柱状图</el-button>
+                    <el-button :type="type == 'line' ? 'primary' : ''" plain size="small" @click="switchChart('line')">折线图</el-button>
+                        <el-button :type="type == 'column' ? 'primary' : ''" plain size="small" @click="switchChart('column')">柱状图</el-button>
                         <!-- <el-button type="" plain size="small">饼形图</el-button> -->
                     </div>
                     <guest-chart :guestData="guestData" :type="type"></guest-chart>
 
                 </li>
+                <!--
                 <li class="charts-wrap">
                     <new-old-chart :newOldData="newOldData"></new-old-chart>
                 </li>
@@ -76,6 +77,7 @@
                 <li class="charts-wrap">
                     <device-chart :deviceData="deviceData"></device-chart>
                 </li>
+                -->
             </ul>
         </div>
 </template>

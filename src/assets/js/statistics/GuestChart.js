@@ -59,6 +59,9 @@ export default{
 
     methods: {
         getData(value){
+            
+            alert(this.props.type)
+            return ;
             console.log(value);
             let guestCharts = this.$refs.guestCharts;
             guestCharts.delegateMethod('showLoading', 'Loading...');
@@ -71,11 +74,20 @@ export default{
                 guestCharts.addSeries({name:' 客流量统计',data: value.sum});
                 guestCharts.hideLoading();
 
+                //alert(chart_class)
+                //alert(this.$data.options.chart.type)
+
+                alert(chart_class)
+                if(chart_class=='column'){
+                    alert('chart')
+                }
+                /*
                 if((chart_class !='') && (chart_class != this.$data.options.chart.type)){
                     guestCharts.getChart().series[0].update({
                         type: this.$data.options.chart.type
                     })
                 }
+                */
             }, 100)
         },
     }

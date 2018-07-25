@@ -61,8 +61,6 @@
           </el-table-column>
           <el-table-column prop="age" label="年龄" width="100">
           </el-table-column>
-          <el-table-column prop="customerMerchant.phone" label="手机" width="110">
-          </el-table-column>
           <el-table-column prop="customerMerchant.is_new" label="新客/熟客" width="110">
             <template slot-scope="scope">
               <span>{{scope.row.is_new == 1 ?'新客':'熟客'}}</span>
