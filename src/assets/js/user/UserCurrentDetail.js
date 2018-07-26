@@ -101,14 +101,7 @@ export default {
         },
 
         fnSaveSubmitForm(formName){
-
-            this.$refs.userEditForm.validate((valid) => {
-                alert(valid)
-            })
-
             this.$refs['userEditForm'].validate((valid) => {
-                alert(this.$data.userEditForm.name)
-                alert(valid)
                 if (valid) {
                     let list = {
                         'truename':this.$data.userEditForm.name,

@@ -51,7 +51,7 @@ export default {
             let qs = require('querystring')
             settingsApi.timeSet(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
-                    console.log(res)
+                    // console.log(res)
                     globalFunctions.functions.message(this,'success','操作成功',1500);
 
                 }else{

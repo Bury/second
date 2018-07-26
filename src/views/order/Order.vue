@@ -63,13 +63,13 @@
         <thead style="background-color: #d1d1d1">
         <tr height="40">
           <th class="col-md-1 text-center">序号</th>
-          <th class="col-md-1 text-center">编号</th>
+          <th class="col-md-2 text-center">编号</th>
           <th class="col-md-2 text-center">材质/款式</th>
           <th class="col-md-1 text-center">金额</th>
           <th class="col-md-2 text-center">客户</th>
-          <th class="col-md-2 text-center">收银时间</th>
-          <th class="col-md-2 text-center">创建时间</th>
-          <th class="col-md-2 text-center">操作</th>
+          <th class="col-md-1.5 text-center">收银时间</th>
+          <th class="col-md-1.5 text-center">创建时间</th>
+          <th class="col-md-1 text-center">操作</th>
         </tr>
         </thead>
         <tbody style="text-align: center">
