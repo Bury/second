@@ -1,6 +1,6 @@
-import global_data from '@/config/global_data'
+import globalData from '@/config/global_data'
 
-import global_functions from '@/config/global_functions'
+import globalFunctions from '@/config/global_functions'
 
 import guestApi from '@/api/guest'
 
@@ -8,9 +8,9 @@ import guestInfo from '@/components/GuestInfo'
 
 import HiddenList from '@/views/guest/HiddenList'
 
-// import GuestVisitedRecord from '@/components/GuestVisitedRecord'
+import GuestVisitedRecord from '@/components/GuestVisitedRecord'
 
-// import GuestOrderRecord from '@/components/GuestOrderRecord'
+import GuestOrderRecord from '@/components/GuestOrderRecord'
 
 export default {
 
@@ -19,8 +19,8 @@ export default {
     components: {
         guestInfo,
         HiddenList,
-        // GuestVisitedRecord,
-        // GuestOrderRecord
+        GuestVisitedRecord,
+        GuestOrderRecord
     },
 
     props:{
@@ -30,10 +30,10 @@ export default {
     data(){
         return{
             tableData: [],
-            allGuestVisitClass:global_data.data.guest_visit_class,
-            allGuestBoughtClass:global_data.data.guest_bought_class,
-            allAgeScope:global_data.data.age_scope,
-            allGenderScope:global_data.data.gender_scope,
+            allGuestVisitClass:globalData.data.guest_visit_class,
+            allGuestBoughtClass:globalData.data.guest_bought_class,
+            allAgeScope:globalData.data.age_scope,
+            allGenderScope:globalData.data.gender_scope,
             pagination:{
                 currentPage:1,
                 totalCount:0,
@@ -111,10 +111,10 @@ export default {
         	 }).then(() => {
         	 	guestApi.guestHidden(qs.stringify({id:row.customer_id,is_hidden:1 })).then((res) => {
              	   if(res.data.errno === 0){
-             		this.lists();
-             		this.$message({message:'屏蔽成功',type:"success"});
+             		    this.lists();
+                        globalFunctions.functions.message(this,'success');
              	   }else{
-             		this.$message(res.data.msg);
+             		    this.$message(res.data.msg);
              	   }
                 })
         	 })
@@ -124,30 +124,29 @@ export default {
         checkout(tab, event) {
             this.$data.showInfoEdit = false;
         },
+
         //删除
-      dele_process(row) {
-        this.$confirm('确认删除该来客信息：'+row.id+' ？', '删除提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          let list = {
-            'id': row.id
-          }
-          let qs = require('querystring');
-          guestApi.del(qs.stringify(list)).then((res) => {
-            if(res.data.errno === 0){
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              });
-              this.lists();
-            }else{
-              this.$message.error(res.data.msg);
+        dele(row) {
+            this.$confirm('确认删除该来客信息：'+row.id+' ？', '删除提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+            let list = {
+                'id': row.id
             }
-          })
-        }).catch(action => {})
-      },
+            let qs = require('querystring');
+            guestApi.del(qs.stringify(list)).then((res) => {
+                if(res.data.errno === 0){
+                    globalFunctions.functions.message(this,'success');
+                    this.lists();
+                }else{
+                    this.$message.error(res.data.msg);
+                }
+            })
+            }).catch(action => {})
+        },
+        
         closeChangeMachie(done){
             done();
             // window.location.reload();

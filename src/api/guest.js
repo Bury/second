@@ -34,15 +34,17 @@ export default {
       })
     })
   },
-  del (list){
+
+  dele (list){
     return new Promise((resolve, reject) => {
-      axios.post(global.GUEST_DEL, list).then((res) => {
+      axios.post(global.GUEST_DELE, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)
       })
     })
   },
+
   //屏蔽动作
   guestHidden (list){
     return new Promise((resolve, reject) => {

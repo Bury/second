@@ -17,7 +17,13 @@
 						<el-option  v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
 					</el-select>
 			  </el-form-item>
-				<el-form-item label="金额：">
+        <el-form-item label="新客/熟客：">
+          <el-select v-model="requestParameters.level" placeholder="新客/熟客">
+              <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
+            </el-select>
+        </el-form-item>
+        <br/>
+        <el-form-item label="金额：">
 					<el-col :span="11">
 						<el-input v-model="requestParameters.price_start"></el-input>
 					</el-col>
@@ -26,11 +32,6 @@
 						<el-input v-model="requestParameters.price_end"></el-input>
 					</el-col>
 			  </el-form-item>
-        <el-form-item label="新客/熟客：">
-          <el-select v-model="requestParameters.level" placeholder="新客/熟客">
-              <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
-            </el-select>
-          </el-form-item>
 			  <el-form-item label="收银时间：">
 				<el-date-picker
 			      v-model="cashTimes"
@@ -50,28 +51,27 @@
 			    </el-date-picker>
 			  </el-form-item>
 			  <el-form-item>
-			    <el-button type="primary" @click="orderList">查询</el-button>
+			    <el-button type="primary" @click="lists">查询</el-button>
 			  </el-form-item>
 			</el-form>
 		</div>
 		<div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
-			<el-button type="primary" @click="realTime">实时录单</el-button>
+			<el-button type="primary" @click="orderLive">实时录单</el-button>
 			<el-button type="primary" @click="addNewList()">创建订单</el-button>
 		</div>
-
 
 		<!-- 列表 -->
       <div style="display: flex;text-align: center">
         <el-col :span="24">
 		    <el-table :data="tableData" border >
-          <el-table-column fixed prop="id" label="序号" width="80"></el-table-column>
-          <el-table-column fixed prop="sn" label="编号" width="170"></el-table-column>
-          <el-table-column label="材质/款式" width="160">
+          <el-table-column fixed prop="id" label="序号" width="80px"></el-table-column>
+          <el-table-column fixed prop="sn" label="编号"></el-table-column>
+          <el-table-column label="材质/款式">
             <template slot-scope="scope">
             <span v-for="good in scope.row.orderGoods" class="margin">[{{good.material_name}}/{{good.style_name}}]</span>
             </template>
           </el-table-column>
-          <el-table-column prop="price" label="金额" width="120"></el-table-column>
+          <el-table-column prop="price" label="金额"></el-table-column>
 
           <el-table-column label="客户" width="240">
             <template slot-scope="scope">
@@ -103,6 +103,17 @@
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150">
+        <el-table-column label="收银时间">
+		    	<template slot-scope="scope">
+		    		{{scope.row.cash_t | date(4)}}
+		    	</template>
+		    </el-table-column>
+		    <el-table-column label="创建时间">
+		    	<template slot-scope="scope">
+		    		{{scope.row.created_at | date(4)}}
+		    	</template>
+		    </el-table-column>
+		    <el-table-column label="操作" width="120px">
 			    <template slot-scope="scope">
 			        <el-button @click="fnEdit(scope.row)" type="text" size="small">编辑</el-button>
 			        <el-button @click="fnRemove(scope.row)" type="text" size="small">删除</el-button>
@@ -111,6 +122,7 @@
 	      </el-table>
         </el-col>
       </div>
+
     <!--新建订单-->
     <el-dialog title="新建订单" :visible.sync="FormVisible">
       <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">

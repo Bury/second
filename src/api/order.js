@@ -4,15 +4,17 @@
 import axios from 'axios'
 
 export default {
-	orderList (list) {
+
+	lists (list) {
 	    return new Promise((resolve, reject) => {
-	      axios.post(global.GET_ORDER_LIST,list).then((res) => {
+	      axios.post(global.ORDER_LISTS,list).then((res) => {
 					resolve(res)
 	      }).catch((err) => {
 	        reject(err)
 	      })
 	    })
-	},
+  },
+  
 	deleOrder (list) {
 	    return new Promise((resolve, reject) => {
 	      axios.post(global.DELE_ORDER,list).then((res) => {

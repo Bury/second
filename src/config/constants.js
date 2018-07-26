@@ -11,20 +11,14 @@ const COMMON = 'v1/'
 //客流统计
 // post analysis/customer
 global.GET_CUSTOMER = `${SERVER_IP}${COMMON}analysis/customer`
-// post analysis/feature
-global.GET_FEATURE = `${SERVER_IP}${COMMON}analysis/feature`
 
-/*提醒列表*/
-global.REMIND_LISTS = `${SERVER_IP}${COMMON}customer/remind-list`
+global.StatisticsFeature = `${SERVER_IP}${COMMON}analysis/feature`
 
 
-
-// post customer/is-reception 接待
-global.IS_RECEPTION = `${SERVER_IP}${COMMON}customer/is-reception`
 
 /*订单管理*/
-// post order/list订单列表
-global.GET_ORDER_LIST = `${SERVER_IP}${COMMON}order/list`
+global.ORDER_LISTS = `${SERVER_IP}${COMMON}order/list`
+
 // post order/dele
 global.DELE_ORDER = `${SERVER_IP}${COMMON}order/dele`
 /// post order/adds 添加订单
@@ -63,7 +57,7 @@ global.GUEST_HIDDEN_LIST = `${SERVER_IP}${COMMON}customer/hidden-list`
 
 global.GUEST_EDIT = `${SERVER_IP}${COMMON}customer/edit-personal-info`
 global.GUEST_VIEW = `${SERVER_IP}${COMMON}customer/personal-info`
-global.GUEST_DEL = `${SERVER_IP}${COMMON}customer/del`
+global.GUEST_DELE = `${SERVER_IP}${COMMON}customer/del`
 
 //标签数据
 global.TAG_LISTS_RESULTS = `${SERVER_IP}${COMMON}tag/tree-form`
