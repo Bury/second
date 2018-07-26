@@ -76,6 +76,7 @@ export default {
                 if(result.errno === 0){
                     var i='';
                     this.tableData = result.data.list;
+                    console.log(this.tableData)
                     this.$data.pagination.currentPage = result.data.pagination.currentPage;
                     this.$data.pagination.totalCount = result.data.pagination.totalCount;
                 }else{
@@ -146,7 +147,7 @@ export default {
             })
             }).catch(action => {})
         },
-        
+
         closeChangeMachie(done){
             done();
             // window.location.reload();

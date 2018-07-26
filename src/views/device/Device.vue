@@ -1,36 +1,38 @@
 <template>
     <div class="device-list-page">
       <template>
-        <div style="display: flex;text-align: center">
-          <el-col :span="22">
-          <!-- 列表 -->
-          <el-table :data="tableData" border style="text-align:center;">
-            <el-table-column prop="id" label="序号"></el-table-column>
-              <el-table-column prop="device_id" label="编号"></el-table-column>
-              <el-table-column prop="version" label="版本"></el-table-column>
-              <el-table-column prop="locate" label="类型">
-                <template slot-scope="scope">
-                  <span>{{scope.row.locate == 'other' ?'其他':'收银'}}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="位置" width="160">
-                <template slot-scope="scope">
-                  {{scope.row.locate_desc}}
-                </template>
-              </el-table-column>
-              <el-table-column prop="status" label="状态">
-                <template slot-scope="scope">
-                  {{scope.row.status == 0 ? '断开' : '正常'}}
-                </template>
-              </el-table-column>
-              <el-table-column label="操作" width="200">
-                <template slot-scope="scope">
-                    <el-button @click="fnEdit(scope.row)" type="text" size="small">编辑</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-col>
-        </div>
+        <table width="99%" class="table-bordered">
+          <thead style="background-color: #d1d1d1">
+          <tr height="40">
+            <th class="col-md-1 text-center">序号</th>
+            <th class="col-md-2 text-center">编号</th>
+            <th class="col-md-1 text-center">版本</th>
+            <th class="col-md-1 text-center">类型</th>
+            <th class="col-md-2 text-center">位置</th>
+            <th class="col-md-1 text-center">状态</th>
+            <th class="col-md-2 text-center">操作</th>
+          </tr>
+          </thead>
+          <tbody style="text-align: center">
+          <tr v-for="(item,index) in tableData" :key="index" height="40">
+            <td>{{item.id}}</td>
+            <td>{{item.device_id}}</td>
+            <td>{{item.version}}</td>
+            <td>
+              <span v-if="item.locate = 'other'">其他</span>
+              <span v-else>收银</span>
+            </td>
+            <td>
+              {{item.locate_desc}}
+            </td>
+            <td>{{item.status == 0 ? '断开' : '正常'}}</td>
+            <td>
+              <el-button @click="fnEdit(scope.row)" type="text" size="small">编辑</el-button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
 				<!-- 编辑 -->
 				<el-dialog title="编辑" :visible.sync="editFormVisible">
 				 	<el-form :model="editForm" :rules="editRules" ref="editForm" label-width="100px" class="demo-ruleForm" style="margin-bottom:50px;">

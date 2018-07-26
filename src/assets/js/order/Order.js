@@ -19,7 +19,7 @@ export default {
     name:'guest-list',
 
     components: {
-        
+
     },
 
     data() {
@@ -73,7 +73,7 @@ export default {
                 cash_t_end:'',
                 created_at_start:'',
                 created_at_end:'',
-                
+
             },
             formName:{
                 cash_t:'',
@@ -200,13 +200,14 @@ export default {
             OrderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 if(res.data.errno === 0){
                 this.$data.tableData = res.data.data.list;
+                console.log(this.$data.tableData);
                 this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
                 this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                 }else{
 
                 }
             })
-            
+
         },
 
         handleCurrentChange(currentPage) {

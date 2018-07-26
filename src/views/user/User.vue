@@ -3,36 +3,71 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
+    <table width="99%" class="table-bordered">
+      <thead style="background-color: #d1d1d1">
+      <tr height="40">
+        <th class="col-md-1 text-center">序号</th>
+        <th class="col-md-1 text-center">账号</th>
+        <th class="col-md-1 text-center">岗位</th>
+        <th class="col-md-1 text-center">姓名</th>
+        <th class="col-md-1 text-center">手机</th>
+        <th class="col-md-1 text-center">状态</th>
+        <th class="col-md-2 text-center">创建时间</th>
+        <th class="col-md-2 text-center">操作</th>
+      </tr>
+      </thead>
+      <tbody style="text-align: center">
+      <tr v-for="(item,index) in tableData" :key="index" height="40">
+        <td>{{item.id}}</td>
+        <td>{{item.username}}</td>
+        <td>{{item.storeRole.name}}</td>
+        <td>{{item.truename}}</td>
+        <td>{{item.phone}}</td>
+        <td>
+          <span @click=fnStatusUpdate(item.id,item.status)>{{item.status == 1 ? '正常' : '禁用'}}</span>
+        </td>
+        <td>{{item.created_at | date(4)}}</td>
+        <td>
+          <el-button type="primary" plain icon="el-icon-view" circle size="small"
+                     @click="fnResetPassword(item)"></el-button>
+          <el-button type="warning" plain icon="el-icon-edit" circle size="small"
+                     @click="fnEdit(item)"></el-button>
+          <el-button type="danger" plain icon="el-icon-delete" circle size="small"
+                     @click="fnRemove(item)"></el-button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
     <div style="display: flex;text-align: center">
-      <el-col :span="24">
-		  <el-table :data="tableData" border height="448">
-			<el-table-column prop="id" label="序号" width="160"></el-table-column>
-	    	<el-table-column prop="username" label="帐号" width="160"></el-table-column>
-	    	<el-table-column prop="storeRole.name" label="岗位" width="160"></el-table-column>
-	    	<el-table-column prop="truename" label="姓名" width="160"></el-table-column>
-	    	<el-table-column prop="phone" label="手机" width="160"></el-table-column>
-	    	<el-table-column prop="status" label="状态" width="160">
-					<template slot-scope="scope" >
-						<span @click=fnStatusUpdate(scope.row.id,scope.row.status)>{{scope.row.status == 1 ? '正常' : '禁用'}}</span>
-					</template>
-				</el-table-column>
-	    	<el-table-column label="创建时间" width="160">
-	    		<template slot-scope="scope">
-	    			{{scope.row.created_at | date(4)}}
-	    		</template>
-	    	</el-table-column>
-		    <el-table-column label="操作" width="220">
-			    <template slot-scope="scope">
-			    	<el-button type="primary" plain icon="el-icon-view" circle size="small"
-			    		@click="fnResetPassword(scope.row)"></el-button>
-			    	<el-button type="warning" plain icon="el-icon-edit" circle size="small"
-			    		@click="fnEdit(scope.row)"></el-button>
-			    	<el-button type="danger" plain icon="el-icon-delete" circle size="small"
-			    		@click="fnRemove(scope.row)"></el-button>
-			    </template>
-		    </el-table-column>
-	    </el-table>
-      </el-col>
+      <!--<el-col :span="24">-->
+		  <!--<el-table :data="tableData" border height="448">-->
+			<!--<el-table-column prop="id" label="序号" width="160"></el-table-column>-->
+	    	<!--<el-table-column prop="username" label="帐号" width="160"></el-table-column>-->
+	    	<!--<el-table-column prop="storeRole.name" label="岗位" width="160"></el-table-column>-->
+	    	<!--<el-table-column prop="truename" label="姓名" width="160"></el-table-column>-->
+	    	<!--<el-table-column prop="phone" label="手机" width="160"></el-table-column>-->
+	    	<!--<el-table-column prop="status" label="状态" width="160">-->
+					<!--<template slot-scope="scope" >-->
+						<!--<span @click=fnStatusUpdate(scope.row.id,scope.row.status)>{{scope.row.status == 1 ? '正常' : '禁用'}}</span>-->
+					<!--</template>-->
+				<!--</el-table-column>-->
+	    	<!--<el-table-column label="创建时间" width="160">-->
+	    		<!--<template slot-scope="scope">-->
+	    			<!--{{scope.row.created_at | date(4)}}-->
+	    		<!--</template>-->
+	    	<!--</el-table-column>-->
+		    <!--<el-table-column label="操作" width="220">-->
+			    <!--<template slot-scope="scope">-->
+			    	<!--<el-button type="primary" plain icon="el-icon-view" circle size="small"-->
+			    		<!--@click="fnResetPassword(scope.row)"></el-button>-->
+			    	<!--<el-button type="warning" plain icon="el-icon-edit" circle size="small"-->
+			    		<!--@click="fnEdit(scope.row)"></el-button>-->
+			    	<!--<el-button type="danger" plain icon="el-icon-delete" circle size="small"-->
+			    		<!--@click="fnRemove(scope.row)"></el-button>-->
+			    <!--</template>-->
+		    <!--</el-table-column>-->
+	    <!--</el-table>-->
+      <!--</el-col>-->
     </div>
 
 	    <!-- 分页 -->

@@ -59,58 +59,48 @@
 			<el-button type="primary" @click="orderLive">实时录单</el-button>
 			<el-button type="primary" @click="addNewList()">创建订单</el-button>
 		</div>
-
-		<!-- 列表 -->
-      <div style="display: flex;text-align: center">
-        <el-col :span="24">
-		    <el-table :data="tableData" border >
-          <el-table-column fixed prop="id" label="序号" width="80px"></el-table-column>
-          <el-table-column fixed prop="sn" label="编号"></el-table-column>
-          <el-table-column label="材质/款式">
-            <template slot-scope="scope">
-            <span v-for="good in scope.row.orderGoods" class="margin">[{{good.material_name}}/{{good.style_name}}]</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="price" label="金额"></el-table-column>
-
-          <el-table-column label="客户" width="240">
-            <template slot-scope="scope">
-              <div style="float:left;width:45%;">
-                <img :src="scope.row.traffic.avatar" style="width:100%;">
-              </div>
-              <div style="float:left;width:55%;padding-left:15px;text-align:left">
-                ID:{{scope.row.traffic.id}}<br/>
-                姓名:{{scope.row.customer_name}}<br/>
-                类型:{{scope.row.traffic.is_new == 1 ?'新客':'熟客'}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column  prop="Id" label="人脸ID" width="75">
-          <template slot-scope="scope">
-            {{scope.row.traffic.id}}
-          </template>
-        </el-table-column>
-          <el-table-column prop="customer_name" label="客户姓名" width="160"></el-table-column>
-          <el-table-column label="客户等级" width="160"></el-table-column>
-          <el-table-column label="收银时间" width="160">
-            <template slot-scope="scope">
-              {{scope.row.cash_t | date(4)}}
-            </template>
-          </el-table-column>
-          <el-table-column label="创建时间" width="160">
-            <template slot-scope="scope">
-              {{scope.row.created_at | date(4)}}
-            </template>
-          </el-table-column>
-          <el-table-column fixed="right" label="操作" width="150">
-			    <template slot-scope="scope">
-			        <el-button @click="fnEdit(scope.row)" type="text" size="small">编辑</el-button>
-			        <el-button @click="fnRemove(scope.row)" type="text" size="small">删除</el-button>
-			    </template>
-		    </el-table-column>
-	      </el-table>
-        </el-col>
-      </div>
+      <table width="99%" class="table-bordered">
+        <thead style="background-color: #d1d1d1">
+        <tr height="40">
+          <th class="col-md-1 text-center">序号</th>
+          <th class="col-md-1 text-center">编号</th>
+          <th class="col-md-2 text-center">材质/款式</th>
+          <th class="col-md-1 text-center">金额</th>
+          <th class="col-md-2 text-center">客户</th>
+          <th class="col-md-2 text-center">收银时间</th>
+          <th class="col-md-2 text-center">创建时间</th>
+          <th class="col-md-2 text-center">操作</th>
+        </tr>
+        </thead>
+        <tbody style="text-align: center">
+        <tr v-for="(item,index) in tableData" :key="index" height="40">
+          <td>{{item.id}}</td>
+          <td>{{item.sn}}</td>
+          <td>
+            <span v-for="good in item.orderGoods" class="margin">[{{good.material_name}}/{{good.style_name}}]</span>
+          </td>
+          <td>{{parseFloat(item.price,2)}}</td>
+          <td>
+            <div style="width: 100%;display: flex;padding: 5%;">
+            <div style="width:45%;">
+              <img :src="item.traffic.avatar" style="width:100%;">
+            </div>
+            <div style="width:55%;padding:5% 0 0 8%;text-align:left">
+              ID:{{item.traffic.id}}<br/>
+              姓名:{{item.customer_name}}<br/>
+              类型:{{item.traffic.is_new == 1 ?'新客':'熟客'}}
+            </div>
+            </div>
+          </td>
+          <td>{{item.cash_t | date(4)}}</td>
+          <td>{{item.created_at | date(4)}}</td>
+          <td>
+            <el-button @click="fnEdit(item)" type="text" size="small">编辑</el-button>
+            <el-button @click="fnRemove(item)" type="text" size="small">删除</el-button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
 
     <!--新建订单-->
     <el-dialog title="新建订单" :visible.sync="FormVisible">

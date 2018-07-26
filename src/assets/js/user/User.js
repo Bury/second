@@ -139,13 +139,13 @@ export default{
                     }else{
                         this.$message.error(res.data.msg);
                     }
-                    
+
                 })
             }).catch(() => {
                 // this.$message({
                 //   type: 'info',
                 //   message: '已取消删除'
-                // });          
+                // });
             });
         },
 
@@ -192,12 +192,12 @@ export default{
                             this.$data.editFormVisible = false;
 
                         }else{
-                            this.$message.error(res.data.msg);	
-                        }		        			
-                        
+                            this.$message.error(res.data.msg);
+                        }
+
                     })
-                    
-                } 
+
+                }
             });
         },
 
@@ -206,7 +206,7 @@ export default{
             this.$data.targetUserId=row.id;
             this.$data.resetPasswordFormVisible = true;
             this.fnResetPasswordClearData();
-        },		
+        },
 
         resetPasswordCancel(){
             this.$data.resetPasswordFormVisible = false;
@@ -224,12 +224,12 @@ export default{
                             this.lists();
                             this.$data.resetPasswordFormVisible = false;
                         }else{
-                            this.$message.error(res.data.msg);	
-                        }		        			
-                        
+                            this.$message.error(res.data.msg);
+                        }
+
                     })
-                    
-                } 
+
+                }
             });
         },
 
@@ -249,7 +249,7 @@ export default{
                 password:'',
             }
         },
-        
+
         fnAdds(){
             this.fnAddsFormClearData();
             this.getRoles();
@@ -276,11 +276,11 @@ export default{
                             this.$data.addFormVisible = false;
 
                         }else{
-                            this.$message.error(res.data.msg);	
-                        }		        			
-                        
+                            this.$message.error(res.data.msg);
+                        }
+
                     })
-                } 
+                }
             });
         },
 
@@ -291,7 +291,7 @@ export default{
             }else{
                 done()
             }
-            
+
         },
 
         fnStatusUpdate(id,status){
@@ -322,14 +322,14 @@ export default{
                 // this.$message({
                 //   type: 'info',
                 //   message: '已取消删除'
-                // });          
+                // });
             });
         },
 
         changeSwitch (data) {
             console.log(this.$data.editFormData.status)
         }
-        
+
     }
-    
+
 }
