@@ -20,9 +20,15 @@
 			</el-table-column>
 			<el-table-column prop="customerMerchant.phone" label="手机" width="110">
 			</el-table-column>
-			<el-table-column prop="customerMerchant.consume_num" label="新客/熟客" width="110">
+			<el-table-column prop="customerMerchant.is_new" label="新客/熟客" width="110">
+				<template slot-scope="scope">
+                   <span>{{scope.row.is_new == 1 ?'新客':'熟客'}}</span>
+                </template>
 			</el-table-column>
-			<el-table-column prop="customerMerchant.consume_num" label="未购/已购" width="110">
+			<el-table-column prop="customerMerchant.vip_level" label="未购/已购" width="110">
+				<template slot-scope="scope">
+                      <span>{{scope.row.vip_level == 1 ?'已购':'未购'}}</span>
+                </template>
 			</el-table-column>
 			<el-table-column prop="created_at" label="进店时间" width="200">
 				<template slot-scope="scope">
