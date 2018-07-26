@@ -86,11 +86,3 @@
 
 
 
-let t = new Date();
-            let y = t.getFullYear();
-            let m = t.getMonth() + 1;
-            let d = t.getDate();
-            let beginTime,endTime;
-            
-            beginTime = t.toLocaleDateString();
-            endTime = `${y}/${m}/${d} 23:59:59`;
