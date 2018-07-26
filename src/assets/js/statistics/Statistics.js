@@ -62,15 +62,16 @@ export default {
         //时间转为秒
         getS(value){
             var formatTimeS = new Date(value).getTime()/1000;
-            return formatTimeS
+            return  Math.floor(formatTimeS) 
         },
 
         //客流量
         getCustomer(parameters){
             let qs = require('querystring');
             statisticsApi.getCustomer(qs.stringify(parameters)).then((res) => {
+            	console.log(res)
                 if(res.data.errno === 0){
-                    // console.log(res.data.data)
+                   // console.log(res.data.data)
                     this.$data.guestData = res.data.data;
                 }else{
 
@@ -160,58 +161,71 @@ export default {
             }
             this.setData();
         },
+        
+        getBeginEnd(val){
+        	let t = new Date();
+            let y = t.getFullYear();
+            let m = t.getMonth() + 1;
+            let d = t.getDate();    
+            let weekd  = t.getDay();
+            
+            switch (val){
+	       	case "day":
+	       	    this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/${d} 00:00:00`);
+                this.$data.guestParameters.end_time =  this.getS(`${y}/${m}/${d} 23:59:59`);
+	       		break;
+	       	case "week":
+	       	    if(weekd === 0){ weekd = 7 }
+            	this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/${d} 00:00:00`) - 86400*(weekd-1);
+                this.$data.guestParameters.end_time =  this.getS(`${y}/${m}/${d} 23:59:59`) + 86400*(7 - weekd);
+	       		break;
+	       	case "month":
+	       	    let nexty,nextm;            	
+            	m === 12 ? (nexty = y + 1,nextm = 1):(nexty = y,nextm = m + 1)
+            	this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/01 00:00:00`);
+            	this.$data.guestParameters.end_time =  this.getS(`${nexty}/${nextm}/01 00:00:00`) - 1;
+	       		break;
+	       	case "year":
+	       	    this.$data.guestParameters.begin_time = this.getS(`${y}/01/01 00:00:00`);
+                this.$data.guestParameters.end_time =  this.getS(`${y}/12/31 23:59:59`);
+	       		break;
+	       	case "select":
+	       	    this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
+                this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
+	       	    break;
+	        }
+        },
 
         setData(){
             if(this.$data.ctrlTimeType[0]){
                 //日
-                let dayCurrent = new Date()
-                // console.log(this.$data.day);
-
-                var padDate=function(va){
-                    va=va<10?'0'+va:va;
-                    return va
-                }
-
-                var value=new Date();
-                var year=value.getFullYear();
-                var month=padDate(value.getMonth()+1);
-                var day=padDate(value.getDate());
-
-                var dayCurrentBegTime=year+'-'+month+'-'+day+'00:00:00';
-                var dayCurrentEndTime=year+'-'+month+'-'+day+'23:59:59';
-
-                this.$data.guestParameters.begin_time = this.getS(dayCurrentBegTime);
-                this.$data.guestParameters.end_time =  this.getS(dayCurrentEndTime);
+               
+                this.getBeginEnd("day")
                 this.requestData();
                 return false;
             }
             if(this.$data.ctrlTimeType[1]){
                 //周
-                // console.log(this.week);
-                // alert(this.week)
-                this.$data.guestParameters.begin_time = utils.getDateTime(this.week);
-                this.$data.guestParameters.end_time =  this.getS('2018-07-30 23:59:59');
+                this.getBeginEnd("week")
                 this.requestData();
                 return false;
+                
             }
             if(this.$data.ctrlTimeType[2]){
                 //月
-                this.$data.guestParameters.begin_time = utils.getDateTime(this.month);
-                this.$data.guestParameters.end_time =  this.getS('2018-07-31 23:59:59');
+                this.getBeginEnd("month")
                 this.requestData();
                 return false;
             }
             if(this.$data.ctrlTimeType[3]){
                 //年
-                this.$data.guestParameters.begin_time = utils.getDateTime(this.year);
-                this.$data.guestParameters.end_time =  this.getS('2018-12-31 23:59:59');
+                this.getBeginEnd("year")
                 this.requestData();
                 return false;
             }
             if(this.$data.ctrlTimeType[4]){
                 //自定义
-                this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
-                this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
+                this.getBeginEnd("select")
                 this.requestData();  
                 return false;
             }

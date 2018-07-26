@@ -51,7 +51,7 @@
             </el-tabs>
         </div>
         <div class="noData" v-if="noData">暂无数据~</div>
-            <ul class="charts-type" v-else>
+        <ul class="charts-type" v-else>
                 <li class="charts-wrap">
                     <div style="padding:10px 0 20px;text-align:center;">
                     <el-button :chartClass="chartClass == 'line' ? 'primary' : ''" plain size="small" @click="switchChart('line')">折线图</el-button>
@@ -76,7 +76,7 @@
                 <li class="charts-wrap">
                     <guest-from-chart :guestFromData="guestFromData"></guest-from-chart>
                 </li>
-            </ul>
+        </ul>
         </div>
 </template>
 
@@ -86,3 +86,11 @@
 
 
 
+let t = new Date();
+            let y = t.getFullYear();
+            let m = t.getMonth() + 1;
+            let d = t.getDate();
+            let beginTime,endTime;
+            
+            beginTime = t.toLocaleDateString();
+            endTime = `${y}/${m}/${d} 23:59:59`;
