@@ -139,7 +139,7 @@ export default {
         switchChart(value){
             // console.log(value)
             this.$data.chartClass = value;
-            this.setData();
+            this.setData(1);
         },
 
         //搜索
@@ -161,7 +161,7 @@ export default {
             this.setData();
         },
 
-        setData(){
+        setData(just_get_guest_data=0){
             if(this.$data.ctrlTimeType[0]){
                 //日
                 let dayCurrent = new Date()
@@ -177,12 +177,12 @@ export default {
                 var month=padDate(value.getMonth()+1);
                 var day=padDate(value.getDate());
 
-                var dayCurrentBegTime=year+'-'+month+'-'+day+'00:00:00';
-                var dayCurrentEndTime=year+'-'+month+'-'+day+'23:59:59';
+                var dayCurrentBegTime=year+'-'+month+'-'+day+' 00:00:00';
+                var dayCurrentEndTime=year+'-'+month+'-'+day+' 23:59:59';
 
                 this.$data.guestParameters.begin_time = this.getS(dayCurrentBegTime);
                 this.$data.guestParameters.end_time =  this.getS(dayCurrentEndTime);
-                this.requestData();
+                this.requestData(just_get_guest_data);
                 return false;
             }
             if(this.$data.ctrlTimeType[1]){
@@ -191,40 +191,42 @@ export default {
                 // alert(this.week)
                 this.$data.guestParameters.begin_time = utils.getDateTime(this.week);
                 this.$data.guestParameters.end_time =  this.getS('2018-07-30 23:59:59');
-                this.requestData();
+                this.requestData(just_get_guest_data);
                 return false;
             }
             if(this.$data.ctrlTimeType[2]){
                 //月
                 this.$data.guestParameters.begin_time = utils.getDateTime(this.month);
                 this.$data.guestParameters.end_time =  this.getS('2018-07-31 23:59:59');
-                this.requestData();
+                this.requestData(just_get_guest_data);
                 return false;
             }
             if(this.$data.ctrlTimeType[3]){
                 //年
                 this.$data.guestParameters.begin_time = utils.getDateTime(this.year);
                 this.$data.guestParameters.end_time =  this.getS('2018-12-31 23:59:59');
-                this.requestData();
+                this.requestData(just_get_guest_data);
                 return false;
             }
             if(this.$data.ctrlTimeType[4]){
                 //自定义
                 this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
                 this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
-                this.requestData();  
+                this.requestData(just_get_guest_data);  
                 return false;
             }
 
         },
 
-        requestData(){
+        requestData(just_get_guest_data){
             this.getCustomer(this.$data.guestParameters);
-            this.statisticsFeature(this.$data.guestParameters, 'face');
-            this.statisticsFeature(this.$data.guestParameters, 'buy');
-            this.statisticsFeature(this.$data.guestParameters, 'age');
-            this.statisticsFeature(this.$data.guestParameters, 'gender');
-            this.statisticsFeature(this.$data.guestParameters, 'camera');
+            if(just_get_guest_data==0){
+                this.statisticsFeature(this.$data.guestParameters, 'face');
+                this.statisticsFeature(this.$data.guestParameters, 'buy');
+                this.statisticsFeature(this.$data.guestParameters, 'age');
+                this.statisticsFeature(this.$data.guestParameters, 'gender');
+                this.statisticsFeature(this.$data.guestParameters, 'camera');
+            }
         }
 
     }
