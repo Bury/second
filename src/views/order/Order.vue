@@ -103,17 +103,6 @@
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="150">
-        <el-table-column label="收银时间">
-		    	<template slot-scope="scope">
-		    		{{scope.row.cash_t | date(4)}}
-		    	</template>
-		    </el-table-column>
-		    <el-table-column label="创建时间">
-		    	<template slot-scope="scope">
-		    		{{scope.row.created_at | date(4)}}
-		    	</template>
-		    </el-table-column>
-		    <el-table-column label="操作" width="120px">
 			    <template slot-scope="scope">
 			        <el-button @click="fnEdit(scope.row)" type="text" size="small">编辑</el-button>
 			        <el-button @click="fnRemove(scope.row)" type="text" size="small">删除</el-button>
