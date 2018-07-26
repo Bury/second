@@ -1,6 +1,6 @@
 <template>
 	<div class="order-record-box">
-		<h3 class="top-box">总成交金额：{{orderRecords.count_price}}元</h3>
+		<h4 class="top-box">总成交金额：{{orderRecords.count_price}}元</h4>
 		<ul class="store-record-list">
 			<li class="store-record-item" v-for="(item,key) in orderRecords.list">
 				<div>订单编号：{{orderRecords.list[key].sn}}</div>

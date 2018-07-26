@@ -1,6 +1,6 @@
 <template>
 	<div class="store-record-box">
-		<h3 class="top-box">到店总次数：{{storeRecords.count_num}}次</h3>
+		<h4 class="top-box">到店总次数：{{storeRecords.count_num}}次</h4>
 		<ul class="store-record-list">
 			<li class="store-record-item" v-for="(item,key) in storeRecords.list">
 				<div class="item-cont">
@@ -17,13 +17,13 @@
 		</ul>
 		<!-- 分页 -->
 		<div>
-			<el-pagination 
+			<el-pagination
 				background
-	            class="pagination" 
-	            layout="prev, pager, next" 
-	            small 
-	            @current-change="changePage" 
-	            :current-page="userInfoPagination.currentPage" 
+	            class="pagination"
+	            layout="prev, pager, next"
+	            small
+	            @current-change="changePage"
+	            :current-page="userInfoPagination.currentPage"
 	            :page-size="requestParas.page_size"
 	            :total="userInfoPagination.totalCount">
 	        </el-pagination>

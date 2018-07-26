@@ -98,7 +98,7 @@
 			  <el-form-item label="手机：" prop="phone">
 			    <el-input v-model="editFormData.phone"></el-input>
 			  </el-form-item>
-				<el-form-item label="状态" prop="phone">
+				<el-form-item label="状态">
 			    <el-switch v-model="editFormData.status" on-color="#00A854" off-color="#F04134"></el-switch>
 			  </el-form-item>
 			</el-form>

@@ -83,53 +83,6 @@
           </tr>
           </tbody>
         </table>
-        <!-- 列表 -->
-        <div style="display: flex;text-align: center">
-          <!--<el-col :span="23">-->
-          <!--<el-table :data="tableData" border height="680" style="margin:0 auto;text-align:center;">-->
-          <!--<el-table-column fixed type="index" label="序号" width="80">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column label="人脸" width="60">-->
-            <!--<template slot-scope="scope">-->
-              <!--<img :src="scope.row.avatar" style="display:block;margin:0 auto;width:100%;">-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-          <!--<el-table-column prop="customerMerchant.name" label="姓名" width="100">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column label="性别" width="50">-->
-            <!--<template slot-scope="scope">-->
-              <!--<span>{{scope.row.gender == 1 ?'男':'女'}}</span>-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-          <!--<el-table-column prop="age" label="年龄" width="100">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column prop="customerMerchant.is_new" label="新客/熟客" width="110">-->
-            <!--<template slot-scope="scope">-->
-              <!--<span>{{scope.row.is_new == 1 ?'新客':'熟客'}}</span>-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-          <!--<el-table-column prop="customerMerchant.vip_level" label="未购/已购" width="110">-->
-            <!--<template slot-scope="scope">-->
-              <!--<span>{{scope.row.vip_level == 1 ?'已购':'未购'}}</span>-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-          <!--<el-table-column prop="device_name" label="拍摄位置" width="160">-->
-          <!--</el-table-column>-->
-          <!--<el-table-column prop="created_at" label="进店时间" width="200">-->
-            <!--<template slot-scope="scope">-->
-              <!--{{scope.row.created_at | date(4)}}-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-          <!--<el-table-column fixed="right" label="操作" width="200">-->
-            <!--<template slot-scope="scope">-->
-              <!--<el-button type="text" size="small" @click="showDialog(scope.row)" >详情备注</el-button>-->
-              <!--<el-button type="text" size="small" @click="filter_process(scope.row)" >屏蔽此人</el-button>-->
-              <!--<el-button type="text" size="small" @click="dele(scope.row)" >删除</el-button>-->
-            <!--</template>-->
-          <!--</el-table-column>-->
-        <!--</el-table>-->
-          <!--</el-col>-->
-        </div>
         <!-- 分页 -->
         <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
           <el-pagination

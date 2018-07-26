@@ -19,7 +19,7 @@ export default {
             },
         }
     },
-    
+
     props:{
     	updateHidden:{
     		type:Number
@@ -29,7 +29,7 @@ export default {
     created:function(){
           this.lists();
     },
-    
+
      watch: {
           updateHidden: function() {
             this.lists()
@@ -39,15 +39,14 @@ export default {
     methods: {
 
         //列表
-        lists(){            
+        lists(){
             let qs = require('querystring');
             guestApi.guestHiddenList(qs.stringify(this.$data.requestParameters)).then((res) => {
                 let result = res.data;
-                console.log(res)
                 if(res.data.errno === 0){
                 	this.tableData = res.data.data.list;
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
-                    this.$data.pagination.totalCount = res.data.data.pagination.totalCount;      
+                    this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                 }else{
                 	this.$message(res.data.msg);
                 }
@@ -73,14 +72,13 @@ export default {
                         this.$message({message:'撤销成功',type:"success"});
                     }else{
                         this.$message(res.data.msg);
-                    }             	
+                    }
                 })
         	 })
-             
+
         }
 
     },
 
 }
-    
-    
+

@@ -5,34 +5,25 @@ import globalFunctions from '@/config/global_functions'
 import userApi from '@/api/user'
 
 export default {
-
     name:'personal',
-
     data() {
         return {
-
             dialogFormVisible: false,
-
             username:'',
-
             role_name:'',
-
             userEditForm: {
                 name:'',
                 phone:'',
             },
-
             rulesUserEdit: {
                 name: globalRules.rules.user.username(4,20,'请输入帐号'),
                 phone: globalRules.rules.user.password(6,20,'请输入密码：')
             },
-
             passwordEditForm: {
                 passwordOld:'',
                 passwordCurrent:'',
                 passwordRepeat:''
             },
-
             rulesPasswordEdit: {
                 passwordOld: globalRules.rules.user.password(6,20,'请输入当前密码：'),
                 passwordCurrent: globalRules.rules.user.password(6,20,'请输入新的密码：'),
@@ -50,7 +41,7 @@ export default {
                     }
                 ]
             },
-        
+
         }
     },
 
@@ -105,7 +96,7 @@ export default {
                             this.$message.error(res.data.msg);
                         }
                     })
-                } 
+                }
             });
         },
 
@@ -131,10 +122,10 @@ export default {
                             this.$message.error(res.data.msg);
                         }
                     })
-                } 
+                }
             });
-        }
+        },
 
     }
-    
+
 }
