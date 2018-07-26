@@ -43,6 +43,7 @@ export default {
             let qs = require('querystring');
             guestApi.guestHiddenList(qs.stringify(this.$data.requestParameters)).then((res) => {
                 let result = res.data;
+                console.log(res)
                 if(res.data.errno === 0){
                 	this.tableData = res.data.data.list;
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
