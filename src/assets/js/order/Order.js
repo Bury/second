@@ -1,15 +1,10 @@
 import global_data from '@/config/global_data'
-
 import OrderApi from '@/api/order'
-
 import remindApi from '@/api/remind'
-
 import * as utils from '@/utils/index'
-
 import apiUrl from '@/config/API.js'
 
 const SERVER_IP = apiUrl.apiUrl
-
 const COMMON = 'v1'
 
 global.IMAGS_PUSH = `${SERVER_IP}${COMMON}/user/upload`//图片上传
@@ -120,7 +115,7 @@ export default {
 
     created: function () {
         this.lists();
-        // this.getAll();
+        this.getAll();
     },
 
     methods: {
@@ -151,7 +146,6 @@ export default {
             }
             let qs = require('querystring')
             remindApi.getAll(qs.stringify(list)).then((res) => {
-                /*
                 if(res.data.errno === 0){
                 let labels = res.data.data;
                 for (let i = 0; i < labels.length; i++) {
@@ -166,7 +160,7 @@ export default {
                 }else{
 
                 }
-                */
+
             })
         },
 
@@ -195,12 +189,10 @@ export default {
             this.$data.requestParameters.cash_t_end = utils.getDateTime(this.$data.cashTimes[1]);
             this.$data.requestParameters.created_at_start = utils.getDateTime(this.$data.createdTimes[0]);
             this.$data.requestParameters.created_at_end = utils.getDateTime(this.$data.createdTimes[1]);
-            console.log(this.$data.requestParameters)
             let qs = require('querystring');
             OrderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 if(res.data.errno === 0){
                 this.$data.tableData = res.data.data.list;
-                console.log(this.$data.tableData);
                 this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
                 this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                 }else{
@@ -225,7 +217,6 @@ export default {
             this.$data.editVisible = true;
             this.orderView(row.id);
         },
-
         orderView(id){
             let qs = require('querystring')
             OrderApi.orderView(qs.stringify({id:id,})).then((res) => {
@@ -277,12 +268,14 @@ export default {
                 price:''
             }
             this.$data.editForm.orderGoods.push(obj);
+            this.$data.editRequestParameters.push(obj);
             this.$data.editAllNum =  this.$data.editForm.orderGoods.length;
         },
 
         //编辑删除商品
         editDeleProduct(index){
             this.$data.editForm.orderGoods.splice(index,1);
+          this.$data.editRequestParameters.splice(index,1);
             let n = 0;
             for(let i=0;i<this.$data.editForm.orderGoods.length;i++){
                 if(this.$data.editForm.orderGoods[i].price.replace(/[^\.\d]/g,'')){
@@ -313,6 +306,7 @@ export default {
 
         //编辑提交，取消
         EditFormSubmit(editForm){
+          console.log(this.$data.editForm.orderGoods)
             let listArry = '';
             if(this.$data.editImgAvatar.length == 0){
                 listArry = '';
@@ -333,6 +327,7 @@ export default {
             OrderApi.editOrder(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.lists();
+                    this.editClearData();
                     this.$message({
                         type: 'success',
                         message: '修改成功!'
@@ -346,6 +341,7 @@ export default {
 
         cancelE(editFrom){
             this.$data.editVisible = false;
+            this.editClearData();
         },
 
         //删除
@@ -383,8 +379,6 @@ export default {
                 if(res.data.errno === 0){
                 this.$data.faceSearch.avatar = res.data.data.avatar;
                 this.$data.faceSearch.customer_id = res.data.data.customer_id;
-                // this.$data.faceSearch.customer_id
-                console.log(this.$data.faceSearch.customer_id,22222)
                 }else{
                 this.$message.error(res.data.msg);
                 }
@@ -415,6 +409,53 @@ export default {
             this.$data.totalMoney = n;
         },
 
+      submitClearData(){
+        this.$data.formName = {
+          goods_info: [],
+          cash_t:'',
+          files_web:'',
+          customer_id:'',
+          remark:''
+        };
+        this.$data.searchFace = {
+          id:'',
+        };
+        this.$data.faceSearch = {
+          avatar:'',
+          customer_id:'',
+        };
+        this.$data.addProList=[{
+          material : null,
+          style : null,
+          price:''
+        }];
+        this.$data.imageListF = [];
+        this.$data.allNum = '1';
+        this.$data.totalMoney = '';
+      },
+      editClearData(){
+        this.$data.item={
+          material : '',
+            style : '',
+            price:''
+        };
+        this.$data.editForm={
+          traffic:{
+            id:'',
+            avatar:'',
+          },
+          orderGoods:[],
+            cash_t:'',
+            avatar:'',
+            price:'',
+        };
+        this.$data.editForm.orderGoods.material = '';
+        this.$data.editForm.orderGoods.style = '';
+        this.$data.editForm.orderGoods.price = '';
+        this.$data.editAllNum='';
+        this.$data.editImgAvatar=[];
+        this.$data.editRequestParameters=[];
+      },
         //添加订单--删除商品
         deleProduct(index){
             this.$data.addProList.splice(index,1);
@@ -445,13 +486,7 @@ export default {
             OrderApi.addOrder(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.lists();
-                    this.$data.formName = {
-                        goods_info: [],
-                        cash_t:'',
-                        files_web:'',
-                        customer_id:'',
-                        remark:''
-                    };
+                    this.submitClearData();
                     this.$message({
                         type: 'success',
                         message: '创建成功!'
@@ -490,15 +525,9 @@ export default {
 
         //取消
         cancel(name){
-            console.log(name);
-            this.$data.formName = {
-                cash_t:'',
-                goods_info:[],
-                files:[],
-                customer_id:'',
-                remark:''
-            };
-            this.$data.dialogVisible = false;
+          console.log(name);
+          this.$data.FormVisible = false;
+          this.submitClearData();
         },
 
         //现场录单

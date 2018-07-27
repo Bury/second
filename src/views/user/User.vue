@@ -85,7 +85,7 @@
 	    </div>
 
 	    <!-- 编辑 -->
-	    <el-dialog title="编辑" :visible.sync="editFormVisible">
+	    <el-dialog title="编辑账号" :visible.sync="editFormVisible">
 		  <el-form :model="editFormData" :rules="editRules" ref="editFormData" label-width="100px" class="demo-ruleForm">
 			  <el-form-item label="岗位：" prop="role_id">
 			 	<el-select v-model="editFormData.role_id" placeholder="岗位">
@@ -125,7 +125,7 @@
 		</el-dialog>
 
 		<!-- 添加 -->
-		<el-dialog title="添加" :visible.sync="addFormVisible" :fullscreen="avatarFormVisible" :before-close="closeChange" >
+		<el-dialog title="新建账号" :visible.sync="addFormVisible" :fullscreen="avatarFormVisible" :before-close="closeChange" >
 		  <el-form :model="addFormData" :rules="addRules" ref="addFormData" label-width="100px" class="demo-ruleForm" v-if="!avatarFormVisible" >
 			  <el-form-item label="岗位：" prop="role_id">
 			 	<el-select v-model="addFormData.role_id" placeholder="岗位">

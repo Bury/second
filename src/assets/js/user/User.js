@@ -1,19 +1,12 @@
 import globalRules from '@/config/global_rules'
-
 import globalFunctions from '@/config/global_functions'
-
 import userApi from '@/api/user'
-
 import roleApi from '@/api/role'
 
 export default{
-
     name:'accoun-set',
-
     components: {
-
     },
-
     data(){
 
         return{
@@ -83,18 +76,14 @@ export default{
         }
 
     },
-
     created:function(){
         this.lists();
         this.getRoles()
     },
-
     methods: {
-
         getRoles(){
             roleApi.lists_results().then((res) => {
                 if(res.data.errno === 0){
-                    console.log(res.data.data)
                     this.$data.allRoles=res.data.data;
                 }else{
                     this.$message.error(res.data.msg);
