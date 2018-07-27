@@ -69,7 +69,6 @@ export default {
         getCustomer(parameters){
             let qs = require('querystring');
             statisticsApi.getCustomer(qs.stringify(parameters)).then((res) => {
-            	console.log(res)
                 if(res.data.errno === 0){
                    // console.log(res.data.data)
                     this.$data.guestData = res.data.data;
@@ -87,10 +86,8 @@ export default {
                 feature: types
             }
             let qs = require('querystring');
-            console.log(list)
             statisticsApi.statisticsFeature(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
-                    console.log(res)
                     let thisData = res.data.data;
                     if (thisData) {
                         if(types == 'face'){
