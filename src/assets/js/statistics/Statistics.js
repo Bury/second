@@ -87,9 +87,10 @@ export default {
                 feature: types
             }
             let qs = require('querystring');
+            console.log(list)
             statisticsApi.statisticsFeature(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
-                    //console.log(res)
+                    console.log(res)
                     let thisData = res.data.data;
                     if (thisData) {
                         if(types == 'face'){
@@ -140,7 +141,7 @@ export default {
         switchChart(value){
             // console.log(value)
             this.$data.chartClass = value;
-            this.setData(1);
+            this.setData();
         },
 
         //搜索
@@ -196,7 +197,7 @@ export default {
 	        }
         },
 
-        setData(just_get_guest_data=0){
+        setData(){
             if(this.$data.ctrlTimeType[0]){
                 //日
                
@@ -232,15 +233,13 @@ export default {
 
         },
 
-        requestData(just_get_guest_data){
-            this.getCustomer(this.$data.guestParameters);
-            if(just_get_guest_data==0){
+        requestData(){
+                this.getCustomer(this.$data.guestParameters);
                 this.statisticsFeature(this.$data.guestParameters, 'face');
                 this.statisticsFeature(this.$data.guestParameters, 'buy');
                 this.statisticsFeature(this.$data.guestParameters, 'age');
                 this.statisticsFeature(this.$data.guestParameters, 'gender');
-                this.statisticsFeature(this.$data.guestParameters, 'camera');
-            }
+                this.statisticsFeature(this.$data.guestParameters, 'camera');            
         }
 
     }
