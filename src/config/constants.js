@@ -8,6 +8,9 @@ const SERVER_IP = apiUrl.apiUrl
 const COMMON = 'v1/'
 
 
+global.FILE_UPLOAD = `${SERVER_IP}${COMMON}/user/upload`//图片上传地址 //PHP对象设计错误
+
+
 //客流统计
 // post analysis/customer
 global.GET_CUSTOMER = `${SERVER_IP}${COMMON}analysis/customer`
@@ -25,10 +28,8 @@ global.DELE_ORDER = `${SERVER_IP}${COMMON}order/dele`
 global.ADD_ORDER_LIST = `${SERVER_IP}${COMMON}order/adds`
 // post order/edit 修改订单
 global.EDIT_ORDER_LIST = `${SERVER_IP}${COMMON}order/edit`
-//post order/search-traffic 查询人脸信息
-global.FINDFACEID_ORDER = `${SERVER_IP}${COMMON}order/search-traffic`
-//post  order/view 显示订单
-global.VIEW_ORDER = `${SERVER_IP}${COMMON}order/view`
+//显示订单
+global.ORDER_VIEW = `${SERVER_IP}${COMMON}order/view`
 
 
 //订单管理/实时录单
@@ -53,7 +54,7 @@ global.GUEST_LISTS = `${SERVER_IP}${COMMON}customer/visitor-list`
 //来客列表屏蔽动作
 global.GUEST_HIDDEN = `${SERVER_IP}${COMMON}customer/do-hidden`
 //屏蔽列表
-global.GUEST_HIDDEN_LIST = `${SERVER_IP}${COMMON}customer/hidden-list`
+global.GUEST_HIDDEN_LISTS = `${SERVER_IP}${COMMON}customer/hidden-list`
 
 global.GUEST_EDIT = `${SERVER_IP}${COMMON}customer/edit-personal-info`
 global.GUEST_VIEW = `${SERVER_IP}${COMMON}customer/personal-info`
@@ -63,9 +64,13 @@ global.GUEST_DELE = `${SERVER_IP}${COMMON}customer/del`
 global.TAG_LISTS_RESULTS = `${SERVER_IP}${COMMON}tag/tree-form`
 
 //到店记录
-global.GuestVisitedRecordLists = `${SERVER_IP}${COMMON}customer/store-recore`
+global.Guest_Visited_Record_Lists = `${SERVER_IP}${COMMON}customer/store-recore`
 //来客订单记录
 global.ORDER_LISTS_USER_RESULTS = `${SERVER_IP}${COMMON}customer/order-recore`
+//post order/search-traffic 查询人脸信息
+// global.GUEST_VIEW = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
+
+
 
 
 //*************设备管理

@@ -110,7 +110,7 @@ export default {
         	 	cancelButtonText:'取消',
         	 	type:'warning'
         	 }).then(() => {
-        	 	guestApi.guestHidden(qs.stringify({id:row.customer_id,is_hidden:1 })).then((res) => {
+        	 	guestApi.hidden(qs.stringify({id:row.customer_id,is_hidden:1 })).then((res) => {
              	   if(res.data.errno === 0){
              		    this.lists();
                         globalFunctions.functions.message(this,'success');

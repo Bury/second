@@ -41,7 +41,7 @@ export default {
         //列表
         lists(){
             let qs = require('querystring');
-            guestApi.guestHiddenList(qs.stringify(this.$data.requestParameters)).then((res) => {
+            guestApi.hiddenLists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 let result = res.data;
                 if(res.data.errno === 0){
                 	this.tableData = res.data.data.list;
@@ -66,7 +66,7 @@ export default {
         	 	cancelButtonText:'取消',
         	 	type:'warning'
         	 }).then(()=>{
-        	 	guestApi.guestHidden(qs.stringify({id:row.id,is_hidden:0 })).then((res) => {
+        	 	guestApi.hidden(qs.stringify({id:row.id,is_hidden:0 })).then((res) => {
                     if(res.data.errno === 0){
                         this.lists();
                         this.$message({message:'撤销成功',type:"success"});

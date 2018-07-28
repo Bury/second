@@ -25,7 +25,7 @@ export default {
 	    })
 	},
 
-	addOrder (list){
+	addsNotLive (list){
 		return new Promise((resolve, reject) => {
 			axios.post(global.ADD_ORDER_LIST,list).then((res) => {
 				resolve(res)
@@ -34,16 +34,7 @@ export default {
 			})
 		})
 	},
-	//查询人脸ID
-	findFaceId(list){
-		return new Promise((resolve, reject) => {
-			axios.post(global.FINDFACEID_ORDER,list).then((res) => {
-				resolve(res)
-			}).catch((err) => {
-				reject(err)
-			})
-		})
-	},
+	
 	editOrder (list){
 		return new Promise((resolve, reject) => {
 			axios.post(global.EDIT_ORDER_LIST,list).then((res) => {
@@ -52,7 +43,17 @@ export default {
 				reject(err)
 			})
 		})
-	},
+  },
+  
+  view (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.ORDER_VIEW,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
 
 	postFace(list){
 	  return new Promise((resolve,reject) =>{
@@ -120,16 +121,8 @@ export default {
       })
     })
   },
-  //订单显示
-  orderView (list) {
-    return new Promise((resolve, reject) => {
-      axios.post(global.VIEW_ORDER,list).then((res) => {
-        resolve(res)
-      }).catch((err) => {
-        reject(err)
-      })
-    })
-  },
+
+  
 
   listsUserResults(list){
     return new Promise((resolve, reject) => {

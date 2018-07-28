@@ -45,8 +45,19 @@ export default {
     })
   },
 
+  //查询人脸ID
+	// findFaceId(list){
+	// 	return new Promise((resolve, reject) => {
+	// 		axios.post(global.FINDFACEID_ORDER,list).then((res) => {
+	// 			resolve(res)
+	// 		}).catch((err) => {
+	// 			reject(err)
+	// 		})
+	// 	})
+	// },
+
   //屏蔽动作
-  guestHidden (list){
+  hidden (list){
     return new Promise((resolve, reject) => {
       axios.post(global.GUEST_HIDDEN, list).then((res) => {
         resolve(res)
@@ -57,9 +68,9 @@ export default {
   },
 
   //屏蔽列表
-  guestHiddenList (list){
+  hiddenLists (list){
     return new Promise((resolve, reject) => {
-      axios.post(global.GUEST_HIDDEN_LIST, list).then((res) => {
+      axios.post(global.GUEST_HIDDEN_LISTS, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)

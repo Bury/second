@@ -7,7 +7,7 @@ import apiUrl from '@/config/API.js'
 const SERVER_IP = apiUrl.apiUrl
 const COMMON = 'v1'
 
-global.IMAGS_PUSH = `${SERVER_IP}${COMMON}/user/upload`//图片上传
+
 
 export default {
 
@@ -115,16 +115,16 @@ export default {
 
     created: function () {
         this.lists();
-        this.getAll();
     },
 
     methods: {
-        //  上传图片动态地址
+
+        //上传图片动态地址
         importFileUrl(){
-            return global.IMAGS_PUSH
+            return global.FILE_UPLOAD
         },
 
-        // 新增 上传图片
+        //新增上传图片
         handleRemove(file, fileList) {
             console.log(file, fileList);
         },
@@ -139,31 +139,6 @@ export default {
             this.$data.imageListF.push(response.data.path);
         },
 
-        getAll(){
-            let list = {
-                'all': '1',
-                'customer_id': ''
-            }
-            let qs = require('querystring')
-            remindApi.getAll(qs.stringify(list)).then((res) => {
-                if(res.data.errno === 0){
-                let labels = res.data.data;
-                for (let i = 0; i < labels.length; i++) {
-                    if(labels[i].name === '材质'){
-                    this.materials = labels[i].children
-                    } else if(labels[i].name === '款式'){
-                    this.styles = labels[i].children
-                    } else {
-                    return false
-                    }
-                }
-                }else{
-
-                }
-
-            })
-        },
-
         //编辑--上传图片的删除、添加地址
         editHandleRemove(file, fileList) {
             console.log(file, fileList);
@@ -175,7 +150,7 @@ export default {
             this.dialogVisible = true;
         },
 
-        // 编辑上传图片成功后的回调
+        //编辑上传图片成功后的回调
         editUploadSuccess (response, file, fileList) {
             for(let i=0;i<this.$data.editForm.avatar.length;i++){
             this.$data.editImgAvatar.push(this.$data.editForm.avatar[i]);
@@ -215,11 +190,12 @@ export default {
         // 编辑显示列表
         fnEdit (row) {
             this.$data.editVisible = true;
-            this.orderView(row.id);
+            this.view(row.id);
         },
-        orderView(id){
+
+        view(id){
             let qs = require('querystring')
-            OrderApi.orderView(qs.stringify({id:id,})).then((res) => {
+            OrderApi.view(qs.stringify({id:id,})).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.editForm = res.data.data;
                     // console.log(res.data.data);
@@ -260,6 +236,30 @@ export default {
             this.$data.editForm.price = n;
         },
 
+        inputFun(){
+            let n = 0;
+            for(let i=0;i<this.$data.addProList.length;i++){
+                if(this.$data.addProList[i].price.replace(/[^\.\d]/g,'')){
+                    n += parseInt(this.$data.addProList[i].price);
+                }else{
+                    this.$data.addProList[i].price=0;
+                }
+            }
+            this.$data.totalMoney = n;
+        },
+
+        totalPrice(){
+            let n = 0;
+            for(let i=0;i<this.$data.addProList.length;i++){
+                if(this.$data.addProList[i].price.replace(/[^\.\d]/g,'')){
+                    n += parseInt(this.$data.addProList[i].price);
+                }else{
+                    this.$data.addProList[i].price=0;
+                }
+            }
+            this.$data.totalMoney = n;
+        },
+
         //编辑添加商品
         editAddProduct(){
             let obj = {
@@ -289,12 +289,12 @@ export default {
         },
 
         //编辑查询人脸信息
-        editFindFaceId(){
+        editFindGuestByFaceId(){
             let list = {
                 'id':this.$data.editForm.traffic.id,
             }
             let qs = require('querystring');
-            OrderApi.findFaceId(qs.stringify(list)).then((res) => {
+            guestApi.view(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.editForm.traffic.avatar = res.data.data.avatar;
                     this.$data.editForm.traffic.customer_id = res.data.data.customer_id;
@@ -369,18 +369,18 @@ export default {
             }).catch(action => {})
         },
 
-        //查询人脸ID
-        findFaceId(){
+        //根据人脸ID查询来客信息
+        findGuestByFaceId(){
             let list = {
                 'id':this.$data.searchFace.id,
             }
             let qs = require('querystring');
-            OrderApi.findFaceId(qs.stringify(list)).then((res) => {
+            guestApi.view(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
-                this.$data.faceSearch.avatar = res.data.data.avatar;
-                this.$data.faceSearch.customer_id = res.data.data.customer_id;
+                    this.$data.faceSearch.avatar = res.data.data.avatar;
+                    this.$data.faceSearch.customer_id = res.data.data.customer_id;
                 }else{
-                this.$message.error(res.data.msg);
+                    this.$message.error(res.data.msg);
                 }
             })
         },
@@ -411,40 +411,45 @@ export default {
 
       submitClearData(){
         this.$data.formName = {
-          goods_info: [],
-          cash_t:'',
-          files_web:'',
-          customer_id:'',
-          remark:''
+            goods_info: [],
+            cash_t:'',
+            files_web:'',
+            customer_id:'',
+            remark:''
         };
+
         this.$data.searchFace = {
-          id:'',
+            id:'',
         };
+
         this.$data.faceSearch = {
-          avatar:'',
-          customer_id:'',
+            avatar:'',
+            customer_id:'',
         };
+
         this.$data.addProList=[{
-          material : null,
-          style : null,
-          price:''
+            material : null,
+            style : null,
+            price:''
         }];
+
         this.$data.imageListF = [];
         this.$data.allNum = '1';
         this.$data.totalMoney = '';
       },
+
       editClearData(){
         this.$data.item={
-          material : '',
+            material : '',
             style : '',
             price:''
         };
         this.$data.editForm={
-          traffic:{
-            id:'',
-            avatar:'',
-          },
-          orderGoods:[],
+            traffic:{
+                id:'',
+                avatar:'',
+            },
+            orderGoods:[],
             cash_t:'',
             avatar:'',
             price:'',
@@ -456,6 +461,7 @@ export default {
         this.$data.editImgAvatar=[];
         this.$data.editRequestParameters=[];
       },
+
         //添加订单--删除商品
         deleProduct(index){
             this.$data.addProList.splice(index,1);
@@ -471,7 +477,7 @@ export default {
             this.$data.allNum =  this.$data.addProList.length;
         },
 
-        //创建新订单
+        //补单
         submitForm(formName){
             let listArry =  this.$data.imageListF.join(',');
             let sendData = JSON.stringify(this.$data.addProList);
@@ -483,7 +489,7 @@ export default {
                 'customer_id':this.$data.faceSearch.customer_id
             }
             let qs = require('querystring');
-            OrderApi.addOrder(qs.stringify(list)).then((res) => {
+            OrderApi.addsNotLive(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.lists();
                     this.submitClearData();

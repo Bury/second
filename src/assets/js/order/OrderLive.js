@@ -6,9 +6,6 @@
   const SERVER_IP = apiUrl.apiUrl
   const COMMON = 'v1'
 
-  //图片上传
-  global.IMAGS_PUSH = `${SERVER_IP}${COMMON}/user/upload`
-
   export default {
 
     name: "order-live",
@@ -128,7 +125,7 @@
     methods:{
       //  上传图片动态地址
       importFileUrl(){
-        return global.IMAGS_PUSH
+        return global.FILE_UPLOAD
       },
 
       //  调用摄像头

@@ -55,12 +55,14 @@
 			  </el-form-item>
 			</el-form>
 		</div>
+
 		<div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
-			<el-button type="primary" @click="orderLive">实时录单</el-button>
-			<el-button type="primary" @click="addNewList()">创建订单</el-button>
+			<el-button type="primary" @click="orderLive">现场开单</el-button>
+			<el-button type="primary" @click="addNewList()">补单</el-button>
 		</div>
-      <table width="99%" class="table-bordered">
-        <thead style="background-color: #d1d1d1">
+
+    <table width="99%" class="table-bordered">
+      <thead style="background-color: #d1d1d1">
         <tr height="40">
           <th class="col-md-1 text-center">序号</th>
           <th class="col-md-2 text-center">编号</th>
@@ -71,8 +73,8 @@
           <th class="col-md-1.5 text-center">创建时间</th>
           <th class="col-md-1 text-center">操作</th>
         </tr>
-        </thead>
-        <tbody style="text-align: center">
+      </thead>
+      <tbody style="text-align: center">
         <tr v-for="(item,index) in tableData" :key="index" height="40">
           <td>{{item.id}}</td>
           <td>{{item.sn}}</td>
@@ -99,11 +101,11 @@
             <el-button @click="fnRemove(item)" type="text" size="small">删除</el-button>
           </td>
         </tr>
-        </tbody>
-      </table>
+      </tbody>
+    </table>
 
-    <!--新建订单-->
-    <el-dialog title="新建订单" :visible.sync="FormVisible">
+    <!--补单-->
+    <el-dialog title="补单" :visible.sync="FormVisible">
       <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
           <el-date-picker
@@ -115,7 +117,7 @@
         <el-form-item label="人脸ID：" :model="searchFace" prop="id">
           <el-row>
             <el-col :span='20'><el-input v-model="searchFace.id" prop="id"></el-input></el-col>
-            <el-col :span='2'><el-button @click="findFaceId()">查询</el-button></el-col>
+            <el-col :span='2'><el-button @click="findGuestByFaceId()">查询</el-button></el-col>
           </el-row>
           <el-form-item :data="faceSearch">
             <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
@@ -192,6 +194,7 @@
         <el-button type="primary" @click="submitForm(formName)">确 定</el-button>
       </div>
     </el-dialog>
+
     <!--编辑-->
     <el-dialog title="编辑" :visible.sync="editVisible" >
       <el-form  :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
@@ -287,6 +290,7 @@
         <el-button type="primary" @click="EditFormSubmit()">确 定</el-button>
       </div>
     </el-dialog>
+
 	    <!-- 分页 -->
 		<div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
 			<el-pagination
