@@ -128,4 +128,19 @@ export default {
     })
   },
 
+
+  //根据人脸身份识别
+  getResultByFace(list){
+	  return new Promise((resolve,reject) =>{
+	    axios.post(global.USER_GET_RESULT_BY_FACE,list,{headers: {
+        'Content-Type': `multipart/form-data;`}}).then((res) => {
+        resolve(res)
+      }).then((res) => {
+	      resolve(res)
+      }).catch((err) =>{
+        reject(err)
+      })
+    })
+  },
+
 }

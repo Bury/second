@@ -3,17 +3,17 @@
 
     <div class="top-box" style="text-align: center">
       <ul style="display: flex">
-        <li @click="get_a">
+        <li @click="step01">
           <span class="circles" v-show="aa">1</span>
           <span class="circlesR"  v-show="ab">1</span>
           <p class="circleFont">确认人脸</p>
         </li>
-        <li @click="get_b">
+        <li @click="step02">
           <span class="circles" v-show="ba">2</span>
           <span class="circlesR" v-show="bb">2</span>
           <p class="circleFont">确认信息</p>
         </li>
-        <li @click="get_c">
+        <li @click="step03">
           <span class="circles" v-show="ca">3</span>
           <span class="circlesR" v-show="cb">3</span>
           <p class="circleFont">订单录入</p>
@@ -27,9 +27,8 @@
     </div>
 
     <div style="border-top:1px solid #dcdfe6;margin-top: 2rem">
-
       <!--拍摄人脸确认身份-->
-      <div class="get_a" style="" v-show="mask_a">
+      <div class="get_a" style="" v-show="step01_block">
         <div>
           <div class="showImg" style="display: flex;align-items: center;width: 30rem;height: 30rem;" v-show="showVideo" id="getVideo">
             <video id="video" autoplay="" style='width:640px;height:480px'></video>
@@ -40,7 +39,7 @@
           <div class="showImg" id="getCn" v-show="actionDialogVisible">
             <canvas id="canvas" width="640" height="480"></canvas>
             <el-row style="flex-direction: column;margin-left: 2rem;align-items: center;margin-bottom: 3rem" id="getNn" >
-              <el-button @click="getNewvideo" style="margin-top: 1rem;margin-left: 1rem">重拍</el-button>
+              <el-button @click="takePictureAgain" style="margin-top: 1rem;margin-left: 1rem">重拍</el-button>
               <el-button style="margin-top: 5rem;" @click="recognition">智能识别</el-button>
             </el-row>
           </div>
@@ -48,7 +47,7 @@
       </div>
 
       <!--确认信息-->
-      <div class="get_a" style="" v-show="mask_b">
+      <div class="get_a" style="" v-show="step02_block">
         <!--确认信息-有人脸-->
         <div style="display: flex;flex-direction: column;align-items: center" v-show="userOld">
           <div class="showImg">
@@ -152,11 +151,10 @@
             <el-button style="margin-left: 5rem" @click="isTrueAndPass">是本人</el-button>
           </el-row>
         </div>
-
-
       </div>
+
       <!--订单录入-->
-      <div class="get_a" v-show="mask_c" style="text-align: center">
+      <div class="get_a" v-show="step03_block" style="text-align: center">
         <div>
           <el-form :inline="true" :model="item" :rules="rulesD" ref="item" size="mini" style="text-align: center">
             <div v-for='(item,index) in addProList' v-if="addProList">

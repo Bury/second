@@ -33,7 +33,8 @@ global.ORDER_VIEW = `${SERVER_IP}${COMMON}order/view`
 
 
 //订单管理/实时录单
-global.POST_ORDER_FACE = `${SERVER_IP}${COMMON}order/face-recognition`
+global.USER_GET_RESULT_BY_FACE = `${SERVER_IP}${COMMON}order/face-recognition`//PHP对象设计错误
+
 //订单管理/实时录单/查找手机号
 global.CHECK_USER_PHONE = `${SERVER_IP}${COMMON}order/search-phone`
 //订单管理/实时录单/查找手机号/点击获取验证码
