@@ -1,6 +1,5 @@
 import global_data from '@/config/global_data'
 import OrderApi from '@/api/order'
-import remindApi from '@/api/remind'
 import * as utils from '@/utils/index'
 import apiUrl from '@/config/API.js'
 
@@ -189,24 +188,14 @@ export default {
             let qs = require('querystring');
             OrderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 if(res.data.errno === 0){
-                this.$data.tableData = res.data.data.list;
-                this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
-                this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
+                    this.$data.tableData = res.data.data.list;
+                    this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+                    this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                 }else{
 
                 }
             })
 
-        },
-
-        handleCurrentChange(currentPage) {
-            this.$data.requestParameters.page = currentPage;
-            this.lists();
-        },
-
-        //新增订单显示
-        addNewList(){
-            this.$data.FormVisible = true;
         },
 
         // 编辑显示列表
@@ -215,6 +204,37 @@ export default {
             this.view(row.id);
         },
 
+        //删除
+        fnRemove(row) {
+            this.$confirm('确认删除该订单：'+row.sn+' ？', '删除提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                let list = {
+                    'id': row.id
+                }
+                let qs = require('querystring');
+                OrderApi.deleOrder(qs.stringify(list)).then((res) => {
+                    if(res.data.errno === 0){
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                        this.lists();
+                    }else{
+                        this.$message.error(res.data.msg);
+                    }
+                })
+            }).catch(action => {})
+        },
+
+        handleCurrentChange(currentPage) {
+            this.$data.requestParameters.page = currentPage;
+            this.lists();
+        },
+
+        //查看
         view(id){
             let qs = require('querystring')
             OrderApi.view(qs.stringify({id:id,})).then((res) => {
@@ -366,30 +386,7 @@ export default {
             this.editClearData();
         },
 
-        //删除
-        fnRemove(row) {
-            this.$confirm('确认删除该订单：'+row.sn+' ？', '删除提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                let list = {
-                    'id': row.id
-                }
-                let qs = require('querystring');
-                OrderApi.deleOrder(qs.stringify(list)).then((res) => {
-                    if(res.data.errno === 0){
-                        this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                        });
-                        this.lists();
-                    }else{
-                        this.$message.error(res.data.msg);
-                    }
-                })
-            }).catch(action => {})
-        },
+        
 
         //根据人脸ID查询来客信息
         findGuestByFaceId(){
@@ -484,7 +481,7 @@ export default {
         this.$data.editRequestParameters=[];
       },
 
-        //添加订单--删除商品
+        //删除商品
         deleProduct(index){
             this.$data.addProList.splice(index,1);
             let n = 0;
@@ -561,6 +558,11 @@ export default {
         //现场录单
         orderLive(){
             this.$router.push({path:'/OrderLive'})
+        },
+
+        //补单
+        orderNotLive(){
+            this.$data.FormVisible = true;
         },
 
     }

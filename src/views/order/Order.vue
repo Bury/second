@@ -58,7 +58,7 @@
 
 		<div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
 			<el-button type="primary" @click="orderLive">现场开单</el-button>
-			<el-button type="primary" @click="addNewList()">补单</el-button>
+			<el-button type="primary" @click="orderNotLive">补单</el-button>
 		</div>
 
     <table width="99%" class="table-bordered">
@@ -97,6 +97,7 @@
           <td>{{item.cash_t | date(4)}}</td>
           <td>{{item.created_at | date(4)}}</td>
           <td>
+            <el-button @click="view(item.id)" type="text" size="small">查看</el-button>
             <el-button @click="fnEdit(item)" type="text" size="small">编辑</el-button>
             <el-button @click="fnRemove(item)" type="text" size="small">删除</el-button>
           </td>
