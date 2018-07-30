@@ -92,6 +92,7 @@ export default {
             editImgVisible:false,
             FormVisible: false,
             editVisible:false,
+            faceVisible:false,
             rules:{
                 cash_t: [
                     { required: true,message: '请选择创建时间', trigger: 'blur' }
@@ -386,10 +387,11 @@ export default {
             this.editClearData();
         },
 
-        
+
 
         //根据人脸ID查询来客信息
         findGuestByFaceId(){
+          this.$data.faceVisible = true;
             let list = {
                 'id':this.$data.searchFace.id,
             }

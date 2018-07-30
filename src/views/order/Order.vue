@@ -121,7 +121,7 @@
             <el-col :span='2'><el-button @click="findGuestByFaceId()">查询</el-button></el-col>
           </el-row>
           <el-form-item :data="faceSearch">
-            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;" v-if="false">
+            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:40px;margin-left: 0px;" v-if="faceVisible">
               <template>
                 <img :src="faceSearch.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar">
               </template>
