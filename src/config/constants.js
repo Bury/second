@@ -8,7 +8,7 @@ const SERVER_IP = apiUrl.apiUrl
 const COMMON = 'v1/'
 
 
-global.FILE_UPLOAD = `${SERVER_IP}${COMMON}/user/upload`//图片上传地址 //PHP对象设计错误
+global.FILE_UPLOAD = `${SERVER_IP}${COMMON}user/upload`//图片上传地址 //PHP对象设计错误
 
 
 //客流统计

@@ -120,27 +120,27 @@ export default {
     },
 
     methods: {
-      getAll(){
-        let list = {
-          'all': '1',
-          'customer_id': ''
-        };
-        let qs = require('querystring');
-        OrderApi.getAll(qs.stringify(list)).then((res) => {
-          if(res.data.errno === 0){
-            let labels = res.data.data;
-            for(let i=0;i<labels.length;i++){
-              if(labels[i].name === '材质'){
-                this.materials = labels[i].children;
-              }else if(labels[i].name === '款式'){
-                this.styles = labels[i].children;
-              }else{
-                return false
-              }
-            }
-          }
-        })
-      },
+      // getAll(){
+      //   let list = {
+      //     'all': '1',
+      //     'customer_id': ''
+      //   };
+      //   let qs = require('querystring');
+      //   OrderApi.getAll(qs.stringify(list)).then((res) => {
+      //     if(res.data.errno === 0){
+      //       let labels = res.data.data;
+      //       for(let i=0;i<labels.length;i++){
+      //         if(labels[i].name === '材质'){
+      //           this.materials = labels[i].children;
+      //         }else if(labels[i].name === '款式'){
+      //           this.styles = labels[i].children;
+      //         }else{
+      //           return false
+      //         }
+      //       }
+      //     }
+      //   })
+      // },
 
         //上传图片动态地址
         importFileUrl(){
