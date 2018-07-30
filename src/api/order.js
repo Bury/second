@@ -14,7 +14,7 @@ export default {
 	      })
 	    })
   },
-  
+
 	deleOrder (list) {
 	    return new Promise((resolve, reject) => {
 	      axios.post(global.DELE_ORDER,list).then((res) => {
@@ -34,7 +34,7 @@ export default {
 			})
 		})
 	},
-	
+
 	editOrder (list){
 		return new Promise((resolve, reject) => {
 			axios.post(global.EDIT_ORDER_LIST,list).then((res) => {
@@ -44,7 +44,7 @@ export default {
 			})
 		})
   },
-  
+
   view (list) {
     return new Promise((resolve, reject) => {
       axios.post(global.ORDER_VIEW,list).then((res) => {
@@ -122,7 +122,7 @@ export default {
     })
   },
 
-  
+
 
   listsUserResults(list){
     return new Promise((resolve, reject) => {
@@ -133,6 +133,14 @@ export default {
       })
     })
   },
-
+  getAll(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.TAG_LISTS_RESULTS, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  }
 }
 

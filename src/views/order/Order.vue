@@ -116,11 +116,11 @@
         </el-form-item>
         <el-form-item label="人脸ID：" :model="searchFace" prop="id">
           <el-row>
-            <el-col :span='20'><el-input v-model="searchFace.id" prop="id"></el-input></el-col>
+            <el-col :span='12'><el-input v-model="searchFace.id" prop="id"></el-input></el-col>
             <el-col :span='2'><el-button @click="findGuestByFaceId()">查询</el-button></el-col>
           </el-row>
           <el-form-item :data="faceSearch">
-            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
+            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;" v-if="false">
               <template>
                 <img :src="faceSearch.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar">
               </template>
@@ -207,8 +207,8 @@
         </el-form-item>
         <el-form-item label="人脸ID：" :model="editForm.traffic.id" prop="faceID">
           <el-row>
-            <el-col :span='20'><el-input v-model="editForm.traffic.id" prop="id"></el-input></el-col>
-            <el-col :span='2'><el-button @click="editFindFaceId()">查询</el-button></el-col>
+            <el-col :span='12'><el-input v-model="editForm.traffic.id" prop="id"></el-input></el-col>
+            <el-col :span='2'><el-button @click="editFindGuestByFaceId()">查询</el-button></el-col>
           </el-row>
           <el-form-item :data="faceSearch">
             <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
