@@ -1,5 +1,6 @@
 import global_data from '@/config/global_data'
 import OrderApi from '@/api/order'
+import GuestApi from '@/api/guest'
 import * as utils from '@/utils/index'
 import apiUrl from '@/config/API.js'
 
@@ -337,7 +338,7 @@ export default {
                 'id':this.$data.editForm.traffic.id,
             }
             let qs = require('querystring');
-            guestApi.view(qs.stringify(list)).then((res) => {
+            GuestApi.view(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.editForm.traffic.avatar = res.data.data.avatar;
                     this.$data.editForm.traffic.customer_id = res.data.data.customer_id;
@@ -396,7 +397,7 @@ export default {
                 'id':this.$data.searchFace.id,
             }
             let qs = require('querystring');
-            guestApi.view(qs.stringify(list)).then((res) => {
+            GuestApi.view(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.faceSearch.avatar = res.data.data.avatar;
                     this.$data.faceSearch.customer_id = res.data.data.customer_id;

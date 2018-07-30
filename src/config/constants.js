@@ -69,7 +69,7 @@ global.Guest_Visited_Record_Lists = `${SERVER_IP}${COMMON}customer/store-recore`
 //来客订单记录
 global.ORDER_LISTS_USER_RESULTS = `${SERVER_IP}${COMMON}customer/order-recore`
 //post order/search-traffic 查询人脸信息
-// global.GUEST_VIEW = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
+global.GUEST_VIEW = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
 
 
 
