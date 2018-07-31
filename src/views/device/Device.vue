@@ -27,7 +27,7 @@
             </td>
             <td>{{item.status == 0 ? '断开' : '正常'}}</td>
             <td>
-              <el-button @click="fnEdit(scope.row)" type="text" size="small">编辑</el-button>
+              <el-button @click="fnEdit(item)" type="text" size="small">编辑</el-button>
             </td>
           </tr>
           </tbody>

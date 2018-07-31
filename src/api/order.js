@@ -55,7 +55,7 @@ export default {
     })
   },
 
-	
+
   postPhone(list){
     return new Promise((resolve,reject) =>{
       axios.post(global.CHECK_USER_PHONE,list).then((res) => {

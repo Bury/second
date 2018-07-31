@@ -146,7 +146,7 @@
             </el-form-item>
           </el-form>
           <el-row style="margin-top: 3rem">
-            <el-button >上一步</el-button>
+            <el-button @click="backLine">上一步</el-button>
             <el-button style="margin-left: 15rem" @click="isNoAndPass">不是本人</el-button>
             <el-button style="margin-left: 5rem" @click="isTrueAndPass">是本人</el-button>
           </el-row>

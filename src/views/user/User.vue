@@ -24,7 +24,7 @@
         <td>{{item.truename}}</td>
         <td>{{item.phone}}</td>
         <td>
-          <span @click=fnStatusUpdate(item.id,item.status)>{{item.status == 1 ? '正常' : '禁用'}}</span>
+          <span @click=fnStatusUpdate(item.id,item.status)>{{item.status == 1 ? '启用' : '禁用'}}</span>
         </td>
         <td>{{item.created_at | date(4)}}</td>
         <td>

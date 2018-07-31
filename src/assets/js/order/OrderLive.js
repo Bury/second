@@ -26,7 +26,7 @@ export default {
         access_token: localStorage.getItem('knock_knock'),
       },
       aa:true,
-      ab:true,
+      ab:false,
       ba:false,
       bb:true,
       ca:false,
@@ -120,7 +120,7 @@ export default {
 
   created:function () {
     //this.getAll();
-    
+
     // this.postFace();
     // this.view();
     console.log(this.$data.NewRuleForm.images);
@@ -172,6 +172,7 @@ export default {
       // document.getElementById('getCn').style.display = 'none';
       this.showVideo = true;
       this.actionDialogVisible = false;
+      this.$data.takeImages = '';
     },
 
     //确认人脸
@@ -201,6 +202,9 @@ export default {
       this.step02_block=true;
       this.step01_block=false;
       this.step03_block=false;
+      this.$data.form.newPhone = '';
+      this.phoneIsMySqlA = false;
+      this.firstNewC = false;
       //  请求接口，上传文件（头像）,返回0-新客，1-熟客
       let file = this.dataURLtoFile(this.$data.takeImages,'testaaa.jpg');
       let list = new FormData();
@@ -264,7 +268,7 @@ export default {
         }
       })
     },
-    
+
     //  有人脸且手机号正确-走下一步
     userOldIs(){
       console.log(this.$data.NewRuleForm.textarea2);
@@ -468,6 +472,20 @@ export default {
     //第二步返回第一步
     backA(){
       console.log(0)
+      this.step01_block=true;
+      this.step02_block=false;
+      this.step03_block=false;
+      this.camera_process();
+      this.aa=true;
+      this.ab=false;
+      this.ba=false;
+      this.bb=true;
+      this.ca=false;
+      this.cb=true;
+      this.da=false;
+      this.db=true;
+    },
+    backLine(){
       this.step01_block=true;
       this.step02_block=false;
       this.step03_block=false;
