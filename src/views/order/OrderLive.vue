@@ -4,23 +4,19 @@
     <div class="top-box" style="text-align: center">
       <ul style="display: flex">
         <li @click="step01">
-          <span class="circles" v-show="aa">1</span>
-          <span class="circlesR"  v-show="ab">1</span>
+          <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" >1</span>
           <p class="circleFont">确认人脸</p>
         </li>
         <li @click="step02">
-          <span class="circles" v-show="ba">2</span>
-          <span class="circlesR" v-show="bb">2</span>
+          <span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" >2</span>
           <p class="circleFont">确认信息</p>
         </li>
         <li @click="step03">
-          <span class="circles" v-show="ca">3</span>
-          <span class="circlesR" v-show="cb">3</span>
+          <span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}">3</span>
           <p class="circleFont">订单录入</p>
         </li>
         <li>
-          <span class="circles" v-show="da">4</span>
-          <span class="circlesR" v-show="db">4</span>
+          <span :class="{'circles':step_4 ===1,'circlesR':step_4 ===2}">4</span>
           <p class="circleFont">完成</p>
         </li>
       </ul>
@@ -60,7 +56,7 @@
               <el-input v-model="NewRuleForm.name" ></el-input>
             </el-form-item>
             <el-form-item label="手机号:" prop="phone" style="width: 30rem;">
-              <el-input v-model="NewRuleForm.phone" style="width: 15rem" :disabled="true"></el-input>
+              <el-input v-model="NewRuleForm.phone" style="width: 13rem" :disabled="true"></el-input>
               <el-button style="margin-left: 2rem" @click="userOldNoPhone" v-show="ifIsOld">纠错</el-button>
               <p style="margin-left: 2rem;color: red" v-show="ifIsNew">此号码为新号码</p>
             </el-form-item>
@@ -102,7 +98,7 @@
               <el-button plain style="float: right" @click="GetSendM">获取验证码</el-button>
             </el-form-item>
             <el-form-item label="" style="width: 30rem;margin-top: 5rem;margin-right: 10rem">
-              <el-button v-show="phoneIsMySql">上一步</el-button>
+              <el-button v-show="phoneIsMySql" @click="getUpMsg">上一步</el-button>
               <el-button style="margin-left: 5rem" v-show="phoneIsMySql" @click="GetMsgPull">确认</el-button>
             </el-form-item>
             <!--数据库没有找到这个手机号，显示为新号码-->

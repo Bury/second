@@ -25,14 +25,10 @@ export default {
       upLoadData: {
         access_token: localStorage.getItem('knock_knock'),
       },
-      aa:true,
-      ab:false,
-      ba:false,
-      bb:true,
-      ca:false,
-      cb:true,
-      da:false,
-      db:true,
+      step_1:1,
+      step_2:2,
+      step_3:2,
+      step_4:2,
       materials:[],
       styles:[],
 
@@ -119,7 +115,7 @@ export default {
   },
 
   created:function () {
-    //this.getAll();
+    // this.getAll();
 
     // this.postFace();
     // this.view();
@@ -168,11 +164,18 @@ export default {
 
     //重拍
     takePictureAgain(){
-      // document.getElementById('getVideo').style.display = 'flex';
-      // document.getElementById('getCn').style.display = 'none';
       this.showVideo = true;
       this.actionDialogVisible = false;
       this.$data.takeImages = '';
+      //点击重拍的时候一切都回到原始状态
+      this.userNew = false;
+      this.userOld = false;
+      this.firstNewC =false;
+      this.$data.form.newPhone = '';
+      this.phoneIsMySqlA = false;
+      this.phoneIsMySql = false;
+      this.firstNewC = false;
+      this.phoneNoMySql = false;
     },
 
     //确认人脸
@@ -202,16 +205,23 @@ export default {
       this.step02_block=true;
       this.step01_block=false;
       this.step03_block=false;
+      //直接点击智能识别的时候一切都回到原始状态
+      this.userNew = false;
+      this.userOld = false;
+      this.firstNewC =false;
       this.$data.form.newPhone = '';
       this.phoneIsMySqlA = false;
+      this.phoneIsMySql = false;
       this.firstNewC = false;
+      this.phoneNoMySql = false;
+      this.checkoutCallBack = false;
       //  请求接口，上传文件（头像）,返回0-新客，1-熟客
       let file = this.dataURLtoFile(this.$data.takeImages,'testaaa.jpg');
       let list = new FormData();
       list.append('file', file);
       UserApi.getResultByFace(list).then((res) => {
         console.log(res);
-        // console.log(res.data.data.avatar)
+        console.log(res.data.data)
         if(res.data.msg === '服务器内部错误'){
           this.$message({
             message: '您获取的照片不合法',
@@ -222,18 +232,14 @@ export default {
           this.step01_block=true;
           this.step03_block=false;
         }else{
-          this.aa=false;
-          this.ab=true;
-          this.ba=true;
-          this.bb=false;
-          this.ca=false;
-          this.cb=true;
-          this.da=false;
-          this.db=true;
+          this.step_1=2;
+          this.step_2=1;
+          this.step_3=2;
+          this.step_4=2;
           console.log('获取到照片了');
           console.log(res.data.errno);
           this.$data.faceId = res.data.data.customer_id;
-          if(res.data.errno === 1){
+          if(res.data.data.is_new === 1){
               this.$data.NewRuleForm.images = res.data.data.avatar;
               // this.$data.NewRuleForm.phone = res.data.data.avatar;
               if(res.data.data.gender === 1){
@@ -248,18 +254,22 @@ export default {
               this.ifIsOld=true;
               this.ifIsNew=false;
               //回显数据
-          }else if(res.data.errno === 0){
+          }else if(res.data.data.is_new === 0){
               //  新用户
               this.userNew = true;
               this.userOld = false;
               this.firstNewC =true;
+            this.$data.form.newPhone = '';
+            this.phoneIsMySqlA = false;
+            this.phoneIsMySql = false;
+            this.phoneNoMySql = false;
               this.$data.newNewP = res.data.data.avatar;
               if(res.data.data.gender === 1){
                   this.$data.newNewQ = '男'
               }else{
                   this.$data.newNewQ = '女'
               }
-              if(res.data.data.is_new === 0){
+              if(res.data.data.vip_level === 0){
                   this.$data.newNewR = '未购买'
               }else{
                   this.$data.newNewR = '已购买'
@@ -283,14 +293,10 @@ export default {
         this.step02_block=false;
         this.step01_block=false;
 
-        this.aa=false;
-        this.ab=true;
-        this.ba=false;
-        this.bb=true;
-        this.ca=true;
-        this.cb=false;
-        this.da=false;
-        this.db=true;
+        this.step_1=2;
+        this.step_2=2;
+        this.step_3=1;
+        this.step_4=2;
         //不管有没有为新手机号，最终走向消费，传值一次,更一次手机号
         let list = {
           'phone': this.$data.form.newPhone,
@@ -419,14 +425,11 @@ export default {
           this.step03_block=true;
           this.step02_block=false;
           this.step01_block=false;
-          this.aa=false;
-          this.ab=true;
-          this.ba=false;
-          this.bb=true;
-          this.ca=true;
-          this.cb=false;
-          this.da=false;
-          this.db=true;
+
+          this.step_1=2;
+          this.step_2=2;
+          this.step_3=1;
+          this.step_4=2;
         });
       }
     },
@@ -476,28 +479,35 @@ export default {
       this.step02_block=false;
       this.step03_block=false;
       this.camera_process();
-      this.aa=true;
-      this.ab=false;
-      this.ba=false;
-      this.bb=true;
-      this.ca=false;
-      this.cb=true;
-      this.da=false;
-      this.db=true;
+
+      this.step_1=1;
+      this.step_2=2;
+      this.step_3=2;
+      this.step_4=2;
+
     },
     backLine(){
       this.step01_block=true;
       this.step02_block=false;
       this.step03_block=false;
       this.camera_process();
-      this.aa=true;
-      this.ab=false;
-      this.ba=false;
-      this.bb=true;
-      this.ca=false;
-      this.cb=true;
-      this.da=false;
-      this.db=true;
+
+      this.step_1=1;
+      this.step_2=2;
+      this.step_3=2;
+      this.step_4=2;
+    },
+    //放弃验证返回输入状态
+    getUpMsg(){
+      this.step01_block=true;
+      this.step02_block=false;
+      this.step03_block=false;
+      this.camera_process();
+
+      this.step_1=1;
+      this.step_2=2;
+      this.step_3=2;
+      this.step_4=2;
     },
 
     //第三步返回第二步
@@ -506,14 +516,10 @@ export default {
       this.step02_block=true;
       this.step03_block=false;
 
-      this.aa=false;
-      this.ab=true;
-      this.ba=true;
-      this.bb=false;
-      this.ca=false;
-      this.cb=true;
-      this.da=false;
-      this.db=true;
+      this.step_1=2;
+      this.step_2=1;
+      this.step_3=2;
+      this.step_4=2;
     },
 
     addAGood(){
@@ -625,14 +631,10 @@ export default {
           type: 'warning',
           center: true
         });
-        this.aa=false;
-        this.ab=true;
-        this.ba=false;
-        this.bb=true;
-        this.ca=false;
-        this.cb=true;
-        this.da=true;
-        this.db=false;
+        this.step_1=2;
+        this.step_2=2;
+        this.step_3=2;
+        this.step_4=1;
       });
 
     }
