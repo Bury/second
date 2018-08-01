@@ -35,6 +35,7 @@ export default {
       step01_block:true,
       step02_block:false,
       step03_block:false,
+      inputMaxL:'',
 
       showVideo:true,
       actionDialogVisible: false,
@@ -131,7 +132,27 @@ export default {
     importFileUrl(){
       return global.FILE_UPLOAD
     },
-
+    getAll() {
+      let list = {
+        'all': 1,
+        'customer_id': ''
+      };
+      let qs = require('querystring');
+      OrderApi.getAll(qs.stringify(list)).then((res) => {
+        if (res.data.errno === 0) {
+          let labels = res.data.data;
+          for (let i = 0; i < labels.length; i++) {
+            if (labels[i].name === '材质') {
+              this.materials = labels[i].children;
+            } else if (labels[i].name === '款式') {
+              this.styles = labels[i].children;
+            } else {
+              return false
+            }
+          }
+        }
+      })
+    },
     //  调用摄像头
     camera_process(){
       let video = document.getElementById('video');
@@ -281,6 +302,7 @@ export default {
 
     //  有人脸且手机号正确-走下一步
     userOldIs(){
+      this.getAll();
       console.log(this.$data.NewRuleForm.textarea2);
       if(this.$data.NewRuleForm.textarea2 === ''){
         this.$message({
@@ -337,15 +359,24 @@ export default {
       let qs = require('querystring');
       OrderApi.postPhone(qs.stringify(list)).then((res) => {
         console.log(res);
-        if(res.data.data.is_not === 0){
-          //  该用户已注册
-          this.phoneIsMySqlA = true;
-          // this.firstNewC =false;
-          // this.phoneIsMySql = true;
-        }else if(res.data.data.is_not === 1){
-          //  该用户未注册
-          this.phoneNoMySql = true;
+        console.log(res.data.errno);
+        if(res.data.errno === 1000002){
+          this.$message({
+            message: res.data.msg,
+            type: 'warning',
+            center: true
+          });
+        }else{
+          if(res.data.data.is_not === 0){
+            //  该用户已注册
+            this.phoneIsMySqlA = true;
+            // this.firstNewC =false;
+            // this.phoneIsMySql = true;
+          }else if(res.data.data.is_not === 1){
+            //  该用户未注册
+            this.phoneNoMySql = true;
 
+          }
         }
       });
 
@@ -406,6 +437,7 @@ export default {
 
     //  返回的顾客信息，是本人直接走消费
     isTrueAndPass(){
+      this.getAll();
       if(this.$data.ruleForm.textarea2 === ''){
         this.$message({
           message: '请填写备注信息',
