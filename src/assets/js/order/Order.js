@@ -454,6 +454,7 @@ export default {
       this.$data.upLoadData = {
         access_token: '',
       };
+      this.handleRemove();
     },
 
     editClearData() {

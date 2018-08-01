@@ -182,7 +182,7 @@
         <el-form-item></el-form-item>
         <el-form-item></el-form-item>
         <el-form-item label="小票" v-model="imageListF">
-          <el-upload v-model="imageListF"
+          <el-upload v-model="item.file"
                      :action="importFileUrl()"
                      list-type="picture-card"
                      :data="upLoadData"
