@@ -24,7 +24,7 @@
         <td>{{item.truename}}</td>
         <td>{{item.phone}}</td>
         <td>
-          <span @click=fnStatusUpdate(item.id,item.status)>{{item.status == 1 ? '正常' : '禁用'}}</span>
+          <span @click=fnStatusUpdate(item.id,item.status)>{{item.status == 1 ? '启用' : '禁用'}}</span>
         </td>
         <td>{{item.created_at | date(4)}}</td>
         <td>
@@ -38,37 +38,6 @@
       </tr>
       </tbody>
     </table>
-    <div style="display: flex;text-align: center">
-      <!--<el-col :span="24">-->
-		  <!--<el-table :data="tableData" border height="448">-->
-			<!--<el-table-column prop="id" label="序号" width="160"></el-table-column>-->
-	    	<!--<el-table-column prop="username" label="帐号" width="160"></el-table-column>-->
-	    	<!--<el-table-column prop="storeRole.name" label="岗位" width="160"></el-table-column>-->
-	    	<!--<el-table-column prop="truename" label="姓名" width="160"></el-table-column>-->
-	    	<!--<el-table-column prop="phone" label="手机" width="160"></el-table-column>-->
-	    	<!--<el-table-column prop="status" label="状态" width="160">-->
-					<!--<template slot-scope="scope" >-->
-						<!--<span @click=fnStatusUpdate(scope.row.id,scope.row.status)>{{scope.row.status == 1 ? '正常' : '禁用'}}</span>-->
-					<!--</template>-->
-				<!--</el-table-column>-->
-	    	<!--<el-table-column label="创建时间" width="160">-->
-	    		<!--<template slot-scope="scope">-->
-	    			<!--{{scope.row.created_at | date(4)}}-->
-	    		<!--</template>-->
-	    	<!--</el-table-column>-->
-		    <!--<el-table-column label="操作" width="220">-->
-			    <!--<template slot-scope="scope">-->
-			    	<!--<el-button type="primary" plain icon="el-icon-view" circle size="small"-->
-			    		<!--@click="fnResetPassword(scope.row)"></el-button>-->
-			    	<!--<el-button type="warning" plain icon="el-icon-edit" circle size="small"-->
-			    		<!--@click="fnEdit(scope.row)"></el-button>-->
-			    	<!--<el-button type="danger" plain icon="el-icon-delete" circle size="small"-->
-			    		<!--@click="fnRemove(scope.row)"></el-button>-->
-			    <!--</template>-->
-		    <!--</el-table-column>-->
-	    <!--</el-table>-->
-      <!--</el-col>-->
-    </div>
 
 	    <!-- 分页 -->
 	    <div v-if="tableData.length > 0" style="margin:0 auto;width:961px;">

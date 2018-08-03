@@ -46,4 +46,7 @@
     box-sizing:border-box;
     margin-right: 15px;
   }
+  input[type=file]{
+    display: none;
+  }
 }

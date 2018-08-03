@@ -8,7 +8,7 @@ const SERVER_IP = apiUrl.apiUrl
 const COMMON = 'v1/'
 
 
-global.FILE_UPLOAD = `${SERVER_IP}${COMMON}/user/upload`//图片上传地址 //PHP对象设计错误
+global.FILE_UPLOAD = `${SERVER_IP}${COMMON}user/upload`//图片上传地址 //PHP对象设计错误
 
 
 //客流统计
@@ -69,7 +69,7 @@ global.Guest_Visited_Record_Lists = `${SERVER_IP}${COMMON}customer/store-recore`
 //来客订单记录
 global.ORDER_LISTS_USER_RESULTS = `${SERVER_IP}${COMMON}customer/order-recore`
 //post order/search-traffic 查询人脸信息
-// global.GUEST_VIEW = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
+global.GUEST_VIEW = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
 
 
 
@@ -109,4 +109,6 @@ global.USER_PASSWORD_EDIT = `${SERVER_IP}${COMMON}user/change-password`
 
 global.USER_LOGOUT = `${SERVER_IP}${COMMON}user/logout`
 global.USER_LOGIN = `${SERVER_IP}${COMMON}user/login`
-
+global.USER_PASSWORD_FORGET = `${SERVER_IP}${COMMON}user/change-password-forgot`
+global.USER_SEND_SMS = `${SERVER_IP}${COMMON}user/send-sms`
+global.USER_CHECK_SMS = `${SERVER_IP}${COMMON}user/check-sms`

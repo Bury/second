@@ -1,6 +1,6 @@
 <template>
     <div class="login-form">
-      
+
       <el-card>
         <div class="company">鹰眼门店管理系统</div>
         <div class="title"></div>
@@ -12,12 +12,41 @@
               <el-input type="password" v-model="loginInfo.password" auto-complete="off" placeholder="密码" />
             </el-form-item>
             <div class="login-btn-box">
-              <!--<el-button @click="reset" class="login-btn">重置</el-button>-->
+
               <el-button type="primary" @click="login" class="login-btn">登录</el-button>
+              <el-button @click="forget" class="login-btn">忘记密码</el-button>
             </div>
         </el-form>
       </el-card>
-      
+
+      <el-dialog title="忘记密码" :visible.sync="passwordVisible">
+        <el-form :model='passwordForm' ref="passwordForm" :rules="rules" label-width="100px" class="demo-ruleForm">
+
+          <el-form-item label="账号名：">
+            <el-col :span="15"><el-input v-model="passwordForm.username"></el-input></el-col>
+          </el-form-item>
+          <el-form-item label="手机号">
+            <el-row>
+            <el-col :span="15"><el-input v-model="passwordForm.phone"></el-input></el-col>
+            <el-col :span="2"><el-button @click="code()">获取验证码</el-button></el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="验证码">
+            <el-col :span="15"><el-input  v-model="passwordForm.code" @blur="blur()"></el-input></el-col>
+          </el-form-item>
+          <el-form-item label="新密码">
+            <el-col :span="15"><el-input v-model="passwordForm.new_password" type="password"></el-input></el-col>
+          </el-form-item>
+          <el-form-item label="确认密码">
+            <el-col :span="15"><el-input  v-model="passwordForm.new_password2" type="password"></el-input></el-col>
+          </el-form-item>
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="passwordSubmit()">确 定</el-button>
+        </div>
+      </el-dialog>
+
     </div>
 </template>
 
