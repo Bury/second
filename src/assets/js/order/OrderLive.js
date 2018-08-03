@@ -256,9 +256,9 @@ export default {
                   this.$data.newNewQ = '女'
               }
               if(res.data.data.is_new === 0){
-                  this.$data.newNewR = '未购买'
+                  this.$data.newNewR = '未购'
               }else{
-                  this.$data.newNewR = '已购买'
+                  this.$data.newNewR = '已购'
               }
           }
         }

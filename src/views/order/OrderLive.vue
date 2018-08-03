@@ -59,7 +59,7 @@
             <el-form-item label="姓名:" prop="name" style="width: 30rem">
               <el-input v-model="NewRuleForm.name" ></el-input>
             </el-form-item>
-            <el-form-item label="手机号:" prop="phone" style="width: 30rem;">
+            <el-form-item label="手机:" prop="phone" style="width: 30rem;">
               <el-input v-model="NewRuleForm.phone" style="width: 15rem" :disabled="true"></el-input>
               <el-button style="margin-left: 2rem" @click="userOldNoPhone" v-show="ifIsOld">纠错</el-button>
               <p style="margin-left: 2rem;color: red" v-show="ifIsNew">此号码为新号码</p>
@@ -85,18 +85,18 @@
           </el-row>
         </div>
 
-        <!--有人脸，但是手机号错误-->
+        <!--有人脸，但是手机错误-->
         <div v-show="userNew">
-          <!--纠错-去数据库查找这个手机号-->
+          <!--纠错-去数据库查找这个手机-->
           <el-form ref="form" :model="form"  :rules="rulesA" label-width="80px">
             <el-form-item style="width: 30rem" v-show="firstNewC">
-              <p style="color: red;font-size: 1.2rem">人脸识别该顾客为新顾客，请输入手机号！</p>
+              <p style="color: red;font-size: 1.2rem">人脸识别该顾客为新顾客，请输入手机！</p>
             </el-form-item>
-            <el-form-item label="手机号:" style="width: 30rem;" prop="newPhone">
+            <el-form-item label="手机:" style="width: 30rem;" prop="newPhone">
               <el-input v-model="form.newPhone" style="width: 10rem" maxlength="11" @focus="needsC"></el-input>
               <el-button plain style="float: right" @click="checkoutPhone">查找</el-button>
             </el-form-item>
-            <!--数据库找到这个手机号，验证更改信息-->
+            <!--数据库找到这个手机，验证更改信息-->
             <el-form-item v-show="phoneIsMySqlA" label="验证码:" style="width: 30rem;">
               <el-input v-model="form.newTakeNum" style="width: 10rem"></el-input>
               <el-button plain style="float: right" @click="GetSendM">获取验证码</el-button>
@@ -105,7 +105,7 @@
               <el-button v-show="phoneIsMySql">上一步</el-button>
               <el-button style="margin-left: 5rem" v-show="phoneIsMySql" @click="GetMsgPull">确认</el-button>
             </el-form-item>
-            <!--数据库没有找到这个手机号，显示为新号码-->
+            <!--数据库没有找到这个手机，显示为新号码-->
             <el-form-item v-show="phoneNoMySql" label="" style="width: 30rem;">
               <p style="color: red">此号码为新号码</p>
             </el-form-item>
@@ -126,7 +126,7 @@
             <el-form-item label="姓名:" prop="name" style="width: 30rem">
               <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
-            <el-form-item label="手机号:" prop="phone" style="width: 30rem">
+            <el-form-item label="手机:" prop="phone" style="width: 30rem">
               <el-input v-model="ruleForm.phone" :disabled="true"></el-input>
               <!--<el-button style="margin-left: 2rem">纠错</el-button>-->
             </el-form-item>
