@@ -192,6 +192,14 @@
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
+        <el-form-item label="备注:" prop="type">
+          <el-input
+            type="textarea"
+            autosize
+            placeholder="请输入内容"
+            v-model="formName.remark">
+          </el-input>
+        </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -199,74 +207,8 @@
         <el-button type="primary" @click="submitForm(formName)">确 定</el-button>
       </div>
     </el-dialog>
-    <!--查看-->
-    <el-dialog title="查看" :visible.sync="viewVisible">
-      <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="收银时间：" prop="cash_t">
-          <el-col :span="10"><el-input disabled  v-model="editForm.cash_t"></el-input></el-col>
-        </el-form-item>
-        <el-form-item label="人脸ID：" prop="faceID">
-          <el-row>
-            <el-col :span='10'>
-              <el-input v-model="editForm.traffic.customer_id" prop="id" disabled></el-input>
-            </el-col>
-          </el-row>
-          <el-form-item :data="faceSearch">
-            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
-              <template>
-                <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar">
-              </template>
-            </div>
-          </el-form-item>
-        </el-form-item>
-        <div v-for="(item,index) in editForm.orderGoods" :key="index" v-if="editForm.orderGoods" :rules="rules">
-          <el-row>
-            <el-col :span='7'>
-              <el-form-item label="材质：" prop="material" label-width="60px">
-                <el-select v-model='item.material'>
-                  <el-option v-for="material in materials" :key="material.id" :label="material.name"
-                             :value="material.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span='7'>
-              <el-form-item label="款式：" prop="style" label-width="60px">
-                <el-select v-model="item.style">
-                  <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span='7'>
-              <el-form-item label='成交金额：' prop="price">
-                <el-input v-model='item.price' v-on:input='editInputFun()'></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </div>
-        <div class="totalAll">
-          <p>共计
-            <input v-model='editAllNum' class='totalNumber' :disabled='true' prop="editAllNum"/>件,总价
-            <input v-model="editForm.price" class='totalPrice' :disabled='true' prop="price"/>元
-          </p>
-        </div>
-        <el-form-item></el-form-item>
-        <el-form-item></el-form-item>
-        <el-form-item></el-form-item>
-        <el-form-item label="小票" v-model="editForm.avatar">
-          <div :model="editForm.avatar" :visible.sync="editImgVisible">
-            <div class="editImg" v-for="item in editForm.avatar">
-              <img :src="item" width="100%"/>
-            </div>
-          </div>
-        </el-form-item>
-
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="viewClose()">确 定</el-button>
-      </div>
-    </el-dialog>
-    <!--编辑-->
-    <el-dialog title="编辑" :visible.sync="editVisible">
+    <!--编辑 or 查看-->
+    <el-dialog :title="takeTitle" :visible.sync="editVisible">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
           <el-date-picker
@@ -358,11 +300,19 @@
             <img width="100%" :src="dialogImageUrl" alt="">
           </el-dialog>
         </el-form-item>
+        <el-form-item label="备注:" prop="type">
+          <el-input
+            type="textarea"
+            autosize
+            placeholder="请输入内容"
+            v-model="editForm.remark">
+          </el-input>
+        </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelE()">取 消</el-button>
-        <el-button type="primary" @click="EditFormSubmit()">确 定</el-button>
+        <el-button type="primary" @click="EditFormSubmit(editForm)" v-show="isForChange">确 定</el-button>
       </div>
     </el-dialog>
 

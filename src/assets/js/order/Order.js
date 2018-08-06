@@ -19,6 +19,8 @@ export default {
       },
       imageListF: [],
       allNum: '1',
+      takeTitle:'',
+      isForChange:false,
       totalMoney: 0,
       faceSearch: {
         avatar: '',
@@ -202,10 +204,14 @@ export default {
     // 编辑显示列表
     fnEdit(row) {
       this.$data.editVisible = true;
+      this.$data.takeTitle = '编辑';
+      this.$data.isForChange = true;
       this.view(row.id);
     },
     fnView(row) {
-      this.$data.viewVisible = true;
+      this.$data.editVisible = true;
+      this.$data.takeTitle = '查看';
+      this.$data.isForChange = false;
       this.view(row.id);
     },
     viewClose() {
@@ -249,9 +255,11 @@ export default {
       orderApi.view(qs.stringify({id: id,})).then((res) => {
         if (res.data.errno === 0) {
           this.$data.editForm = res.data.data;
-          console.log(res.data.data.cash_t);
-          console.log(this.TimeOut(res.data.data.cash_t,4));
-          this.$data.editForm.cash_t = this.TimeOut(res.data.data.cash_t,4);
+          // console.log(res.data.data.cash_t);
+          // console.log(this.TimeOut(res.data.data.cash_t,4));
+          let time = new Date(res.data.data.cash_t * 1000);
+          this.$data.editForm.cash_t = time;
+          this.$data.editForm.remark = res.data.data.remark;
           // this.$data.editVisible = true;
           for (let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
             let obj = {
@@ -357,6 +365,7 @@ export default {
 
     //编辑提交，取消
     EditFormSubmit(editForm) {
+      console.log(editForm)
       let listArry = '';
       if (this.$data.editImgAvatar.length == 0) {
         listArry = '';
@@ -364,15 +373,17 @@ export default {
         listArry = this.$data.editImgAvatar.join(',');
       }
       let sendA = JSON.stringify(this.$data.editRequestParameters);
+      console.log(this.editForm.cash_t);
+      let postTime = this.editForm.cash_t / 1000;
       let list = {
         'id': this.$data.editForm.id,
         'goods_info': sendA,
-        'cash_t': this.$data.editForm.cash_t,
-        'remark': '',
+        'cash_t': postTime,
+        'remark': this.$data.editForm.remark,
         'files_web': this.$data.editForm.avatar,
         'avatar': listArry,
         'customer_id': this.$data.editForm.traffic.customer_id
-      }
+      };
       let qs = require('querystring');
       orderApi.editOrder(qs.stringify(list)).then((res) => {
         if (res.data.errno === 0) {
@@ -514,7 +525,7 @@ export default {
       let list = {
         'goods_info': sendData,
         'cash_t': this.$data.formName.cash_t,
-        'remark': '',
+        'remark': this.$data.formName.remark,
         'files_web': listArry,
         'customer_id': this.$data.faceSearch.customer_id
       }
