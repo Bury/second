@@ -11,6 +11,7 @@ export default {
             dialogFormVisible: false,
             username:'',
             role_name:'',
+          errors:0,
             userEditForm: {
                 name:'',
                 phone:'',
@@ -93,7 +94,8 @@ export default {
                           globalFunctions.functions.message(this,'success','修改成功');
                           this.$data.dialogFormVisible = false;
                         }else{
-                            this.$message.error(res.data.msg);
+                            this.$message.error('旧密码应该至少包含6个字符');
+                            this.$data.errors = 1;
                         }
                     })
                 }

@@ -27,8 +27,8 @@
 		<!-- 修改密码 -->
 		<el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="min-width:800px;">
 		  <el-form :model="passwordEditForm" :rules="rulesPasswordEdit" ref="passwordEditForm" label-width="100px" class="demo-passwordEditForm">
-		    <el-form-item label="当前密码：" prop="passwordOld">
-		      <el-input type="password" v-model="passwordEditForm.passwordOld" ></el-input>
+		    <el-form-item label="旧密码：" prop="passwordOld">
+		      <el-input type="password" v-model="passwordEditForm.passwordOld" :class="{'postError': errors ===1}"></el-input>
 		    </el-form-item>
 		    <el-form-item label="新的密码：" prop="passwordCurrent">
 		      <el-input type="password" v-model="passwordEditForm.passwordCurrent" ></el-input>
@@ -47,4 +47,4 @@
 
 <script src="@/assets/js/user/UserCurrentDetail.js"></script>
 
-<style lang="scss" scoped src="@/assets/css/user/UserCurrentDetail.scss">
+<style lang="scss"  src="@/assets/css/user/UserCurrentDetail.scss">
