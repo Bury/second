@@ -32,7 +32,7 @@ const functions={
 					// this.$router.replace({
 					// 	name: 'UserLogin'
 					// });
-					router.push('/');//this.$router.replace({name: '/'})
+					router.push('/UserLogin');//this.$router.replace({name: '/'})
 				}else{
 					message.error(res.ata.msg);
 				}
