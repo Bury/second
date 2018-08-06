@@ -74,6 +74,9 @@ export default {
             this.$data.passwordEditForm.passwordOld = '';
             this.$data.passwordEditForm.passwordCurrent = '';
             this.$data.passwordEditForm.passwordRepeat = '';
+          setTimeout(() =>{
+            this.$refs.passwordEditForm.resetFields();
+          },0)
         },
 
         fnPasswordEditSubmitForm(formName){
@@ -93,6 +96,9 @@ export default {
                         if(res.data.errno === 0){
                           globalFunctions.functions.message(this,'success','修改成功');
                           this.$data.dialogFormVisible = false;
+                          this.$data.passwordEditForm.passwordOld = '';
+                          this.$data.passwordEditForm.passwordCurrent = '';
+                          this.$data.passwordEditForm.passwordRepeat = '';
                         }else{
                             this.$message.error('旧密码应该至少包含6个字符');
                             this.$data.errors = 1;
@@ -100,6 +106,9 @@ export default {
                     })
                 }
             });
+          setTimeout(() =>{
+            this.$refs.passwordEditForm.resetFields();
+          },0)
         },
 
         fnSaveSubmitForm(formName){

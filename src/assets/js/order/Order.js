@@ -184,21 +184,24 @@ export default {
 
     //列表
     lists() {
-      this.$data.requestParameters.cash_t_start = utils.getDateTime(this.$data.cashTimes[0]);
-      this.$data.requestParameters.cash_t_end = utils.getDateTime(this.$data.cashTimes[1]);
-      this.$data.requestParameters.created_at_start = utils.getDateTime(this.$data.createdTimes[0]);
-      this.$data.requestParameters.created_at_end = utils.getDateTime(this.$data.createdTimes[1]);
+      if((this.$data.cashTimes != null) && (this.$data.createdTimes != null) ){
+        this.$data.requestParameters.cash_t_start = utils.getDateTime(this.$data.cashTimes[0]);
+        this.$data.requestParameters.cash_t_end = utils.getDateTime(this.$data.cashTimes[1]);
+        this.$data.requestParameters.created_at_start = utils.getDateTime(this.$data.createdTimes[0]);
+        this.$data.requestParameters.created_at_end = utils.getDateTime(this.$data.createdTimes[1]);
+      }else{
+        this.$data.cashTimes = ['',''];
+        this.$data.createdTimes = ['',''];
+      }
       let qs = require('querystring');
       orderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
         if (res.data.errno === 0) {
           this.$data.tableData = res.data.data.list;
           this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
           this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-        } else {
-
+          this.$data.requestParameters = {};
         }
       })
-
     },
 
     // 编辑显示列表
@@ -216,6 +219,7 @@ export default {
     },
     viewClose() {
       this.$data.viewVisible = false;
+      this.editClearData();
     },
 
     //删除
@@ -260,7 +264,6 @@ export default {
           let time = new Date(res.data.data.cash_t * 1000);
           this.$data.editForm.cash_t = time;
           this.$data.editForm.remark = res.data.data.remark;
-          // this.$data.editVisible = true;
           for (let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
             let obj = {
               'material': this.$data.editForm.orderGoods[i].material,
@@ -398,6 +401,9 @@ export default {
           this.$message.error(res.data.msg);
         }
       })
+      setTimeout(() =>{
+        this.$refs.editForm.resetFields();
+      },0)
     },
 
     cancelE(editFrom) {
@@ -418,7 +424,8 @@ export default {
           this.$data.faceSearch.avatar = res.data.data.avatar;
           this.$data.faceSearch.customer_id = res.data.data.customer_id;
         } else {
-          this.$message.error(res.data.msg);
+          this.$message.error("没有该编号信息");
+          this.$data.faceVisible = false;
         }
       })
     },
