@@ -7,7 +7,6 @@ import '../static/css/iconfont.css'
 import '../static/css/home.css'
 import '../static/css/main.css'
 import '../static/font/iconfont.css'
-
 import http from './api/http.js'
 
 import App from './App'
@@ -15,10 +14,14 @@ import router from './router'
 import axios from 'axios'
 import * as filters from './filters'
 import './config/constants'
+import Moment from 'moment'
+import globalFunction from '@/assets/js/globalFunction'
+
+Vue.prototype.moment = Moment
 
 
 Vue.use(ElementUI)
-
+Vue.use(globalFunction);
 Vue.filter('date', filters.dateFilter)
 
 Vue.config.productionTip = false

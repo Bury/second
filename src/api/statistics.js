@@ -4,6 +4,7 @@
 import axios from 'axios'
 
 export default {
+	
 	getCustomer (list) {
 	    return new Promise((resolve, reject) => {
 	      axios.post(global.GET_CUSTOMER,list).then((res) => {
@@ -13,9 +14,11 @@ export default {
 	      })
 	    })
 	},
-	getFeature (list) {
+
+
+	statisticsFeature (list) {
 	    return new Promise((resolve, reject) => {
-	      axios.post(global.GET_FEATURE,list).then((res) => {
+	      axios.post(global.StatisticsFeature,list).then((res) => {
 	        resolve(res)
 	      }).catch((err) => {
 	        reject(err)

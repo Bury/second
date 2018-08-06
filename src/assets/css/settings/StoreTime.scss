@@ -1,0 +1,33 @@
+div{
+  display: flex;
+  .left{
+    width: 25%;
+  }
+  .open-time-set-page{
+    flex: 1;
+    margin:80px auto 0;
+    padding:40px;
+    border:1px solid #d2d2d2;
+    display: flex;
+    flex-direction: column;
+    .top-box{
+      height: 60px;
+    }
+    .time-box{
+      margin:0 auto 100px;;
+    }
+    .saveBtn{
+      position:relative;
+      width: 100%;
+      height: 40px;
+      .save-btn{
+        position: absolute;
+        bottom:0;
+        right:20px;
+      }
+    }
+  }
+  .right{
+    width: 25%;
+  }
+}

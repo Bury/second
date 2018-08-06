@@ -1,0 +1,30 @@
+.statistics-page{
+    padding-top:120px;
+    .top-box{
+        position: fixed;
+        padding-top:90px;
+        top:0;
+        z-index:9;
+        width:100%;
+        background:#fff;
+    }
+    .charts-type{
+        margin:0 auto;
+        padding:5px;
+        width: 98%;
+        overflow:hidden;
+        .charts-wrap{
+            float:left;
+            margin: 15px 0;
+            width: 49%;
+            height: 520px;
+        }
+        .charts-wrap:nth-child(2n){
+            float:right;
+        }
+    }
+    .noData{
+        text-align:center;
+        color:#999;
+    }
+}

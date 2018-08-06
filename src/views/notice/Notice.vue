@@ -70,7 +70,7 @@ export default {
             innerVisible: false,
             tableData: [
                 {name: 'zhangan',
-                 conent: '删除账号',
+                 conent: '删除帐号',
                  who: 'zhangs',
                  time: '2017-7-12'
                 }

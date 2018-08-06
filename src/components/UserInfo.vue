@@ -18,7 +18,7 @@
                 标签： 
                     <el-tag v-for="(item,key) in userInfo.tag" :key="key" style="margin-right:10px;">{{userInfo.tag[key].name}}</el-tag>
             </div>
-            <p class="user-remarks">备注： {{userInfo.remark === null || userInfo.remark === "" ? '暂无备注' : userInfo.remark}}</p>
+            <p class="user-remarks">备注： {{userInfo.remark === null ? '暂无备注' : userInfo.remark}}</p>
             <el-button type="primary" plain size="small" class="edit-btn" @click="editUserInfo()">编辑</el-button>
         </div>
 
@@ -38,6 +38,7 @@
               </el-form-item>
               <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
               <el-form-item label="客户等级：">{{editUserInfoData.vip_level == 0 ? '普通' : 'VIP'}}</el-form-item>
+              <el-form-item label="年龄：" >{{editUserInfoData.age}}</el-form-item>
               <el-form-item label="标签：">
                 <div v-for="label in labels" :key="label.id" class="labels">
                     <div>—— {{label.name}} ——</div>
@@ -62,62 +63,59 @@
 	</div>
 </template>
 <script>
+	
+    import globalRules from '../config/global_rules'
+    
     import remindApi from '../api/remind'
+
     export default {
+
       	name:'user-info',
+
         props:{
             customerId:{
                 type:Number
             },
             showInfoEdit:{
                 type:Boolean
+            },
+            traffic:{
+            	type:Number
             }
         },
+
         data() {
             return {
                 infoEdit:false,
+                remarksId:"",
                 userInfo:{},
                 editUserInfoData:{},
                 labels:{},
                 UserInfoRules:{
-                    name: [
-                        { required: true, message: '请输入姓名', trigger: 'blur' },
-                        { min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
-                    ],
-                    gender:[
-                        { required: true, message: '请选择性别', trigger: 'blur' },
-                    ],
-                    phone:[
-                        { required: true, message: '请输入手机号码', trigger: 'blur' },
-                        {
-                            validator: (rule, value, callback) => {
-                                if (value.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)) {
-                                    callback();
-                                } else {
-                                    callback("请输入正确的手机号码！");
-                                }
-                            },
-                            trigger: 'blur'
-                        }
-                    ]
-
+                    name:globalRules.rules.user.truename(),
+                    gender:globalRules.rules.user.gender(),
+                    phone:globalRules.rules.user.phone(),
                 }
             };
+
         },
+
         watch: {
           customerId: function() {
-             this.personalInfo(this.$props.customerId)
+             this.view(this.$props.customerId)
           },
-          
         },
+
         created:function(){
-            this.personalInfo(this.$props.customerId)
+            this.view(this.$props.customerId)
             this.getAll(this.$props.customerId)
         },
+
         methods: {
+
             getAll(customerId){
                 let list = {
-                    'all': '1',
+                    'all': 1,
                     'customer_id': customerId
                 }
                 let qs = require('querystring')
@@ -125,17 +123,16 @@
                     if(res.data.errno === 0){
                         this.$data.labels = res.data.data
                     }else{
-
+                    	
                     }
                 })
             },
 
-            personalInfo(customerId){
-                this.$data.infoEdit = this.$props.showInfoEdit;
-                let qs = require('querystring')
-                remindApi.personalInfo(qs.stringify({
-                    'customer_id':customerId
-                })).then((res) => {
+            getGuestInfo(customerId,trafficId){
+            	this.$data.infoEdit = this.$props.showInfoEdit;
+                let qs = require('querystring');
+                let personlList ={'customer_id':customerId};
+                guestApi.view(qs.stringify(personlList)).then((res) => {
                     if(res.data.errno === 0){
                     	console.log(res.data.data)
                         this.$data.userInfo = res.data.data
@@ -144,40 +141,43 @@
                     }
                 })
             },
+
             editUserInfo(){
                 this.$data.editUserInfoData = this.$data.userInfo;
                 this.$data.infoEdit = true;
             },
+
             userInfoCancel(){
                 this.$data.infoEdit = false;
             },
+
             userInfoSubmit(formName){
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                            let qs = require('querystring')
+                            let qs = require('querystring');                            
                             remindApi.editPersonalInfo(qs.stringify({
                                 customer_id:this.$data.editUserInfoData.customer_id,
+                                traffic_id: this.$props.traffic,
                                 name       :this.$data.editUserInfoData.name,    
                                 phone      :this.$data.editUserInfoData.phone,   
                                 gender     :this.$data.editUserInfoData.gender, 
                                 tag_ids    :this.$data.editUserInfoData.tag_ids,
                                 remark     :this.$data.editUserInfoData.remark,
+                            
                             })).then((res) => {
-                                if(res.data.errno === 0){  
-                                	this.$alert('保存成功', '提示', {
-                                      confirmButtonText: '确定'
-                                    });
-                                	
-                                    this.userInfoCancel();                                    
-                                    this.personalInfo(this.$props.customerId)                                    
+                                if(res.data.errno === 0){
+                                    this.userInfoCancel();
+                                    this.view(this.$props.customerId)
                                 }else{
-
+                                	
                                 }
                         })
                     }
                 })
             }
+
         }
+
     };
 </script>
 <style lang="scss" scoped>

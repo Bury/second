@@ -1,20 +1,83 @@
 /**
- * 来客列表 
+ * 来客列表
  */
 import axios from 'axios'
 
 export default {
-	
-	guestList (list) {
+
+  lists (list) {
     return new Promise((resolve, reject) => {
-      axios.post(global.GET_GUEST_LIST, list).then((res) => {
+      axios.post(global.GUEST_LISTS, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)
       })
     })
-  }
+  },
 
-  
+  edit(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_EDIT, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
+  view (list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_VIEW, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
+  dele (list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_DELE, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
+  //查询人脸ID
+	// findFaceId(list){
+	// 	return new Promise((resolve, reject) => {
+	// 		axios.post(global.FINDFACEID_ORDER,list).then((res) => {
+	// 			resolve(res)
+	// 		}).catch((err) => {
+	// 			reject(err)
+	// 		})
+	// 	})
+	// },
+
+  //屏蔽动作
+  hidden (list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_HIDDEN, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
+  //屏蔽列表
+  hiddenLists (list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_HIDDEN_LISTS, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+
+
 
 }
