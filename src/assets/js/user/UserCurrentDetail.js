@@ -11,6 +11,7 @@ export default {
             dialogFormVisible: false,
             username:'',
             role_name:'',
+          errors:0,
             userEditForm: {
                 name:'',
                 phone:'',
@@ -99,7 +100,8 @@ export default {
                           this.$data.passwordEditForm.passwordCurrent = '';
                           this.$data.passwordEditForm.passwordRepeat = '';
                         }else{
-                            this.$message.error(res.data.msg);
+                            this.$message.error('旧密码应该至少包含6个字符');
+                            this.$data.errors = 1;
                         }
                     })
                 }
