@@ -203,7 +203,11 @@
     <el-dialog title="查看" :visible.sync="viewVisible">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
-          <el-col :span="10"><el-input disabled  v-model="editForm.cash_t"></el-input></el-col>
+          <el-date-picker disabled
+            v-model="editForm.cash_t"
+            type="datetime"
+            placeholder="选择日期时间">
+          </el-date-picker>
         </el-form-item>
         <el-form-item label="人脸ID：" prop="faceID">
           <el-row>
