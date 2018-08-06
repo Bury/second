@@ -35,7 +35,8 @@ export default {
       item: {
         material: '',
         style: '',
-        price: ''
+        price: '',
+        file:''
       },
       dialogImageUrl: '',
       dialogVisible: false,
@@ -145,6 +146,8 @@ export default {
     //新增上传图片
     handleRemove(file, fileList) {
       console.log(file, fileList);
+      console.log(file)
+      console.log(fileList)
     },
 
     handlePictureCardPreview(file) {
@@ -160,6 +163,8 @@ export default {
     //编辑--上传图片的删除、添加地址
     editHandleRemove(file, fileList) {
       console.log(file, fileList);
+      console.log(this.$data.dialogImageUrl)
+
     },
 
     editHandlePictureCardPreview(file) {
@@ -244,6 +249,9 @@ export default {
       orderApi.view(qs.stringify({id: id,})).then((res) => {
         if (res.data.errno === 0) {
           this.$data.editForm = res.data.data;
+          console.log(res.data.data.cash_t);
+          console.log(this.TimeOut(res.data.data.cash_t,4));
+          this.$data.editForm.cash_t = this.TimeOut(res.data.data.cash_t,4);
           // this.$data.editVisible = true;
           for (let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
             let obj = {
@@ -454,7 +462,10 @@ export default {
       this.$data.upLoadData = {
         access_token: '',
       };
-      this.handleRemove();
+      this.$data.dialogImageUrl = '';
+      this.$data.editForm.avatar = '';
+      this.$data.item.file = '';
+      this.$data.dialogVisible = false;
     },
 
     editClearData() {

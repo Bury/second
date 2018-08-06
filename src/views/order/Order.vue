@@ -200,19 +200,15 @@
       </div>
     </el-dialog>
     <!--查看-->
-    <el-dialog title="编辑" :visible.sync="viewVisible">
+    <el-dialog title="查看" :visible.sync="viewVisible">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
-          <el-date-picker
-            v-model="editForm.cash_t"
-            type="datetime"
-            placeholder="选择日期时间">
-          </el-date-picker>
+          <el-col :span="10"><el-input disabled  v-model="editForm.cash_t"></el-input></el-col>
         </el-form-item>
         <el-form-item label="人脸ID：" prop="faceID">
           <el-row>
             <el-col :span='10'>
-              <el-input v-model="editForm.traffic.customer_id" prop="id"></el-input>
+              <el-input v-model="editForm.traffic.customer_id" prop="id" disabled></el-input>
             </el-col>
           </el-row>
           <el-form-item :data="faceSearch">

@@ -90,8 +90,8 @@ export default {
                     let qs = require('querystring')
                     userApi.password_edit(qs.stringify(list)).then((res) => {
                         if(res.data.errno === 0){
-                            alert('操作成功')
-                            globalFunctions.functions.user.logout(userApi,this.$router,this.$message);
+                          globalFunctions.functions.message(this,'success','修改成功');
+                          this.$data.dialogFormVisible = false;
                         }else{
                             this.$message.error(res.data.msg);
                         }
