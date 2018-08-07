@@ -86,7 +86,9 @@ export default {
                 if(res.data.errno === 0){
                     console.log(res,151515);
                     var is_new=this.$data.guestInfo.is_new;
-                    var vip_level=this.$data.guestInfo.vip_level;
+                    // console.log(res.data.data.vip_level)
+                    var vip_level=res.data.data.vip_level;
+                    // console.log(vip_level);
                     this.$set(res.data.data, 'is_new_to_text', globalFunctions.functions.guest.getVisitInfo(is_new));
                     this.$set(res.data.data, 'is_bought_to_text', globalFunctions.functions.guest.getBoughtInfo(vip_level));
                     this.$data.guestInfo = res.data.data;
