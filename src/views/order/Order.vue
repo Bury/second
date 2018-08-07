@@ -58,7 +58,8 @@
     </div>
 
     <div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
-      <el-button type="primary" @click="orderLive">现场开单</el-button>
+      <el-button type="primary" @click="orderLive">现场开单(拍摄)</el-button>
+      <el-button type="primary" @click="orderVideo">现场开单(视频流)</el-button>
       <el-button type="primary" @click="orderNotLive">补单</el-button>
     </div>
 
@@ -120,6 +121,9 @@
           <el-row>
             <el-col :span='10'>
               <el-input v-model="searchFace.id" prop="id"></el-input>
+              <!--<input type="number" class="input" v-model="searchFace.id" maxlength="5" v-on:input="getMoneyb(form.moneyb)"  placeholder=""-->
+                     <!--onkeyup="this.value=this.value.replace(/\.\d{2,}$/,this.value.substr(this.value.indexOf('.'),3))" />-->
+              <!--</el-input>-->
             </el-col>
             <el-col :span='2'>
               <el-button @click="findGuestByFaceId()">查询</el-button>
@@ -153,7 +157,16 @@
             </el-col>
             <el-col :span="7" style="padding: 0;margin: 0;">
               <el-form-item label='成交金额：'>
-                <el-input v-model='item.price' v-on:input='inputFun()'></el-input>
+                <!--<el-input v-model='item.price' v-on:input='inputFun(item.price)'></el-input>-->
+                <!--<input type="number" class="input" v-model="item.price"-->
+                       <!--v-on:input="inputFun(item.price)"  placeholder=""-->
+                       <!--onkeyup="this.value=this.value.replace(/\.\d{2,}$/,this.value.substr(this.value.indexOf('.'),3))" />-->
+                <!--<input type="text" class="input" v-model="form.moneya"  maxlength="11"-->
+                       <!--onkeyup="this.value=this.value.replace(/\D/g,'')"-->
+                       <!--onafterpaste="this.value=this.value.replace(/\D/g,'')"/>-->
+                <el-input v-model="item.price" v-on:input="inputFun()" value="" :maxlength="inputMaxL"
+                          @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.price) ? null : item.price.length - 1">
+                </el-input>
               </el-form-item>
             </el-col>
             <el-col :span='1' style="padding: 0;margin: 0;">

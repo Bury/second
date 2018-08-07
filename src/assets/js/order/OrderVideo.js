@@ -124,7 +124,7 @@ export default {
   },
 
   mounted:function(){
-    this.camera_process();
+    // this.camera_process();
   },
 
   methods:{
@@ -153,20 +153,23 @@ export default {
         }
       })
     },
-    //  调用摄像头
-    camera_process(){
-      let video = document.getElementById('video');
-      let canvas = document.getElementById('canvas');
-      let context = canvas.getContext('2d');
-      let image = new Image();
-
-      if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
-        //调用用户媒体设备, 访问摄像头
-        globalFunctions.functions.user_media.getUserMedia({video : {width: 480, height: 320}}, globalFunctions.functions.user_media.success, globalFunctions.functions.user_media.error,video);
-      } else {
-        alert('不支持访问用户媒体');
-      }
+    reFresh(){
+      console.log(15151515);
     },
+    //  调用摄像头
+    // camera_process(){
+    //   let video = document.getElementById('video');
+    //   let canvas = document.getElementById('canvas');
+    //   let context = canvas.getContext('2d');
+    //   let image = new Image();
+    //
+    //   if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+    //     //调用用户媒体设备, 访问摄像头
+    //     globalFunctions.functions.user_media.getUserMedia({video : {width: 480, height: 320}}, globalFunctions.functions.user_media.success, globalFunctions.functions.user_media.error,video);
+    //   } else {
+    //     alert('不支持访问用户媒体');
+    //   }
+    // },
 
     //拍照
     takePicture() {
@@ -210,7 +213,6 @@ export default {
     //订单录入
     step03:function (){
       console.log('订单录入');
-      this.step03_block = true
     },
 
     dataURLtoFile(dataurl, filename){

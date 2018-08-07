@@ -24,12 +24,6 @@
                     <span slot="title">订单管理</span>
                 </el-menu-item>
             </router-link>
-            <!--<router-link :to="{name: 'Label'}">
-                <el-menu-item index="/Label">
-                    <i class="el-icon-info"></i>
-                    <span slot="title">标签管理</span>
-                </el-menu-item>
-            </router-link>-->
             <router-link :to="{name: 'Device'}">
                 <el-menu-item index="/Device">
                     <i class="el-icon-view"></i>

@@ -110,6 +110,7 @@ export default {
         ],
       },
       viewVisible: false,
+      inputMaxL:'',
     }
   },
   created: function () {
@@ -298,18 +299,6 @@ export default {
       this.$data.editForm.price = n;
     },
 
-    inputFun() {
-      let n = 0;
-      for (let i = 0; i < this.$data.addProList.length; i++) {
-        if (this.$data.addProList[i].price.replace(/[^\.\d]/g, '')) {
-          n += parseInt(this.$data.addProList[i].price);
-        } else {
-          this.$data.addProList[i].price = 0;
-        }
-      }
-      this.$data.totalMoney = n;
-    },
-
     totalPrice() {
       let n = 0;
       for (let i = 0; i < this.$data.addProList.length; i++) {
@@ -321,6 +310,8 @@ export default {
       }
       this.$data.totalMoney = n;
     },
+
+
 
     //编辑添加商品
     editAddProduct() {
@@ -438,21 +429,18 @@ export default {
         price: ''
       }
       this.$data.addProList.push(obj);
+
+    },
+    //计算总价
+    inputFun(itemPrice) {
+      let n= 0;
+      for(let i = 0; i< this.$data.addProList.length; i++){
+      n += parseFloat(this.$data.addProList[i].price,2);
+      }
+      this.$data.totalMoney = n;
       this.$data.allNum = this.$data.addProList.length;
     },
 
-    //计算总价
-    inputFun() {
-      let n = 0;
-      for (let i = 0; i < this.$data.addProList.length; i++) {
-        if (this.$data.addProList[i].price.replace(/[^\.\d]/g, '')) {
-          n += parseInt(this.$data.addProList[i].price);
-        } else {
-          this.$data.addProList[i].price = 0;
-        }
-      }
-      this.$data.totalMoney = n;
-    },
 
     submitClearData() {
       this.$data.formName = {
@@ -516,7 +504,7 @@ export default {
       let n = 0;
       for (let i = 0; i < this.$data.addProList.length; i++) {
         if (this.$data.addProList[i].price.replace(/[^\.\d]/g, '')) {
-          n += parseInt(this.$data.addProList[i].price);
+          n += parseFloat(this.$data.addProList[i].price,2);
         } else {
           this.$data.addProList[i].price = 0;
         }
@@ -589,7 +577,9 @@ export default {
     orderLive() {
       this.$router.push({path: '/OrderLive'})
     },
-
+    orderVideo() {
+      this.$router.push({path: '/OrderVideo'})
+    },
     //补单
     orderNotLive() {
       this.$data.FormVisible = true;

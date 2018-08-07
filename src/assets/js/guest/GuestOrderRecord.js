@@ -38,7 +38,6 @@ export default{
             orderApi.listsUserResults(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.orderRecords = res.data.data;
-                    console.log(this.$data.orderRecords)
                 }else{
 
                 }

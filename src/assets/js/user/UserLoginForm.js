@@ -69,7 +69,7 @@ export default {
               if(res.data.data.user.is_change_pwd == 0){
                 this.$data.dialogFormVisible = true;
               }else{
-                this.$router.replace({name: 'Statistics'});
+                this.$router.push('/Statistics');
               }
 
             } else {
@@ -165,7 +165,7 @@ export default {
             }
           })
         }
-        this.$router.replace({name: 'Statistics'});
+        this.$router.push('/Statistics');
       });
       setTimeout(() =>{
         this.$refs.passwordEditForm.resetFields();
