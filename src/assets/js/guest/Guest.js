@@ -57,7 +57,7 @@ export default {
             },
             currentCustomerId:'',
             trafficId:'',
-            showInfoEdit:false
+            showInfoEdit:false,
         }
     },
 

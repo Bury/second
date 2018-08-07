@@ -60,12 +60,14 @@ export default {
         if (valid) {
           let qs = require('querystring');
           userApi.login(qs.stringify(this.$data.loginInfo)).then((res) => {
+            console.log(res);
             if (res.data.errno === 0) {
+              console.log(res.data.data);
               localStorage.setItem('knock_knock', res.data.data.access_token);
               localStorage.setItem('username', res.data.data.user.username);
               localStorage.setItem('store_id', res.data.data.user.store_id);
               localStorage.setItem('store_name', res.data.data.user.store_name);
-              console.log(res.data.data.user.is_change_pwd);
+              // console.log(res.data.data.user.is_change_pwd);
               if(res.data.data.user.is_change_pwd == 0){
                 this.$data.dialogFormVisible = true;
               }else{

@@ -204,6 +204,9 @@ export default{
 
         resetPasswordCancel(){
             this.$data.resetPasswordFormVisible = false;
+            setTimeout(() =>{
+              this.$refs.resetPasswordFormData.resetFields();
+            },0)
             this.fnResetPasswordClearData();
         },
 

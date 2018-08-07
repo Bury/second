@@ -109,7 +109,7 @@ export default {
         ],
       },
       viewVisible: false,
-      // viewVisible:false,
+      noData:false,
       inputMaxL:'',
     }
   },
@@ -197,10 +197,14 @@ export default {
       let qs = require('querystring');
       orderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
         if (res.data.errno === 0) {
-          this.$data.tableData = res.data.data.list;
-          this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
-          this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-          this.$data.requestParameters = {};
+          if(res.data.data.list.length == 0){
+            this.$data.tableData = res.data.data.list;
+            this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+            this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
+          }else{
+            this.$data.noData = true;
+          }
+
         }
       })
     },

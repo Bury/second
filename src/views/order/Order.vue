@@ -76,6 +76,7 @@
         <th class="col-md-1 text-center">操作</th>
       </tr>
       </thead>
+
       <tbody style="text-align: center">
       <tr v-for="(item,index) in tableData" :key="index" height="40">
         <td>{{item.id}}</td>
@@ -106,8 +107,7 @@
       </tr>
       </tbody>
     </table>
-
-    <!--补单-->
+    <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>    <!--补单-->
     <el-dialog title="补单" :visible.sync="FormVisible">
       <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
