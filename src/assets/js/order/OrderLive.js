@@ -225,7 +225,7 @@ export default {
     //订单录入
     step03:function (){
       console.log('订单录入');
-      // this.step03_block = true
+      this.step03_block = true
     },
 
     dataURLtoFile(dataurl, filename){
@@ -717,17 +717,22 @@ export default {
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         console.log(res);
-        this.$message({
-          message: res.data.msg,
-          type: 'warning',
-          center: true
-        });
+        if(res.data.msg != ''){
+          this.$message({
+            message: res.data.msg,
+            type: 'warning',
+            center: true
+          });
+        }
+
         this.step_1=2;
         this.step_2=2;
         this.step_3=2;
         this.step_4=1;
+        //完成订单之后，跳回列表页面
+        this.$router.push({path: '/Order'})
       });
-
+      // this.$router.push({path: '/Order'})
     }
 
   }
