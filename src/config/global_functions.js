@@ -38,7 +38,7 @@ const functions={
 				}
 			})
 
-			
+
 		}
 	},
 
@@ -92,8 +92,8 @@ const functions={
         }
 	}
 
-	
-	
+
+
 }
 
 export default {
