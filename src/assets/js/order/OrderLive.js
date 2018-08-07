@@ -37,7 +37,7 @@ export default {
       step01_block:true,
       step02_block:false,
       step03_block:false,
-      inputMaxL:'',
+      inputMaxL:9,
 
       showVideo:true,
       actionDialogVisible: false,
@@ -94,7 +94,8 @@ export default {
       },
       rulesD:{
         money:[
-
+          // { required: true, message: '请输入手机号', trigger: 'blur' },
+          { min: 3, max: 9, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ]
       },
       form:{
@@ -225,7 +226,7 @@ export default {
     //订单录入
     step03:function (){
       console.log('订单录入');
-      this.step03_block = true
+      // this.step03_block = true
     },
 
     dataURLtoFile(dataurl, filename){

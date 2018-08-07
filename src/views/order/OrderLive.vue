@@ -164,9 +164,9 @@
                   <el-option  v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="成交总额：">
+              <el-form-item label="成交总额：" prop="money">
                 <el-col :span="15">
-                  <el-input v-model="item.money" v-on:input="getMoney(item.money)" value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></el-input>
+                  <el-input v-model="item.money" v-on:input="getMoney(item.money)"  value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></el-input>
                 </el-col>
               </el-form-item>
               <el-form-item>
@@ -183,7 +183,7 @@
             <p>共计</p>
             <input class="lastNum" disabled v-model="allGoodLenght">
             <p>件，</p><p>总价</p>
-            <input class="lastNum" disabled v-model="allMoney" value="0">
+            <input class="lastNums" disabled v-model="allMoney" value="0">
             <p>元</p>
           </div>
         </el-row>
