@@ -157,7 +157,10 @@ export default{
                 truename:'',
                 phone:'',
                 status:''
-            }
+            };
+          setTimeout(() =>{
+            this.$refs.editFormData.resetFields();
+          },0)
         },
 
         //编辑提交
@@ -179,7 +182,9 @@ export default{
                                 status:''
                             }
                             this.$data.editFormVisible = false;
-
+                          setTimeout(() =>{
+                            this.$refs.editFormData.resetFields();
+                          },0)
                         }else{
                             this.$message.error(res.data.msg);
                         }
