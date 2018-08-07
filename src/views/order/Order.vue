@@ -404,8 +404,7 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelE()">取 消</el-button>
-        <el-button type="primary" @click="EditFormSubmit(editForm)" v-show="isForChange">确 定</el-button>
+        <el-button @click="viewClose()">取 消</el-button>
       </div>
     </el-dialog>
     <!-- 分页 -->
