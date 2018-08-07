@@ -68,6 +68,8 @@ export default {
               console.log(res.data.data.user.is_change_pwd);
               if(res.data.data.user.is_change_pwd == 0){
                 this.$data.dialogFormVisible = true;
+              }else{
+                this.$router.replace({name: 'Statistics'});
               }
 
             } else {
