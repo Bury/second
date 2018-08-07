@@ -12,12 +12,12 @@
             </el-date-picker>
           </el-form-item>
           <el-form-item label="新客/熟客：">
-          <el-select v-model="requestParameters.level" placeholder="新客/熟客">
+          <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
               <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="未购/已购：">
-          <el-select v-model="requestParameters.level" placeholder="未购/已购">
+          <el-select v-model="requestParameters.bought" placeholder="未购/已购">
               <el-option v-for="(item, idx) in allGuestBoughtClass" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
