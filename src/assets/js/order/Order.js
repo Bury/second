@@ -193,6 +193,7 @@ export default {
       }else{
         this.$data.cashTimes = ['',''];
         this.$data.createdTimes = ['',''];
+        this.lists();
       }
       let qs = require('querystring');
       orderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {

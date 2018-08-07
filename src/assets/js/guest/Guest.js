@@ -69,8 +69,8 @@ export default {
 
         //列表
         lists(){
-            this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 ;
-            this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000;
+          this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 ;
+          this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000;
             let qs = require('querystring');
             guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 let result = res.data;
@@ -93,11 +93,14 @@ export default {
         },
 
         onSubmit() {
-            // this.lists();
-          this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 ;
-          this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000;
+          if(this.$data.value4 != null){
+            this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 ;
+            this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000;
+          }else{
+            this.$data.value4 = ['',''];
+            this.lists();
+          }
           this.$data.requestParameters.page = 1;
-          console.log(this.$data.requestParameters);
           let qs = require('querystring');
           guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
             let result = res.data;
