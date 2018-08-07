@@ -28,7 +28,7 @@
           <el-form-item label="手机号">
             <el-row>
             <el-col :span="15"><el-input v-model="passwordForm.phone"></el-input></el-col>
-            <el-col :span="2"><el-button @click="code()">获取验证码</el-button></el-col>
+            <el-col :span="2"><el-button @click="code()" :class="{disabled: !this.canClick}">{{getClickName}}</el-button></el-col>
             </el-row>
           </el-form-item>
           <el-form-item label="验证码">

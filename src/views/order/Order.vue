@@ -76,6 +76,7 @@
         <th class="col-md-1 text-center">操作</th>
       </tr>
       </thead>
+
       <tbody style="text-align: center">
       <tr v-for="(item,index) in tableData" :key="index" height="40">
         <td>{{item.id}}</td>
@@ -106,8 +107,7 @@
       </tr>
       </tbody>
     </table>
-
-    <!--补单-->
+    <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>    <!--补单-->
     <el-dialog title="补单" :visible.sync="FormVisible">
       <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
@@ -329,6 +329,84 @@
       </div>
     </el-dialog>
 
+    <!--查看-->
+    <el-dialog title="查看" :visible.sync="viewVisible">
+      <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="收银时间：" prop="cash_t">
+          <el-date-picker disabled
+            v-model="editForm.cash_t"
+            type="datetime"
+            placeholder="选择日期时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="人脸ID：" prop="faceID">
+          <el-row>
+            <el-col :span='10'>
+              <el-input v-model="editForm.traffic.customer_id" disabled></el-input>
+            </el-col>
+          </el-row>
+          <el-form-item :data="faceSearch">
+            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
+              <template>
+                <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar">
+              </template>
+            </div>
+          </el-form-item>
+        </el-form-item>
+        <div v-for="(item,index) in editForm.orderGoods" :key="index" v-if="editForm.orderGoods" :rules="rules">
+          <el-row>
+            <el-col :span='7'>
+              <el-form-item label="材质：" prop="material" label-width="60px">
+                <el-select v-model='item.material' disabled>
+                  <el-option v-for="material in materials" :key="material.id" :label="material.name"
+                             :value="material.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span='7'>
+              <el-form-item label="款式：" prop="style" label-width="60px">
+                <el-select v-model="item.style" disabled>
+                  <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span='7'>
+              <el-form-item label='成交金额：' prop="price">
+                <el-input v-model='item.price' v-on:input='editInputFun()' disabled></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="totalAll">
+          <p>共计
+            <input v-model='editAllNum' class='totalNumber' :disabled='true' prop="editAllNum"/>件,总价
+            <input v-model="editForm.price" class='totalPrice' :disabled='true' prop="price"/>元
+          </p>
+        </div>
+        <el-form-item></el-form-item>
+        <el-form-item></el-form-item>
+        <el-form-item></el-form-item>
+        <el-form-item label="小票" v-model="editForm.avatar">
+          <div :model="editForm.avatar" :visible.sync="editImgVisible">
+            <div class="editImg" v-for="item in editForm.avatar">
+              <img :src="item" width="100%"/>
+            </div>
+          </div>
+        </el-form-item>
+        <el-form-item label="备注:" prop="type">
+          <el-input disabled
+            type="textarea"
+            autosize
+            placeholder="请输入内容"
+            v-model="editForm.remark">
+          </el-input>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="viewClose()">取 消</el-button>
+      </div>
+    </el-dialog>
     <!-- 分页 -->
     <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
       <el-pagination

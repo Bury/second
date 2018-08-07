@@ -242,6 +242,7 @@ export default {
       //  请求接口，上传文件（头像）,返回0-新客，1-熟客
       let file = this.dataURLtoFile(this.$data.takeImages,'testaaa.jpg');
       let list = new FormData();
+      console.log(list);
       list.append('file', file);
       UserApi.getResultByFace(list).then((res) => {
         console.log(res);
@@ -662,8 +663,8 @@ export default {
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         console.log(res);
         this.$message({
-          message: res.data.msg,
-          type: 'warning',
+          message: '操作成功',
+          type: 'success',
           center: true
         });
         this.step_1=2;

@@ -56,7 +56,8 @@ export default {
                 gender:'',
             },
             currentCustomerId:'',
-            showInfoEdit:false
+            trafficId:'',
+            showInfoEdit:false,
         }
     },
 
@@ -68,16 +69,15 @@ export default {
 
         //列表
         lists(){
-            // this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 || '';
-            // this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000 || '';
+          this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 ;
+          this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000;
             let qs = require('querystring');
-
             guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 let result = res.data;
                 if(result.errno === 0){
                     var i='';
                     this.tableData = result.data.list;
-                    console.log(this.tableData)
+                    // console.log(this.tableData)
                     this.$data.pagination.currentPage = result.data.pagination.currentPage;
                     this.$data.pagination.totalCount = result.data.pagination.totalCount;
                 }else{
@@ -87,17 +87,40 @@ export default {
         },
 
         handleCurrentChange(currentPage) {
+          this.$data.tableData = [];
             this.$data.requestParameters.page = currentPage;
             this.lists();
         },
 
         onSubmit() {
+          if(this.$data.value4 != null){
+            this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 ;
+            this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000;
+          }else{
+            this.$data.value4 = ['',''];
             this.lists();
+          }
+          this.$data.requestParameters.page = 1;
+          let qs = require('querystring');
+          guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
+            let result = res.data;
+            if(result.errno === 0){
+              var i='';
+              this.tableData = result.data.list;
+              // console.log(this.tableData)
+              this.$data.pagination.currentPage = result.data.pagination.currentPage;
+              this.$data.pagination.totalCount = result.data.pagination.totalCount;
+            }else{
+
+            }
+          })
         },
 
         showDialog(row) {
+          console.log(row);
             this.$data.showInfoEdit = false;
             this.$data.currentCustomerId = row.customer_id;
+            this.$data.trafficId = row.id;
             this.$data.activeName1 = 'first';
             this.$data.dialogVisible = true;
         },

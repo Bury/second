@@ -16,7 +16,7 @@
                 <div class="img-id">人脸ID：{{guestInfo.id}}</div>
             </div>
             <div class="user-tags">
-                标签： 
+                标签：
                 <el-tag v-for="(item,key) in guestInfo.tag" :key="key" style="margin-right:10px;">{{guestInfo.tag[key].name}}</el-tag>
             </div>
             <p class="user-remarks">备注： {{guestInfo.remark === '' ? '暂无' : guestInfo.remark}}</p>
@@ -25,10 +25,10 @@
 
         <div class="user-info-edit" v-if="infoEdit">
             <el-form :model="editGuestInfoData" :rules="GuestInfoRules" ref="editGuestInfoData" label-width="100px" class="demo-editGuestInfoData" size="mini" style="float:left;margin-right:50px;width:400px;">
-                <el-form-item label="姓名：" prop="name">
+                <el-form-item label="姓名：">
                     <el-input v-model="editGuestInfoData.name"></el-input>
                 </el-form-item>
-                <el-form-item label="手机：" prop="phone">
+                <el-form-item label="手机：" >
                     <el-input v-model="editGuestInfoData.phone"></el-input>
                 </el-form-item>
                 <el-form-item label="性别：" prop="gender">

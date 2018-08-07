@@ -78,7 +78,7 @@
 		</el-dialog>
 
 		<!-- 重置密码 -->
-		<el-dialog title="重置密码" :visible.sync="resetPasswordFormVisible">
+		<el-dialog title="重置密码" :visible.sync="resetPasswordFormVisible" :before-close="resetClose">
 		  <el-form :model="resetPasswordFormData" :rules="resetPasswordRules" ref="resetPasswordFormData" label-width="100px" class="demo-ruleForm">
 			  <el-form-item label="新的密码：" prop="password">
 			    <el-input type="password" v-model="resetPasswordFormData.password"></el-input>

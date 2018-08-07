@@ -31,11 +31,13 @@ export default {
       step_4:2,
       materials:[],
       styles:[],
-
+      getClickName:'获取验证码',
+      waitTime:60,
+      canClick: true,
       step01_block:true,
       step02_block:false,
       step03_block:false,
-      inputMaxL:'',
+      inputMaxL:9,
 
       showVideo:true,
       actionDialogVisible: false,
@@ -92,7 +94,8 @@ export default {
       },
       rulesD:{
         money:[
-
+          // { required: true, message: '请输入手机号', trigger: 'blur' },
+          { min: 3, max: 9, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ]
       },
       form:{
@@ -172,7 +175,10 @@ export default {
     takePicture() {
         let context = canvas.getContext('2d');
         let image = new Image();
-        context.drawImage(video, 0, 0, 680, 360);
+
+
+        context.drawImage(video, 0, 0, 480, 320);
+
         // console.log(context.drawImage);
         image = canvas.toDataURL("image/jpeg");//base64
         this.$data.takeImages = image;
@@ -206,11 +212,21 @@ export default {
     //确认信息
     step02:function (){
       console.log('确认信息');
+      //一下都是测试开启，勿动
+      // this.userNew = true;
+      // this.phoneIsMySqlA = true;
+      // this.step01_block = false;
+      // this.step02_block = true;
+      // this.userNew= false;
+      // this.userOld = true;
+      // this.firstNewC = false;
+      // this.ifIsOld=true;
+      // this.ifIsNew=false;
     },
     //订单录入
     step03:function (){
       console.log('订单录入');
-      this.step03_block = true
+      // this.step03_block = true
     },
 
     dataURLtoFile(dataurl, filename){
@@ -247,6 +263,16 @@ export default {
         if(res.data.msg === '服务器内部错误'){
           this.$message({
             message: '您获取的照片不合法',
+            type: 'warning',
+            center: true
+          });
+          this.step02_block=false;
+          this.step01_block=true;
+          this.step03_block=false;
+        }else if(res.data.errno === -1){
+          console.log("获取照片失败");
+          this.$message({
+            message: '获取人脸失败',
             type: 'warning',
             center: true
           });
@@ -394,7 +420,7 @@ export default {
     },
 
     //点击获取验证码
-    GetSendM(){
+    getMsg(){
       let list = {
         'phone': this.$data.form.newPhone
       }
@@ -404,35 +430,68 @@ export default {
         this.phoneIsMySql = true;
       });
     },
+    GetSendM(){
+      if(this.$data.form.newPhone == ''){
+        this.$message({
+          type: 'warning',
+          message: '请输入手机号!'
+        });
+      }else{
+        if (!this.canClick) return  ;
+        this.canClick = false
+        this.$data.getClickName = this.$data.waitTime + 's后发送';
+        this.getMsg();
+        let clock = window.setInterval(() => {
+          this.$data.waitTime--;
+          this.$data.getClickName = this.$data.waitTime + 's后发送';
+          if (this.$data.waitTime < 0) {
+            window.clearInterval(clock)
+            this.$data.getClickName = '发送验证码';
+            this.$data.waitTime = 60;
+            this.canClick = true  //这里重新开启
+
+          }
+        },1000);
+      }
+
+    },
 
     //获得验证码，点击确认返回顾客信息
     GetMsgPull(){
       //验证码填写之后，点击确认
-      let list = {
-        'phone': this.$data.form.newPhone,
-        'code':this.$data.form.newTakeNum
+      if(this.$data.form.newTakeNum == ''){
+        this.$message({
+          type: 'warning',
+          message: '请填写验证码!'
+        });
+      }else{
+        let list = {
+          'phone': this.$data.form.newPhone,
+          'code':this.$data.form.newTakeNum
+        }
+        let qs = require('querystring');
+        OrderApi.checkMsg(qs.stringify(list)).then((res) => {
+          console.log(res);
+          console.log(res.data.data.avatar);
+          this.$data.ruleForm.image = res.data.data.avatar;
+          this.$data.ruleForm.name = res.data.data.name;
+          this.$data.ruleForm.phone = this.$data.form.newPhone;
+          if(res.data.data.gender === 1){
+            this.$data.ruleForm.sex = '男'
+          }else{
+            this.$data.ruleForm.sex = '女'
+          }
+          if(res.data.data.vip_level === 0){
+            this.$data.ruleForm.type = '普通'
+          }else if(res.data.data.vip_level === 1){
+            this.$data.ruleForm.type = 'VIP'
+          }
+          this.$data.faceId = res.data.data.customer_id;
+          this.checkoutCallBack = true;
+          this.userNew = false;
+        });
       }
-      let qs = require('querystring');
-      OrderApi.checkMsg(qs.stringify(list)).then((res) => {
-        console.log(res);
-        console.log(res.data.data.avatar);
-        this.$data.ruleForm.image = res.data.data.avatar;
-        this.$data.ruleForm.name = res.data.data.name;
-        this.$data.ruleForm.phone = this.$data.form.newPhone;
-        if(res.data.data.gender === 1){
-          this.$data.ruleForm.sex = '男'
-        }else{
-          this.$data.ruleForm.sex = '女'
-        }
-        if(res.data.data.vip_level === 0){
-          this.$data.ruleForm.type = '普通'
-        }else if(res.data.data.vip_level === 1){
-          this.$data.ruleForm.type = 'VIP'
-        }
-        this.$data.faceId = res.data.data.customer_id;
-        this.checkoutCallBack = true;
-        this.userNew = false;
-      });
+
 
     },
 
@@ -659,17 +718,22 @@ export default {
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         console.log(res);
-        this.$message({
-          message: res.data.msg,
-          type: 'warning',
-          center: true
-        });
+        if(res.data.msg != ''){
+          this.$message({
+            message: res.data.msg,
+            type: 'warning',
+            center: true
+          });
+        }
+
         this.step_1=2;
         this.step_2=2;
         this.step_3=2;
         this.step_4=1;
+        //完成订单之后，跳回列表页面
+        this.$router.push({path: '/Order'})
       });
-
+      // this.$router.push({path: '/Order'})
     }
 
   }

@@ -64,7 +64,7 @@
               <img :src="item.avatar" style="display:block;margin:0 auto;width:100%;">
               </div>
             </td>
-            <td>{{item.customerMerchant.name}}</td>
+            <td>{{item.customerMerchant.name == '' ? '--' : item.customerMerchant.name}}</td>
             <td>
               <span>{{item.gender == 1 ?'男':'女'}}</span>
             </td>
@@ -109,7 +109,7 @@
     <el-dialog :visible.sync="dialogVisible" style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">
       <el-tabs v-model="activeName1" @tab-click="checkout">
           <el-tab-pane label="个人信息" name="first">
-            <guest-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></guest-info>
+            <guest-info :customerId="currentCustomerId" :traffic="trafficId" :showInfoEdit="showInfoEdit"></guest-info>
           </el-tab-pane>
 
           <el-tab-pane label="到店记录" name="second" style="min-height:415px;">

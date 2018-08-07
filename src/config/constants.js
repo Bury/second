@@ -58,7 +58,7 @@ global.GUEST_HIDDEN = `${SERVER_IP}${COMMON}customer/do-hidden`
 global.GUEST_HIDDEN_LISTS = `${SERVER_IP}${COMMON}customer/hidden-list`
 
 global.GUEST_EDIT = `${SERVER_IP}${COMMON}customer/edit-personal-info`
-global.GUEST_VIEW = `${SERVER_IP}${COMMON}customer/personal-info`
+global.GUEST_VIEW_INFO = `${SERVER_IP}${COMMON}customer/personal-info`
 global.GUEST_DELE = `${SERVER_IP}${COMMON}customer/del`
 
 //标签数据
@@ -69,7 +69,7 @@ global.Guest_Visited_Record_Lists = `${SERVER_IP}${COMMON}customer/store-recore`
 //来客订单记录
 global.ORDER_LISTS_USER_RESULTS = `${SERVER_IP}${COMMON}customer/order-recore`
 //post order/search-traffic 查询人脸信息
-global.GUEST_VIEW = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
+global.GUEST_VIEW_FACE = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
 
 //门店数据统计
 global.STORE_DATA_STATISTICS = `${SERVER_IP}${COMMON}store/data-statistics`

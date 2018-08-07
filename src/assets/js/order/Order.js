@@ -1,6 +1,5 @@
 import global_data from '@/config/global_data'
 import orderApi from '@/api/order'
-import guestApi from '@/api/guest'
 import * as utils from '@/utils/index'
 import apiUrl from '@/config/API.js'
 
@@ -110,6 +109,7 @@ export default {
         ],
       },
       viewVisible: false,
+      noData:false,
       inputMaxL:'',
     }
   },
@@ -193,6 +193,7 @@ export default {
       }else{
         this.$data.cashTimes = ['',''];
         this.$data.createdTimes = ['',''];
+        this.lists();
       }
       let qs = require('querystring');
       orderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
@@ -200,7 +201,7 @@ export default {
           this.$data.tableData = res.data.data.list;
           this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
           this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-          this.$data.requestParameters = {};
+
         }
       })
     },
@@ -213,7 +214,7 @@ export default {
       this.view(row.id);
     },
     fnView(row) {
-      this.$data.editVisible = true;
+      this.$data.viewVisible = true;
       this.$data.takeTitle = '查看';
       this.$data.isForChange = false;
       this.view(row.id);
@@ -260,11 +261,10 @@ export default {
       orderApi.view(qs.stringify({id: id,})).then((res) => {
         if (res.data.errno === 0) {
           this.$data.editForm = res.data.data;
-          // console.log(res.data.data.cash_t);
-          // console.log(this.TimeOut(res.data.data.cash_t,4));
           let time = new Date(res.data.data.cash_t * 1000);
           this.$data.editForm.cash_t = time;
           this.$data.editForm.remark = res.data.data.remark;
+          this.$data.editForm.price = Number(res.data.data.price).toFixed(2);
           for (let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
             let obj = {
               'material': this.$data.editForm.orderGoods[i].material,
@@ -343,11 +343,12 @@ export default {
 
     //编辑查询人脸信息
     editFindGuestByFaceId() {
+      console.log(0)
       let list = {
         'id': this.$data.editForm.traffic.customer_id,
       }
       let qs = require('querystring');
-      guestApi.view(qs.stringify(list)).then((res) => {
+      orderApi.checkFaceInfo(qs.stringify(list)).then((res) => {
         if (res.data.errno === 0) {
           this.$data.editForm.traffic.avatar = res.data.data.avatar;
           this.$data.editForm.traffic.customer_id = res.data.data.customer_id;
@@ -410,7 +411,7 @@ export default {
         'id': this.$data.searchFace.id,
       }
       let qs = require('querystring');
-      guestApi.view(qs.stringify(list)).then((res) => {
+      orderApi.checkFaceInfo(qs.stringify(list)).then((res) => {
         if (res.data.errno === 0) {
           this.$data.faceSearch.avatar = res.data.data.avatar;
           this.$data.faceSearch.customer_id = res.data.data.customer_id;
@@ -517,9 +518,10 @@ export default {
     submitForm(formName) {
       let listArry = this.$data.imageListF.join(',');
       let sendData = JSON.stringify(this.$data.addProList);
+      let cashTime = this.$data.formName.cash_t / 1000;
       let list = {
         'goods_info': sendData,
-        'cash_t': this.$data.formName.cash_t,
+        'cash_t': cashTime,
         'remark': this.$data.formName.remark,
         'files_web': listArry,
         'customer_id': this.$data.faceSearch.customer_id

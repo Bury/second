@@ -33,7 +33,7 @@
             </el-row>
           </div>
           <div class="showImg" id="getCn" v-show="actionDialogVisible">
-            <canvas id="canvas" width="640" height="480"></canvas>
+            <canvas id="canvas" width="480" height="320"></canvas>
             <el-row style="flex-direction: column;margin-left: 2rem;align-items: center;margin-bottom: 3rem" id="getNn" >
               <el-button @click="takePictureAgain" style="margin-top: 1rem;margin-left: 1rem">重拍</el-button>
               <el-button style="margin-top: 5rem;" @click="recognition">智能识别</el-button>
@@ -95,7 +95,7 @@
             <!--数据库找到这个手机，验证更改信息-->
             <el-form-item v-show="phoneIsMySqlA" label="验证码:" style="width: 30rem;">
               <el-input v-model="form.newTakeNum" style="width: 10rem"></el-input>
-              <el-button plain style="float: right" @click="GetSendM">获取验证码</el-button>
+              <el-button plain style="float: right" @click="GetSendM" :class="{disabled: !this.canClick}">{{getClickName}}</el-button>
             </el-form-item>
             <el-form-item label="" style="width: 30rem;margin-top: 5rem;margin-right: 10rem">
               <el-button v-show="phoneIsMySql" @click="getUpMsg">上一步</el-button>
@@ -164,9 +164,9 @@
                   <el-option  v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="成交总额：">
+              <el-form-item label="成交总额：" prop="money">
                 <el-col :span="15">
-                  <el-input v-model="item.money" v-on:input="getMoney(item.money)" value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></el-input>
+                  <el-input v-model="item.money" v-on:input="getMoney(item.money)"  value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></el-input>
                 </el-col>
               </el-form-item>
               <el-form-item>
@@ -183,11 +183,11 @@
             <p>共计</p>
             <input class="lastNum" disabled v-model="allGoodLenght">
             <p>件，</p><p>总价</p>
-            <input class="lastNum" disabled v-model="allMoney" value="0">
+            <input class="lastNums" disabled v-model="allMoney" value="0">
             <p>元</p>
           </div>
         </el-row>
-        <!--长传小票-->
+        <!--上传小票-->
         <el-row>
           <el-upload v-model="item.file"
                      :action="importFileUrl()"

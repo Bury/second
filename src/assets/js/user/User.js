@@ -33,7 +33,7 @@ export default{
             },
             addRules:{
                 //role_id:globalRules.rules.common.id(),
-                name:globalRules.rules.user.truename(),
+                truename:globalRules.rules.user.truename(),
                 phone:globalRules.rules.user.phone(),
                 username:globalRules.rules.user.username(4,20,'请输入帐号'),
                 password:globalRules.rules.user.password(6,20,'请输入密码：'),
@@ -157,7 +157,10 @@ export default{
                 truename:'',
                 phone:'',
                 status:''
-            }
+            };
+          setTimeout(() =>{
+            this.$refs.editFormData.resetFields();
+          },0)
         },
 
         //编辑提交
@@ -179,7 +182,9 @@ export default{
                                 status:''
                             }
                             this.$data.editFormVisible = false;
-
+                          setTimeout(() =>{
+                            this.$refs.editFormData.resetFields();
+                          },0)
                         }else{
                             this.$message.error(res.data.msg);
                         }
@@ -196,9 +201,18 @@ export default{
             this.$data.resetPasswordFormVisible = true;
             this.fnResetPasswordClearData();
         },
+      resetClose(){
+        this.$data.resetPasswordFormVisible = false;
+        setTimeout(() =>{
+          this.$refs.resetPasswordFormData.resetFields();
+        },0)
+      },
 
         resetPasswordCancel(){
             this.$data.resetPasswordFormVisible = false;
+            setTimeout(() =>{
+              this.$refs.resetPasswordFormData.resetFields();
+            },0)
             this.fnResetPasswordClearData();
         },
 
