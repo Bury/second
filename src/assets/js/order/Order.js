@@ -110,6 +110,7 @@ export default {
         ],
       },
       viewVisible: false,
+      // viewVisible:false,
       inputMaxL:'',
     }
   },
@@ -213,7 +214,7 @@ export default {
       this.view(row.id);
     },
     fnView(row) {
-      this.$data.editVisible = true;
+      this.$data.viewVisible = true;
       this.$data.takeTitle = '查看';
       this.$data.isForChange = false;
       this.view(row.id);
@@ -260,11 +261,10 @@ export default {
       orderApi.view(qs.stringify({id: id,})).then((res) => {
         if (res.data.errno === 0) {
           this.$data.editForm = res.data.data;
-          // console.log(res.data.data.cash_t);
-          // console.log(this.TimeOut(res.data.data.cash_t,4));
           let time = new Date(res.data.data.cash_t * 1000);
           this.$data.editForm.cash_t = time;
           this.$data.editForm.remark = res.data.data.remark;
+          this.$data.editForm.price = Number(res.data.data.price).toFixed(2);
           for (let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
             let obj = {
               'material': this.$data.editForm.orderGoods[i].material,
