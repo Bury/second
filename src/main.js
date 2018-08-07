@@ -23,6 +23,8 @@ Vue.prototype.moment = Moment
 Vue.use(ElementUI)
 Vue.use(globalFunction);
 Vue.filter('date', filters.dateFilter)
+Vue.filter('numberFilter', filters.numberFilter)
+Vue.filter('numbersFilter', filters.numbersFilter)
 
 Vue.config.productionTip = false
 

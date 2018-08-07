@@ -88,3 +88,18 @@ Date.prototype.format = function (mask) {
     }
   })
 }
+
+//保留两位小数,四舍五入
+export const numberFilter = (value) => {
+  let realNum = Number(value).toFixed(2);
+  console.log(realNum)
+  return realNum;
+}
+
+//保留两位小数，不进行四舍五入
+export const numbersFilter = (value) =>{
+  let transtnum = Number(value).toFixed(3);
+  let realVal = transtnum.substring(0, transtnum.length - 1);
+  // return Number(realVal);
+  return realVal;
+}
