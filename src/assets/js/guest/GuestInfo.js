@@ -3,7 +3,7 @@ import globalData from '@/config/global_data'
 import globalRules from '@/config/global_rules'
 
 import globalFunctions from '@/config/global_functions'
-    
+
 import guestApi from '@/api/guest'
 
 import tagApi from '@/api/tag'
@@ -46,12 +46,12 @@ export default {
 
     watch: {
         customerId: function() {
-            this.view(this.$props.customerId)
+            this.view(this.$props.customerId,this.$props.traffic);
         },
     },
 
     created:function(){
-        this.view(this.$props.customerId)
+        this.view(this.$props.customerId,this.$props.traffic)
         this.getTagListsResults(this.$props.customerId)
     },
 
@@ -68,17 +68,23 @@ export default {
                     console.log(res.data.data)
                     this.$data.labels = res.data.data
                 }else{
-                    
+
                 }
             })
         },
 
-        view(customerId){
+        view(customerId,traffic){
+          console.log(customerId,traffic,141414);
             this.$data.infoEdit = this.$props.showInfoEdit;
             let qs = require('querystring');
-            let list ={'customer_id':customerId};
+            let list ={
+              'customer_id':customerId,
+              'traffic_id':traffic,
+            };
             guestApi.view(qs.stringify(list)).then((res) => {
+              console.log(res,131313);
                 if(res.data.errno === 0){
+                    console.log(res,151515);
                     var is_new=this.$data.guestInfo.is_new;
                     var vip_level=this.$data.guestInfo.vip_level;
                     this.$set(res.data.data, 'is_new_to_text', globalFunctions.functions.guest.getVisitInfo(is_new));
@@ -111,13 +117,13 @@ export default {
         guestInfoEditSubmit(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                        let qs = require('querystring');                            
+                        let qs = require('querystring');
                         guestApi.edit(qs.stringify({
                             customer_id:this.$data.editGuestInfoData.customer_id,
-                            name:this.$data.editGuestInfoData.name,    
-                            phone:this.$data.editGuestInfoData.phone,   
-                            gender:this.$data.editGuestInfoData.gender, 
-                            age:this.$data.editGuestInfoData.age, 
+                            name:this.$data.editGuestInfoData.name,
+                            phone:this.$data.editGuestInfoData.phone,
+                            gender:this.$data.editGuestInfoData.gender,
+                            age:this.$data.editGuestInfoData.age,
                             tag_ids:this.ids.join(","),
                             vip_level:this.$data.editGuestInfoData.vip_level,
                             remark:this.$data.editGuestInfoData.remark,
@@ -126,7 +132,7 @@ export default {
                                 this.guestInfoCancel();
                                 this.view(this.$props.customerId)
                             }else{
-                                
+
                             }
                     })
                 }

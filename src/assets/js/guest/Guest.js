@@ -56,6 +56,7 @@ export default {
                 gender:'',
             },
             currentCustomerId:'',
+            trafficId:'',
             showInfoEdit:false
         }
     },
@@ -77,7 +78,7 @@ export default {
                 if(result.errno === 0){
                     var i='';
                     this.tableData = result.data.list;
-                    console.log(this.tableData)
+                    // console.log(this.tableData)
                     this.$data.pagination.currentPage = result.data.pagination.currentPage;
                     this.$data.pagination.totalCount = result.data.pagination.totalCount;
                 }else{
@@ -96,8 +97,10 @@ export default {
         },
 
         showDialog(row) {
+          console.log(row);
             this.$data.showInfoEdit = false;
             this.$data.currentCustomerId = row.customer_id;
+            this.$data.trafficId = row.id;
             this.$data.activeName1 = 'first';
             this.$data.dialogVisible = true;
         },
