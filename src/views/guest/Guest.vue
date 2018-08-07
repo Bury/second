@@ -64,7 +64,7 @@
               <img :src="item.avatar" style="display:block;margin:0 auto;width:100%;">
               </div>
             </td>
-            <td>{{item.customerMerchant.name}}</td>
+            <td>{{item.customerMerchant.name == '' ? '--' : item.customerMerchant.name}}</td>
             <td>
               <span>{{item.gender == 1 ?'男':'女'}}</span>
             </td>
