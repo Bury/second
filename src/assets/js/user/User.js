@@ -33,7 +33,7 @@ export default{
             },
             addRules:{
                 //role_id:globalRules.rules.common.id(),
-                name:globalRules.rules.user.truename(),
+                truename:globalRules.rules.user.truename(),
                 phone:globalRules.rules.user.phone(),
                 username:globalRules.rules.user.username(4,20,'请输入帐号'),
                 password:globalRules.rules.user.password(6,20,'请输入密码：'),
