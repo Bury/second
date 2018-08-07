@@ -1,6 +1,5 @@
 import global_data from '@/config/global_data'
 import orderApi from '@/api/order'
-import guestApi from '@/api/guest'
 import * as utils from '@/utils/index'
 import apiUrl from '@/config/API.js'
 
@@ -343,11 +342,12 @@ export default {
 
     //编辑查询人脸信息
     editFindGuestByFaceId() {
+      console.log(0)
       let list = {
         'id': this.$data.editForm.traffic.customer_id,
       }
       let qs = require('querystring');
-      guestApi.view(qs.stringify(list)).then((res) => {
+      orderApi.checkFaceInfo(qs.stringify(list)).then((res) => {
         if (res.data.errno === 0) {
           this.$data.editForm.traffic.avatar = res.data.data.avatar;
           this.$data.editForm.traffic.customer_id = res.data.data.customer_id;
@@ -410,7 +410,7 @@ export default {
         'id': this.$data.searchFace.id,
       }
       let qs = require('querystring');
-      guestApi.view(qs.stringify(list)).then((res) => {
+      orderApi.checkFaceInfo(qs.stringify(list)).then((res) => {
         if (res.data.errno === 0) {
           this.$data.faceSearch.avatar = res.data.data.avatar;
           this.$data.faceSearch.customer_id = res.data.data.customer_id;

@@ -81,7 +81,7 @@ export default {
               'customer_id':customerId,
               'traffic_id':traffic,
             };
-            guestApi.view(qs.stringify(list)).then((res) => {
+            guestApi.viewInfo(qs.stringify(list)).then((res) => {
               console.log(res,131313);
                 if(res.data.errno === 0){
                     console.log(res,151515);

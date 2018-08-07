@@ -25,9 +25,9 @@ export default {
     })
   },
 
-  view (list){
+  viewInfo (list){
     return new Promise((resolve, reject) => {
-      axios.post(global.GUEST_VIEW, list).then((res) => {
+      axios.post(global.GUEST_VIEW_INFO, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)

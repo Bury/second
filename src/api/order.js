@@ -130,6 +130,15 @@ export default {
         reject(err)
       })
     })
+  },
+  checkFaceInfo(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_VIEW_FACE, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
   }
 }
 
