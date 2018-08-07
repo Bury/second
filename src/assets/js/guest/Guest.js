@@ -69,10 +69,9 @@ export default {
 
         //列表
         lists(){
-            // this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 || '';
-            // this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000 || '';
+            this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 ;
+            this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000;
             let qs = require('querystring');
-
             guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 let result = res.data;
                 if(result.errno === 0){
