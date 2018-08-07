@@ -51,7 +51,7 @@ export default{
         guestBoughtInfoCharts.delegateMethod('showLoading', 'Loading...');
         guestBoughtInfoCharts.removeSeries();
         setTimeout(() => {
-            guestBoughtInfoCharts.addSeries({data: value});
+            guestBoughtInfoCharts.addSeries({name:'人数',data: value});
             guestBoughtInfoCharts.hideLoading();
           }, 100)
       },

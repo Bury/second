@@ -17,10 +17,10 @@ const rules={
 	    		{ required: true, message: text, trigger: 'blur' },
 	        	{
 	        		validator:(rule,value,callback) =>{
-	        			if(value.match(/^[a-zA-Z0-9]{5,16}$/)){
+	        			if(value.match(/^[a-zA-Z0-9\u4e00-\u9fa5]{5,16}$/)){
 	        				callback();
 	        			}else{
-	        				callback("只能是数字和字母5-16位")
+	        				callback("只能是数字、字母和汉字5-16位")
 	        			}
 	        		},
 	        		trigger:'blur'

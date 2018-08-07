@@ -50,7 +50,7 @@ export default{
         guestAgeCharts.delegateMethod('showLoading', 'Loading...');
         guestAgeCharts.removeSeries();
         setTimeout(() => {
-              guestAgeCharts.addSeries({data: value});
+              guestAgeCharts.addSeries({name:'人数',data: value});
               guestAgeCharts.hideLoading();
           }, 100)
       },

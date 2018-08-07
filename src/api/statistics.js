@@ -26,4 +26,15 @@ export default {
 	    })
 	},
 	
+	
+	storeStatistics (list) {
+	    return new Promise((resolve, reject) => {
+	      axios.post(global.STORE_DATA_STATISTICS,list).then((res) => {
+	        resolve(res)
+	      }).catch((err) => {
+	        reject(err)
+	      })
+	    })
+	},
+	
 }

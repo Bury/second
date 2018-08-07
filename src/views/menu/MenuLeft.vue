@@ -7,7 +7,7 @@
                  text-color="#fff"
                  active-text-color="#409EFF">
             <router-link :to="{name: 'Statistics'}">
-                <el-menu-item index="/">
+                <el-menu-item index="/Statistics">
                     <i class="el-icon-menu"></i>
                     <span slot="title">客流统计</span>
                 </el-menu-item>

@@ -25,6 +25,7 @@ Vue.use(globalFunction);
 Vue.filter('date', filters.dateFilter)
 Vue.filter('numberFilter', filters.numberFilter)
 Vue.filter('numbersFilter', filters.numbersFilter)
+Vue.filter('numThousand', filters.numThousand)
 
 Vue.config.productionTip = false
 

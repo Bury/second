@@ -53,11 +53,11 @@
         <div class="noData" v-if="noData">暂无数据~</div>
         <ul class="charts-type" v-else>
                 <li class="charts-wrap">
+                	<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>
                     <div style="padding:10px 0 20px;text-align:center;">
-                    <el-button :chartClass="chartClass == 'line' ? 'primary' : ''" plain size="small" @click="switchChart('line')">折线图</el-button>
-                        <el-button :chartClass="chartClass == 'column' ? 'primary' : ''" plain size="small" @click="switchChart('column')">柱状图</el-button>
-                        <!-- <el-button chartClass="" plain size="small">饼形图</el-button> -->
-                    </div>
+                    <el-button :type="chartClass == 'line' ? 'primary' : ''"  size="small" @click="switchChart('line')">折线图</el-button>
+                    <el-button :type="chartClass == 'column' ? 'primary' : ''"  size="small" @click="switchChart('column')">柱状图</el-button>
+                    </div>                    
                     <guest-chart :guestData="guestData" :chartClass="chartClass"></guest-chart>
                 </li>
                 

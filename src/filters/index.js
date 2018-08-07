@@ -102,3 +102,14 @@ export const numbersFilter = (value) =>{
   // return Number(realVal);
   return realVal;
 }
+
+//数字千分位用逗号隔开展示
+export const numThousand = (value) =>{
+  let res = value.toString().replace(/\d+/, function(n) { // 先提取整数部分 
+				return n.replace(/(\d)(?=(\d{3})+$)/g, function($1) {
+					return $1 + ","
+				});
+			}) 
+		return res
+}
+

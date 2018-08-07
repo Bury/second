@@ -32,6 +32,7 @@ export default {
     data () {
         return {
             noData: false,
+            goStoreNum:'',
             timeType: 'day',
             day:'',
             week:'',
@@ -39,7 +40,7 @@ export default {
             year:'',
             userDefined:[],
             ctrlTimeType:[true,false,false,false,false],
-            chartClass:'',
+            chartClass:'line',
             guestData:{},
             guestVisitedInfoData:[],
             guestBoughtInfoData:[],
@@ -62,19 +63,31 @@ export default {
         //时间转为秒
         getS(value){
             var formatTimeS = new Date(value).getTime()/1000;
-            return  Math.floor(formatTimeS) 
+            return  formatTimeS 
         },
 
         //客流量
         getCustomer(parameters){
             let qs = require('querystring');
             statisticsApi.getCustomer(qs.stringify(parameters)).then((res) => {
-                if(res.data.errno === 0){
-                   // console.log(res.data.data)
+                if(res.data.errno === 0){                    
                     this.$data.guestData = res.data.data;
-                }else{
-
                 }
+            })
+        },
+        
+        //到店人数
+        storeStatistics(d){
+        	let timeData = {
+        		time_start:d.begin_time,
+        		time_end:d.end_time,
+        	};
+        	let qs = require('querystring');
+            statisticsApi.storeStatistics(qs.stringify(timeData)).then((res) => {
+            	if(res.data.errno === 0){
+            		this.$data.goStoreNum = res.data.data.passenger_flow
+            	}
+              
             })
         },
 
@@ -90,6 +103,7 @@ export default {
                 if(res.data.errno === 0){
                     let thisData = res.data.data;
                     if (thisData) {
+                    	this.noData = false
                         if(types == 'face'){
                             let newData = [];
                             for(var i=0; i<thisData.face.length; i++){
@@ -134,16 +148,47 @@ export default {
             })
 
         },
-
+         
+         //切换折现和柱状图
         switchChart(value){
-            // console.log(value)
             this.$data.chartClass = value;
-            this.setData();
         },
-
         //搜索
-        onSubmit(){
-            this.setData();
+        onSubmit(){   	
+        	if(this.$data.ctrlTimeType[0]){
+        		
+            	this.$data.guestParameters.begin_time = this.getS(this.$data.day);
+                this.$data.guestParameters.end_time =   this.getS(this.$data.day) + 86399; 
+                
+            }else if(this.$data.ctrlTimeType[1]){
+            	
+            	this.$data.guestParameters.begin_time = this.getS(this.$data.week);
+                this.$data.guestParameters.end_time =   this.getS(this.$data.week) + 604799;
+                
+            }else if(this.$data.ctrlTimeType[2]){  
+            	
+            	let nexty,nextm;  
+            	let t = new Date(this.$data.month);            	
+            	let m = t.getMonth() + 1;      
+            	let y = t.getFullYear();
+            	m === 12 ? (nexty = y + 1,nextm = 1):(nexty = y,nextm = m + 1)
+            	this.$data.guestParameters.begin_time = t.getTime() / 1000;
+                this.$data.guestParameters.end_time =  this.getS(`${nexty}/${nextm}/01 00:00:00`) - 1;
+                
+            }else if(this.$data.ctrlTimeType[3]){
+            	
+            	let yearDate = new Date(this.$data.year);
+            	let y = yearDate.getFullYear();
+            	this.$data.guestParameters.begin_time = this.getS(`${y}/01/01 00:00:00`);
+                this.$data.guestParameters.end_time =  this.getS(`${y}/12/31 23:59:59`);  
+                
+            }else if(this.$data.ctrlTimeType[4]){
+            	
+            	this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
+                this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
+                
+            }
+        	this.requestData();
         },
 
         /*
@@ -236,8 +281,11 @@ export default {
                 this.statisticsFeature(this.$data.guestParameters, 'buy');
                 this.statisticsFeature(this.$data.guestParameters, 'age');
                 this.statisticsFeature(this.$data.guestParameters, 'gender');
-                this.statisticsFeature(this.$data.guestParameters, 'camera');            
-        }
+                this.statisticsFeature(this.$data.guestParameters, 'camera'); 
+                this.storeStatistics(this.$data.guestParameters)
+        },
+        
+        
 
     }
 

@@ -47,10 +47,13 @@ export default{
             newOldCharts.delegateMethod('showLoading', 'Loading...');
             newOldCharts.removeSeries();
              setTimeout(() => {
-                newOldCharts.addSeries({data: value});
+                newOldCharts.addSeries({name:'人数',data: value});
                 newOldCharts.hideLoading();
             }, 100)
         },
     }
     
 }
+
+
+

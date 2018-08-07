@@ -36,12 +36,11 @@ export default{
     },
     methods: {
       getData(value){
-        // console.log(value)
         let guestGenderCharts = this.$refs.guestGenderCharts;
         guestGenderCharts.delegateMethod('showLoading', 'Loading...');
         guestGenderCharts.removeSeries();
         setTimeout(() => {
-              guestGenderCharts.addSeries({data: value});
+              guestGenderCharts.addSeries({name:'人数',data: value});
               guestGenderCharts.hideLoading();
           }, 100)
       },

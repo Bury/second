@@ -20,7 +20,7 @@ export default{
          return{
             options: {
                 chart: {
-                    type: ''//line/column
+                    type: 'line'//line/column
                 },
                 title: {
                     text: '客流量占比'
@@ -30,7 +30,7 @@ export default{
                 },
                 yAxis: {
                     title: {
-                        text: ''
+                        text: '人数'
                     }
                 },
                 credits: {
@@ -63,7 +63,11 @@ export default{
             // }
             // alert(chart_class_text_string+'@@@')
             this.getData(this.$props.guestData);
+        },
+        chartClass:function(){
+        	this.getData(this.$props.guestData)
         }
+        
     },
 
     methods: {
@@ -89,10 +93,10 @@ export default{
                 }else{
                     chart_class_text_string=this.$props.chartClass;
                 }
-                // alert(chart_class_text_string)
+                
                 this.$data.options.chart.type=chart_class_text_string;
-
                 guestCharts.addSeries({name:' 客流量统计',data: value.sum});
+                guestCharts.getChart().xAxis[0].setCategories(value.time);
                 guestCharts.hideLoading();
 
                 // console.log(guestCharts.getChart().series)
