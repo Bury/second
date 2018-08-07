@@ -187,7 +187,7 @@
             <p>元</p>
           </div>
         </el-row>
-        <!--长传小票-->
+        <!--上传小票-->
         <el-row>
           <el-upload v-model="item.file"
                      :action="importFileUrl()"
