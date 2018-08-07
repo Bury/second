@@ -10,7 +10,7 @@ const rules={
 	},
 
 	user:{
-		
+
         //用户名验证
 		username(len_min,len_max,text){
 			return [
@@ -27,23 +27,23 @@ const rules={
 	        	}
 	    	]
 		},
-        
+
         //密码验证
 		password(len_min,len_max,text) {
 			 return [
 		        { required: true, message: text, trigger: 'blur' },
 		        { validator:(rule,value,callback) =>{
-	        			if(value.match(/^[a-zA-Z0-9]{5,16}$/)){
+	        			if(value.match(/^[a-zA-Z0-9]{6,16}$/)){
 	        				callback();
 	        			}else{
 	        				callback("数字和字母6-16位")
 	        			}
 	        		},
-	        		trigger:'blur' 
+	        		trigger:'blur'
 		        }
 			]
 		},
-        
+
         //手机号验证
 		phone(){
 			return [
@@ -59,13 +59,13 @@ const rules={
 	                	trigger: 'blur'
 	            	}
 	        	]
-		},        
-        
+		},
+
         //姓名验证
 		truename(){
 			return [
 	    		{ required: true, message: '请输入姓名', trigger: 'blur' },
-	    		
+
 	        	{
 	                validator: (rule, value, callback) => {
 		                    if (value.match(/^[a-zA-Z\u4e00-\u9fa5]{2,8}$/)){
@@ -78,7 +78,7 @@ const rules={
 	            	}
 	    	]
 		},
-		
+
 		//性别验证
 		gender(){
 			return [
@@ -86,8 +86,8 @@ const rules={
 			]
 		}
 	},
-	
-	
+
+
 }
 
 export default {
