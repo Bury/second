@@ -521,9 +521,10 @@ export default {
     submitForm(formName) {
       let listArry = this.$data.imageListF.join(',');
       let sendData = JSON.stringify(this.$data.addProList);
+      let cashTime = this.$data.formName.cash_t / 1000;
       let list = {
         'goods_info': sendData,
-        'cash_t': this.$data.formName.cash_t,
+        'cash_t': cashTime,
         'remark': this.$data.formName.remark,
         'files_web': listArry,
         'customer_id': this.$data.faceSearch.customer_id
