@@ -145,27 +145,35 @@ export default {
         if(this.$data.passwordEditForm.passwordOld==this.$data.passwordEditForm.passwordCurrent){
           globalFunctions.functions.message(this,'error','新的密码与当前密码不能相同');
           return false;
-        }
-        if (valid) {
-          let list = {
-            'old_password':this.$data.passwordEditForm.passwordOld,
-            'new_password':this.$data.passwordEditForm.passwordCurrent,
-            'new_password2':this.$data.passwordEditForm.passwordRepeat
-          }
-          let qs = require('querystring')
-          userApi.password_edit(qs.stringify(list)).then((res) => {
-            if(res.data.errno === 0){
-              globalFunctions.functions.message(this,'success','修改成功');
-              this.$data.dialogFormVisible = false;
-              this.$data.passwordEditForm.passwordOld = '';
-              this.$data.passwordEditForm.passwordCurrent = '';
-              this.$data.passwordEditForm.passwordRepeat = '';
-            }else{
-              this.$message.error(res.data.msg);
+        }else{
+          if(this.$data.passwordEditForm.passwordCurrent==this.$data.passwordEditForm.passwordRepeat){
+            if (valid) {
+              let list = {
+                'old_password':this.$data.passwordEditForm.passwordOld,
+                'new_password':this.$data.passwordEditForm.passwordCurrent,
+                'new_password2':this.$data.passwordEditForm.passwordRepeat
+              }
+              let qs = require('querystring')
+              userApi.password_edit(qs.stringify(list)).then((res) => {
+                if(res.data.errno === 0){
+                  globalFunctions.functions.message(this,'success','修改成功');
+                  this.$data.dialogFormVisible = false;
+                  this.$data.passwordEditForm.passwordOld = '';
+                  this.$data.passwordEditForm.passwordCurrent = '';
+                  this.$data.passwordEditForm.passwordRepeat = '';
+                  this.$router.push('/Statistics');
+                }else{
+                  this.$message.error(res.data.msg);
+                }
+              })
             }
-          })
+          } else{
+            this.$message.error('密码输入不正确，请再次输入');
+          }
+
         }
-        this.$router.push('/Statistics');
+
+
       });
       setTimeout(() =>{
         this.$refs.passwordEditForm.resetFields();
