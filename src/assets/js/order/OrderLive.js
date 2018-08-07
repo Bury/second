@@ -172,7 +172,7 @@ export default {
     takePicture() {
         let context = canvas.getContext('2d');
         let image = new Image();
-        context.drawImage(video, 0, 0, 680, 360);
+        context.drawImage(video, 0, 0, 480, 320);
         // console.log(context.drawImage);
         image = canvas.toDataURL("image/jpeg");//base64
         this.$data.takeImages = image;
