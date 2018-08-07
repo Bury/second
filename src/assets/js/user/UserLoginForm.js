@@ -7,6 +7,9 @@ export default {
   name: 'login-form',
   data() {
     return {
+      getClickName:'获取验证码',
+      waitTime:60,
+      canClick: true,
       loginInfo: {
         username: '',
         password: ''
@@ -86,20 +89,48 @@ export default {
     forget() {
       this.$data.passwordVisible = true;
     },
-    code(){
+    getMsg(){
       let list = {
         'phone': this.$data.passwordForm.phone,
         'username': this.$data.passwordForm.username,
       };
       let qs = require('querystring');
       userApi.sendSms(qs.stringify(list)).then((res) => {
+
+      })
+    },
+    code(){
+
+      if(this.$data.passwordForm.username == ''){
+        this.$message({
+          type: 'warning',
+          message: '请输入用户名!'
+        });
+      }else{
         if(this.$data.passwordForm.phone == ''){
           this.$message({
             type: 'warning',
             message: '请输入手机号!'
           });
+        }else{
+          if (!this.canClick) return  ;
+          this.canClick = false
+          this.$data.getClickName = this.$data.waitTime + 's后发送';
+          this.getMsg();
+          let clock = window.setInterval(() => {
+            this.$data.waitTime--;
+            this.$data.getClickName = this.$data.waitTime + 's后发送';
+            if (this.$data.waitTime < 0) {
+              window.clearInterval(clock)
+              this.$data.getClickName = '发送验证码';
+              this.$data.waitTime = 60;
+              this.canClick = true  //这里重新开启
+
+            }
+          },1000);
         }
-      })
+      }
+
     },
     blur(){
       let list = {
