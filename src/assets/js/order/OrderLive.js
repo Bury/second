@@ -172,7 +172,7 @@ export default {
     takePicture() {
         let context = canvas.getContext('2d');
         let image = new Image();
-        context.drawImage(video, 0, 0, 680, 360);
+        context.drawImage(video, 0, 0, 640, 480);
         // console.log(context.drawImage);
         image = canvas.toDataURL("image/jpeg");//base64
         this.$data.takeImages = image;
@@ -247,6 +247,16 @@ export default {
         if(res.data.msg === '服务器内部错误'){
           this.$message({
             message: '您获取的照片不合法',
+            type: 'warning',
+            center: true
+          });
+          this.step02_block=false;
+          this.step01_block=true;
+          this.step03_block=false;
+        }else if(res.data.errno === -1){
+          console.log("获取照片失败");
+          this.$message({
+            message: '获取人脸失败',
             type: 'warning',
             center: true
           });
