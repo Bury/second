@@ -92,7 +92,6 @@ Date.prototype.format = function (mask) {
 //保留两位小数,四舍五入
 export const numberFilter = (value) => {
   let realNum = Number(value).toFixed(2);
-  console.log(realNum)
   return realNum;
 }
 
