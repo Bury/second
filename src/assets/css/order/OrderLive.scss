@@ -69,4 +69,10 @@
   .el-icon-plus{
     font-size: 5rem;
   }
+  .disabled{
+    background-color: #ddd;
+    border-color: #ddd;
+    color:#57a3f3;
+    cursor: not-allowed; // 鼠标变化
+  }
 }
