@@ -29,7 +29,7 @@
         <td>{{item.created_at | date(4)}}</td>
         <td>
           <el-button type="primary" plain icon="el-icon-view" circle size="small"
-                     @click="fnResetPassword(item)"></el-button>
+                     @click="fnResetPassword(item)" v-bind:disabled="item.status==0"></el-button>
           <el-button type="warning" plain icon="el-icon-edit" circle size="small"
                      @click="fnEdit(item)"></el-button>
           <el-button type="danger" plain icon="el-icon-delete" circle size="small"
