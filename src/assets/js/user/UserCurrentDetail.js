@@ -80,6 +80,7 @@ export default {
         },
 
         fnPasswordEditSubmitForm(formName){
+          // console.log(this.$data.passwordEditForm.passwordOld);
             this.$refs[formName].validate((valid) => {
                 if(this.$data.passwordEditForm.passwordOld==this.$data.passwordEditForm.passwordCurrent){
                     globalFunctions.functions.message(this,'error','新的密码与当前密码不能相同');
