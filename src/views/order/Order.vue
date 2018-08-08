@@ -374,8 +374,9 @@
               </el-form-item>
             </el-col>
             <el-col :span='7'>
-              <el-form-item label='成交金额：' prop="price">
-                <el-input v-model='item.price' v-on:input='editInputFun()' disabled></el-input>
+              <el-form-item label='成交金额：'>
+                <p class="numberPrice">{{item.price | numberFilter}}</p>
+                <!--<el-input v-model='' v-on:input='editInputFun()' disabled></el-input>-->
               </el-form-item>
             </el-col>
           </el-row>
