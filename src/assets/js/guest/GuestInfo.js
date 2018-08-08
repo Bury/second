@@ -74,7 +74,7 @@ export default {
         },
 
         view(customerId,traffic){
-          console.log(customerId,traffic,141414);
+          // console.log(customerId,traffic,141414);
             this.$data.infoEdit = this.$props.showInfoEdit;
             let qs = require('querystring');
             let list ={
@@ -82,9 +82,7 @@ export default {
               'traffic_id':traffic,
             };
             guestApi.viewInfo(qs.stringify(list)).then((res) => {
-              console.log(res,131313);
                 if(res.data.errno === 0){
-                    console.log(res,151515);
                     var is_new=this.$data.guestInfo.is_new;
                     // console.log(res.data.data.vip_level)
                     var vip_level=res.data.data.vip_level;
@@ -109,6 +107,7 @@ export default {
         editGuestInfo(){
             this.$data.editGuestInfoData = this.$data.guestInfo;
             this.$data.infoEdit = true;
+            console.log(this.$data.editGuestInfoData);
         },
 
         guestInfoCancel(){
@@ -131,6 +130,7 @@ export default {
                             remark:this.$data.editGuestInfoData.remark,
                         })).then((res) => {
                             if(res.data.errno === 0){
+                              console.log(this.$data.editGuestInfoData.vip_level)
                                 this.guestInfoCancel();
                                 this.view(this.$props.customerId)
                             }else{

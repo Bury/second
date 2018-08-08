@@ -44,10 +44,11 @@
                     {{editGuestInfoData.is_new_to_text}}
                 </el-form-item>
                 <el-form-item label="未购/已购：">
-                    <el-radio-group v-model="editGuestInfoData.vip_level">
-                    <el-radio :label="0">未购</el-radio>
-                    <el-radio :label="1">已购</el-radio>
-                </el-radio-group>
+                 {{editGuestInfoData.vip_level == 0 ? '未购' : '已购'}}
+                    <!--<el-radio-group v-model="editGuestInfoData.vip_level" >-->
+                      <!--&lt;!&ndash;<el-radio :label="0">已购</el-radio>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<el-radio :label="1">已购</el-radio>&ndash;&gt;-->
+                <!--</el-radio-group>-->
                 </el-form-item>
                 <el-form-item label="标签：">
                     <div v-for="label in labels" :key="label.id" class="labels">
