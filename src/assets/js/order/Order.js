@@ -111,6 +111,11 @@ export default {
       viewVisible: false,
       noData:false,
       inputMaxL:'',
+      pickerOptionsSet: {
+        disabledDate(time) {
+          return time.getTime() > Date.now() - 8.64e6
+        }
+      },
     }
   },
   created: function () {

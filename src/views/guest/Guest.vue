@@ -3,7 +3,7 @@
     <div class="top-box" v-show="topBoxSow">
 			  <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
           <el-form-item label="进店时间：">
-            <el-date-picker
+            <el-date-picker :picker-options="pickerOptionsSet"
                 v-model="value4"
                 type="datetimerange"
                 range-separator="至"

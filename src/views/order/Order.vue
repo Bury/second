@@ -34,7 +34,7 @@
           </el-col>
         </el-form-item>
         <el-form-item label="收银时间：">
-          <el-date-picker
+          <el-date-picker :picker-options="pickerOptionsSet"
             v-model="cashTimes"
             type="datetimerange"
             range-separator="至"
@@ -43,7 +43,7 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="创建时间：">
-          <el-date-picker
+          <el-date-picker :picker-options="pickerOptionsSet"
             v-model="createdTimes"
             type="datetimerange"
             range-separator="至"
@@ -112,7 +112,7 @@
     <el-dialog title="补单" :visible.sync="FormVisible" :before-close="dialogClose">
       <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
-          <el-date-picker
+          <el-date-picker :picker-options="pickerOptionsSet"
             v-model="formName.cash_t"
             type="datetime"
             placeholder="选择日期时间">

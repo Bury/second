@@ -58,6 +58,11 @@ export default {
             currentCustomerId:'',
             trafficId:'',
             showInfoEdit:false,
+            pickerOptionsSet: {
+              disabledDate(time) {
+                return time.getTime() > Date.now() - 8.64e6
+              }
+            },
         }
     },
 
