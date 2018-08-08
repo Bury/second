@@ -275,7 +275,7 @@ export default {
         }else if(res.data.errno === -1){
           console.log("获取照片失败");
           this.$message({
-            message: '获取人脸失败',
+            message: '获取人脸失败，请重新拍摄',
             type: 'warning',
             center: true
           });
