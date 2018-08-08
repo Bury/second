@@ -13,7 +13,7 @@
                 <div class="img-wrap">
                     <img :src="guestInfo.avatar" alt="人脸图像">
                 </div>
-                <div class="img-id">人脸ID：{{guestInfo.id}}</div>
+                <div class="img-id">人脸ID：{{guestInfo.customer_id}}</div>
             </div>
             <div class="user-tags">
                 标签：

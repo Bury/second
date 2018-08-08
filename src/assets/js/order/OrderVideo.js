@@ -548,7 +548,9 @@ export default {
       this.$data.NewRuleForm.images = this.$data.newNewP;
       this.$data.NewRuleForm.phone = this.$data.form.newPhone;
       this.$data.NewRuleForm.sex = this.$data.newNewQ;
-      this.$data.NewRuleForm.type =  this.$data.newNewR
+      this.$data.NewRuleForm.type =  this.$data.newNewR;
+      this.$data.NewRuleForm.textarea2 =  this.$data.remark;
+      this.$data.isNoMyself = this.$data.faceIdIs;
     },
 
     //第二步返回第一步
@@ -721,10 +723,7 @@ export default {
           });
         }
 
-        this.step_1=2;
-        this.step_2=2;
-        this.step_3=2;
-        this.step_4=1;
+
         //完成订单之后，跳回列表页面
         if(res.data.error == 0){
           this.$message({
@@ -734,6 +733,10 @@ export default {
           });
           this.$router.push({path: '/Order'});
           this.$refs.upload.clearFiles();
+          this.step_1=2;
+          this.step_2=2;
+          this.step_3=2;
+          this.step_4=1;
         }
 
       });
