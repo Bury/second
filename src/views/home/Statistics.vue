@@ -56,8 +56,7 @@
                 <el-tab-pane label="自定义统计" name="userDefined"></el-tab-pane>
             </el-tabs>
         </div>
-        <div class="noData" v-if="noData">暂无数据~</div>
-        <ul class="charts-type" v-else>
+        <ul class="charts-type">
                 <li class="charts-wrap">
                 	<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>
                     <div style="padding:10px 0 20px;text-align:center;">

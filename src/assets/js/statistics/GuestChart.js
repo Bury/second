@@ -1,4 +1,7 @@
+import Highcharts from 'highcharts';
+import HighchartsNoData from 'highcharts-no-data-to-display';
 import VueHighcharts from 'vue2-highcharts'
+HighchartsNoData(Highcharts)
 
 export default {
 
@@ -18,6 +21,7 @@ export default {
 	data() {
 
 		return {
+			Highcharts:Highcharts,
 			options: {
 				chart: {
 					type: 'line' //line/column
@@ -53,16 +57,7 @@ export default {
 	},
 
 	watch: {
-		guestData: function() {
-			// alert(this.$props.guestData)
-			// alert(this.$props.chartClass)
-			// var chart_class_text_string='';
-			// if(this.$props.chartClass=='' || this.$props.chartClass=='line'){
-			//     chart_class_text_string='line';
-			// }else{
-			//     chart_class_text_string=this.$props.chartClass;
-			// }
-			// alert(chart_class_text_string+'@@@')
+		guestData: function() {			
 			this.getData(this.$props.guestData);
 		},
 		chartClass: function() {
@@ -70,33 +65,36 @@ export default {
 		}
 
 	},
+	created:function(){		
+		Highcharts.setOptions({
+				lang: {
+					thousandsSep: ',',
+					noData: '暂无数据'
+				}
+		});
+	},
 
 	methods: {
 		getData(value) {
-			// console.log(value);
+			let isdata = value.sum.every(function(val){return val == 0})
+			
 			let guestCharts = this.$refs.guestCharts;
 			guestCharts.delegateMethod('showLoading', 'Loading...');
 			if(guestCharts.getChart().series[0] != undefined) {
 				guestCharts.getChart().series[0].remove(true); //删除单个
-			}
-
+			}  
 			setTimeout(() => {
-				var chart_class_text_string = '';
-				if(this.$props.chartClass == '' || this.$props.chartClass == 'line') {
-					chart_class_text_string = 'line';
-				} else {
-					chart_class_text_string = this.$props.chartClass;
-				}
-
-				this.$data.options.chart.type = chart_class_text_string;
+				guestCharts.hideLoading();
+				
+				this.$data.options.chart.type = this.$props.chartClass;
 				guestCharts.addSeries({
 					name: ' 客流量统计',
-					data: value.sum
+					data: (isdata && [] ) ||  value.sum
 				});
 				guestCharts.getChart().xAxis[0].setCategories(value.time);
-				guestCharts.hideLoading();
+				
 				guestCharts.getChart().series[0].update({
-					type: this.$data.options.chart.type
+					type: this.$props.chartClass
 				})
 			}, 100)
 		},

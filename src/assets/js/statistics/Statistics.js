@@ -31,7 +31,6 @@ export default {
 
     data () {
         return {        	
-            noData: false,
             goStoreNum:'',
             timeType: 'day',
             day:'',
@@ -75,7 +74,7 @@ export default {
         getCustomer(parameters){
             let qs = require('querystring');
             statisticsApi.getCustomer(qs.stringify(parameters)).then((res) => {
-                if(res.data.errno === 0){                    
+                if(res.data.errno === 0){      
                     this.$data.guestData = res.data.data;
                 }
             })
@@ -162,7 +161,7 @@ export default {
             this.$data.chartClass = value;
         },
         //搜索
-        onSubmit(){   	
+        onSubmit(){ 
         	if(this.$data.ctrlTimeType[0]){
             	this.$data.guestParameters.begin_time = this.getS(this.$data.day);
                 this.$data.guestParameters.end_time =   this.getS(this.$data.day) + 86399; 
@@ -212,33 +211,41 @@ export default {
             this.setData();
         },
         
+        //绑定默认时间
+        modelDate(t){        	
+        	let d = new Date(t*1000);
+            return d;
+        	
+        },          
         getBeginEnd(val){
         	let t = new Date();
             let y = t.getFullYear();
             let m = t.getMonth() + 1;
             let d = t.getDate();    
-            let weekd  = t.getDay();
-            
+            let weekd  = t.getDay();            
             switch (val){
-	       	case "day":
-//	       	    this.$data.day = t.toString()
+	       	case "day":	       	    
 	       	    this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/${d} 00:00:00`);
                 this.$data.guestParameters.end_time =  this.getS(`${y}/${m}/${d} 23:59:59`);
+                this.$data.day = this.modelDate(this.$data.guestParameters.begin_time)
 	       		break;
 	       	case "week":
 	       	    if(weekd === 0){ weekd = 7 }
             	this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/${d} 00:00:00`) - 86400*(weekd-1);
                 this.$data.guestParameters.end_time =  this.getS(`${y}/${m}/${d} 23:59:59`) + 86400*(7 - weekd);
+                this.$data.week =  this.modelDate(this.$data.guestParameters.begin_time)
 	       		break;
 	       	case "month":
 	       	    let nexty,nextm;            	
             	m === 12 ? (nexty = y + 1,nextm = 1):(nexty = y,nextm = m + 1)
             	this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/01 00:00:00`);
             	this.$data.guestParameters.end_time =  this.getS(`${nexty}/${nextm}/01 00:00:00`) - 1;
+            	this.$data.month =  this.modelDate(this.$data.guestParameters.begin_time)
 	       		break;
 	       	case "year":
 	       	    this.$data.guestParameters.begin_time = this.getS(`${y}/01/01 00:00:00`);
                 this.$data.guestParameters.end_time =  this.getS(`${y}/12/31 23:59:59`);
+               this.$data.year =  this.modelDate(this.$data.guestParameters.begin_time)
 	       		break;
 	       	case "select":
 	       	    this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
