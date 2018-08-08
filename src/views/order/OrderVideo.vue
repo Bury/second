@@ -122,7 +122,7 @@
             <!--数据库找到这个手机，验证更改信息-->
             <el-form-item v-show="phoneIsMySqlA" label="验证码:" style="width: 30rem;">
               <el-input v-model="form.newTakeNum" style="width: 10rem"></el-input>
-              <el-button plain style="float: right" @click="GetSendM">获取验证码</el-button>
+              <el-button plain style="float: right" @click="GetSendM" :class="{disabled: !this.canClick}">{{getClickName}}</el-button>
             </el-form-item>
             <el-form-item label="" style="width: 30rem;margin-top: 5rem;margin-right: 10rem">
               <el-button v-show="phoneIsMySql" @click="getUpMsg">上一步</el-button>

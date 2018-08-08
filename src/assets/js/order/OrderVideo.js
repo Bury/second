@@ -31,11 +31,14 @@ export default {
       step_4:2,
       materials:[],
       styles:[],
-
+      getClickName:'获取验证码',
+      waitTime:60,
+      canClick: true,
+      isCan:0,
       step01_block:true,
       step02_block:false,
       step03_block:false,
-      inputMaxL:'',
+      inputMaxL:9,
 
       showVideo:true,
       actionDialogVisible: false,
@@ -49,7 +52,8 @@ export default {
       ifIsNew:false,
       firstNewC:false,
       phoneIsMySqlA:false,
-      faceId:'',
+      faceIdIs:'',
+      faceIdNo:'',
       takeImages:'',
       goodsList:[],
       allMoneyList:[],
@@ -92,7 +96,8 @@ export default {
       },
       rulesD:{
         money:[
-
+          { required: true, message: '最高输入金额一百万', trigger: 'change' },
+          // { min: 3, max: 9, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ]
       },
       form:{
@@ -111,7 +116,8 @@ export default {
         money:''
       }],
       dialogImageUrl: '',
-      actionDialogVisible: false
+      actionDialogVisible: false,
+      isNoMyself:'',
     };
   },
 
@@ -124,7 +130,7 @@ export default {
   },
 
   mounted:function(){
-    // this.camera_process();
+    this.camera_process();
   },
 
   methods:{
@@ -153,37 +159,37 @@ export default {
         }
       })
     },
-    reFresh(){
-      console.log(15151515);
-    },
     //  调用摄像头
-    // camera_process(){
-    //   let video = document.getElementById('video');
-    //   let canvas = document.getElementById('canvas');
-    //   let context = canvas.getContext('2d');
-    //   let image = new Image();
-    //
-    //   if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
-    //     //调用用户媒体设备, 访问摄像头
-    //     globalFunctions.functions.user_media.getUserMedia({video : {width: 480, height: 320}}, globalFunctions.functions.user_media.success, globalFunctions.functions.user_media.error,video);
-    //   } else {
-    //     alert('不支持访问用户媒体');
-    //   }
-    // },
+    camera_process(){
+      let video = document.getElementById('video');
+      let canvas = document.getElementById('canvas');
+      let context = canvas.getContext('2d');
+      let image = new Image();
+
+      if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+        //调用用户媒体设备, 访问摄像头
+        globalFunctions.functions.user_media.getUserMedia({video : {width: 480, height: 320}}, globalFunctions.functions.user_media.success, globalFunctions.functions.user_media.error,video);
+      } else {
+        alert('不支持访问用户媒体');
+      }
+    },
 
     //拍照
     takePicture() {
-        let context = canvas.getContext('2d');
-        let image = new Image();
-        context.drawImage(video, 0, 0, 680, 360);
-        // console.log(context.drawImage);
-        image = canvas.toDataURL("image/jpeg");//base64
-        this.$data.takeImages = image;
-        // console.log(this.$data.takeImages)
-        document.getElementById('getVideo').style.display = 'none';
-        //  获取头像
-        this.showVideo = false;
-        this.actionDialogVisible = true;
+      let context = canvas.getContext('2d');
+      let image = new Image();
+
+
+      context.drawImage(video, 0, 0, 480, 320);
+
+      // console.log(context.drawImage);
+      image = canvas.toDataURL("image/jpeg");//base64
+      this.$data.takeImages = image;
+      // console.log(this.$data.takeImages)
+      document.getElementById('getVideo').style.display = 'none';
+      //  获取头像
+      this.showVideo = false;
+      this.actionDialogVisible = true;
     },
 
     //重拍
@@ -209,10 +215,21 @@ export default {
     //确认信息
     step02:function (){
       console.log('确认信息');
+      //一下都是测试开启，勿动
+      // this.userNew = true;
+      // this.phoneIsMySqlA = true;
+      // this.step01_block = false;
+      // this.step02_block = true;
+      // this.userNew= false;
+      // this.userOld = true;
+      // this.firstNewC = false;
+      // this.ifIsOld=true;
+      // this.ifIsNew=false;
     },
     //订单录入
     step03:function (){
       console.log('订单录入');
+      // this.step03_block = true
     },
 
     dataURLtoFile(dataurl, filename){
@@ -242,7 +259,6 @@ export default {
       //  请求接口，上传文件（头像）,返回0-新客，1-熟客
       let file = this.dataURLtoFile(this.$data.takeImages,'testaaa.jpg');
       let list = new FormData();
-      console.log(list);
       list.append('file', file);
       UserApi.getResultByFace(list).then((res) => {
         console.log(res);
@@ -256,6 +272,16 @@ export default {
           this.step02_block=false;
           this.step01_block=true;
           this.step03_block=false;
+        }else if(res.data.errno === -1){
+          console.log("获取照片失败");
+          this.$message({
+            message: '获取人脸失败',
+            type: 'warning',
+            center: true
+          });
+          this.step02_block=false;
+          this.step01_block=true;
+          this.step03_block=false;
         }else{
           this.step_1=2;
           this.step_2=1;
@@ -263,42 +289,42 @@ export default {
           this.step_4=2;
           console.log('获取到照片了');
           console.log(res.data.errno);
-          this.$data.faceId = res.data.data.customer_id;
+          this.$data.faceIdIs = res.data.data.customer_id;
           if(res.data.data.is_new === 1){
-              this.$data.NewRuleForm.images = res.data.data.avatar;
-              // this.$data.NewRuleForm.phone = res.data.data.avatar;
-              if(res.data.data.gender === 1){
-                  this.$data.NewRuleForm.sex = '男'
-              }else{
-                  this.$data.NewRuleForm.sex = '女'
-              }
-              //  老用户
-              this.userNew= false;
-              this.userOld = true;
-              this.firstNewC = false;
-              this.ifIsOld=true;
-              this.ifIsNew=false;
-              //回显数据
+            this.$data.NewRuleForm.images = res.data.data.avatar;
+            // this.$data.NewRuleForm.phone = res.data.data.avatar;
+            if(res.data.data.gender === 1){
+              this.$data.NewRuleForm.sex = '男'
+            }else{
+              this.$data.NewRuleForm.sex = '女'
+            }
+            //  老用户
+            this.userNew= false;
+            this.userOld = true;
+            this.firstNewC = false;
+            this.ifIsOld=true;
+            this.ifIsNew=false;
+            //回显数据
           }else if(res.data.data.is_new === 0){
-              //  新用户
-              this.userNew = true;
-              this.userOld = false;
-              this.firstNewC =true;
+            //  新用户
+            this.userNew = true;
+            this.userOld = false;
+            this.firstNewC =true;
             this.$data.form.newPhone = '';
             this.phoneIsMySqlA = false;
             this.phoneIsMySql = false;
             this.phoneNoMySql = false;
-              this.$data.newNewP = res.data.data.avatar;
-              if(res.data.data.gender === 1){
-                  this.$data.newNewQ = '男'
-              }else{
-                  this.$data.newNewQ = '女'
-              }
-              if(res.data.data.vip_level === 0){
-                  this.$data.newNewR = '未购买'
-              }else{
-                  this.$data.newNewR = '已购买'
-              }
+            this.$data.newNewP = res.data.data.avatar;
+            if(res.data.data.gender === 1){
+              this.$data.newNewQ = '男'
+            }else{
+              this.$data.newNewQ = '女'
+            }
+            if(res.data.data.vip_level === 0){
+              this.$data.newNewR = '未购买'
+            }else{
+              this.$data.newNewR = '已购买'
+            }
           }
         }
       })
@@ -324,9 +350,11 @@ export default {
         this.step_3=1;
         this.step_4=2;
         //不管有没有为新手机号，最终走向消费，传值一次,更一次手机号
+        //这里的 this.$data.faceI 有两种可能，是本人和不是本人
+        console.log(this.$data.isNoMyself);
         let list = {
           'phone': this.$data.form.newPhone,
-          'customer_id':this.$data.faceId,
+          'customer_id':this.$data.isNoMyself,
         }
         let qs = require('querystring');
         OrderApi.addNPhone(qs.stringify(list)).then((res) => {
@@ -397,7 +425,7 @@ export default {
     },
 
     //点击获取验证码
-    GetSendM(){
+    getMsg(){
       let list = {
         'phone': this.$data.form.newPhone
       }
@@ -407,35 +435,69 @@ export default {
         this.phoneIsMySql = true;
       });
     },
+    GetSendM(){
+      if(this.$data.form.newPhone == ''){
+        this.$message({
+          type: 'warning',
+          message: '请输入手机号!'
+        });
+      }else{
+        if (!this.canClick) return  ;
+        this.canClick = false
+        this.$data.getClickName = this.$data.waitTime + 's后发送';
+        this.getMsg();
+        let clock = window.setInterval(() => {
+          this.$data.waitTime--;
+          this.$data.getClickName = this.$data.waitTime + 's后发送';
+          if (this.$data.waitTime < 0) {
+            window.clearInterval(clock)
+            this.$data.getClickName = '发送验证码';
+            this.$data.waitTime = 60;
+            this.canClick = true  //这里重新开启
+
+          }
+        },1000);
+      }
+
+    },
 
     //获得验证码，点击确认返回顾客信息
     GetMsgPull(){
       //验证码填写之后，点击确认
-      let list = {
-        'phone': this.$data.form.newPhone,
-        'code':this.$data.form.newTakeNum
+      if(this.$data.form.newTakeNum == ''){
+        this.$message({
+          type: 'warning',
+          message: '请填写验证码!'
+        });
+      }else{
+        let list = {
+          'phone': this.$data.form.newPhone,
+          'code':this.$data.form.newTakeNum
+        }
+        let qs = require('querystring');
+        OrderApi.checkMsg(qs.stringify(list)).then((res) => {
+          console.log(res);
+          console.log(res.data.data.avatar);
+          this.$data.ruleForm.image = res.data.data.avatar;
+          this.$data.ruleForm.name = res.data.data.name;
+          this.$data.ruleForm.textarea2 = res.data.data.remark;
+          this.$data.ruleForm.phone = this.$data.form.newPhone;
+          if(res.data.data.gender === 1){
+            this.$data.ruleForm.sex = '男'
+          }else{
+            this.$data.ruleForm.sex = '女'
+          }
+          if(res.data.data.vip_level === 0){
+            this.$data.ruleForm.type = '普通'
+          }else if(res.data.data.vip_level === 1){
+            this.$data.ruleForm.type = 'VIP'
+          }
+          this.$data.faceIdNo = res.data.data.customer_id;
+          this.checkoutCallBack = true;
+          this.userNew = false;
+        });
       }
-      let qs = require('querystring');
-      OrderApi.checkMsg(qs.stringify(list)).then((res) => {
-        console.log(res);
-        console.log(res.data.data.avatar);
-        this.$data.ruleForm.image = res.data.data.avatar;
-        this.$data.ruleForm.name = res.data.data.name;
-        this.$data.ruleForm.phone = this.$data.form.newPhone;
-        if(res.data.data.gender === 1){
-          this.$data.ruleForm.sex = '男'
-        }else{
-          this.$data.ruleForm.sex = '女'
-        }
-        if(res.data.data.vip_level === 0){
-          this.$data.ruleForm.type = '普通'
-        }else if(res.data.data.vip_level === 1){
-          this.$data.ruleForm.type = 'VIP'
-        }
-        this.$data.faceId = res.data.data.customer_id;
-        this.checkoutCallBack = true;
-        this.userNew = false;
-      });
+
 
     },
 
@@ -449,14 +511,16 @@ export default {
           center: true
         });
       }else{
-        console.log(this.$data.faceId);
+        console.log(this.$data.faceIdNo);
         let list = {
           'phone': this.$data.form.newPhone,
-          'customer_id':this.$data.faceId,
+          'customer_id':this.$data.faceIdNo,
           'is_me':1
         }
         let qs = require('querystring');
         OrderApi.postMe(qs.stringify(list)).then((res) => {
+          //是本人的时候，人脸id为查询手机号返回人脸id
+          this.$data.isNoMyself = this.$data.faceIdNo;
           console.log(res);
           this.step03_block=true;
           this.step02_block=false;
@@ -474,11 +538,13 @@ export default {
     isNoAndPass(){
       let list = {
         'phone': this.$data.form.newPhone,
-        'customer_id':this.$data.faceId,
+        'customer_id':this.$data.faceIdIs,
         'is_me':0
       }
       let qs = require('querystring');
       OrderApi.postMe(qs.stringify(list)).then((res) => {
+        //不是本人的时候，人脸id为人脸识别返回id
+        this.$data.isNoMyself = this.$data.faceIdIs;
         console.log(res);
         console.log(0)
         this.userOld = true;
@@ -490,7 +556,8 @@ export default {
         this.$data.NewRuleForm.images = this.$data.newNewP;
         this.$data.NewRuleForm.phone = this.$data.form.newPhone;
         this.$data.NewRuleForm.sex = this.$data.newNewQ;
-        this.$data.NewRuleForm.type =  this.$data.newNewR
+        this.$data.NewRuleForm.type =  this.$data.newNewR;
+        this.$data.NewRuleForm.textarea2 = this.$data.remark;
       });
 
     },
@@ -572,7 +639,15 @@ export default {
 
     //  实时计算输入金额
     getMoney(obj){
-
+      if(obj.length > 11){
+        this.$message({
+          message: '最高输入金额为一百万',
+          type: 'warning',
+          center: true
+        });
+        // this.isCan = 1;
+        obj.length = 9;
+      }
       console.log(0);
       // console.log(this.$data.requestNewCreate.money);
       let m = 0;
@@ -657,22 +732,35 @@ export default {
         'goods_info':sendData,
         'remark':this.$data.pushRemk,
         'files_web':listArry,
-        'customer_id':this.$data.faceId,
+        'customer_id':this.$data.isNoMyself,
       }
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         console.log(res);
-        this.$message({
-          message: '操作成功',
-          type: 'success',
-          center: true
-        });
+        if(res.data.msg != ''){
+          this.$message({
+            message: res.data.msg,
+            type: 'warning',
+            center: true
+          });
+        }
+
         this.step_1=2;
         this.step_2=2;
         this.step_3=2;
         this.step_4=1;
-      });
+        //完成订单之后，跳回列表页面
+        if(res.data.error == 0){
+          this.$message({
+            message: '创建订单成功',
+            type: 'warning',
+            center: true
+          });
+          this.$router.push({path: '/Order'});
+        }
 
+      });
+      // this.$router.push({path: '/Order'})
     }
 
   }
