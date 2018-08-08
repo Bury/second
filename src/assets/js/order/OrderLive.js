@@ -34,6 +34,7 @@ export default {
       getClickName:'获取验证码',
       waitTime:60,
       canClick: true,
+      isCan:0,
       step01_block:true,
       step02_block:false,
       step03_block:false,
@@ -94,8 +95,8 @@ export default {
       },
       rulesD:{
         money:[
-          // { required: true, message: '请输入手机号', trigger: 'blur' },
-          { min: 3, max: 9, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { required: true, message: '最高输入金额一百万', trigger: 'change' },
+          // { min: 3, max: 9, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ]
       },
       form:{
@@ -628,7 +629,15 @@ export default {
 
     //  实时计算输入金额
     getMoney(obj){
-
+      if(obj.length > 11){
+        this.$message({
+          message: '最高输入金额为一百万',
+          type: 'warning',
+          center: true
+        });
+        // this.isCan = 1;
+        obj.length = 9;
+      }
       console.log(0);
       // console.log(this.$data.requestNewCreate.money);
       let m = 0;

@@ -166,7 +166,7 @@
               </el-form-item>
               <el-form-item label="成交总额：" prop="money">
                 <el-col :span="15">
-                  <el-input v-model="item.money" v-on:input="getMoney(item.money)"  value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></el-input>
+                  <el-input v-model="item.money" v-on:input="getMoney(item.money)"  value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1" v-bind:disabled="isCan==1" ></el-input>
                 </el-col>
               </el-form-item>
               <el-form-item>
