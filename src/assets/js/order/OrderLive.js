@@ -750,7 +750,7 @@ export default {
         this.step_3=2;
         this.step_4=1;
         //完成订单之后，跳回列表页面
-        if(res.data.error == 0){
+        if(res.data.errno == 0){
           this.$message({
             message: '创建订单成功',
             type: 'success',
