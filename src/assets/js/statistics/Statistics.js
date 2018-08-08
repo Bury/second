@@ -30,7 +30,7 @@ export default {
     },
 
     data () {
-        return {
+        return {        	
             noData: false,
             goStoreNum:'',
             timeType: 'day',
@@ -51,6 +51,11 @@ export default {
                 begin_time:'',
                 end_time:'',
             },
+            pickerOptionsSet:{
+        		disabledDate(time) {
+                   return time.getTime() > Date.now() - 8.64e6
+        		}
+        	},
         }
     },
 
@@ -103,7 +108,6 @@ export default {
                 if(res.data.errno === 0){
                     let thisData = res.data.data;
                     if (thisData) {
-                    	this.noData = false
                         if(types == 'face'){
                             let newData = [];
                             for(var i=0; i<thisData.face.length; i++){
@@ -139,8 +143,12 @@ export default {
                             }
                             this.$data.guestFromData = newData;
                         }
-                    } else {
-                        this.noData = true
+                    }else{
+                    	(types == 'face') && (this.$data.guestVisitedInfoData = []);
+                    	(types === 'buy') && (this.$data.guestBoughtInfoData = []);
+                    	(types === 'age') && (this.$data.ageData = []);
+                    	(types === 'gender') && (this.$data.guestGenderData = []);
+                    	(types ==='camera') && (this.$data.guestFromData = []);
                     }
                 }else{
 
@@ -156,7 +164,6 @@ export default {
         //搜索
         onSubmit(){   	
         	if(this.$data.ctrlTimeType[0]){
-        		
             	this.$data.guestParameters.begin_time = this.getS(this.$data.day);
                 this.$data.guestParameters.end_time =   this.getS(this.$data.day) + 86399; 
                 
@@ -214,6 +221,7 @@ export default {
             
             switch (val){
 	       	case "day":
+//	       	    this.$data.day = t.toString()
 	       	    this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/${d} 00:00:00`);
                 this.$data.guestParameters.end_time =  this.getS(`${y}/${m}/${d} 23:59:59`);
 	       		break;

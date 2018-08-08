@@ -5,37 +5,43 @@
             <el-form :inline="true" class="demo-form-inline" size="mini">
                 <el-form-item label="时间选择：">
                     <el-date-picker
-                        v-if="ctrlTimeType[0]"
-                        v-model="day"
-                        type="datetime"
-                        placeholder="选择日期时间">
+                        v-show="ctrlTimeType[0]"
+                         v-model="day"
+                         type="date"
+                         format="yyyy 年 MM 月 dd 日"
+                         placeholder="选择日期时间"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                     <el-date-picker
-                        v-if="ctrlTimeType[1]"
+                        v-show="ctrlTimeType[1]"
                         v-model="week"
                         type="week"
                         format="yyyy 第 WW 周"
-                        placeholder="选择周">
+                        placeholder="选择周"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                     <el-date-picker
-                        v-if="ctrlTimeType[2]"
+                        v-show="ctrlTimeType[2]"
                         v-model="month"
                         type="month"
-                        placeholder="选择月">
+                        placeholder="选择月"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                     <el-date-picker
-                        v-if="ctrlTimeType[3]"
+                        v-show="ctrlTimeType[3]"
                         v-model="year"
                         type="year"
-                        placeholder="选择年">
+                        placeholder="选择年"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                     <el-date-picker
                         v-model="userDefined"
-                        v-if="ctrlTimeType[4]"
+                        v-show="ctrlTimeType[4]"
                         type="datetimerange"
                         range-separator="至"
                         start-placeholder="开始日期"
-                        end-placeholder="结束日期">
+                        end-placeholder="结束日期"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item>

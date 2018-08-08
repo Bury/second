@@ -1,4 +1,7 @@
+import Highcharts from 'highcharts';
+import HighchartsNoData from 'highcharts-no-data-to-display';
 import VueHighcharts from 'vue2-highcharts'
+HighchartsNoData(Highcharts)
 
 export default{
 
@@ -15,6 +18,7 @@ export default{
 
     data(){
       return{
+      	Highcharts:Highcharts,
         options: {
             chart: {
                 type: 'pie'
@@ -39,15 +43,23 @@ export default{
          this.getData(this.$props.guestFromData);
       }
     },
-
+    created:function(){		
+		Highcharts.setOptions({
+				lang: {
+					thousandsSep: ',',
+					noData: '暂无数据'
+				}
+		});
+	},
     methods: {
       getData(value){
         let guestFromCharts = this.$refs.guestFromCharts;
         guestFromCharts.delegateMethod('showLoading', 'Loading...');
         guestFromCharts.removeSeries();
         setTimeout(() => {
+        	  guestFromCharts.hideLoading();
               guestFromCharts.addSeries({name:'数量',data: value});
-              guestFromCharts.hideLoading();
+             
           }, 100)
       },
       
