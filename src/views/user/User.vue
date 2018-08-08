@@ -89,7 +89,7 @@
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
 		    <el-button @click="resetPasswordCancel">取 消</el-button>
-		    <el-button type="primary" @click="fnResetPasswordSubmit('resetPasswordFormData')">确 定</el-button>
+		    <el-button type="primary" @click="fnResetPasswordSubmit('resetPasswordFormData')" v-bind:disabled="isClick==1">确 定</el-button>
 		  </div>
 		</el-dialog>
 

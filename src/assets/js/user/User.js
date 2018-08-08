@@ -12,6 +12,7 @@ export default{
         return{
             allRoles:'',
             targetUserId:0,
+          isClick:0,
             tableData: [],
             pagination:{
                 currentPage:1,
@@ -203,6 +204,12 @@ export default{
 
         //重置密码
         fnResetPassword(row){
+          console.log(row)
+          if(row.status === 1){
+            this.$data.isClick = 0;
+          }else if(row.status === 0){
+            this.$data.isClick = 1;
+          }
             this.$data.targetUserId=row.id;
             this.$data.resetPasswordFormVisible = true;
             this.fnResetPasswordClearData();
