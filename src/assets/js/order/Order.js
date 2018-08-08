@@ -16,7 +16,7 @@ export default {
       upLoadData: {
         access_token: localStorage.getItem('knock_knock'),
       },
-      imageListF: [],
+      imageListF:'',
       allNum: '1',
       takeTitle:'',
       isForChange:false,
@@ -160,7 +160,12 @@ export default {
 
     // 上传成功后的回调
     uploadSuccess(response, file, fileList) {
-      this.$data.imageListF.push(response.data.path);
+      console.log(response.data.path);
+      // console.log(this.$data.imageListF)
+      let imageArr = [];
+      imageArr.push(response.data.path);
+      this.$data.imageListF = imageArr;
+      // console.log(this.$data.imageListF)
     },
 
     //编辑--上传图片的删除、添加地址
@@ -592,6 +597,9 @@ export default {
     //补单
     orderNotLive() {
       this.$data.FormVisible = true;
+      //点击补单的时候，清空一下数据
+      this.$data.imageListF = '';
+      this.$data.item.file = '';
     },
 
   }
