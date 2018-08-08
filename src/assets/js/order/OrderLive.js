@@ -663,8 +663,10 @@ export default {
           type: 'warning',
           center: true
         });
+        this.$data.allMoney = 0;
+      }else{
+        this.$data.allMoney = m;
       }
-      this.$data.allMoney = m;
     },
 
     //  删除一条新增的商品数据

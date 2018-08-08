@@ -455,8 +455,19 @@ export default {
       for(let i = 0; i< this.$data.addProList.length; i++){
       n += parseFloat(this.$data.addProList[i].price,2);
       }
-      this.$data.totalMoney = n;
+
       this.$data.allNum = this.$data.addProList.length;
+      if(isNaN(n) == true){
+        // console.log(0)
+        this.$message({
+          message: '输入不合法，请重新输入',
+          type: 'warning',
+          center: true
+        });
+        this.$data.totalMoney = 0;
+      }else{
+        this.$data.totalMoney = n;
+      }
     },
 
 
