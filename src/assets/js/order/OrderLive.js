@@ -333,40 +333,31 @@ export default {
     //  有人脸且手机号正确-走下一步
     userOldIs(){
       this.getAll();
-      console.log(this.$data.NewRuleForm.textarea2);
-      if(this.$data.NewRuleForm.textarea2 === ''){
-        this.$message({
-          message: '请填写备注信息',
-          type: 'warning',
-          center: true
-        });
-      }else{
-        this.step03_block=true;
-        this.step02_block=false;
-        this.step01_block=false;
+      this.step03_block=true;
+      this.step02_block=false;
+      this.step01_block=false;
 
-        this.step_1=2;
-        this.step_2=2;
-        this.step_3=1;
-        this.step_4=2;
-        //不管有没有为新手机号，最终走向消费，传值一次,更一次手机号
-        //这里的 this.$data.faceI 有两种可能，是本人和不是本人
-        console.log(this.$data.isNoMyself);
-        let list = {
-          'phone': this.$data.form.newPhone,
-          'customer_id':this.$data.isNoMyself,
-        }
-        let qs = require('querystring');
-        OrderApi.addNPhone(qs.stringify(list)).then((res) => {
-          console.log(res);
-          console.log(res.data.msg)
-          // this.$message({
-          //   message: res.data.msg,
-          //   type: 'warning',
-          //   center: true
-          // });
-        });
+      this.step_1=2;
+      this.step_2=2;
+      this.step_3=1;
+      this.step_4=2;
+      //不管有没有为新手机号，最终走向消费，传值一次,更一次手机号
+      //这里的 this.$data.faceI 有两种可能，是本人和不是本人
+      console.log(this.$data.isNoMyself);
+      let list = {
+        'phone': this.$data.form.newPhone,
+        'customer_id':this.$data.isNoMyself,
       }
+      let qs = require('querystring');
+      OrderApi.addNPhone(qs.stringify(list)).then((res) => {
+        console.log(res);
+        console.log(res.data.msg)
+        // this.$message({
+        //   message: res.data.msg,
+        //   type: 'warning',
+        //   center: true
+        // });
+      });
 
     },
 
@@ -504,34 +495,26 @@ export default {
     //  返回的顾客信息，是本人直接走消费
     isTrueAndPass(){
       this.getAll();
-      if(this.$data.ruleForm.textarea2 === ''){
-        this.$message({
-          message: '请填写备注信息',
-          type: 'warning',
-          center: true
-        });
-      }else{
-        console.log(this.$data.faceIdNo);
-        let list = {
-          'phone': this.$data.form.newPhone,
-          'customer_id':this.$data.faceIdNo,
-          'is_me':1
-        }
-        let qs = require('querystring');
-        OrderApi.postMe(qs.stringify(list)).then((res) => {
-          //是本人的时候，人脸id为查询手机号返回人脸id
-          this.$data.isNoMyself = this.$data.faceIdNo;
-          console.log(res);
-          this.step03_block=true;
-          this.step02_block=false;
-          this.step01_block=false;
-
-          this.step_1=2;
-          this.step_2=2;
-          this.step_3=1;
-          this.step_4=2;
-        });
+      console.log(this.$data.faceIdNo);
+      let list = {
+        'phone': this.$data.form.newPhone,
+        'customer_id':this.$data.faceIdNo,
+        'is_me':1
       }
+      let qs = require('querystring');
+      OrderApi.postMe(qs.stringify(list)).then((res) => {
+        //是本人的时候，人脸id为查询手机号返回人脸id
+        this.$data.isNoMyself = this.$data.faceIdNo;
+        console.log(res);
+        this.step03_block=true;
+        this.step02_block=false;
+        this.step01_block=false;
+
+        this.step_1=2;
+        this.step_2=2;
+        this.step_3=1;
+        this.step_4=2;
+      });
     },
 
     //  返回的顾客信息不是本人，则显示最开始的顾客信息
