@@ -254,7 +254,14 @@ export default {
       this.$data.requestParameters.page = currentPage;
       this.lists();
     },
-
+    dialogClose(){
+      this.$data.FormVisible = false;
+      setTimeout(() =>{
+        this.$refs.formName.resetFields();
+        this.submitClearData();
+        this.$data.faceVisible = false;
+      },0)
+    },
     //查看
     view(id) {
       let qs = require('querystring')

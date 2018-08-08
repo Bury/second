@@ -36,7 +36,7 @@ export default{
                 truename:globalRules.rules.user.truename(),
                 phone:globalRules.rules.user.phone(),
                 username:globalRules.rules.user.username(4,20,'请输入帐号'),
-                password:globalRules.rules.user.password(6,20,'请输入密码：'),
+                password:globalRules.rules.user.password(6,20,'请输入密码'),
             },
             avatarFormVisible:false,
             editFormVisible:false,
@@ -58,7 +58,7 @@ export default{
                 repassword:'',
             },
             resetPasswordRules:{
-                password:globalRules.rules.user.password(6,20,'请输入当前密码：'),
+                password:globalRules.rules.user.password(6,20,'请输入当前密码'),
                 repassword:[
                     { required: true, message: '请再次输入密码', trigger: 'blur' },
                     {
@@ -162,6 +162,12 @@ export default{
             this.$refs.editFormData.resetFields();
           },0)
         },
+      dialogClose(){
+        this.$data.editFormVisible = false;
+        setTimeout(() =>{
+          this.$refs.editFormData.resetFields();
+        },0)
+      },
 
         //编辑提交
         editSubmit(formName){
@@ -263,6 +269,9 @@ export default{
         addCancel(){
             this.$data.addFormVisible = false;
             this.fnAddsFormClearData();
+          setTimeout(() =>{
+            this.$refs.addFormData.resetFields();
+          },0)
         },
 
         fnAddsSubmit(formName){
@@ -288,12 +297,16 @@ export default{
         },
 
         closeChange(done){
-            // done();
-            if(this.$data.avatarFormVisible){
-                this.$data.avatarFormVisible = false;
-            }else{
-                done()
-            }
+          this.$data.addFormVisible = false;
+          setTimeout(() =>{
+            this.$refs.addFormData.resetFields();
+          },0)
+            // // done();
+            // if(this.$data.avatarFormVisible){
+            //     this.$data.avatarFormVisible = false;
+            // }else{
+            //     done()
+            // }
 
         },
 

@@ -81,16 +81,6 @@ export default{
             this.locate_changed();
             this.$data.editFormVisible = true;
         },
-
-        editCancel(){
-            this.$data.editId=0;
-            this.$data.editForm = {
-                locate: '',
-                locate_desc: ''
-            }
-            this.$data.editFormVisible = false;
-        },
-
         editSubmit(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -111,7 +101,24 @@ export default{
                     })
                 }
             });
-        }
+        },
+        dialogClose(){
+            this.$data.editFormVisible = false;
+            setTimeout(() => {
+              this.$refs.editForm.resetFields();
+            })
+        },
+        editCancel(){
+          this.$data.editId=0;
+          this.$data.editForm = {
+            locate: '',
+            locate_desc: ''
+          }
+          this.$data.editFormVisible = false;
+          setTimeout(() => {
+            this.$refs.editForm.resetFields();
+          })
+        },
 
     }
 

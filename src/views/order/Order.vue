@@ -108,7 +108,8 @@
       </tbody>
     </table>
     <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>    <!--补单-->
-    <el-dialog title="补单" :visible.sync="FormVisible">
+    <!--补单-->
+    <el-dialog title="补单" :visible.sync="FormVisible" :before-close="dialogClose">
       <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
           <el-date-picker
