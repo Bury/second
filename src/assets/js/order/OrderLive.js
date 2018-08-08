@@ -480,6 +480,7 @@ export default {
           console.log(res.data.data.avatar);
           this.$data.ruleForm.image = res.data.data.avatar;
           this.$data.ruleForm.name = res.data.data.name;
+          this.$data.ruleForm.textarea2 = res.data.data.remark;
           this.$data.ruleForm.phone = this.$data.form.newPhone;
           if(res.data.data.gender === 1){
             this.$data.ruleForm.sex = '男'
@@ -555,7 +556,8 @@ export default {
         this.$data.NewRuleForm.images = this.$data.newNewP;
         this.$data.NewRuleForm.phone = this.$data.form.newPhone;
         this.$data.NewRuleForm.sex = this.$data.newNewQ;
-        this.$data.NewRuleForm.type =  this.$data.newNewR
+        this.$data.NewRuleForm.type =  this.$data.newNewR;
+        this.$data.NewRuleForm.textarea2 = this.$data.remark;
       });
 
     },
@@ -748,7 +750,15 @@ export default {
         this.step_3=2;
         this.step_4=1;
         //完成订单之后，跳回列表页面
-        this.$router.push({path: '/Order'})
+        if(res.data.error == 0){
+          this.$message({
+            message: '创建订单成功',
+            type: 'warning',
+            center: true
+          });
+          this.$router.push({path: '/Order'});
+        }
+
       });
       // this.$router.push({path: '/Order'})
     }
