@@ -14,7 +14,6 @@ export default {
 	      })
 	    })
   },
-
 	deleOrder (list) {
 	    return new Promise((resolve, reject) => {
 	      axios.post(global.DELE_ORDER,list).then((res) => {
@@ -139,6 +138,25 @@ export default {
         reject(err)
       })
     })
-  }
+  },
+  //视频流操作
+  chooseLists (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.ORDER_CHOOSE_LISTS,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  videoFindFace (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.ORDER_FIND_FACE,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
 }
 

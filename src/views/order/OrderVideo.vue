@@ -21,12 +21,7 @@
         </li>
       </ul>
     </div>
-    <div style="position: relative;margin-bottom: 2rem;">
-      <div style="position: absolute;right: 12rem;margin-bottom: 2rem;">
-        <el-button @click="reFresh">刷新</el-button>
-      </div>
 
-    </div>
 
     <div style="margin-top: 2rem;overflow: hidden;">
       <!--拍摄人脸确认身份-->
@@ -47,23 +42,32 @@
           <!--</div>-->
         <!--</div>-->
       </div>
-      <div class="get_a" style="margin-top:2rem;" v-show="step01_block">
-        <table width="90%" style="margin-top:2rem;border: 1px solid #000">
+      <div class="get_a" v-show="step01_block">
+        <div style="position: relative;margin-bottom: 2rem;overflow: hidden;">
+          <div style="float:right;">
+            <el-button @click="reFresh">刷新</el-button>
+          </div>
+        </div>
+        <table width="90%" style="margin-top:2rem;">
           <thead style="font-size:2rem;">
-          <tr height="40">
+          <tr height="60">
             <th class="col-md-5 text-center">人脸</th>
             <th class="col-md-3 text-center">操作</th>
           </tr>
 
           </thead>
           <tbody>
-            <tr height="100" style="border: 1px solid #000;text-align: center;">
+            <tr v-for="(item,index) in tableData" :key="index"
+                style="text-align: center;">
               <td>
-                <div class="videoImg" style="width: 50%;height: 10rem;border: 1px solid #000;">
-                  <img src="" style="width: 100%;" />
+                <div class="videoImg" style="width: 100%;height: 15rem;margin-bottom: 1rem;overflow: hidden;">
+                  <div style="width:45%;">
+                    <img :src="item.avatar" style="width: 100%;height: 100%;" />
+                  </div>
+
                 </div>
               </td>
-              <td><el-button style="" @click="recognition">智能识别</el-button></td>
+              <td><el-button style="" @click="recognition(item.id)">智能识别</el-button></td>
             </tr>
           </tbody>
         </table>

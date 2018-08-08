@@ -21,6 +21,11 @@ global.StatisticsFeature = `${SERVER_IP}${COMMON}analysis/feature`
 
 /*订单管理*/
 global.ORDER_LISTS = `${SERVER_IP}${COMMON}order/list`
+//post order/choose-list 现场开单视频流
+global.ORDER_CHOOSE_LISTS = `${SERVER_IP}${COMMON}order/choose-list`
+// order/face-recognition2 视频流智能识别-查询人脸
+global.ORDER_FIND_FACE = `${SERVER_IP}${COMMON}order/face-recognition2`
+
 
 // post order/dele
 global.DELE_ORDER = `${SERVER_IP}${COMMON}order/dele`

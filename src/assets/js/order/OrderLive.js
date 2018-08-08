@@ -11,7 +11,7 @@ import router from '@/router/index'
 const SERVER_IP = apiUrl.apiUrl
 
 const COMMON = 'v1'
-
+let clock;
 export default {
 
   name: "order-live",
@@ -395,6 +395,10 @@ export default {
             this.phoneIsMySqlA = true;
             // this.firstNewC =false;
             // this.phoneIsMySql = true;
+            window.clearInterval(clock)
+            this.$data.getClickName = '发送验证码';
+            this.$data.waitTime = 60;
+            this.canClick = true  //这里重新开启
           }else if(res.data.data.is_not === 1){
             //  该用户未注册
             this.phoneNoMySql = true;
@@ -437,7 +441,7 @@ export default {
         this.canClick = false
         this.$data.getClickName = this.$data.waitTime + 's后发送';
         this.getMsg();
-        let clock = window.setInterval(() => {
+        clock = window.setInterval(() => {
           this.$data.waitTime--;
           this.$data.getClickName = this.$data.waitTime + 's后发送';
           if (this.$data.waitTime < 0) {
@@ -467,25 +471,33 @@ export default {
         }
         let qs = require('querystring');
         OrderApi.checkMsg(qs.stringify(list)).then((res) => {
-          console.log(res);
-          console.log(res.data.data.avatar);
-          this.$data.ruleForm.image = res.data.data.avatar;
-          this.$data.ruleForm.name = res.data.data.name;
-          this.$data.ruleForm.textarea2 = res.data.data.remark;
-          this.$data.ruleForm.phone = this.$data.form.newPhone;
-          if(res.data.data.gender === 1){
-            this.$data.ruleForm.sex = '男'
+          if(res.data.msg == '验证码错误') {
+            this.$message({
+              type: 'warning',
+              message: '验证码填写错误!'
+            });
           }else{
-            this.$data.ruleForm.sex = '女'
+            console.log(res);
+            console.log(res.data.data.avatar);
+            this.$data.ruleForm.image = res.data.data.avatar;
+            this.$data.ruleForm.name = res.data.data.name;
+            this.$data.ruleForm.textarea2 = res.data.data.remark;
+            this.$data.ruleForm.phone = this.$data.form.newPhone;
+            if(res.data.data.gender === 1){
+              this.$data.ruleForm.sex = '男'
+            }else{
+              this.$data.ruleForm.sex = '女'
+            }
+            if(res.data.data.vip_level === 0){
+              this.$data.ruleForm.type = '普通'
+            }else if(res.data.data.vip_level === 1){
+              this.$data.ruleForm.type = 'VIP'
+            }
+            this.$data.faceIdNo = res.data.data.customer_id;
+            this.checkoutCallBack = true;
+            this.userNew = false;
           }
-          if(res.data.data.vip_level === 0){
-            this.$data.ruleForm.type = '普通'
-          }else if(res.data.data.vip_level === 1){
-            this.$data.ruleForm.type = 'VIP'
-          }
-          this.$data.faceIdNo = res.data.data.customer_id;
-          this.checkoutCallBack = true;
-          this.userNew = false;
+
         });
       }
 

@@ -11,7 +11,7 @@ import router from '@/router/index'
 const SERVER_IP = apiUrl.apiUrl
 
 const COMMON = 'v1'
-
+let clock;
 export default {
 
   name: "order-live",
@@ -118,6 +118,10 @@ export default {
       dialogImageUrl: '',
       actionDialogVisible: false,
       isNoMyself:'',
+      tableData:{
+        id:'',
+        avatar:'',
+      },
     };
   },
 
@@ -126,14 +130,26 @@ export default {
 
     // this.postFace();
     // this.view();
-    console.log(this.$data.NewRuleForm.images);
+    this.chooseLists();
   },
 
   mounted:function(){
-    this.camera_process();
+    // this.camera_process();
   },
 
   methods:{
+    chooseLists(){
+      OrderApi.chooseLists().then((res) => {
+        if(res.data.errno === 0){
+          this.$data.tableData = res.data.data.list;
+          // console.log(this.$data.tableData);
+        }
+      })
+    },
+    reFresh(){
+      // console.log('刷新操作');
+      this.chooseLists();
+    },
     //  上传图片动态地址
     importFileUrl(){
       return global.FILE_UPLOAD
@@ -159,54 +175,7 @@ export default {
         }
       })
     },
-    //  调用摄像头
-    camera_process(){
-      let video = document.getElementById('video');
-      let canvas = document.getElementById('canvas');
-      let context = canvas.getContext('2d');
-      let image = new Image();
 
-      if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
-        //调用用户媒体设备, 访问摄像头
-        globalFunctions.functions.user_media.getUserMedia({video : {width: 480, height: 320}}, globalFunctions.functions.user_media.success, globalFunctions.functions.user_media.error,video);
-      } else {
-        alert('不支持访问用户媒体');
-      }
-    },
-
-    //拍照
-    takePicture() {
-      let context = canvas.getContext('2d');
-      let image = new Image();
-
-
-      context.drawImage(video, 0, 0, 480, 320);
-
-      // console.log(context.drawImage);
-      image = canvas.toDataURL("image/jpeg");//base64
-      this.$data.takeImages = image;
-      // console.log(this.$data.takeImages)
-      document.getElementById('getVideo').style.display = 'none';
-      //  获取头像
-      this.showVideo = false;
-      this.actionDialogVisible = true;
-    },
-
-    //重拍
-    takePictureAgain(){
-      this.showVideo = true;
-      this.actionDialogVisible = false;
-      this.$data.takeImages = '';
-      //点击重拍的时候一切都回到原始状态
-      this.userNew = false;
-      this.userOld = false;
-      this.firstNewC =false;
-      this.$data.form.newPhone = '';
-      this.phoneIsMySqlA = false;
-      this.phoneIsMySql = false;
-      this.firstNewC = false;
-      this.phoneNoMySql = false;
-    },
 
     //确认人脸
     step01:function (){
@@ -232,17 +201,11 @@ export default {
       // this.step03_block = true
     },
 
-    dataURLtoFile(dataurl, filename){
-      var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-      while(n--){
-        u8arr[n] = bstr.charCodeAt(n);
-      }
-      return new File([u8arr], filename, {type:mime});
-    },
+
 
     //智能识别人脸身份
-    recognition(){
+    recognition(id){
+      console.log(id)
       this.step02_block=true;
       this.step01_block=false;
       this.step03_block=false;
@@ -257,10 +220,11 @@ export default {
       this.phoneNoMySql = false;
       this.checkoutCallBack = false;
       //  请求接口，上传文件（头像）,返回0-新客，1-熟客
-      let file = this.dataURLtoFile(this.$data.takeImages,'testaaa.jpg');
-      let list = new FormData();
-      list.append('file', file);
-      UserApi.getResultByFace(list).then((res) => {
+      let list = {
+        id:id
+      };
+      let qs = require('querystring')
+      OrderApi.videoFindFace(qs.stringify(list)).then((res) => {
         console.log(res);
         console.log(res.data.data)
         if(res.data.msg === '服务器内部错误'){
@@ -282,7 +246,8 @@ export default {
           this.step02_block=false;
           this.step01_block=true;
           this.step03_block=false;
-        }else{
+        }
+        else{
           this.step_1=2;
           this.step_2=1;
           this.step_3=2;
@@ -404,6 +369,10 @@ export default {
             this.phoneIsMySqlA = true;
             // this.firstNewC =false;
             // this.phoneIsMySql = true;
+            window.clearInterval(clock)
+            this.$data.getClickName = '发送验证码';
+            this.$data.waitTime = 60;
+            this.canClick = true  //这里重新开启
           }else if(res.data.data.is_not === 1){
             //  该用户未注册
             this.phoneNoMySql = true;
@@ -446,7 +415,7 @@ export default {
         this.canClick = false
         this.$data.getClickName = this.$data.waitTime + 's后发送';
         this.getMsg();
-        let clock = window.setInterval(() => {
+        clock = window.setInterval(() => {
           this.$data.waitTime--;
           this.$data.getClickName = this.$data.waitTime + 's后发送';
           if (this.$data.waitTime < 0) {
@@ -476,25 +445,32 @@ export default {
         }
         let qs = require('querystring');
         OrderApi.checkMsg(qs.stringify(list)).then((res) => {
-          console.log(res);
-          console.log(res.data.data.avatar);
-          this.$data.ruleForm.image = res.data.data.avatar;
-          this.$data.ruleForm.name = res.data.data.name;
-          this.$data.ruleForm.textarea2 = res.data.data.remark;
-          this.$data.ruleForm.phone = this.$data.form.newPhone;
-          if(res.data.data.gender === 1){
-            this.$data.ruleForm.sex = '男'
+          if(res.data.msg == '验证码错误'){
+            this.$message({
+              type: 'warning',
+              message: '验证码填写错误!'
+            });
           }else{
-            this.$data.ruleForm.sex = '女'
+            console.log(res);
+            console.log(res.data.data.avatar);
+            this.$data.ruleForm.image = res.data.data.avatar;
+            this.$data.ruleForm.name = res.data.data.name;
+            this.$data.ruleForm.textarea2 = res.data.data.remark;
+            this.$data.ruleForm.phone = this.$data.form.newPhone;
+            if(res.data.data.gender === 1){
+              this.$data.ruleForm.sex = '男'
+            }else{
+              this.$data.ruleForm.sex = '女'
+            }
+            if(res.data.data.vip_level === 0){
+              this.$data.ruleForm.type = '普通'
+            }else if(res.data.data.vip_level === 1){
+              this.$data.ruleForm.type = 'VIP'
+            }
+            this.$data.faceIdNo = res.data.data.customer_id;
+            this.checkoutCallBack = true;
+            this.userNew = false;
           }
-          if(res.data.data.vip_level === 0){
-            this.$data.ruleForm.type = '普通'
-          }else if(res.data.data.vip_level === 1){
-            this.$data.ruleForm.type = 'VIP'
-          }
-          this.$data.faceIdNo = res.data.data.customer_id;
-          this.checkoutCallBack = true;
-          this.userNew = false;
         });
       }
 
@@ -581,7 +557,7 @@ export default {
       this.step01_block=true;
       this.step02_block=false;
       this.step03_block=false;
-      this.camera_process();
+      // this.camera_process();
 
       this.step_1=1;
       this.step_2=2;
@@ -593,7 +569,7 @@ export default {
       this.step01_block=true;
       this.step02_block=false;
       this.step03_block=false;
-      this.camera_process();
+      // this.camera_process();
 
       this.step_1=1;
       this.step_2=2;
@@ -605,7 +581,7 @@ export default {
       this.step01_block=true;
       this.step02_block=false;
       this.step03_block=false;
-      this.camera_process();
+      // this.camera_process();
 
       this.step_1=1;
       this.step_2=2;
@@ -757,6 +733,7 @@ export default {
             center: true
           });
           this.$router.push({path: '/Order'});
+          this.$refs.upload.clearFiles();
         }
 
       });
