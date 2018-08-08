@@ -52,7 +52,8 @@ export default {
       ifIsNew:false,
       firstNewC:false,
       phoneIsMySqlA:false,
-      faceId:'',
+      faceIdIs:'',
+      faceIdNo:'',
       takeImages:'',
       goodsList:[],
       allMoneyList:[],
@@ -115,7 +116,8 @@ export default {
         money:''
       }],
       dialogImageUrl: '',
-      actionDialogVisible: false
+      actionDialogVisible: false,
+      isNoMyself:'',
     };
   },
 
@@ -287,7 +289,7 @@ export default {
           this.step_4=2;
           console.log('获取到照片了');
           console.log(res.data.errno);
-          this.$data.faceId = res.data.data.customer_id;
+          this.$data.faceIdIs = res.data.data.customer_id;
           if(res.data.data.is_new === 1){
               this.$data.NewRuleForm.images = res.data.data.avatar;
               // this.$data.NewRuleForm.phone = res.data.data.avatar;
@@ -348,9 +350,11 @@ export default {
         this.step_3=1;
         this.step_4=2;
         //不管有没有为新手机号，最终走向消费，传值一次,更一次手机号
+        //这里的 this.$data.faceI 有两种可能，是本人和不是本人
+        console.log(this.$data.isNoMyself);
         let list = {
           'phone': this.$data.form.newPhone,
-          'customer_id':this.$data.faceId,
+          'customer_id':this.$data.isNoMyself,
         }
         let qs = require('querystring');
         OrderApi.addNPhone(qs.stringify(list)).then((res) => {
@@ -487,7 +491,7 @@ export default {
           }else if(res.data.data.vip_level === 1){
             this.$data.ruleForm.type = 'VIP'
           }
-          this.$data.faceId = res.data.data.customer_id;
+          this.$data.faceIdNo = res.data.data.customer_id;
           this.checkoutCallBack = true;
           this.userNew = false;
         });
@@ -506,14 +510,16 @@ export default {
           center: true
         });
       }else{
-        console.log(this.$data.faceId);
+        console.log(this.$data.faceIdNo);
         let list = {
           'phone': this.$data.form.newPhone,
-          'customer_id':this.$data.faceId,
+          'customer_id':this.$data.faceIdNo,
           'is_me':1
         }
         let qs = require('querystring');
         OrderApi.postMe(qs.stringify(list)).then((res) => {
+          //是本人的时候，人脸id为查询手机号返回人脸id
+          this.$data.isNoMyself = this.$data.faceIdNo;
           console.log(res);
           this.step03_block=true;
           this.step02_block=false;
@@ -531,11 +537,13 @@ export default {
     isNoAndPass(){
       let list = {
         'phone': this.$data.form.newPhone,
-        'customer_id':this.$data.faceId,
+        'customer_id':this.$data.faceIdIs,
         'is_me':0
       }
       let qs = require('querystring');
       OrderApi.postMe(qs.stringify(list)).then((res) => {
+        //不是本人的时候，人脸id为人脸识别返回id
+        this.$data.isNoMyself = this.$data.faceIdIs;
         console.log(res);
         console.log(0)
         this.userOld = true;
@@ -722,7 +730,7 @@ export default {
         'goods_info':sendData,
         'remark':this.$data.pushRemk,
         'files_web':listArry,
-        'customer_id':this.$data.faceId,
+        'customer_id':this.$data.isNoMyself,
       }
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
