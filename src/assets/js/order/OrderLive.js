@@ -753,7 +753,7 @@ export default {
         if(res.data.error == 0){
           this.$message({
             message: '创建订单成功',
-            type: 'warning',
+            type: 'success',
             center: true
           });
           this.$router.push({path: '/Order'});
