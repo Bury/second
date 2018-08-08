@@ -757,6 +757,7 @@ export default {
             center: true
           });
           this.$router.push({path: '/Order'});
+          this.$refs.upload.clearFiles();
         }
 
       });

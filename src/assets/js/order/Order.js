@@ -553,6 +553,7 @@ export default {
             message: '创建成功!'
           });
           this.$data.FormVisible = false;
+          this.$refs.upload.clearFiles();
         } else {
           this.$message.error(res.data.msg);
         }

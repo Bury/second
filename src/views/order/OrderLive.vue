@@ -190,6 +190,7 @@
         <!--上传小票-->
         <el-row>
           <el-upload v-model="item.file"
+                     ref='upload'
                      :action="importFileUrl()"
                      list-type="picture-card"
                      :data="upLoadData"
