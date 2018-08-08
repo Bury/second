@@ -639,7 +639,16 @@ export default {
         m += Number(this.$data.addProList[i].money);
         console.log(m);
       }
-      this.$data.allGoodLenght =this.$data.addProList.length
+      this.$data.allGoodLenght =this.$data.addProList.length;
+      console.log(isNaN(m));
+      if(isNaN(m) == true){
+        // console.log(0)
+        this.$message({
+          message: '输入不合法，请重新输入',
+          type: 'warning',
+          center: true
+        });
+      }
       this.$data.allMoney = m;
     },
 
