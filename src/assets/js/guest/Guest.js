@@ -94,7 +94,23 @@ export default {
         handleCurrentChange(currentPage) {
           this.$data.tableData = [];
             this.$data.requestParameters.page = currentPage;
-            this.lists();
+            let list ={
+              page:this.$data.requestParameters.page,
+            }
+            // this.lists();
+          let qs = require('querystring');
+          guestApi.lists(qs.stringify(list)).then((res) => {
+            let result = res.data;
+            if(result.errno === 0){
+              var i='';
+              this.tableData = result.data.list;
+              // console.log(this.tableData)
+              this.$data.pagination.currentPage = result.data.pagination.currentPage;
+              this.$data.pagination.totalCount = result.data.pagination.totalCount;
+            }else{
+
+            }
+          })
         },
 
         onSubmit() {
