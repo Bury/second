@@ -30,7 +30,8 @@ export default {
     },
 
     data () {
-        return {        	
+        return {    
+        	noTimeHide:false,
             goStoreNum:'',
             timeType: 'day',
             day:'',
@@ -163,16 +164,17 @@ export default {
         //搜索
         onSubmit(){ 
         	if(this.$data.ctrlTimeType[0]){
+        		if(this.$data.day == null) { return false}
             	this.$data.guestParameters.begin_time = this.getS(this.$data.day);
                 this.$data.guestParameters.end_time =   this.getS(this.$data.day) + 86399; 
                 
-            }else if(this.$data.ctrlTimeType[1]){
-            	
+           }else if(this.$data.ctrlTimeType[1]){
+           	    if(this.$data.week == null) { return false}
             	this.$data.guestParameters.begin_time = this.getS(this.$data.week);
                 this.$data.guestParameters.end_time =   this.getS(this.$data.week) + 604799;
                 
             }else if(this.$data.ctrlTimeType[2]){  
-            	
+            	if(this.$data.month== null) { return false}
             	let nexty,nextm;  
             	let t = new Date(this.$data.month);            	
             	let m = t.getMonth() + 1;      
@@ -182,14 +184,19 @@ export default {
                 this.$data.guestParameters.end_time =  this.getS(`${nexty}/${nextm}/01 00:00:00`) - 1;
                 
             }else if(this.$data.ctrlTimeType[3]){
-            	
+            	if(this.$data.year == null) {return false;}
             	let yearDate = new Date(this.$data.year);
             	let y = yearDate.getFullYear();
             	this.$data.guestParameters.begin_time = this.getS(`${y}/01/01 00:00:00`);
                 this.$data.guestParameters.end_time =  this.getS(`${y}/12/31 23:59:59`);  
                 
             }else if(this.$data.ctrlTimeType[4]){
-            	
+            	if(this.$data.userDefined == null || this.$data.userDefined.length == 0) {
+            		this.$data.noTimeHide = true;
+            		return false;
+            	}else{
+            		this.$data.noTimeHide = false;
+            	}            	
             	this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
                 this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
                 
@@ -203,19 +210,15 @@ export default {
         cateChanged(tab, event){
             var nowIdx = tab.index;
             this.$data.ctrlTimeType = [false,false,false,false,false];
-            this.$data.ctrlTimeType[nowIdx] = true;
-            this.$data.guestParameters = {
-                begin_time:'',
-                end_time:'',
-            }
+            this.$data.ctrlTimeType[nowIdx] = true; 
+            (nowIdx !== 4) && (this.$data.noTimeHide = false);
             this.setData();
         },
         
         //绑定默认时间
         modelDate(t){        	
         	let d = new Date(t*1000);
-            return d;
-        	
+            return d;        	
         },          
         getBeginEnd(val){
         	let t = new Date();
@@ -248,8 +251,13 @@ export default {
                this.$data.year =  this.modelDate(this.$data.guestParameters.begin_time)
 	       		break;
 	       	case "select":
-	       	    this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
-                this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
+	       	    if(this.$data.userDefined !== null && this.$data.userDefined.length !== 0){
+	       	    	this.$data.noTimeHide = false;
+	       	    	this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
+                    this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
+	       	    }else{
+	       	    	this.$data.noTimeHide = true;
+	       	    }	       	    
 	       	    break;
 	        }
         },

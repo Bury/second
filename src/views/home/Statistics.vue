@@ -37,7 +37,7 @@
                     <el-date-picker
                         v-model="userDefined"
                         v-show="ctrlTimeType[4]"
-                        type="datetimerange"
+                        type="daterange"
                         range-separator="至"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期"
@@ -56,7 +56,8 @@
                 <el-tab-pane label="自定义统计" name="userDefined"></el-tab-pane>
             </el-tabs>
         </div>
-        <ul class="charts-type">
+        <div style="text-align: center;" v-show="noTimeHide"><span>请选择时间</span></div>
+        <ul class="charts-type" v-show="!noTimeHide">
                 <li class="charts-wrap">
                 	<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>
                     <div style="padding:10px 0 20px;text-align:center;">
@@ -81,7 +82,7 @@
                 <li class="charts-wrap">
                     <guest-from-chart :guestFromData="guestFromData"></guest-from-chart>
                 </li>
-        </ul>
+         </ul>
         </div>
 </template>
 
