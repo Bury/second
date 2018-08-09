@@ -197,7 +197,7 @@
         <el-form-item></el-form-item>
         <el-form-item></el-form-item>
         <el-form-item label="小票" v-model="imageListF">
-          <el-upload v-model="item.file"
+          <el-upload v-model="item.file" :limit = 3
                      ref='upload'
                      :action="importFileUrl()"
                      list-type="picture-card"
@@ -233,7 +233,7 @@
             placeholder="选择日期时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="人脸ID：" prop="faceID">
+        <el-form-item label="人脸编号：" prop="faceID">
           <el-row>
             <el-col :span='10'>
               <el-input v-model="editForm.traffic.customer_id"></el-input>

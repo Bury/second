@@ -2,6 +2,7 @@ import global_data from '@/config/global_data'
 import orderApi from '@/api/order'
 import * as utils from '@/utils/index'
 import apiUrl from '@/config/API.js'
+import globalFunctions from '@/config/global_functions'
 
 const SERVER_IP = apiUrl.apiUrl
 const COMMON = 'v1'
@@ -16,7 +17,7 @@ export default {
       upLoadData: {
         access_token: localStorage.getItem('knock_knock'),
       },
-      imageListF:'',
+      imageListF:[],
       allNum: '1',
       takeTitle:'',
       isForChange:false,
@@ -116,6 +117,7 @@ export default {
           return time.getTime() > Date.now() - 8.64e6
         }
       },
+      imageArr:[],
     }
   },
   created: function () {
@@ -165,12 +167,16 @@ export default {
 
     // 上传成功后的回调
     uploadSuccess(response, file, fileList) {
-      console.log(response.data.path);
-      // console.log(this.$data.imageListF)
-      let imageArr = [];
-      imageArr.push(response.data.path);
-      this.$data.imageListF = imageArr;
-      // console.log(this.$data.imageListF)
+      let image = response.data.path;
+      this.$data.imageArr.push(image);
+      this.$data.imageListF = this.$data.imageArr;
+      if(this.$data.imageArr.length >= 3){
+        this.$message ({
+          type:'warning',
+          message:'只能上传三张小票信息',
+        })
+      }
+      console.log(this.$data.imageArr);
     },
 
     //编辑--上传图片的删除、添加地址
@@ -219,45 +225,17 @@ export default {
     // 编辑显示列表
     fnEdit(row) {
       this.$data.editVisible = true;
-      this.$data.takeTitle = '编辑';
       this.$data.isForChange = true;
       this.view(row.id);
     },
     fnView(row) {
       this.$data.viewVisible = true;
-      this.$data.takeTitle = '查看';
       this.$data.isForChange = false;
       this.view(row.id);
     },
     viewClose() {
       this.$data.viewVisible = false;
       this.editClearData();
-    },
-
-    //删除
-    fnRemove(row) {
-      this.$confirm('确认删除该订单：' + row.sn + ' ？', '删除提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        let list = {
-          'id': row.id
-        }
-        let qs = require('querystring');
-        orderApi.deleOrder(qs.stringify(list)).then((res) => {
-          if (res.data.errno === 0) {
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            });
-            this.lists();
-          } else {
-            this.$message.error(res.data.msg);
-          }
-        })
-      }).catch(action => {
-      })
     },
 
     handleCurrentChange(currentPage) {
@@ -277,6 +255,7 @@ export default {
       let qs = require('querystring')
       orderApi.view(qs.stringify({id: id,})).then((res) => {
         if (res.data.errno === 0) {
+          console.log(res.data.data);
           this.$data.editForm = res.data.data;
           let time = new Date(res.data.data.cash_t * 1000);
           this.$data.editForm.cash_t = time;
@@ -470,7 +449,7 @@ export default {
       }
     },
 
-
+//清空数据
     submitClearData() {
       this.$data.formName = {
         goods_info: [],
@@ -502,7 +481,6 @@ export default {
       this.$data.item.file = '';
       this.$data.dialogVisible = false;
     },
-
     editClearData() {
       this.$data.item = {
         material: '',
@@ -544,6 +522,7 @@ export default {
 
     //补单
     submitForm(formName) {
+      console.log(this.$data.imageListF);
       let listArry = this.$data.imageListF.join(',');
       let sendData = JSON.stringify(this.$data.addProList);
       let cashTime = this.$data.formName.cash_t / 1000;
@@ -602,6 +581,8 @@ export default {
       this.$data.FormVisible = false;
       this.submitClearData();
       this.$data.faceVisible = false;
+      this.$data.imageListF = '';
+      this.$data.item.file = '';
     },
 
     //现场录单
