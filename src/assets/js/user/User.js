@@ -308,13 +308,6 @@ export default{
           setTimeout(() =>{
             this.$refs.addFormData.resetFields();
           },0)
-            // // done();
-            // if(this.$data.avatarFormVisible){
-            //     this.$data.avatarFormVisible = false;
-            // }else{
-            //     done()
-            // }
-
         },
 
         fnStatusUpdate(id,status){

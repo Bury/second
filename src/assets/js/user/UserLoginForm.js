@@ -10,6 +10,7 @@ export default {
       getClickName:'获取验证码',
       waitTime:60,
       canClick: true,
+      status:1,
       loginInfo: {
         username: '',
         password: ''
@@ -77,7 +78,11 @@ export default {
                 this.$router.push('/Statistics');
               }
 
-            } else {
+            }else if(res.data.errno === -1){
+              this.$message.error(res.data.msg);
+              this.$data.status = 0
+            }
+            else {
               this.$message.error(res.data.msg);
             }
           })

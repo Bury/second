@@ -13,8 +13,8 @@
             </el-form-item>
             <div class="login-btn-box">
 
-              <el-button type="primary" @click="login" class="login-btn">登录</el-button>
-              <el-button @click="forget" class="login-btn">忘记密码</el-button>
+              <el-button type="primary" @click="login" class="login-btn" >登录</el-button>
+              <el-button @click="forget" class="login-btn" v-bind:disabled="status==0">忘记密码</el-button>
             </div>
         </el-form>
       </el-card>
