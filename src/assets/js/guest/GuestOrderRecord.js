@@ -12,7 +12,15 @@ export default{
 
     data(){
         return{
-            orderRecords:{}
+            orderRecords:[],
+          pagination:{
+            currentPage:'',
+            totalCount:'',
+          },
+          requestParameters:{
+              page:1,
+              page_size:6,
+          }
         }
     },
 
@@ -32,12 +40,15 @@ export default{
             let list = {
                     'customer_id':customerId,
                     'page':1,
-                    'page_size': 10
+                    'page_size': 6
                 }
             let qs = require('querystring')
             orderApi.listsUserResults(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.orderRecords = res.data.data;
+                    this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+                    this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
+                    console.log(this.$data.orderRecords);
                 }else{
 
                 }

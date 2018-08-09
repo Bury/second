@@ -142,8 +142,8 @@ export default {
             })
         },
       remark(val){
-          if(val.length >= 3 ){
-            let remarkVal = val.substring(0,3);
+          if(val.length >= 200 ){
+            let remarkVal = val.substring(0,200);
             this.$data.editGuestInfoData.remark = remarkVal;
             this.$message({
               type:'warning',
