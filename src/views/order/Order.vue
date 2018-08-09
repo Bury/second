@@ -119,7 +119,7 @@
             placeholder="选择日期时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="人脸ID：" :model="searchFace" prop="id">
+        <el-form-item label="人脸编号：" :model="searchFace" prop="id">
           <el-row>
             <el-col :span='10'>
               <el-input v-model="searchFace.id" prop="id"></el-input>

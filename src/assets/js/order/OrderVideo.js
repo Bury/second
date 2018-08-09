@@ -463,9 +463,9 @@ export default {
               this.$data.ruleForm.sex = '女'
             }
             if(res.data.data.vip_level === 0){
-              this.$data.ruleForm.type = '普通'
+              this.$data.ruleForm.type = '未购'
             }else if(res.data.data.vip_level === 1){
-              this.$data.ruleForm.type = 'VIP'
+              this.$data.ruleForm.type = '已购'
             }
             this.$data.faceIdNo = res.data.data.customer_id;
             this.checkoutCallBack = true;

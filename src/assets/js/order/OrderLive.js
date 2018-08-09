@@ -39,7 +39,6 @@ export default {
       step02_block:false,
       step03_block:false,
       inputMaxL:9,
-
       showVideo:true,
       actionDialogVisible: false,
       userOld:false,
@@ -490,9 +489,9 @@ export default {
               this.$data.ruleForm.sex = '女'
             }
             if(res.data.data.vip_level === 0){
-              this.$data.ruleForm.type = '普通'
+              this.$data.ruleForm.type = '未购'
             }else if(res.data.data.vip_level === 1){
-              this.$data.ruleForm.type = 'VIP'
+              this.$data.ruleForm.type = '已购'
             }
             this.$data.faceIdNo = res.data.data.customer_id;
             this.checkoutCallBack = true;
@@ -746,6 +745,7 @@ export default {
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         console.log(res);
+        this.clearFrom();
         if(res.data.msg != ''){
           this.$message({
             message: res.data.msg,
@@ -770,7 +770,20 @@ export default {
 
       });
       // this.$router.push({path: '/Order'})
-    }
+    },
+    clearFrom(){
+      this.$data.item = {
+        material: '',
+        style: '',
+        money:'',
+        file:''
+      };
+      this.$data.addProList=[{
+        material: '',
+        style: '',
+        money:''
+      }];
 
+    },
   }
 }
