@@ -19,7 +19,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="新客/熟客：">
-          <el-select v-model="requestParameters.level" placeholder="新客/熟客">
+          <el-select v-model="requestParameters.is_new" placeholder="新客/熟客">
             <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
           </el-select>
         </el-form-item>
@@ -204,8 +204,10 @@
                      :data="upLoadData"
                      :on-preview="handlePictureCardPreview"
                      :on-remove="handleRemove"
-                     :onSuccess="uploadSuccess">
+                     :onSuccess="uploadSuccess"
+                     :before-upload="beforeAvatarUpload">
             <i class="el-icon-plus"></i>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
           </el-upload>
         </el-form-item>
         <el-form-item label="备注:" prop="type">

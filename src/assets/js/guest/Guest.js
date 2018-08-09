@@ -50,8 +50,8 @@ export default {
                 visit_time_start:'',
                 visit_time_end:'',
                 //level:'',
-                visited:'',
-                bought:'',
+                is_new:'',
+                is_buy:'',
                 age:'',
                 gender:'',
             },
@@ -81,8 +81,8 @@ export default {
                 let result = res.data;
                 if(result.errno === 0){
                     var i='';
-                    this.tableData = result.data.list;
-                    // console.log(this.tableData)
+                    this.$data.tableData = result.data.list;
+                    console.log(this.$data.tableData)
                     this.$data.pagination.currentPage = result.data.pagination.currentPage;
                     this.$data.pagination.totalCount = result.data.pagination.totalCount;
                 }else{

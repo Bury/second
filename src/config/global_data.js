@@ -36,7 +36,7 @@ const data={
 		'1':'未购',
 		'2':'已购',
 	},
-	
+
 }
 
 export default {
