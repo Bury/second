@@ -39,6 +39,7 @@ export default {
                 name: globalRules.rules.user.truename(),
                 gender:globalRules.rules.user.gender(),
                 phone:globalRules.rules.user.phone(),
+                remark:globalRules.rules.user.remark(),
             }
         };
 
@@ -139,7 +140,17 @@ export default {
                     })
                 }
             })
-        }
+        },
+      remark(val){
+          if(val.length >= 3 ){
+            let remarkVal = val.substring(0,3);
+            this.$data.editGuestInfoData.remark = remarkVal;
+            this.$message({
+              type:'warning',
+              message:'备注信息最多输入200个字符',
+            })
+          }
+      },
 
     }
 

@@ -59,7 +59,8 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="备注：">
-                    <el-input type="textarea" v-model="editGuestInfoData.remark"></el-input>
+                    <el-input type="textarea" v-model="editGuestInfoData.remark" prop="remark"
+                              v-on:input="remark(editGuestInfoData.remark)"></el-input>
                 </el-form-item>
             </el-form>
             <div class="img-box">

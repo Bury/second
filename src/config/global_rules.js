@@ -33,9 +33,10 @@ const rules={
 			 return [
 		        { required: true, message: text, trigger: 'blur' },
 		        { validator:(rule,value,callback) =>{
-	        			if(value.match(/^[a-zA-Z0-9^%&'!@#*()_+[{}:'"<>/,;=?$\x22]{5,16}$/)){
+	        			if(value.match(/^[a-zA-Z0-9^%&'!@#*()_+\[\]~`{}\-:'"<>/,;=?$\x22]{6,16}$/)){
 	        				callback();
-	        			}if(value.match(/^\s*|\s*$/)){
+	        			}
+	        			if(value.match(/^\s*|\s*$/)){
                   callback("除空格外数字,字母和任意字符6-16位")
                 }
                 // else{
@@ -87,7 +88,22 @@ const rules={
 			return [
 			    { required: true, message: '请选择性别', trigger: 'blur' }
 			]
-		}
+		},
+    //备注验证
+    remark(){
+		  return[
+        { required: true, message: '请填写备注信息', trigger: 'blur' },
+        {
+          validator: (rule, value, callback) => {
+            
+            if (value.length > 200){
+              callback("最多输入200个字符");
+            }
+          },
+          trigger: 'blur'
+        }
+      ]
+    },
 	},
 
 
