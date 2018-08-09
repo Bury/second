@@ -19,8 +19,9 @@
             <td>{{item.device_id}}</td>
             <td>{{item.version}}</td>
             <td>
-              <span v-if="item.locate = 'other'">其他</span>
-              <span v-else>收银</span>
+              {{item.locate == 'other' ? '其他' : '收银'}}
+              <!--<span v-if="item.locate = 'other'">其他</span>-->
+              <!--<span v-else>收银</span>-->
             </td>
             <td>
               {{item.locate_desc}}
