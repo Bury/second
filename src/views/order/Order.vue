@@ -19,7 +19,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="新客/熟客：">
-          <el-select v-model="requestParameters.is_new" placeholder="新客/熟客">
+          <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
             <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
           </el-select>
         </el-form-item>
@@ -225,7 +225,7 @@
         <el-button type="primary" @click="submitForm(formName)">确 定</el-button>
       </div>
     </el-dialog>
-    <!--编辑 or 查看-->
+    <!--编辑-->
     <el-dialog :title="takeTitle" :visible.sync="editVisible">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
@@ -353,7 +353,7 @@
           <el-form-item :data="faceSearch">
             <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
               <template>
-                <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar">
+                <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar" @click="imgView">
               </template>
             </div>
           </el-form-item>
@@ -393,7 +393,7 @@
         <el-form-item></el-form-item>
         <el-form-item></el-form-item>
         <el-form-item label="小票" v-model="editForm.avatar">
-          <div :model="editForm.avatar" :visible.sync="editImgVisible">
+          <div :model="editForm.avatar" :visible.sync="editImgVisible" @click="imgView">
             <div class="editImg" v-for="item in editForm.avatar">
               <img :src="item" width="100%"/>
             </div>
@@ -426,6 +426,12 @@
         :total="pagination.totalCount">
       </el-pagination>
     </div>
+    <!--查看放大图片-->
+    <el-dialog :visible.sync="imgViewVisible" class="imgView">
+      <div>
+        <!--<img :src="">-->
+      </div>
+    </el-dialog>
   </div>
 </template>
 

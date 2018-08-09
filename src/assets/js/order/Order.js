@@ -57,7 +57,7 @@ export default {
         page_size: 20,
         material: '',
         style: '',
-        is_new: '',
+        visited: '',
         price_start: '',
         price_end: '',
         cash_t_start: '',
@@ -118,6 +118,7 @@ export default {
         }
       },
       imageArr:[],
+      imgViewVisible:false,
     }
   },
   created: function () {
@@ -165,16 +166,18 @@ export default {
       this.dialogVisible = true;
     },
     beforeAvatarUpload(file) {
+      console.log(file.type);
       const isJPG = file.type === 'image/jpeg';
+      const isPNG = file.type === 'image/png';
       const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
+      if (!isJPG && !isPNG) {
+        this.$message.error('上传头像图片只能是 JPG或PNG 格式!');
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
-      return isJPG && isLt2M;
+      return (isJPG || isPNG) && isLt2M;
     },
 
     // 上传成功后的回调
@@ -596,6 +599,11 @@ export default {
       this.$data.faceVisible = false;
       this.$data.imageListF = '';
       this.$data.item.file = '';
+    },
+    //查看图片放大
+    imgView(){
+      console.log(121212);
+      this.$data.imgViewVisible = true;
     },
 
     //现场录单

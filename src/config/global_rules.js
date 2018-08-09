@@ -33,7 +33,7 @@ const rules={
 			 return [
 		        { required: true, message: text, trigger: 'blur' },
 		        { validator:(rule,value,callback) =>{
-	        			if(value.match(/^[a-zA-Z0-9^%&'!@#*()_+\[\]~`{}\-:'"<>/,;=?$\x22]{6,16}$/)){
+	        			if(value.match(/^[a-zA-Z0-9^%&'!@#*()_+\[\]~`\\{}\-:'"<>/,;=?$\x22]{6,16}$/)){
 	        				callback();
 	        			}
 	        			if(value.match(/^\s*|\s*$/)){
@@ -95,7 +95,7 @@ const rules={
         { required: true, message: '请填写备注信息', trigger: 'blur' },
         {
           validator: (rule, value, callback) => {
-            
+
             if (value.length > 200){
               callback("最多输入200个字符");
             }
