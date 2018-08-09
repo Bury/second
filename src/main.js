@@ -9,6 +9,8 @@ import '../static/css/main.css'
 import '../static/font/iconfont.css'
 import http from './api/http.js'
 
+import 'babel-polyfill'
+
 import App from './App'
 import router from './router'
 import axios from 'axios'

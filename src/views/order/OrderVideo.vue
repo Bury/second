@@ -24,24 +24,7 @@
 
 
     <div style="margin-top: 2rem;overflow: hidden;">
-      <!--拍摄人脸确认身份-->
-      <div class="get_a" style="" v-show="step01_block">
-        <!--<div>-->
-          <!--<div class="showImg" style="display: flex;align-items: center;width: 30rem;height: 30rem;" v-show="showVideo" id="getVideo">-->
-            <!--<video id="video" autoplay="" style='width:640px;height:480px'></video>-->
-            <!--<el-row style="display: flex;flex-direction: column;margin-left: 2rem">-->
-              <!--<el-button id='picture' @click="takePicture">拍摄</el-button>-->
-            <!--</el-row>-->
-          <!--</div>-->
-          <!--<div class="showImg" id="getCn" v-show="actionDialogVisible">-->
-            <!--<canvas id="canvas" width="640" height="480"></canvas>-->
-            <!--<el-row style="flex-direction: column;margin-left: 2rem;align-items: center;margin-bottom: 3rem" id="getNn" >-->
-              <!--<el-button @click="takePictureAgain" style="margin-top: 1rem;margin-left: 1rem">重拍</el-button>-->
-              <!--<el-button style="margin-top: 5rem;" @click="recognition">智能识别</el-button>-->
-            <!--</el-row>-->
-          <!--</div>-->
-        <!--</div>-->
-      </div>
+      <!--照片显示-->
       <div class="get_a" v-show="step01_block">
         <div style="position: relative;margin-bottom: 2rem;overflow: hidden;">
           <div style="float:right;">
@@ -60,7 +43,7 @@
             <tr v-for="(item,index) in tableData" :key="index"
                 style="text-align: center;">
               <td>
-                <div class="videoImg" style="width: 100%;height: 15rem;margin-bottom: 1rem;overflow: hidden;">
+                <div class="videoImg" style="width: 100%;margin-bottom: 1rem;overflow: hidden;">
                   <div style="width:45%;">
                     <img :src="item.avatar" style="width: 100%;height: 100%;" />
                   </div>
