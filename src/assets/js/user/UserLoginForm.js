@@ -38,8 +38,8 @@ export default {
         passwordRepeat:''
       },
       rulesPasswordEdit: {
-        passwordOld: globalRules.rules.user.password(6,20,'请输入当前密码：'),
-        passwordCurrent: globalRules.rules.user.password(6,20,'请输入新的密码：'),
+        passwordOld: globalRules.rules.user.password(6,20,'请输入当前密码'),
+        passwordCurrent: globalRules.rules.user.password(6,20,'请输入新的密码'),
         passwordRepeat: [
           { required: true, message: '请再次输入密码', trigger: 'blur' },
           {

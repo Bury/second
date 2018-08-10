@@ -28,7 +28,7 @@ export default{
     watch: {
         customerId: function() {
             this.lists(this.$props.customerId)
-        }
+        },
     },
 
     created:function(){
@@ -38,11 +38,12 @@ export default{
     methods:{
 
         lists(customerId){
+          // console.log(document.referrer,111111);
           console.log(this.$props.customerId)
             let list = {
                     'customer_id':customerId,
-                    'page':'',
-                    'page_size': ''
+                    'page':1,
+                    'page_size': 6
                 }
             let qs = require('querystring');
             orderApi.listsUserResults(qs.stringify(list)).then((res) => {
@@ -60,9 +61,21 @@ export default{
             })
         },
       handleCurrentChange(currentPage) {
-          console.log(currentPage,this.$props.customerId,111111);
         this.$data.requestParameters.page = currentPage;
-        this.lists(this.$props.customerId);
+        let list = {
+          'customer_id':this.$props.customerId,
+          'page':this.$data.requestParameters.page,
+          'page_size': 6
+        }
+        let qs = require('querystring');
+        orderApi.listsUserResults(qs.stringify(list)).then((res) => {
+          if(res.data.errno === 0){
+            this.$data.orderRecords = res.data.data;
+            this.$data.listArr = res.data.data.list;
+            this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+            this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
+          }
+        })
       },
 
     }
