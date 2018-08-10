@@ -64,6 +64,12 @@ const rules={
 	            	}
 	        	]
 		},
+    //验证码验证
+    code(){
+      return[
+        { required: true, message: '请输入验证码', trigger: 'blur' },
+      ]
+    },
 
         //姓名验证
 		truename(){
