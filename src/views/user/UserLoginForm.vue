@@ -19,25 +19,24 @@
         </el-form>
       </el-card>
       <!--忘记密码-->
-      <el-dialog title="忘记密码" :visible.sync="passwordVisible">
+      <el-dialog title="忘记密码" :visible.sync="passwordVisible" :before-close="dialogClose">
         <el-form :model='passwordForm' ref="passwordForm" :rules="rules" label-width="100px" class="demo-ruleForm">
-
-          <el-form-item label="账号名：">
+          <el-form-item label="账号名:" prop="username">
             <el-col :span="15"><el-input v-model="passwordForm.username"></el-input></el-col>
           </el-form-item>
-          <el-form-item label="手机号">
+          <el-form-item label="手机号:" prop="phone">
             <el-row>
             <el-col :span="15"><el-input v-model="passwordForm.phone"></el-input></el-col>
             <el-col :span="2"><el-button @click="code()" :class="{disabled: !this.canClick}">{{getClickName}}</el-button></el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="验证码">
+          <el-form-item label="验证码:" prop="code">
             <el-col :span="15"><el-input  v-model="passwordForm.code" @blur="blur()"></el-input></el-col>
           </el-form-item>
-          <el-form-item label="新密码">
+          <el-form-item label="新密码:" prop="password">
             <el-col :span="15"><el-input v-model="passwordForm.new_password" type="password"></el-input></el-col>
           </el-form-item>
-          <el-form-item label="确认密码">
+          <el-form-item label="确认密码:" prop="repassword">
             <el-col :span="15"><el-input  v-model="passwordForm.new_password2" type="password"></el-input></el-col>
           </el-form-item>
 

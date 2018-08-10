@@ -17,7 +17,10 @@ export default {
       },
       rules: {
         username: globalRules.rules.user.username(5, 16, '请输入帐号'),
-        password: globalRules.rules.user.loginPassword()
+        phone: globalRules.rules.user.phone(),
+        code: globalRules.rules.user.code(),
+        password: globalRules.rules.user.password(6, 16, '请输入密码'),
+        repassword: globalRules.rules.user.password(6, 16, '请输入密码'),
       },
       passwordVisible: false,
       passwordForm:{
@@ -35,8 +38,8 @@ export default {
         passwordRepeat:''
       },
       rulesPasswordEdit: {
-        passwordOld: globalRules.rules.user.password(6,20,'请输入当前密码：'),
-        passwordCurrent: globalRules.rules.user.password(6,20,'请输入新的密码：'),
+        passwordOld: globalRules.rules.user.password(6,20,'请输入当前密码'),
+        passwordCurrent: globalRules.rules.user.password(6,20,'请输入新的密码'),
         passwordRepeat: [
           { required: true, message: '请再次输入密码', trigger: 'blur' },
           {
@@ -77,8 +80,7 @@ export default {
               }else{
                 this.$router.push('/Statistics');
               }
-
-            }else if(res.data.errno === -1){
+            }else if(res.data.msg === '此账号被禁用'){
               this.$message.error(res.data.msg);
               this.$data.status = 0
             }
@@ -105,7 +107,6 @@ export default {
       })
     },
     code(){
-
       if(this.$data.passwordForm.username == ''){
         this.$message({
           type: 'warning',
@@ -157,16 +158,26 @@ export default {
       let qs = require('querystring');
       userApi.passwordForget(qs.stringify(list)).then((res) => {
         if (res.data.errno === 0) {
+         // this.passwordClear();
           this.$message({
             type: 'success',
             message: '修改成功!'
           });
-          this.$data.passwordVisible = false;
+          // this.$data.passwordVisible = false;
+          this.dialogClose();
         } else {
           this.$message.error(res.data.msg);
         }
 
       });
+    },
+    //关闭表单清空数据
+    dialogClose(){
+      setTimeout(() =>{
+        this.$refs.passwordForm.resetFields();
+        this.passwordClear();
+        this.$data.passwordVisible = false;
+      },0)
     },
   //  修改密码
     fnCancel(){
@@ -218,6 +229,16 @@ export default {
       },0)
     },
 
+    //数据清空
+    passwordClear(){
+      this.$data.passwordForm={
+        username:'',
+        new_password:'',
+        new_password2:'',
+        code:'',
+        phone:'',
+      }
+    }
   },
 
 }

@@ -53,6 +53,23 @@ const rules={
 		        }
 			]
 		},
+    //再次确认密码验证
+    passwordRepeat() {
+		  return[
+        { required: true, message: '请再次输入密码', trigger: 'blur' },
+        {
+          validator: (rule, value, callback) => {
+            if (value !== this.$data.passwordEditForm.passwordCurrent) {
+              callback(new Error('两次输入密码不一致!'));
+            } else {
+              callback();
+            }
+          },
+          trigger: 'blur'
+        }
+      ]
+    },
+
 
         //手机号验证
 		phone(){
@@ -70,6 +87,12 @@ const rules={
 	            	}
 	        	]
 		},
+    //验证码验证
+    code(){
+      return[
+        { required: true, message: '请输入验证码', trigger: 'blur' },
+      ]
+    },
 
         //姓名验证
 		truename(){

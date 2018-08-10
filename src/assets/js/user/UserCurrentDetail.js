@@ -18,7 +18,7 @@ export default {
             },
             rulesUserEdit: {
                 name: globalRules.rules.user.username(4,20,'请输入帐号'),
-                phone: globalRules.rules.user.password(6,20,'请输入密码：')
+                phone: globalRules.rules.user.password(6,20,'请输入密码')
             },
             passwordEditForm: {
                 passwordOld:'',
@@ -26,21 +26,21 @@ export default {
                 passwordRepeat:''
             },
             rulesPasswordEdit: {
-                passwordOld: globalRules.rules.user.password(6,20,'请输入当前密码：'),
-                passwordCurrent: globalRules.rules.user.password(6,20,'请输入新的密码：'),
+                passwordOld: globalRules.rules.user.password(6,20,'请输入当前密码'),
+                passwordCurrent: globalRules.rules.user.password(6,20,'请输入新的密码'),
                 passwordRepeat: [
-                    { required: true, message: '请再次输入密码', trigger: 'blur' },
-                    {
-                            validator: (rule, value, callback) => {
-                            if (value !== this.$data.passwordEditForm.passwordCurrent) {
-                                callback(new Error('两次输入密码不一致!'));
-                            } else {
-                                callback();
-                            }
-                            },
-                        trigger: 'blur'
+                { required: true, message: '请再次输入密码', trigger: 'blur' },
+                {
+                  validator: (rule, value, callback) => {
+                    if (value !== this.$data.passwordEditForm.passwordCurrent) {
+                      callback(new Error('两次输入密码不一致!'));
+                    } else {
+                      callback();
                     }
-                ]
+                  },
+                  trigger: 'blur'
+                }
+              ]
             },
 
         }
@@ -101,7 +101,7 @@ export default {
                           this.$data.passwordEditForm.passwordCurrent = '';
                           this.$data.passwordEditForm.passwordRepeat = '';
                         }else{
-                            this.$message.error('旧密码应该至少包含6个字符');
+                            this.$message.error('旧密码不正确');
                             this.$data.errors = 1;
                         }
                     })
