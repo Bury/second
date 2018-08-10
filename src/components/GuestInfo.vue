@@ -6,14 +6,14 @@
                 <li class="user-phone">手机： {{guestInfo.phone}}</li>
                 <li class="user-sex">性别： {{guestInfo.gender == 1 ? '男' : '女'}}</li>
                 <li class="user-age">年龄： {{guestInfo.age}}</li>
-                <li class="user-type">新客/熟客：{{guestInfo.is_new_to_text}}</li>
+                <li class="user-type">新客/熟客：{{guestInfo.is_new == 1 ? '新客' : '熟客'}}</li>
                 <li class="user-type">未购/已购：{{guestInfo.is_bought_to_text}}</li>
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
                     <img :src="guestInfo.avatar" alt="人脸图像">
                 </div>
-                <div class="img-id">人脸ID：{{guestInfo.customer_id}}</div>
+                <div class="img-id">人脸编号：{{guestInfo.customer_id}}</div>
             </div>
             <div class="user-tags">
                 标签：
@@ -22,7 +22,7 @@
             <p class="user-remarks">备注： {{guestInfo.remark === '' ? '暂无' : guestInfo.remark}}</p>
             <el-button type="primary" plain size="small" class="edit-btn" @click="editGuestInfo()">编辑</el-button>
         </div>
-
+      <!--编辑-->
         <div class="user-info-edit" v-if="infoEdit">
             <el-form :model="editGuestInfoData" :rules="GuestInfoRules" ref="editGuestInfoData" label-width="100px" class="demo-editGuestInfoData" size="mini" style="float:left;margin-right:50px;width:400px;">
                 <el-form-item label="姓名：">
