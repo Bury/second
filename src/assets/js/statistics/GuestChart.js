@@ -91,8 +91,7 @@ export default {
 					name: ' 客流量统计',
 					data: (isdata && [] ) ||  value.sum
 				});
-				guestCharts.getChart().xAxis[0].setCategories(value.time);
-				
+				guestCharts.getChart().xAxis[0].setCategories(value.time);				
 				guestCharts.getChart().series[0].update({
 					type: this.$props.chartClass
 				})
