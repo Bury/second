@@ -204,7 +204,7 @@ export default {
       this.$data.form.newPhone = '';
       this.phoneIsMySqlA = false;
       this.phoneIsMySql = false;
-      this.firstNewC = false;
+      // this.firstNewC = false;
       this.phoneNoMySql = false;
     },
 
@@ -291,7 +291,7 @@ export default {
           console.log(res.data.errno);
           this.$data.faceIdIs = res.data.data.customer_id;
           console.log(this.$data.faceIdIs);
-          if(res.data.data.is_new === 1){
+          if(res.data.data.is_new === 0){
               this.$data.NewRuleForm.images = res.data.data.avatar;
               // this.$data.NewRuleForm.phone = res.data.data.avatar;
               if(res.data.data.gender === 1){
@@ -306,7 +306,7 @@ export default {
               this.ifIsOld=true;
               this.ifIsNew=false;
               //回显数据
-          }else if(res.data.data.is_new === 0){
+          }else if(res.data.data.is_new === 1){
               //  新用户
               this.userNew = true;
               this.userOld = false;
@@ -769,7 +769,7 @@ export default {
           this.step_1=2;
           this.step_2=2;
           this.step_3=2;
-          this.step_4=1;          
+          this.step_4=1;
         }
 
       });
