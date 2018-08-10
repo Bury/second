@@ -80,8 +80,7 @@ export default {
               }else{
                 this.$router.push('/Statistics');
               }
-
-            }else if(res.data.errno === -1){
+            }else if(res.data.msg === '此账号被禁用'){
               this.$message.error(res.data.msg);
               this.$data.status = 0
             }
