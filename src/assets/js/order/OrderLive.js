@@ -293,12 +293,20 @@ export default {
           console.log(this.$data.faceIdIs);
           if(res.data.data.is_new === 0){
               this.$data.NewRuleForm.images = res.data.data.avatar;
-              // this.$data.NewRuleForm.phone = res.data.data.avatar;
+              this.$data.NewRuleForm.phone = res.data.data.phone;
               if(res.data.data.gender === 1){
                   this.$data.NewRuleForm.sex = '男'
               }else{
                   this.$data.NewRuleForm.sex = '女'
               }
+            if(res.data.data.vip_level === 1){
+              this.$data.NewRuleForm.type = '已购买'
+            }else{
+              this.$data.NewRuleForm.type = '未购买'
+            }
+              //为老顾客的时候拿到顾客id
+            this.$data.isNoMyself = res.data.data.customer_id;
+              console.log(this.$data.isNoMyself)
               //  老用户
               this.userNew= false;
               this.userOld = true;
@@ -748,7 +756,7 @@ export default {
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         console.log(res);
-        this.clearFrom();
+        this.$data.pushGoods = [];
         if(res.data.msg != ''){
           this.$message({
             message: res.data.msg,
@@ -775,19 +783,6 @@ export default {
       });
       // this.$router.push({path: '/Order'})
     },
-    clearFrom(){
-      this.$data.item = {
-        material: '',
-        style: '',
-        money:'',
-        file:''
-      };
-      this.$data.addProList=[{
-        material: '',
-        style: '',
-        money:''
-      }];
 
-    },
   }
 }
