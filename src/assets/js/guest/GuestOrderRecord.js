@@ -12,15 +12,16 @@ export default{
 
     data(){
         return{
-            orderRecords:[],
+          orderRecords:[],
           pagination:{
-            currentPage:'',
-            totalCount:'',
+            currentPage:1,
+            totalCount:0,
           },
           requestParameters:{
               page:1,
               page_size:6,
-          }
+          },
+          listArr:'',
         }
     },
 
@@ -37,15 +38,19 @@ export default{
     methods:{
 
         lists(customerId){
+          console.log(this.$props.customerId)
             let list = {
                     'customer_id':customerId,
-                    'page':1,
-                    'page_size': 6
+                    'page':'',
+                    'page_size': ''
                 }
-            let qs = require('querystring')
+            let qs = require('querystring');
             orderApi.listsUserResults(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.orderRecords = res.data.data;
+                    console.log(this.$data.orderRecords);
+                    console.log(res.data.data.list.length);
+                    this.$data.listArr = res.data.data.list;
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
                     this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                     console.log(this.$data.orderRecords);
@@ -54,6 +59,11 @@ export default{
                 }
             })
         },
+      handleCurrentChange(currentPage) {
+          console.log(currentPage,this.$props.customerId,111111);
+        this.$data.requestParameters.page = currentPage;
+        this.lists(this.$props.customerId);
+      },
 
     }
 

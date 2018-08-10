@@ -12,7 +12,7 @@
     </ul>
   </div>
   <!-- 分页 -->
-  <div v-if="orderRecords.length > 0" style="margin:0 auto;max-width:1551px;">
+  <div v-if="listArr.length > 0" style="margin:0 auto;max-width:1551px;">
     <el-pagination
       background
       class="pagination"
