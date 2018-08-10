@@ -117,8 +117,9 @@ export default {
           return time.getTime() > Date.now() - 8.64e6
         }
       },
-      imageArr:[],
       imgViewVisible:false,
+      imgViewBig:'',
+      submitFlag:true,
     }
   },
   created: function () {
@@ -154,11 +155,24 @@ export default {
       return global.FILE_UPLOAD
     },
 
-    //新增上传图片
+    //图片移除时操作
     handleRemove(file, fileList) {
-      console.log(file, fileList);
-      console.log(file)
-      console.log(fileList)
+    	console.log(file)
+    	 console.log(fileList)
+    	 if(file.response.errno === 0){
+    	 	  for(let i=0;i<this.$data.imageListF.length;i++){
+    	 	  	this.$data.imageListF[i] == file.response.data.path  && this.$data.imageListF.splice(i,1)
+    	 	  }
+    	 }
+    	
+    },
+    
+    //超出个数时操作
+    handleExceed(files, fileList){
+    	this.$message ({
+          type:'warning',
+          message:'只能上传三张小票信息',
+        })
     },
 
     handlePictureCardPreview(file) {
@@ -166,32 +180,36 @@ export default {
       this.dialogVisible = true;
     },
     beforeAvatarUpload(file) {
-      console.log(file.type);
-      const isJPG = file.type === 'image/jpeg';
+      const isJPEG = file.type === 'image/jpeg';
       const isPNG = file.type === 'image/png';
       const isLt2M = file.size / 1024 / 1024 < 2;
 
-      if (!isJPG && !isPNG) {
+      if (!isJPEG && !isPNG) {
         this.$message.error('上传头像图片只能是 JPG或PNG 格式!');
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
-      return (isJPG || isPNG) && isLt2M;
+      return (isJPEG || isPNG) && isLt2M;
     },
 
     // 上传成功后的回调
     uploadSuccess(response, file, fileList) {
-      let image = response.data.path;
-      this.$data.imageArr.push(image);
-      this.$data.imageListF = this.$data.imageArr;
-      if(this.$data.imageArr.length >= 3){
-        this.$message ({
+    	console.log(file)
+    	console.log(fileList)
+    	if(response.errno === 0){
+    		let image = response.data.path;
+        if(this.$data.imageListF.length < 3){
+      	 this.$data.imageListF.push(image)
+        }
+    	}else{
+    		this.$message ({
           type:'warning',
-          message:'只能上传三张小票信息',
+          message:'此图片有格式问题！',
         })
-      }
-      console.log(this.$data.imageArr);
+    	}
+      
+      console.log(this.$data.imageListF);
     },
 
     //编辑--上传图片的删除、添加地址
@@ -245,7 +263,7 @@ export default {
     },
     fnView(row) {
       this.$data.viewVisible = true;
-      this.$data.isForChange = false;
+      this.$data.isForChange = false;      
       this.view(row.id);
     },
     viewClose() {
@@ -271,6 +289,7 @@ export default {
       orderApi.view(qs.stringify({id: id,})).then((res) => {
         if (res.data.errno === 0) {
           console.log(res.data.data);
+          res.data.data.avatar === null &&  (res.data.data.avatar = [])
           this.$data.editForm = res.data.data;
           let time = new Date(res.data.data.cash_t * 1000);
           this.$data.editForm.cash_t = time;
@@ -485,7 +504,7 @@ export default {
         style: null,
         price: ''
       }];
-      this.$data.imageListF = '';
+      this.$data.imageListF = [];
       this.$data.allNum = '1';
       this.$data.totalMoney = '';
       this.$data.upLoadData = {
@@ -537,8 +556,9 @@ export default {
 
     //补单
     submitForm(formName) {
-      console.log(this.$data.imageListF);
-      let listArry = this.$data.imageListF.join(',');
+      let listArry; 
+      if (this.$data.submitFlag === false){return false;}
+      this.$data.imageListF.length === 0 ? listArry = "" : listArry = this.$data.imageListF.join(',');
       let sendData = JSON.stringify(this.$data.addProList);
       let cashTime = this.$data.formName.cash_t / 1000;
       let list = {
@@ -549,6 +569,7 @@ export default {
         'customer_id': this.$data.faceSearch.customer_id
       }
       let qs = require('querystring');
+      this.$data.submitFlag = false ;
       orderApi.addsNotLive(qs.stringify(list)).then((res) => {
         if (res.data.errno === 0) {
           this.lists();
@@ -559,6 +580,7 @@ export default {
           });
           this.$data.FormVisible = false;
           this.$refs.upload.clearFiles();
+          this.$data.submitFlag = true;
         } else {
           this.$message.error(res.data.msg);
         }
@@ -596,13 +618,13 @@ export default {
       this.$data.FormVisible = false;
       this.submitClearData();
       this.$data.faceVisible = false;
-      this.$data.imageListF = '';
+      this.$data.imageListF = [];
       this.$data.item.file = '';
     },
     //查看图片放大
-    imgView(){
-      console.log(121212);
+    imgView(event){
       this.$data.imgViewVisible = true;
+      this.$data.imgViewBig = event.currentTarget.src
     },
 
     //现场录单
@@ -616,7 +638,7 @@ export default {
     orderNotLive() {
       this.$data.FormVisible = true;
       //点击补单的时候，清空一下数据
-      this.$data.imageListF = '';
+      this.$data.imageListF = [];
       this.$data.item.file = '';
     },
 

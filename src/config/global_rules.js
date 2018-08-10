@@ -27,6 +27,13 @@ const rules={
 	        	}
 	    	]
 		},
+		
+		loginPassword() {
+			 return [
+		        { required: true, message: '请输入密码：', trigger: 'blur' },
+		        
+			]
+		},
 
         //密码验证
 		password(len_min,len_max,text) {
@@ -35,10 +42,9 @@ const rules={
 		        { validator:(rule,value,callback) =>{
 	        			if(value.match(/^[a-zA-Z0-9^%&'!@#*()_+\[\]~`\\{}\-:'"<>/,;=?$\x22]{6,16}$/)){
 	        				callback();
-	        			}
-	        			if(value.match(/^\s*|\s*$/)){
-                  callback("除空格外数字,字母和任意字符6-16位")
-                }
+	        			}else if(value.match(/^\s*|\s*$/)){
+                        callback("除空格外数字,字母和任意字符6-16位")
+                        }
                 // else{
 	        		// 		callback("数字,字母和任意字符6-16位")
 	        		// 	}

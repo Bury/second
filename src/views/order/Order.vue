@@ -205,6 +205,7 @@
                      :on-preview="handlePictureCardPreview"
                      :on-remove="handleRemove"
                      :onSuccess="uploadSuccess"
+                     :on-exceed="handleExceed"
                      :before-upload="beforeAvatarUpload">
             <i class="el-icon-plus"></i>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
@@ -353,7 +354,7 @@
           <el-form-item :data="faceSearch">
             <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
               <template>
-                <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar" @click="imgView">
+                <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar" @click="imgView($event)">
               </template>
             </div>
           </el-form-item>
@@ -392,11 +393,15 @@
         <el-form-item></el-form-item>
         <el-form-item></el-form-item>
         <el-form-item></el-form-item>
-        <el-form-item label="小票" v-model="editForm.avatar">
-          <div :model="editForm.avatar" :visible.sync="editImgVisible" @click="imgView">
-            <div class="editImg" v-for="item in editForm.avatar">
-              <img :src="item" width="100%"/>
-            </div>
+        <el-form-item label="小票:" v-model="editForm.avatar">
+          <div :model="editForm.avatar" :visible.sync="editImgVisible">
+          	<template v-if='editForm.avatar.length > 0'>
+          		<div class="editImg" v-for="item in editForm.avatar">
+                <img :src="item" width="100%"  @click="imgView($event)"/>
+              </div>
+          	</template>
+          	<span v-else>暂无小票</span>
+            
           </div>
         </el-form-item>
         <el-form-item label="备注:" prop="type">
@@ -427,9 +432,9 @@
       </el-pagination>
     </div>
     <!--查看放大图片-->
-    <el-dialog :visible.sync="imgViewVisible" class="imgView">
-      <div>
-        <!--<img :src="">-->
+    <el-dialog :visible.sync="imgViewVisible">
+      <div  class="imgView">
+        <img :src="imgViewBig">
       </div>
     </el-dialog>
   </div>

@@ -117,6 +117,7 @@ export default {
       dialogImageUrl: '',
       actionDialogVisible: false,
       isNoMyself:'',
+      submitFlag:true,
     };
   },
 
@@ -717,6 +718,8 @@ export default {
     //最后的计算
     allPostM(){
       console.log(this.$data.addProList);
+      if(this.$data.submitFlag === false) {return false;}
+      this.$data.submitFlag = false;
       let arrAs= {};
       for(let i = 0; i< this.$data.addProList.length; i++){
         arrAs = {
@@ -753,6 +756,7 @@ export default {
             center: true
           });
         }
+        this.$data.submitFlag = true;
         //完成订单之后，跳回列表页面
         if(res.data.errno == 0){
           this.$message({
@@ -765,7 +769,7 @@ export default {
           this.step_1=2;
           this.step_2=2;
           this.step_3=2;
-          this.step_4=1;
+          this.step_4=1;          
         }
 
       });
