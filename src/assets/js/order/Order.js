@@ -157,8 +157,8 @@ export default {
 
     //图片移除时操作
     handleRemove(file, fileList) {
-    	console.log(file)
-    	 console.log(fileList)
+    	
+    	
     	 if(file.response.errno === 0){
     	 	  for(let i=0;i<this.$data.imageListF.length;i++){
     	 	  	this.$data.imageListF[i] == file.response.data.path  && this.$data.imageListF.splice(i,1)
@@ -195,8 +195,7 @@ export default {
 
     // 上传成功后的回调
     uploadSuccess(response, file, fileList) {
-    	console.log(file)
-    	console.log(fileList)
+    	
     	if(response.errno === 0){
     		let image = response.data.path;
         if(this.$data.imageListF.length < 3){
@@ -209,7 +208,7 @@ export default {
         })
     	}
       
-      console.log(this.$data.imageListF);
+      
     },
 
     //编辑--上传图片的删除、添加地址
@@ -390,7 +389,8 @@ export default {
 
     //编辑提交，取消
     EditFormSubmit(editForm) {
-      console.log(editForm)
+    	if(this.$data.submitFlag = false){return false;}
+    	this.$data.submitFlag = false;
       let listArry = '';
       if (this.$data.editImgAvatar.length == 0) {
         listArry = '';
@@ -398,14 +398,14 @@ export default {
         listArry = this.$data.editImgAvatar.join(',');
       }
       let sendA = JSON.stringify(this.$data.editRequestParameters);
-      console.log(this.editForm.cash_t);
       let postTime = this.editForm.cash_t / 1000;
+      let files_web = this.$data.editForm.avatar.join()
       let list = {
         'id': this.$data.editForm.id,
         'goods_info': sendA,
         'cash_t': postTime,
         'remark': this.$data.editForm.remark,
-        'files_web': this.$data.editForm.avatar,
+        'files_web': files_web,
         'avatar': listArry,
         'customer_id': this.$data.editForm.traffic.customer_id
       };
@@ -418,11 +418,12 @@ export default {
             type: 'success',
             message: '修改成功!'
           });
-          this.$data.editVisible = false;
         } else {
           this.$message.error(res.data.msg);
         }
+        this.$data.editVisible = false;
       })
+      this.$data.submitFlag = true;
       setTimeout(() =>{
         this.$refs.editForm.resetFields();
       },0)
@@ -471,7 +472,6 @@ export default {
 
       this.$data.allNum = this.$data.addProList.length;
       if(isNaN(n) == true){
-        // console.log(0)
         this.$message({
           message: '输入不合法，请重新输入',
           type: 'warning',
@@ -558,6 +558,7 @@ export default {
     submitForm(formName) {
       let listArry; 
       if (this.$data.submitFlag === false){return false;}
+      this.$data.submitFlag = false ;
       this.$data.imageListF.length === 0 ? listArry = "" : listArry = this.$data.imageListF.join(',');
       let sendData = JSON.stringify(this.$data.addProList);
       let cashTime = this.$data.formName.cash_t / 1000;
@@ -568,9 +569,8 @@ export default {
         'files_web': listArry,
         'customer_id': this.$data.faceSearch.customer_id
       }
-      let qs = require('querystring');
-      this.$data.submitFlag = false ;
-      orderApi.addsNotLive(qs.stringify(list)).then((res) => {
+      let qs = require('querystring');      
+      orderApi.addsNotLive(qs.stringify(list)).then((res) => {      	
         if (res.data.errno === 0) {
           this.lists();
           this.submitClearData();
@@ -579,11 +579,11 @@ export default {
             message: '创建成功!'
           });
           this.$data.FormVisible = false;
-          this.$refs.upload.clearFiles();
-          this.$data.submitFlag = true;
+          this.$refs.upload.clearFiles();          
         } else {
           this.$message.error(res.data.msg);
         }
+        this.$data.submitFlag = true;
       })
     },
 

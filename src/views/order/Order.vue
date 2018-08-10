@@ -113,7 +113,7 @@
     <el-dialog title="补单" :visible.sync="FormVisible" :before-close="dialogClose">
       <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
-          <el-date-picker :picker-options="pickerOptionsSet"
+          <el-date-picker
             v-model="formName.cash_t"
             type="datetime"
             placeholder="选择日期时间">
