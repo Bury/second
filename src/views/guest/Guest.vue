@@ -103,7 +103,7 @@
       </el-tab-pane>
 
     </el-tabs>
-
+    <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>
 
     <!-- 弹窗 -->
     <el-dialog :visible.sync="dialogVisible" style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">

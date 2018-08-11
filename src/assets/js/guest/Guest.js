@@ -63,6 +63,7 @@ export default {
                 return time.getTime() > Date.now() - 8.64e6
               }
             },
+          noData:false,
         }
     },
 
@@ -94,23 +95,7 @@ export default {
         handleCurrentChange(currentPage) {
           this.$data.tableData = [];
             this.$data.requestParameters.page = currentPage;
-            // let list ={
-            //   page:this.$data.requestParameters.page,
-            // }
             this.lists();
-          // let qs = require('querystring');
-          // guestApi.lists(qs.stringify(list)).then((res) => {
-          //   let result = res.data;
-          //   if(result.errno === 0){
-          //     var i='';
-          //     this.tableData = result.data.list;
-          //     // console.log(this.tableData)
-          //     this.$data.pagination.currentPage = result.data.pagination.currentPage;
-          //     this.$data.pagination.totalCount = result.data.pagination.totalCount;
-          //   }else{
-          //
-          //   }
-          // })
         },
 
         onSubmit() {
@@ -126,13 +111,16 @@ export default {
           guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
             let result = res.data;
             if(result.errno === 0){
-              var i='';
+              // var i='';
               this.tableData = result.data.list;
               // console.log(this.tableData)
+              if(result.data.list.length == 0){
+                this.$data.noData = true;
+              }else{
+                this.$data.noData = false;
+              }
               this.$data.pagination.currentPage = result.data.pagination.currentPage;
               this.$data.pagination.totalCount = result.data.pagination.totalCount;
-            }else{
-
             }
           })
         },
