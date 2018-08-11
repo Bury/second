@@ -1,6 +1,6 @@
 <template>
 	<div class="left-menu1">
-		<el-menu :default-active="currentMenu"
+		<el-menu :default-active="$route.path"
                  class="el-menu-vertical-demo"
                  :collapse="isCollapse && isShow"
                  background-color="#545c64"
@@ -68,12 +68,6 @@
             this.getUrl();
         },
         mounted:function () {
-          window.addEventListener("popstate", function(){
-            let self = this;
-            let currentUrl = window.location.href;
-            self.currentMenu = currentUrl.split('#')[1];
-            console.log(self.currentMenu)
-          }, false)
         },
         methods:{
             getUrl(){
