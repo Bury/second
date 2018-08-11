@@ -95,7 +95,7 @@ export default {
 				id: [{required: true,message: '请输入人脸编号',trigger: 'blur'}],
 //				material: [{required: true,message: '请选择材质信息',trigger: 'change'}],
 //				style: [{required: true,message: '请选择款式信息',trigger: 'change'}],
-//				price: [{required: true,message: '请输入商品价格',trigger: 'blur'}],				
+//				price: [{required: true,message: '请输入商品价格',trigger: 'blur'}],
 			},
 			rules: {
 				cash_t: [{required: true,message: '请选择创建时间',trigger: 'blur'}],
@@ -252,24 +252,33 @@ export default {
 				this.lists();
 			}
 			let qs = require('querystring');
-			orderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
-				if(res.data.errno === 0) {
-					console.log(res.data.data.list);
-					this.$data.tableData = res.data.data.list;
-					this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
-					this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-				}
-			})
+      orderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
+        if (res.data.errno === 0) {
+          console.log(res.data.data.list);
+          console.log(res.data.data.list.length);
+          if(res.data.data.list.length === 0){
+            console.log(res.data.data.list.length);
+            this.$data.noData = true;
+          }else{
+            this.$data.noData = false;
+
+          }
+          this.$data.tableData = res.data.data.list;
+          this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+          this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
+
+        }
+      })
 		},
 
 		// 编辑显示列表
-		fnEdit(row) {			
+		fnEdit(row) {
 			this.$data.editVisible = true;
 			this.$data.isForChange = true;
 			this.view(row.id);
 			setTimeout(()=>{
 						this.$refs.upload.clearFiles();
-			},0)   
+			},0)
 		},
 		fnView(row) {
 			this.$data.viewVisible = true;
@@ -441,7 +450,7 @@ export default {
 
 		cancelE(editFrom) {
 			this.$data.editVisible = false;
-			this.editClearData();			
+			this.editClearData();
 			this.$refs.upload.clearFiles();
 		},
 
@@ -589,14 +598,14 @@ export default {
 										type: 'success',
 										message: '创建成功!'
 									});
-									this.$data.FormVisible = false;									
+									this.$data.FormVisible = false;
 								} else {
 									this.$message.error(res.data.msg);
 								}
 								this.$data.submitFlag = true;
 								this.$refs.upload.clearFiles();
 							})
-					
+
 
 				},
 
@@ -654,13 +663,13 @@ export default {
 				orderNotLive() {
 					setTimeout(()=>{
 						this.$refs.upload.clearFiles();
-					},0)          
+					},0)
 					this.$data.FormVisible = true;
-					//点击补单的时候，清空一下数据					
+					//点击补单的时候，清空一下数据
 					this.$data.imageListF = [];
 					this.$data.item.file = [];
-					
-					
+
+
 				},
 
 		}

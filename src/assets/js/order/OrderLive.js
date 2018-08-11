@@ -294,6 +294,7 @@ export default {
           if(res.data.data.is_new === 0){
               this.$data.NewRuleForm.images = res.data.data.avatar;
               this.$data.NewRuleForm.phone = res.data.data.phone;
+            this.$data.NewRuleForm.name = res.data.data.name;
               if(res.data.data.gender === 1){
                   this.$data.NewRuleForm.sex = '男'
               }else{
