@@ -227,7 +227,7 @@
       </div>
     </el-dialog>
     <!--编辑-->
-    <el-dialog :title="takeTitle" :visible.sync="editVisible">
+    <el-dialog :title="takeTitle" :visible.sync="editVisible" :before-close="dialogCloseEdit">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
           <el-date-picker
@@ -399,7 +399,7 @@
           <div :model="editForm.avatar" :visible.sync="editImgVisible">
           	<template v-if='editForm.avatar.length > 0'>
           		<div class="editImg" v-for="item in editForm.avatar">
-                <img :src="item" width="100%"  @click="imgView($event)"/>
+                <img :src="item" width="100%" height="100%"  @click="imgView($event)"/>
               </div>
           	</template>
           	<span v-else>暂无小票</span>

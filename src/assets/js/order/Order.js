@@ -296,10 +296,19 @@ export default {
 		},
 		dialogClose() {
 			this.$data.FormVisible = false;
+			this.$refs.upload.clearFiles();
 			setTimeout(() => {
 				this.$refs.formName.resetFields();
 				this.submitClearData();
 				this.$data.faceVisible = false;
+			}, 0)
+		},
+		dialogCloseEdit() {
+			this.$data.editVisible = false;
+			this.$refs.upload.clearFiles();
+			setTimeout(() => {
+				this.$refs.editForm.resetFields();
+				this.editClearData();
 			}, 0)
 		},
 		//查看
@@ -355,7 +364,7 @@ export default {
 			let n = 0;
 			for(let i = 0; i < this.$data.addProList.length; i++) {
 				if(this.$data.addProList[i].price.replace(/[^\.\d]/g, '')) {
-					n += parseInt(this.$data.addProList[i].price);
+					n += parseInt(this.$data.addProList[i].price,2);
 				} else {
 					this.$data.addProList[i].price = 0;
 				}
@@ -431,8 +440,7 @@ export default {
 			let qs = require('querystring');
 			orderApi.editOrder(qs.stringify(list)).then((res) => {
 				if(res.data.errno === 0) {
-					this.lists();
-					this.editClearData();
+					this.lists();					
 					this.$message({
 						type: 'success',
 						message: '修改成功!'
@@ -440,7 +448,8 @@ export default {
 				} else {
 					this.$message.error(res.data.msg);
 				}
-				this.$data.editVisible = false;
+				this.$data.editVisible = false;			
+				this.editClearData();
 			})
 			this.$data.submitFlag = true;
 			setTimeout(() => {
@@ -486,9 +495,9 @@ export default {
 		inputFun(itemPrice) {
 			let n = 0;
 			for(let i = 0; i < this.$data.addProList.length; i++) {
-				n += parseFloat(this.$data.addProList[i].price, 2);
+				n += parseFloat(this.$data.addProList[i].price == "" ? 0 : this.$data.addProList[i].price);
 			}
-
+			
 			this.$data.allNum = this.$data.addProList.length;
 			if(isNaN(n) == true) {
 				this.$message({
@@ -599,11 +608,12 @@ export default {
 										message: '创建成功!'
 									});
 									this.$data.FormVisible = false;
+									this.$refs.upload.clearFiles();
 								} else {
 									this.$message.error(res.data.msg);
 								}
 								this.$data.submitFlag = true;
-								this.$refs.upload.clearFiles();
+								this.$data.faceVisible = false;															
 							})
 
 
@@ -641,6 +651,7 @@ export default {
 					this.$data.faceVisible = false;
 					this.$data.imageListF = [];
 					this.$data.item.file = '';
+					this.$refs.upload.clearFiles();
 				},
 				//查看图片放大
 				imgView(event) {
@@ -661,15 +672,11 @@ export default {
 				},
 				//补单
 				orderNotLive() {
-					setTimeout(()=>{
-						this.$refs.upload.clearFiles();
-					},0)
+					console.log(this.$data.faceVisible)
 					this.$data.FormVisible = true;
 					//点击补单的时候，清空一下数据
 					this.$data.imageListF = [];
 					this.$data.item.file = [];
-
-
 				},
 
 		}
