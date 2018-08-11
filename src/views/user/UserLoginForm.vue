@@ -26,7 +26,7 @@
           </el-form-item>
           <el-form-item label="手机号:" prop="phone">
             <el-row>
-            <el-col :span="15"><el-input v-model="passwordForm.phone"></el-input></el-col>
+            <el-col :span="15"><el-input v-model="passwordForm.phone" @focus="needsC"></el-input></el-col>
             <el-col :span="2"><el-button @click="code()" :class="{disabled: !this.canClick}">{{getClickName}}</el-button></el-col>
             </el-row>
           </el-form-item>

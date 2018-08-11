@@ -2,7 +2,7 @@ import globalRules from '@/config/global_rules'
 import globalFunctions from '@/config/global_functions'
 
 import userApi from '@/api/user.js'
-
+let clock;
 export default {
   name: 'login-form',
   data() {
@@ -106,6 +106,13 @@ export default {
 
       })
     },
+    needsC(){
+      window.clearInterval(clock)
+      this.$data.getClickName = '发送验证码';
+      this.$data.waitTime = 60;
+      this.canClick = true  //这里重新开启
+      this.$data.passwordForm.phone = '';
+    },
     code(){
       if(this.$data.passwordForm.username == ''){
         this.$message({
@@ -123,7 +130,7 @@ export default {
           this.canClick = false
           this.$data.getClickName = this.$data.waitTime + 's后发送';
           this.getMsg();
-          let clock = window.setInterval(() => {
+           clock = window.setInterval(() => {
             this.$data.waitTime--;
             this.$data.getClickName = this.$data.waitTime + 's后发送';
             if (this.$data.waitTime < 0) {

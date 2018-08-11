@@ -306,7 +306,7 @@ export default {
             }
               //为老顾客的时候拿到顾客id
             this.$data.isNoMyself = res.data.data.customer_id;
-              console.log(this.$data.isNoMyself)
+              // console.log(this.$data.isNoMyself)
               //  老用户
               this.userNew= false;
               this.userOld = true;
@@ -353,9 +353,26 @@ export default {
       //不管有没有为新手机号，最终走向消费，传值一次,更一次手机号
       //这里的 this.$data.faceI 有两种可能，是本人和不是本人
       console.log(this.$data.isNoMyself);
+      //如果识别出来人脸则手机号给返回，否者为查询输入
+      let phonePast;
+      let customerIdPast;
+      if(this.$data.form.newPhone == ''){
+        //识别出来
+        phonePast = this.$data.NewRuleForm.phone;
+        console.log(phonePast)
+      }else{
+        phonePast = this.$data.form.newPhone;
+        console.log(phonePast)
+      }
+      if(this.$data.isNoMyself == ''){
+        customerIdPast = this.$data.faceIdIs;
+        console.log(customerIdPast)
+      }else{
+        customerIdPast = this.$data.isNoMyself
+      }
       let list = {
-        'phone': this.$data.form.newPhone,
-        'customer_id':this.$data.isNoMyself,
+        'phone': phonePast,
+        'customer_id':customerIdPast,
       }
       let qs = require('querystring');
       OrderApi.addNPhone(qs.stringify(list)).then((res) => {
