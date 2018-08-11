@@ -94,7 +94,7 @@ export default{
 
         //列表
         lists(){
-            this.$data.requestParameters.sid = localStorage.getItem('store_id');
+            this.$data.requestParameters.sid = sessionStorage.getItem('store_id');
             let qs = require('querystring')
             userApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 if(res.data.errno === 0){

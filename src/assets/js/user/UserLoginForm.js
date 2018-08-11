@@ -70,10 +70,10 @@ export default {
             console.log(res);
             if (res.data.errno === 0) {
               console.log(res.data.data);
-              localStorage.setItem('knock_knock', res.data.data.access_token);
-              localStorage.setItem('username', res.data.data.user.username);
-              localStorage.setItem('store_id', res.data.data.user.store_id);
-              localStorage.setItem('store_name', res.data.data.user.store_name);
+              sessionStorage.setItem('knock_knock', res.data.data.access_token);
+              sessionStorage.setItem('username', res.data.data.user.username);
+              sessionStorage.setItem('store_id', res.data.data.user.store_id);
+              sessionStorage.setItem('store_name', res.data.data.user.store_name);
               // console.log(res.data.data.user.is_change_pwd);
               if(res.data.data.user.is_change_pwd == 0){
                 this.$data.dialogFormVisible = true;

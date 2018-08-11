@@ -28,8 +28,8 @@ export default {
     },
 
     created: function(){
-        this.$data.username = localStorage.getItem('username');
-        this.$data.store_name = localStorage.getItem('store_name');
+        this.$data.username = sessionStorage.getItem('username');
+        this.$data.store_name = sessionStorage.getItem('store_name');
     },
 
     methods: {

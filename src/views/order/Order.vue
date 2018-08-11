@@ -111,23 +111,23 @@
     <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>    <!--补单-->
     <!--补单-->
     <el-dialog title="补单" :visible.sync="FormVisible" :before-close="dialogClose">
-      <el-form :model='formName' ref="formName" :rules="rules" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="收银时间：" prop="cash_t">
+      <el-form :model='formName' ref="formName" :rules="fromRules" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="收银时间："  prop="cash_t">
           <el-date-picker
             v-model="formName.cash_t"
             type="datetime"
             placeholder="选择日期时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="人脸编号：" :model="searchFace" prop="id">
+        <el-form-item label="人脸编号：" :model="searchFace">
           <el-row>
-            <el-col :span='10'>
-              <el-input v-model="searchFace.id" prop="id"></el-input>
+            <el-col :span='7'>
+              <el-input v-model="searchFace.id"  prop="id"></el-input>
               <!--<input type="number" class="input" v-model="searchFace.id" maxlength="5" v-on:input="getMoneyb(form.moneyb)"  placeholder=""-->
                      <!--onkeyup="this.value=this.value.replace(/\.\d{2,}$/,this.value.substr(this.value.indexOf('.'),3))" />-->
               <!--</el-input>-->
             </el-col>
-            <el-col :span='2'>
+            <el-col :span='7' style="margin-left: 10px;">
               <el-button @click="findGuestByFaceId()">查询</el-button>
             </el-col>
           </el-row>
@@ -140,25 +140,24 @@
             </div>
           </el-form-item>
         </el-form-item>
-        <div v-for="(item,index) in addProList" :key="index" v-if="addProList" :rules="rules">
+        <div v-for="(item,index) in addProList" :key="index" v-if="addProList">
           <el-row type="flex">
             <el-col :span="7" style="padding: 0;margin: 0;">
-              <el-form-item label="材质：" prop="material" label-width="60px">
-                <el-select v-model='item.material'>
-                  <el-option v-for="material in materials" :key="material.id" :label="material.name"
-                             :value="material.id"></el-option>
+              <el-form-item label="材质：" prop="material" label-width="80px">
+                <el-select v-model='item.material' >
+                  <el-option v-for="material in materials" :key="material.id" :label="material.name" :value="material.id"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="7" style="padding: 0;margin: 0;">
-              <el-form-item label="款式：" prop="style" label-width="60px">
+              <el-form-item label="款式：" prop="style" label-width="80px">
                 <el-select v-model="item.style">
                   <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="7" style="padding: 0;margin: 0;">
-              <el-form-item label='成交金额：'>
+              <el-form-item label='成交金额：' prop="price"  label-width="100px">
                 <!--<el-input v-model='item.price' v-on:input='inputFun(item.price)'></el-input>-->
                 <!--<input type="number" class="input" v-model="item.price"-->
                        <!--v-on:input="inputFun(item.price)"  placeholder=""-->
@@ -174,7 +173,7 @@
             <el-col :span='1' style="padding: 0;margin: 0;">
               <div class='deleproduct'>
                 <div>
-                  <el-button @click='deleProduct(index)'>删除</el-button>
+                  <el-button v-if="addProList.length > 1" @click='deleProduct(index)'>删除</el-button>
                 </div>
               </div>
             </el-col>
@@ -197,7 +196,8 @@
         <el-form-item></el-form-item>
         <el-form-item></el-form-item>
         <el-form-item label="小票" v-model="imageListF">
-          <el-upload v-model="item.file" :limit = 3
+          <el-upload  v-model="item.file" 
+          	         :limit = 3
                      ref='upload'
                      :action="importFileUrl()"
                      list-type="picture-card"
@@ -253,7 +253,7 @@
             </div>
           </el-form-item>
         </el-form-item>
-        <div v-for="(item,index) in editForm.orderGoods" :key="index" v-if="editForm.orderGoods" :rules="rules">
+        <div v-for="(item,index) in editRequestParameters" :key="index" v-if="editRequestParameters" :rules="rules">
           <el-row>
             <el-col :span='7'>
               <el-form-item label="材质：" prop="material" label-width="60px">
@@ -278,7 +278,7 @@
             <el-col :span='1'>
               <div class='deleproduct'>
                 <div>
-                  <el-button @click='editDeleProduct(index)'>删除</el-button>
+                  <el-button v-if="editRequestParameters.length > 1" @click='editDeleProduct(index)'>删除</el-button>
                 </div>
               </div>
             </el-col>
@@ -306,7 +306,9 @@
               <img :src="item" width="100%"/>
             </div>
           </div>
-          <el-upload v-model="item.file"
+          <el-upload 
+          	         ref="upload"
+          	         v-model="item.file"
                      :action="importFileUrl()"
                      list-type="picture-card"
                      :data="upLoadData"
