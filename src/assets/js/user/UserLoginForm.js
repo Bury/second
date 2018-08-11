@@ -11,6 +11,9 @@ export default {
       waitTime:60,
       canClick: true,
       status:1,
+      passwordVisibleSecod:false,
+      passwordVisibleThird:false,
+      getMsgAfter:false,
       loginInfo: {
         username: '',
         password: ''
@@ -97,14 +100,20 @@ export default {
       this.$data.passwordVisible = true;
     },
     getMsg(){
-      let list = {
-        'phone': this.$data.passwordForm.phone,
-        'username': this.$data.passwordForm.username,
-      };
-      let qs = require('querystring');
-      userApi.sendSms(qs.stringify(list)).then((res) => {
+      if (!this.canClick) return  ;
+      this.canClick = false
+      this.$data.getClickName = this.$data.waitTime + 's后发送';
+      clock = window.setInterval(() => {
+        this.$data.waitTime--;
+        this.$data.getClickName = this.$data.waitTime + 's后发送';
+        if (this.$data.waitTime < 0) {
+          window.clearInterval(clock)
+          this.$data.getClickName = '发送验证码';
+          this.$data.waitTime = 60;
+          this.canClick = true  //这里重新开启
 
-      })
+        }
+      },1000);
     },
     needsC(){
       window.clearInterval(clock)
@@ -114,41 +123,65 @@ export default {
       this.$data.passwordForm.phone = '';
     },
     code(){
+
+      let list = {
+        'phone': this.$data.passwordForm.phone,
+        'username': this.$data.passwordForm.username,
+      };
+      let qs = require('querystring');
+      userApi.sendSms(qs.stringify(list)).then((res) => {
+        console.log(res.data.msg)
+        if(res.data.errno == -1){
+          this.$message({
+            type: 'warning',
+            message: res.data.msg
+          });
+          this.$data.passwordVisible = true;
+          this.$data.passwordVisibleSecod = false;
+          this.$data.passwordForm.phone = '';
+          this.$data.passwordForm.username = '';
+        }else{
+          this.getMsg();
+          this.$data.getMsgAfter = true;
+        }
+      })
+
+    },
+    blur(){
+
+    },
+    //第一步
+    passwordSubmitLast(){
       if(this.$data.passwordForm.phone == ''){
         this.$message({
           type: 'warning',
           message: '请输入手机号!'
         });
-      }
-
-      else{
+      }else{
         if(this.$data.passwordForm.username == ''){
           this.$message({
             type: 'warning',
             message: '请输入用户名!'
           });
-        }
-        else{
-          if (!this.canClick) return  ;
-          this.canClick = false
-          this.$data.getClickName = this.$data.waitTime + 's后发送';
-          this.getMsg();
-           clock = window.setInterval(() => {
-            this.$data.waitTime--;
-            this.$data.getClickName = this.$data.waitTime + 's后发送';
-            if (this.$data.waitTime < 0) {
-              window.clearInterval(clock)
-              this.$data.getClickName = '发送验证码';
-              this.$data.waitTime = 60;
-              this.canClick = true  //这里重新开启
-
-            }
-          },1000);
+        }else{
+          this.$data.passwordVisible = false;
+          this.$data.passwordVisibleSecod = true;
+          window.clearInterval(clock)
+          this.$data.getClickName = '发送验证码';
+          this.$data.waitTime = 60;
+          this.canClick = true  //这里重新开启
+          this.$data.getMsgAfter = false;
         }
       }
 
     },
-    blur(){
+    //回到第一步
+    toFirst(){
+      this.$data.passwordVisible = true;
+      this.$data.passwordVisibleSecod = false;
+    },
+    //第二步
+    passwordSubmitSecond(){
       let list = {
         'phone': this.$data.passwordForm.phone,
         'code': this.$data.passwordForm.code,
@@ -156,7 +189,15 @@ export default {
       let qs = require('querystring');
       userApi.checkSms(qs.stringify(list)).then((res) => {
         this.$data.sendCode = res.data.data.code;
+        if(res.data.errno == 0){
+          this.$data.passwordVisibleThird = true;
+        }
       })
+    },
+    //第三步回到第er步
+    toSecond(){
+      this.$data.passwordVisibleSecod = true;
+      this.$data.passwordVisibleThird = false;
     },
     passwordSubmit(){
       let list = {
@@ -174,6 +215,9 @@ export default {
             message: '修改成功!'
           });
           // this.$data.passwordVisible = false;
+          this.$data.passwordVisible = false;
+          this.$data.passwordVisibleSecod = false;
+          this.$data.passwordVisibleThird = false;
           this.dialogClose();
         } else {
           this.$message.error(res.data.msg);

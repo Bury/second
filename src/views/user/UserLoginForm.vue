@@ -27,21 +27,43 @@
           <el-form-item label="手机号:" prop="phone">
             <el-row>
             <el-col :span="15"><el-input v-model="passwordForm.phone" @focus="needsC"></el-input></el-col>
-            <el-col :span="2"><el-button @click="code()" :class="{disabled: !this.canClick}">{{getClickName}}</el-button></el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="验证码:" prop="code">
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="passwordSubmitLast()">下一步</el-button>
+        </div>
+      </el-dialog>
+      <!--忘记密码第二步-->
+      <el-dialog title="忘记密码" :visible.sync="passwordVisibleSecod" :before-close="dialogClose">
+        <el-form>
+          <el-form-item label="手机号:" prop="phone">
+            <el-row>
+              <el-col :span="15"><el-input v-model="passwordForm.phone" disabled></el-input></el-col>
+              <el-col :span="2"><el-button @click="code()" :class="{disabled: !this.canClick}">{{getClickName}}</el-button></el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="验证码:" prop="code" v-show="getMsgAfter">
             <el-col :span="15"><el-input  v-model="passwordForm.code" @blur="blur()"></el-input></el-col>
           </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="toFirst()">上 一 步</el-button>
+          <el-button type="primary" @click="passwordSubmitSecond()">确 定</el-button>
+        </div>
+      </el-dialog>
+      <!--忘记密码第三步-->
+      <el-dialog title="忘记密码" :visible.sync="passwordVisibleThird" :before-close="dialogClose">
+        <el-form>
           <el-form-item label="新密码:" prop="password">
             <el-col :span="15"><el-input v-model="passwordForm.new_password" type="password"></el-input></el-col>
           </el-form-item>
           <el-form-item label="确认密码:" prop="repassword">
             <el-col :span="15"><el-input  v-model="passwordForm.new_password2" type="password"></el-input></el-col>
           </el-form-item>
-
         </el-form>
         <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="toSecond()">上 一 步</el-button>
           <el-button type="primary" @click="passwordSubmit()">确 定</el-button>
         </div>
       </el-dialog>
