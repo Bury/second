@@ -19,7 +19,7 @@ export default {
         password: ''
       },
       rules: {
-        username: globalRules.rules.user.username(5, 16, '请输入帐号'),
+        username: globalRules.rules.user.username('请输入帐号'),
         phone: globalRules.rules.user.phone(),
         code: globalRules.rules.user.code(),
         password: globalRules.rules.user.password(6, 16, '请输入密码'),
