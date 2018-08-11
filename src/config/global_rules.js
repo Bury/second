@@ -17,21 +17,21 @@ const rules={
 	    		{ required: true, message: text, trigger: 'blur' },
 	        	{
 	        		validator:(rule,value,callback) =>{
-	        			if(value.match(/^[a-zA-Z0-9\u4e00-\u9fa5]{5,16}$/)){
+	        			if(value.match(/^[a-zA-Z0-9^·%&'.!@#*()_+\[\]~`\\{}\-:'"<>/,;=?$\x22]{5,16}$/)){
 	        				callback();
 	        			}else{
-	        				callback("只能是数字、字母和汉字5-16位")
+	        				callback("请输入5-16位的账号名")
 	        			}
 	        		},
 	        		trigger:'blur'
 	        	}
 	    	]
 		},
-		
+
 		loginPassword() {
 			 return [
 		        { required: true, message: '请输入密码：', trigger: 'blur' },
-		        
+
 			]
 		},
 
@@ -40,7 +40,7 @@ const rules={
 			 return [
 		        { required: true, message: text, trigger: 'blur' },
 		        { validator:(rule,value,callback) =>{
-	        			if(value.match(/^[a-zA-Z0-9^%&'!@#*()_+\[\]~`\\{}\-:'"<>/,;=?$\x22]{6,16}$/)){
+	        			if(value.match(/^[a-zA-Z0-9^·%&'.!@#*()_+\[\]~`\\{}\-:'"<>/,;=?$\x22]{6,16}$/)){
 	        				callback();
 	        			}else if(value.match(/^\s*|\s*$/)){
                         callback("除空格外数字,字母和任意字符6-16位")
@@ -101,7 +101,7 @@ const rules={
 
 	        	{
 	                validator: (rule, value, callback) => {
-		                    if (value.match(/^[a-zA-Z\u4e00-\u9fa5]{2,8}$/)){
+		                    if (value.match(/^[a-zA-Z0-9^·%&'.!@#*()_+\[\]~`\\{}\-:'"<>/,;=?$\x22]{1,15}$/)){
 		                        callback();
 		                    } else {
 		                        callback("请输入2-8位汉字或英文");

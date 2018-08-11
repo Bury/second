@@ -114,18 +114,21 @@ export default {
       this.$data.passwordForm.phone = '';
     },
     code(){
-      if(this.$data.passwordForm.username == ''){
+      if(this.$data.passwordForm.phone == ''){
         this.$message({
           type: 'warning',
-          message: '请输入用户名!'
+          message: '请输入手机号!'
         });
-      }else{
-        if(this.$data.passwordForm.phone == ''){
+      }
+
+      else{
+        if(this.$data.passwordForm.username == ''){
           this.$message({
             type: 'warning',
-            message: '请输入手机号!'
+            message: '请输入用户名!'
           });
-        }else{
+        }
+        else{
           if (!this.canClick) return  ;
           this.canClick = false
           this.$data.getClickName = this.$data.waitTime + 's后发送';
@@ -178,9 +181,10 @@ export default {
 
       });
     },
-    //关闭表单清空数据
+    //关闭表单清空数据以及表单验证
     dialogClose(){
       setTimeout(() =>{
+        this.needsC();
         this.$refs.passwordForm.resetFields();
         this.passwordClear();
         this.$data.passwordVisible = false;

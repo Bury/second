@@ -665,12 +665,12 @@ export default {
     getMoney(obj){
       if(obj.length > 11){
         this.$message({
-          message: '最高输入金额为一百万',
+          message: '最高输入金额为九十九万',
           type: 'warning',
           center: true
         });
         // this.isCan = 1;
-        obj.length = 9;
+        obj.length = 11;
       }
       console.log(0);
       // console.log(this.$data.requestNewCreate.money);

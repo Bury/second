@@ -57,6 +57,7 @@
         props:{
             isCollapse: Boolean,
             isShow: Boolean,
+          // active_text_color:'',
         },
         data(){
             return{
@@ -65,6 +66,14 @@
         },
         created(){
             this.getUrl();
+        },
+        mounted:function () {
+          window.addEventListener("popstate", function(){
+            let self = this;
+            let currentUrl = window.location.href;
+            self.currentMenu = currentUrl.split('#')[1];
+            console.log(self.currentMenu)
+          }, false)
         },
         methods:{
             getUrl(){
