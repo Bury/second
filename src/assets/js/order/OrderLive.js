@@ -306,7 +306,8 @@ export default {
             }else{
               this.$data.NewRuleForm.type = '未购买'
             }
-              //为老顾客的时候拿到顾客id
+            this.$data.NewRuleForm.textarea2 = res.data.data.remark;
+            //为老顾客的时候拿到顾客id
             this.$data.isNoMyself = res.data.data.customer_id;
               // console.log(this.$data.isNoMyself)
               //  老用户
