@@ -165,8 +165,7 @@
                 <!--<input type="text" class="input" v-model="form.moneya"  maxlength="11"-->
                        <!--onkeyup="this.value=this.value.replace(/\D/g,'')"-->
                        <!--onafterpaste="this.value=this.value.replace(/\D/g,'')"/>-->
-                <el-input v-model="item.price" v-on:input="inputFun()" value="" :maxlength="inputMaxL"
-                          @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.price) ? null : item.price.length - 1">
+                <el-input v-model.trim="item.price" v-on:input="inputFun(index)" value="" :maxlength="inputMaxL">
                 </el-input>
               </el-form-item>
             </el-col>
@@ -215,6 +214,7 @@
           <el-input
             type="textarea"
             autosize
+            maxlength=200
             placeholder="请输入内容"
             v-model="formName.remark">
           </el-input>
@@ -324,7 +324,7 @@
         <el-form-item label="备注:" prop="type">
           <el-input
             type="textarea"
-            autosize
+            maxlength=200
             placeholder="请输入内容"
             v-model="editForm.remark">
           </el-input>

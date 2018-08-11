@@ -28,7 +28,7 @@
                 <el-form-item label="姓名：">
                     <el-input v-model="editGuestInfoData.name"></el-input>
                 </el-form-item>
-                <el-form-item label="手机：" >
+                <el-form-item label="手机："  prop="phone">
                     <el-input v-model="editGuestInfoData.phone"></el-input>
                 </el-form-item>
                 <el-form-item label="性别：" prop="gender">

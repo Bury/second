@@ -492,7 +492,9 @@ export default {
 
 		},
 		//计算总价
-		inputFun(itemPrice) {
+		inputFun(index) {
+			this.$data.inputMaxL = /^\d+\.?\d{0,1}$/.test(this.$data.addProList[index].price) ? null : this.$data.addProList[index].price.length - 1;
+			
 			let n = 0;
 			for(let i = 0; i < this.$data.addProList.length; i++) {
 				n += parseFloat(this.$data.addProList[i].price == "" ? 0 : this.$data.addProList[i].price);
@@ -678,6 +680,17 @@ export default {
 					this.$data.imageListF = [];
 					this.$data.item.file = [];
 				},
+				remark(val){
+            if(val.length >= 200 ){
+              let remarkVal = val.substring(0,200);
+              this.$data.formName.remark = remarkVal;
+              this.$message({
+                   type:'warning',
+                   message:'备注信息最多输入200个字符',
+              })
+            }
+        },
+				
 
 		}
 
