@@ -61,19 +61,7 @@
         },
         data(){
             return{
-                currentMenu:'/'
-            }
-        },
-        created(){
-            this.getUrl();
-        },
-        mounted:function () {
-        },
-        methods:{
-            getUrl(){
-                let self = this;
-                let currentUrl = window.location.href;
-                self.currentMenu = currentUrl.split('#')[1];
+              
             }
         }
     }
