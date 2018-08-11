@@ -199,9 +199,16 @@
                      :onSuccess="uploadSuccess">
             <i class="el-icon-plus"></i>
           </el-upload>
-          <!--<el-dialog :visible.sync="actionDialogVisible">-->
-          <!--<img width="100%" :src="dialogImageUrl" alt="">-->
-          <!--</el-dialog>-->
+        </el-row>
+        <el-row  style="width: 50rem;margin-bottom: 3rem;margin-top: 2rem;display: flex">
+          <p style="width: 3rem">备注:</p>
+          <el-input
+            type="textarea"
+            autosize
+            placeholder="请输入内容"
+            maxlength=200
+            v-model="remarkString">
+          </el-input>
         </el-row>
         <el-row style="margin-top: 3rem">
           <el-button style="margin-left: 15rem;margin-right: 10rem;float: right" @click="allPostM">确认</el-button>

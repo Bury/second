@@ -118,6 +118,7 @@ export default {
       actionDialogVisible: false,
       isNoMyself:'',
       submitFlag:true,
+      remarkString:'',
     };
   },
 
@@ -783,7 +784,7 @@ export default {
       }
       let list = {
         'goods_info':sendData,
-        'remark':this.$data.pushRemk,
+        'remark':this.$data.remarkString,
         'files_web':listArry,
         'customer_id':this.$data.isNoMyself,
       }
