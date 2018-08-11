@@ -34,10 +34,10 @@ export default{
             },
             addRules:{
                 //role_id:globalRules.rules.common.id(),
-                truename:globalRules.rules.user.truename(),
+                truename:globalRules.rules.user.minMax(1,15),
                 phone:globalRules.rules.user.phone(),
-                username:globalRules.rules.user.username(4,20,'请输入帐号'),
-                password:globalRules.rules.user.password(6,20,'请输入密码'),
+                username:globalRules.rules.user.username('请输入帐号'),
+                password:globalRules.rules.user.password('请输入密码'),
             },
             avatarFormVisible:false,
             editFormVisible:false,
@@ -49,7 +49,7 @@ export default{
                 status:''
             },
             editRules:{
-                name:globalRules.rules.user.truename(),
+                truename:globalRules.rules.user.minMax(1,15),
                 phone:globalRules.rules.user.phone(),
             },
             resetPasswordFormVisible:false,

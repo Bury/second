@@ -17,7 +17,7 @@ export default {
                 phone:'',
             },
             rulesUserEdit: {
-                name: globalRules.rules.user.username(4,20,'请输入帐号'),
+                name: globalRules.rules.user.minMax(1,15,'请输入帐号'),
                 phone: globalRules.rules.user.password(6,20,'请输入密码')
             },
             passwordEditForm: {

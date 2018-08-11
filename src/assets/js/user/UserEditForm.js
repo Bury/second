@@ -26,9 +26,9 @@ export default {
         },
         
         editRules:{
-            name:globalRules.rules.user.truename(),
+            name:globalRules.rules.user.minMax(1,15),
             phone:globalRules.rules.user.phone(),
-            username: globalRules.rules.user.username(4,20,'请输入帐号'),
+            username: globalRules.rules.user.username('请输入帐号'),
         },
 
     }

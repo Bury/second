@@ -11,13 +11,13 @@ const rules={
 
 	user:{
 
-        //用户名验证
-		username(len_min,len_max,text){
+        //账号名5-16位字符
+		username(text){
 			return [
 	    		{ required: true, message: text, trigger: 'blur' },
 	        	{
 	        		validator:(rule,value,callback) =>{
-	        			if(value.match(/^[a-zA-Z0-9^·%&'.!@#*()_+\[\]~`\\{}\-:'"<>/,;=?$\x22]{5,16}$/)){
+	        			if(value.match(/^[a-zA-Z0-9\u4E00-\u9FA5_]{5,16}$/)){
 	        				callback();
 	        			}else{
 	        				callback("请输入5-16位的账号名")
@@ -36,7 +36,7 @@ const rules={
 		},
 
         //密码验证
-		password(len_min,len_max,text) {
+		password(text) {
 			 return [
 		        { required: true, message: text, trigger: 'blur' },
 		        { validator:(rule,value,callback) =>{
@@ -122,18 +122,23 @@ const rules={
 		                    if (value.match(/^[a-zA-Z0-9^·%&'.!@#*()_+\[\]~`\\{}\-:'"<>/,;=?$\x22]{1,15}$/)){
 		                        callback();
 		                    } else {
-		                        callback("请输入2-8位汉字或英文");
+		                        callback("请输入1-15位汉字或英文");
 		                    }
 	                	},
 	                	trigger: 'blur'
 	            	}
 	    	]
 		},
+		
+		//任意字符长度控制
+		minMax(min,max){
+			return [{ required: true, min: min, max: max,message: `请输入${min}到${max}位`, trigger: 'blur' }]
+		},
 
 		//性别验证
 		gender(){
 			return [
-			    { required: true, message: '请选择性别', trigger: 'blur' }
+			    { required: true,min: len_min, message: '请选择性别', trigger: 'blur' }
 			]
 		},
     //备注验证

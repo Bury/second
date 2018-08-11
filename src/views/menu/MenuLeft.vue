@@ -63,6 +63,9 @@
             return{
               
             }
+        },
+        created:function(){
+        	console.log(this.$router)
         }
     }
 </script>
