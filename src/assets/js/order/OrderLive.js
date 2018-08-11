@@ -314,6 +314,19 @@ export default {
               this.firstNewC = false;
               this.ifIsOld=true;
               this.ifIsNew=false;
+              //老用户纠错新手机号
+            this.$data.newNewP = res.data.data.avatar;
+            if(res.data.data.gender === 1){
+              this.$data.newNewQ = '男'
+            }else{
+              this.$data.newNewQ = '女'
+            }
+            if(res.data.data.vip_level === 0){
+              this.$data.newNewR = '未购买'
+            }else{
+              this.$data.newNewR = '已购买'
+            }
+
               //回显数据
           }else if(res.data.data.is_new === 1){
               //  新用户
@@ -374,6 +387,8 @@ export default {
       let list = {
         'phone': phonePast,
         'customer_id':customerIdPast,
+        'name': this.$data.NewRuleForm.name,
+        'remark':this.$data.NewRuleForm.textarea2,
       }
       let qs = require('querystring');
       OrderApi.addNPhone(qs.stringify(list)).then((res) => {
@@ -591,6 +606,7 @@ export default {
       this.ifIsNew=false;
       this.userNew = false;
       //人脸为拍摄人脸
+      console.log(this.$data.newNewP)
       this.$data.NewRuleForm.images = this.$data.newNewP;
       this.$data.NewRuleForm.phone = this.$data.form.newPhone;
       this.$data.NewRuleForm.sex = this.$data.newNewQ;
