@@ -20,7 +20,7 @@ const rules={
 	        			if(value.match(/^[a-zA-Z0-9\u4E00-\u9FA5_]{5,16}$/)){
 	        				callback();
 	        			}else{
-	        				callback("请输入5-16位的账号名")
+	        				callback("账号名的格式由数字、中文、英文、下划线组成，请重新输入")
 	        			}
 	        		},
 	        		trigger:'blur'
@@ -87,7 +87,7 @@ const rules={
 	            	}
 	        	]
 		},
-		
+
 		//手机号不必须验证
 		noMustPhone(){
 			return [
@@ -104,7 +104,7 @@ const rules={
 	            	}
 	        	]
 		},
-		
+
     //验证码验证
     code(){
       return[
@@ -129,7 +129,7 @@ const rules={
 	            	}
 	    	]
 		},
-		
+
 		//任意字符长度控制
 		minMax(min,max){
 			return [{ required: true, min: min, max: max,message: `请输入${min}到${max}位`, trigger: 'blur' }]
