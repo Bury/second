@@ -20,7 +20,7 @@
       <tr v-for="(item,index) in tableData" :key="index" height="40">
         <td>{{item.id}}</td>
         <td>{{item.username}}</td>
-        <td>{{item.storeRole.name}}</td>
+        <td>{{item.storeRole.name == null ? '--' :item.storeRole.name }}</td>
         <td>{{item.truename}}</td>
         <td>{{item.phone}}</td>
         <td>
