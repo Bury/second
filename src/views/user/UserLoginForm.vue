@@ -43,7 +43,7 @@
               <el-col :span="2"><el-button @click="code()" :class="{disabled: !this.canClick}">{{getClickName}}</el-button></el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="验证码:" prop="code" v-show="getMsgAfter">
+          <el-form-item label="验证码:" prop="code">
             <el-col :span="15"><el-input  v-model="passwordForm.code" @blur="blur()"></el-input></el-col>
           </el-form-item>
         </el-form>

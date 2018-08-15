@@ -13,7 +13,6 @@ export default {
       status:1,
       passwordVisibleSecod:false,
       passwordVisibleThird:false,
-      getMsgAfter:false,
       loginInfo: {
         username: '',
         password: ''
@@ -142,7 +141,6 @@ export default {
           this.$data.passwordForm.username = '';
         }else{
           this.getMsg();
-          this.$data.getMsgAfter = true;
         }
       })
 
@@ -170,7 +168,6 @@ export default {
           this.$data.getClickName = '发送验证码';
           this.$data.waitTime = 60;
           this.canClick = true  //这里重新开启
-          this.$data.getMsgAfter = false;
         }
       }
 
@@ -188,6 +185,12 @@ export default {
       };
       let qs = require('querystring');
       userApi.checkSms(qs.stringify(list)).then((res) => {
+        if(res.data.errno == 1000002){
+          this.$message({
+            type:'warning',
+            message:'请先获取验证码'
+          })
+        }
         this.$data.sendCode = res.data.data.code;
         if(res.data.errno == 0){
           this.$data.passwordVisibleThird = true;
