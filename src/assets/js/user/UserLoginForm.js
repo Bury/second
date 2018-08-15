@@ -185,7 +185,7 @@ export default {
       };
       let qs = require('querystring');
       userApi.checkSms(qs.stringify(list)).then((res) => {
-        if(res.data.errno == 1000002){
+        if(res.data.errno == 1000002 || res.data.errno == -1){
           this.$message({
             type:'warning',
             message:'请先获取验证码'
@@ -235,6 +235,7 @@ export default {
         this.$refs.passwordForm.resetFields();
         this.passwordClear();
         this.$data.passwordVisible = false;
+        this.$data.passwordVisibleSecod = false;
       },0)
     },
   //  修改密码
