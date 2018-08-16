@@ -10,11 +10,11 @@ export default {
 
     data() {
         return {
-            checkAll: false,
+            checkAll: true,
             checkedType: [],
             types: typeId,
             typeVal: typeOptions,
-            isIndeterminate: true
+            isIndeterminate: false
         };
     },
 

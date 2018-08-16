@@ -200,5 +200,13 @@ export default {
         })
       })
     },
-
+  menu (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.USER_MENU, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
 }

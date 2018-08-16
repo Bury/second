@@ -1,57 +1,37 @@
 <template>
 	<div class="left-menu1">
-		<el-menu :default-active="$route.path"
-                 class="el-menu-vertical-demo"
-                 :collapse="isCollapse && isShow"
-                 background-color="#545c64"
-                 text-color="#fff"
-                 active-text-color="#409EFF">
-            <router-link :to="{name: 'Statistics'}">
-                <el-menu-item index="/Statistics">
-                    <i class="el-icon-menu"></i>
-                    <span slot="title">客流统计</span>
-                </el-menu-item>
-            </router-link>
-            <router-link :to="{name: 'Guest'}">
-                <el-menu-item index="/Guest">
-                    <i class="el-icon-service"></i>
-                    <span slot="title">来客列表</span>
-                </el-menu-item>
-            </router-link>
-            <router-link :to="{name: 'Order'}">
-                <el-menu-item index="/Order">
-                    <i class="el-icon-phone-outline"></i>
-                    <span slot="title">订单管理</span>
-                </el-menu-item>
-            </router-link>
-            <router-link :to="{name: 'Device'}">
-                <el-menu-item index="/Device">
-                    <i class="el-icon-view"></i>
-                    <span slot="title">设备管理</span>
-                </el-menu-item>
-            </router-link>
-            <router-link :to="{name: 'User'}">
-                <el-menu-item index="/User">
-                    <i class="el-icon-service"></i>
-                    <span slot="title">帐号管理</span>
-                </el-menu-item>
-            </router-link>
-            <el-submenu index="7-1" style="padding-bottom:200px;">
-                <template slot="title">
-                    <i class="el-icon-setting"></i>
-                    <span slot="title">系统设置</span>
-                </template>
-                <router-link :to="{name: 'StoreRemind'}">
-                    <el-menu-item index="/StoreRemind" style="padding-left:53px;">来客提醒</el-menu-item>
-                </router-link>
-                <router-link :to="{name: 'StoreTime'}">
-                    <el-menu-item index="/StoreTime" style="padding-left:53px;">营业时间</el-menu-item>
-                </router-link>
-            </el-submenu>
-        </el-menu>
+    <el-menu :default-active="currentMenu" :data="tableData" @select="getUrl1"
+             v-for="(item,index) in tableData"
+             :key="index"
+             class="el-menu-vertical-demo"
+             :collapse="isCollapse && isShow"
+             background-color="#545c64"
+             text-color="#fff"
+             active-text-color="#409EFF">
+
+      <router-link :to="{name: item.front_url}" v-if="item.no_child">
+        <el-menu-item :index="item.front_url">
+          <i :class="item.front_icon"></i>
+          <span slot="title">{{item.name}}</span>
+        </el-menu-item>
+      </router-link>
+
+      <el-submenu :index="item.front_url"  v-if="item.children">
+        <template slot="title">
+          <i :class="item.front_icon"></i>
+          <span slot="title">{{item.name}}</span>
+        </template>
+        <router-link v-for="(item1,index1) in item.children" :to="{name: item1.front_url}">
+          <el-menu-item :index="item1.front_url" style="padding-left:53px;">{{item1.name}}</el-menu-item>
+        </router-link>
+      </el-submenu>
+
+    </el-menu>
+
 	</div>
 </template>
 <script>
+  import userApi from '../../api/user.js'
     export default {
         name:'word-item',
         props:{
@@ -61,12 +41,31 @@
         },
         data(){
             return{
-              
+              tableData:[],
+              currentMenu: '/Statistics',
             }
         },
         created:function(){
         	console.log(this.$router)
-        }
+          this.menu();
+        	this.getUrl();
+        },
+        methods:{
+          menu() {
+            userApi.menu().then((res) => {
+              console.log(res.data.data)
+              this.$data.tableData = res.data.data;
+            })
+          },
+          getUrl1(key){
+            this.$data.currentMenu = key;
+          },
+          getUrl() {
+            let self = this;
+            let currentUrl = window.location.href;
+            self.currentMenu = currentUrl.split('#')[1];
+          },
+        },
     }
 </script>
 

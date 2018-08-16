@@ -124,3 +124,4 @@ global.USER_CHECK_SMS = `${SERVER_IP}${COMMON}user/check-sms`
 global.USER_SEND_PHONE = `${SERVER_IP}${COMMON}user/change-phone-sms`
 global.USER_CKECK_PHONE = `${SERVER_IP}${COMMON}user/change-phone-check`
 global.USER_SAVE_CHANGE_PHONE = `${SERVER_IP}${COMMON}user/change-phone-save`
+global.USER_MENU = `${SERVER_IP}${COMMON}user/left-menu`
