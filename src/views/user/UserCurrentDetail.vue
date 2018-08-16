@@ -21,7 +21,7 @@
 					{{userEditForm.phone || "暂无手机号"}}
 		  	</el-form-item>
 	  		<div style="text-align:center;">
-				<el-button type="primary" @click="fnSaveSubmitForm('userEditForm')">保 存</el-button>
+				<!-- <el-button type="primary" @click="fnSaveSubmitForm('userEditForm')">保 存</el-button> -->
 			</div>
 		</el-form>
 
