@@ -59,7 +59,7 @@ export default {
 
         handleCheckAllChange(val) {
             this.checkedType = val ? typeId : [];
-            this.isIndeterminate = false;
+            this.isIndeterminate = true;
             console.log(this.checkedType)
         },
 
