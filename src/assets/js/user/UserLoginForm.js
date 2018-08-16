@@ -40,8 +40,8 @@ export default {
         passwordRepeat:''
       },
       rulesPasswordEdit: {
-        passwordOld: globalRules.rules.user.password(6,20,'请输入当前密码'),
-        passwordCurrent: globalRules.rules.user.password(6,20,'请输入新的密码'),
+        passwordOld: globalRules.rules.user.password('请输入当前密码'),
+        passwordCurrent: globalRules.rules.user.password('请输入新的密码'),
         passwordRepeat: [
           { required: true, message: '请再次输入密码', trigger: 'blur' },
           {
@@ -232,11 +232,20 @@ export default {
     dialogClose(){
       setTimeout(() =>{
         this.needsC();
-        this.$refs.passwordForm.resetFields();
+        this.$refs.passwordForm.resetFields();      
         this.passwordClear();
         this.$data.passwordVisible = false;
         this.$data.passwordVisibleSecod = false;
       },0)
+    },
+    dialogCloseEdit(){
+      setTimeout(() => {
+        this.$refs.passwordEditForm.resetFields();
+        this.$data.dialogFormVisible = false;
+        this.$data.passwordEditForm.passwordOld = '';
+        this.$data.passwordEditForm.passwordCurrent = '';
+        this.$data.passwordEditForm.passwordRepeat = '';
+      }, 0);
     },
   //  修改密码
     fnCancel(){

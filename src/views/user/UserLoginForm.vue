@@ -67,7 +67,7 @@
         </div>
       </el-dialog>
       <!--修改密码-->
-      <el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="min-width:800px;">
+      <el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="min-width:800px;" :before-close="dialogCloseEdit">
         <el-form :model="passwordEditForm" :rules="rulesPasswordEdit" ref="passwordEditForm" label-width="100px" class="demo-passwordEditForm">
           <el-form-item label="当前密码：" prop="passwordOld">
             <el-input type="password" v-model="passwordEditForm.passwordOld" ></el-input>

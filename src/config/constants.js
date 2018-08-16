@@ -115,8 +115,12 @@ global.STORE_TIME_SET = `${SERVER_IP}${COMMON}store-config/business-time`
 global.USER_CURRENT_INFO = `${SERVER_IP}${COMMON}user/info`
 global.USER_PASSWORD_EDIT = `${SERVER_IP}${COMMON}user/change-password`
 
+//个人中心
 global.USER_LOGOUT = `${SERVER_IP}${COMMON}user/logout`
 global.USER_LOGIN = `${SERVER_IP}${COMMON}user/login`
 global.USER_PASSWORD_FORGET = `${SERVER_IP}${COMMON}user/change-password-forgot`
 global.USER_SEND_SMS = `${SERVER_IP}${COMMON}user/send-sms`
 global.USER_CHECK_SMS = `${SERVER_IP}${COMMON}user/check-sms`
+global.USER_SEND_PHONE = `${SERVER_IP}${COMMON}user/change-phone-sms`
+global.USER_CKECK_PHONE = `${SERVER_IP}${COMMON}user/change-phone-check`
+global.USER_SAVE_CHANGE_PHONE = `${SERVER_IP}${COMMON}user/change-phone-save`
