@@ -33,6 +33,7 @@ export default {
 					categories: []
 				},
 				yAxis: {
+					allowDecimals:false,
 					title: {
 						text: '人数'
 					}					
