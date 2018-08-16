@@ -179,7 +179,7 @@ export default {
             }
           })
         }
-  
+
       },
       submitFromTel(){
         let list = {
@@ -225,7 +225,8 @@ export default {
         })
       },
       getMsg(){
-          if(this.$data.telForm.phone.length == 11){
+          let phone = this.$data.telForm.phone;
+          if(phone.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)){
             if (!this.canClick) return  ;
                     this.canClick = false
                     this.$data.getClickName = this.$data.waitTime + 's后发送';
@@ -238,11 +239,16 @@ export default {
                         this.$data.getClickName = '发送验证码';
                         this.$data.waitTime = 60;
                         this.canClick = true  //这里重新开启
-            
+
                     }
                     },1000);
+          }else{
+            this.$message({
+              type:"warning",
+              message:'请输入正确的手机号'
+            })
           }
-        
+
       },
 
     }

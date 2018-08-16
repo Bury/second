@@ -122,7 +122,6 @@ export default {
       this.$data.passwordForm.phone = '';
     },
     code(){
-
       let list = {
         'phone': this.$data.passwordForm.phone,
         'username': this.$data.passwordForm.username,
@@ -144,30 +143,39 @@ export default {
         }
       })
 
+
+
     },
     blur(){
 
     },
     //第一步
     passwordSubmitLast(){
-      if(this.$data.passwordForm.phone == ''){
+      let phone = this.$data.passwordForm.phone;
+      let name = this.$data.passwordForm.username;
+      if( phone == ''){
         this.$message({
           type: 'warning',
           message: '请输入手机号!'
         });
       }else{
-        if(this.$data.passwordForm.username == ''){
+        if(name == ''){
           this.$message({
             type: 'warning',
             message: '请输入用户名!'
           });
-        }else{
+        }else if(phone.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)){
           this.$data.passwordVisible = false;
           this.$data.passwordVisibleSecod = true;
           window.clearInterval(clock)
           this.$data.getClickName = '发送验证码';
           this.$data.waitTime = 60;
           this.canClick = true  //这里重新开启
+        }else{
+          this.$message({
+            type:'warning',
+            message:'请输入正确的手机号'
+          })
         }
       }
 
@@ -232,7 +240,7 @@ export default {
     dialogClose(){
       setTimeout(() =>{
         this.needsC();
-        this.$refs.passwordForm.resetFields();      
+        this.$refs.passwordForm.resetFields();
         this.passwordClear();
         this.$data.passwordVisible = false;
         this.$data.passwordVisibleSecod = false;
