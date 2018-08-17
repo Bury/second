@@ -81,13 +81,10 @@ export default {
 			
 			let guestCharts = this.$refs.guestCharts;
 			guestCharts.delegateMethod('showLoading', 'Loading...');
-			if(guestCharts.getChart().series[0] != undefined) {
-				guestCharts.getChart().series[0].remove(true); //删除单个
-			}  
+			guestCharts.removeSeries();  
 			setTimeout(() => {
 				guestCharts.hideLoading();
 				
-				this.$data.options.chart.type = this.$props.chartClass;
 				guestCharts.addSeries({
 					name: ' 客流量统计',
 					data: (isdata && [] ) ||  value.sum
