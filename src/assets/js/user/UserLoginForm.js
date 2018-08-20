@@ -64,6 +64,9 @@ export default {
     reset() {
       this.$refs.loginForm.resetFields();
     },
+    enterLogin(){
+      this.login();
+    },
     login() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
