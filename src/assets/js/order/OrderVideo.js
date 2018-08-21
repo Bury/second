@@ -23,7 +23,7 @@ export default {
   data(){
     return {
       upLoadData: {
-        access_token: sessionStorage.getItem('knock_knock'),
+        access_token: localStorage.getItem('knock_knock'),
       },
       step_1:1,
       step_2:2,
@@ -670,8 +670,8 @@ export default {
 
       // if (response.errno == 1000000 || response.msg=='access-token不能为空' || response.msg=='用户不存在') {
       //   console.log(0)
-      //   sessionStorage.setItem('knock_knock', '')
-      //   sessionStorage.setItem('username', '')
+      //   localStorage.setItem('knock_knock', '')
+      //   localStorage.setItem('username', '')
       //   router.replace({
       //     path: '/UserLogin',
       //     query: {redirect: router.currentRoute.fullPath}

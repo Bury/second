@@ -13,7 +13,7 @@ export default {
 		return {
 			allGuestVisitClass: global_data.data.guest_visit_class,
 			upLoadData: {
-				access_token: sessionStorage.getItem('knock_knock'),
+				access_token: localStorage.getItem('knock_knock'),
 			},
 			imageListF: [],
 			allNum: '1',
