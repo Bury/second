@@ -7,6 +7,7 @@ export default {
   name: 'login-form',
   data() {
     return {
+      routeName:'',
       getClickName:'获取验证码',
       waitTime:60,
       canClick: true,
@@ -60,6 +61,9 @@ export default {
     }
 
   },
+  created:function (){
+    this.menu();
+  },
   methods: {
     reset() {
       this.$refs.loginForm.resetFields();
@@ -83,7 +87,7 @@ export default {
               if(res.data.data.user.is_change_pwd == 0){
                 this.$data.dialogFormVisible = true;
               }else{
-                this.$router.push('/Statistics');
+                this.menu();
               }
             }else if(res.data.msg === '此账号被禁用'){
               this.$message.error(res.data.msg);
@@ -95,6 +99,22 @@ export default {
           })
         } else {
           return false
+        }
+      })
+    },
+    menu() {
+      userApi.menu().then((res) => {
+        if(res.data.errno === 0){
+          for(let i=0;i<res.data.data.length;i++){
+            if(res.data.data[i].no_child === true){
+              this.$data.routeName = res.data.data[0].front_url;
+              break
+            }else if(res.data.data[i].no_child === false){
+              this.$data.routeName = res.data.data[i].children[0].front_url;
+              break
+            }
+          }
+          this.$router.push(this.$data.routeName);
         }
       })
     },
@@ -289,7 +309,7 @@ export default {
                   this.$data.passwordEditForm.passwordOld = '';
                   this.$data.passwordEditForm.passwordCurrent = '';
                   this.$data.passwordEditForm.passwordRepeat = '';
-                  this.$router.push('/Statistics');
+                  this.menu();
                 }else{
                   this.$message.error(res.data.msg);
                 }
