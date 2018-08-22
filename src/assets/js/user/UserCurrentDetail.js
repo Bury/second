@@ -173,9 +173,11 @@ export default {
               this.$message({
                 type: 'warning',
                 message: res.data.msg
-              });
+              })
               this.$data.dialogFormVisibleTel = true;
               this.$data.telForm.phone = '';
+            }else{
+              this.getMsg();
             }
           })
         }
@@ -213,15 +215,23 @@ export default {
         })
       },
       cancelTel(){
+        window.clearInterval(clock)
+        this.$data.getClickName = '发送验证码';
+        this.$data.waitTime = 60;
+        this.canClick = true  //这里重新开启
         setTimeout(() => {
           this.$refs.telForm.resetFields();
-          this.$data.dialogFormVisibleTel = false;
+          this.$data.dialogFormVisibleTel = false;         
         })
       },
       dialogCloseTel(){
+        window.clearInterval(clock)
+        this.$data.getClickName = '发送验证码';
+          this.$data.waitTime = 60;
+          this.canClick = true  //这里重新开启
         setTimeout(() => {
           this.$refs.telForm.resetFields();
-          this.$data.dialogFormVisibleTel = false;
+          this.$data.dialogFormVisibleTel = false;         
         })
       },
       getMsg(){
@@ -230,7 +240,6 @@ export default {
             if (!this.canClick) return  ;
                     this.canClick = false
                     this.$data.getClickName = this.$data.waitTime + 's后发送';
-                    this.code();
                     clock = window.setInterval(() => {
                     this.$data.waitTime--;
                     this.$data.getClickName = this.$data.waitTime + 's后发送';
@@ -239,7 +248,6 @@ export default {
                         this.$data.getClickName = '发送验证码';
                         this.$data.waitTime = 60;
                         this.canClick = true  //这里重新开启
-
                     }
                     },1000);
           }else{
