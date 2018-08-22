@@ -3,8 +3,8 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
-    <table width="99%" class="table-bordered">
-      <thead style="background-color: #d1d1d1">
+    <table width="99%" class="table">
+      <thead>
       <tr height="40">
         <th class="col-md-1 text-center">序号</th>
         <th class="col-md-1 text-center">账号</th>

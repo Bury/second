@@ -29,11 +29,11 @@ export default {
   min-width:1204px;
   min-height: 100%;
   color: #ffffff;
-  background-color: #fff;
+  background-color: #eee;
   overflow: auto;
 }
 
-input, .el-select-dropdown, .el-textarea, .el-textarea__inner, .el-message-box, .el-message, 
+input, .el-select-dropdown, .el-textarea, .el-textarea__inner, .el-message-box, .el-message,
 .el-dropdown-menu, .el-button, .el-cascader-menu, .el-tooltip__popper, .el-picker-panel, .el-date-picker {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
@@ -58,4 +58,7 @@ ul,li{list-style: none;}
 .el-tree-node__content{
     display:inline-block !important;
   }
+.el-menu-item .is-active {
+  background-color: red !important;
+}
 </style>

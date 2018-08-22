@@ -4,28 +4,28 @@
              router
              class="el-menu-vertical-demo"
              :collapse="isCollapse && isShow"
-             background-color="#545c64"
+             background-color="#4588e6"
              text-color="#fff"
-            active-text-color="#409EFF">
+            active-text-color="#fff">
 
-      <template v-for="(item,index) in tableData">      	
-        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child">
+      <template v-for="(item,index) in tableData">
+        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" class="aaa">
         	<!-- <template slot="title"> -->
-            <i :class="item.front_icon"></i>
+            <i :class="item.front_icon" style="color: #fff;"></i>
             <span slot="title">{{item.name}}</span>
           <!-- </template>   -->
         </el-menu-item>
-        
+
         <el-submenu v-else :key="index"  :index="item.front_url" >
          <template slot="title">
-          <i :class="item.front_icon"></i>
+          <i :class="item.front_icon"  style="color: #fff;"></i>
           <span slot="title">{{item.name}}</span>
          </template>
           <template v-for="(item1,index1) in item.children">
           	<el-menu-item :key="index1" :index="item1.front_url" style="padding-left:53px;">{{item1.name}}</el-menu-item>
           </template>
         </el-submenu>
-      </template>     
+      </template>
 
     </el-menu>
 
@@ -66,7 +66,7 @@
         		 }
         		 this.$data.tableData = res.data.data;
         	 }
-          
+
             })
           },
           getUrl() {
@@ -76,4 +76,4 @@
     }
 </script>
 
-<style lang="scss" scoped src="@/assets/css/menu/MenuLeft.scss">
+<style lang="scss" src="@/assets/css/menu/MenuLeft.scss">

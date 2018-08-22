@@ -42,8 +42,8 @@
     <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
 
       <el-tab-pane label="来客列表" name="first">
-        <table width="99%" class="table-bordered">
-          <thead style="background-color: #d1d1d1">
+        <table width="99%" class="table">
+          <thead>
           <tr height="40">
             <th class="col-md-1 text-center">序号</th>
             <th class="col-md-1 text-center">人脸</th>
@@ -130,4 +130,4 @@
 
 <script src="@/assets/js/guest/Guest.js"></script>
 
-<style lang="scss" scoped src="@/assets/css/guest/Guest.scss">
+<style lang="scss"  src="@/assets/css/guest/Guest.scss">

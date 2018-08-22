@@ -480,14 +480,7 @@ export default {
     //  返回的顾客信息，是本人直接走消费
     isTrueAndPass(){
       this.getAll();
-      if(this.$data.ruleForm.textarea2 === ''){
-        this.$message({
-          message: '请填写备注信息',
-          type: 'warning',
-          center: true
-        });
-      }else{
-        console.log(this.$data.faceIdNo);
+        // console.log(this.$data.faceIdNo);
         let list = {
           'phone': this.$data.form.newPhone,
           'customer_id':this.$data.faceIdNo,
@@ -507,7 +500,7 @@ export default {
           this.step_3=1;
           this.step_4=2;
         });
-      }
+
     },
 
     //  返回的顾客信息不是本人，则显示最开始的顾客信息
@@ -696,11 +689,11 @@ export default {
         };
         this.$data.pushGoods.push(arrAs);
       }
-      console.log(this.$data.pushGoods);
+      // console.log(this.$data.pushGoods);
       let sendData = JSON.stringify(this.$data.pushGoods);
-      console.log(sendData);
+      // console.log(sendData);
       let listArry =  this.$data.imageListF.join(',');
-      console.log(listArry);
+      // console.log(listArry);
       if(this.$data.NewRuleForm.textarea2 === ''){
         this.$data.pushRemk = this.$data.ruleForm.textarea2;
       }else if(this.$data.ruleForm.textarea2 === ''){
@@ -714,7 +707,7 @@ export default {
       }
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
-        console.log(res);
+        // console.log(res);
         if(res.data.msg != ''){
           this.$message({
             message: res.data.msg,
@@ -723,7 +716,12 @@ export default {
           });
         }
 
-
+        this.$router.push({path: '/Order'});
+        this.$message({
+          message: '创建订单成功',
+          type: 'success',
+          center: true
+        });
         //完成订单之后，跳回列表页面
         if(res.data.error == 0){
           this.$message({
@@ -731,7 +729,7 @@ export default {
             type: 'warning',
             center: true
           });
-          this.$router.push({path: '/Order'});
+
           this.$refs.upload.clearFiles();
           this.step_1=2;
           this.step_2=2;

@@ -63,8 +63,8 @@
       <el-button type="primary" @click="orderNotLive">补单</el-button>
     </div>
 
-    <table width="99%" class="table-bordered">
-      <thead style="background-color: #d1d1d1">
+    <table width="99%" class="table">
+      <thead>
       <tr height="40">
         <th class="col-md-1 text-center">序号</th>
         <th class="col-md-2 text-center">编号</th>

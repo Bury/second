@@ -1,8 +1,8 @@
 <template>
     <div class="device-list-page">
       <template>
-        <table width="99%" class="table-bordered">
-          <thead style="background-color: #d1d1d1">
+        <table width="99%" class="table">
+          <thead>
           <tr height="40">
             <th class="col-md-1 text-center">序号</th>
             <th class="col-md-2 text-center">编号</th>
@@ -58,4 +58,4 @@
 
 <script src="@/assets/js/device/Device.js"></script>
 
-<style lang="scss" scoped src="@/assets/css/device/Device.scss">
+<style lang="scss"  src="@/assets/css/device/Device.scss">

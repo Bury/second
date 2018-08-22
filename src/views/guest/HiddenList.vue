@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<!-- 屏蔽列表 -->
-    <table width="99%" class="table-bordered">
-      <thead style="background-color: #d1d1d1">
+    <table width="99%" class="table">
+      <thead>
       <tr height="40">
         <th class="col-md-1 text-center">序号</th>
         <th class="col-md-1 text-center">人脸</th>
@@ -56,3 +56,15 @@
 </template>
 
 <script src="@/assets/js/guest/HiddenList.js"></script>
+<style>
+  .table thead{
+    color: #999;
+  }
+  .table tbody tr td{
+    color: #2a2a2a;
+    vertical-align: middle;
+  }
+  .table tbody tr:hover{
+    background-color: #f5fbfe;
+  }
+</style>
