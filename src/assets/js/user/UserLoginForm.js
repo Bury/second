@@ -91,27 +91,35 @@ export default {
               }
             }else if(res.data.msg === '此账号被禁用'){
               this.$message.error(res.data.msg);
-              this.$data.status = 0
+              this.$data.status = 0;
             }
             else {
               this.$message.error(res.data.msg);
             }
           })
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     menu() {
       userApi.menu().then((res) => {
         if(res.data.errno === 0){
+          if(res.data.data === null){
+						this.$message("此账号暂无权限！");
+					  localStorage.setItem('knock_knock', null);
+            localStorage.setItem('username', '');
+            localStorage.setItem('store_id', '');
+            localStorage.setItem('store_name', '');
+						return false;
+					};
           for(let i=0;i<res.data.data.length;i++){
             if(res.data.data[i].no_child === true){
               this.$data.routeName = res.data.data[0].front_url;
-              break
+              break;
             }else if(res.data.data[i].no_child === false){
               this.$data.routeName = res.data.data[i].children[0].front_url;
-              break
+              break;
             }
           }
           this.$router.push(this.$data.routeName);
@@ -226,7 +234,7 @@ export default {
         if(res.data.errno == 0){
           this.$data.passwordVisibleThird = true;
         }
-      })
+      });
     },
     //第三步回到第er步
     toSecond(){
