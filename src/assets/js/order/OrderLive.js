@@ -819,6 +819,9 @@ export default {
       });
       // this.$router.push({path: '/Order'})
     },
+    fnGoback(){
+      this.$router.push('/Order')
+    },
 
   }
 }

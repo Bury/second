@@ -3,7 +3,7 @@
     <div class="top-box">
       <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
         <el-form-item label="编号：">
-          <el-input v-model="requestParameters.sn"></el-input>
+          <el-input v-model.trim="requestParameters.sn"></el-input>
         </el-form-item>
         <el-form-item label="材质：">
           <el-select v-model="requestParameters.material" placeholder="请选择材质">
@@ -26,11 +26,11 @@
         <br/>
         <el-form-item label="金额：">
           <el-col :span="11">
-            <el-input v-model="requestParameters.price_start"></el-input>
+            <el-input v-model.trim="requestParameters.price_start"></el-input>
           </el-col>
           <el-col class="line" :span="2">-</el-col>
           <el-col :span="11">
-            <el-input v-model="requestParameters.price_end"></el-input>
+            <el-input v-model.trim="requestParameters.price_end"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="收银时间：">
@@ -53,6 +53,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="lists">查询</el-button>
+          <el-button type="primary" @click="fnReset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -122,7 +123,7 @@
         <el-form-item label="人脸编号：" :model="searchFace">
           <el-row>
             <el-col :span='7'>
-              <el-input v-model="searchFace.id"  prop="id"></el-input>
+              <el-input v-model.trim="searchFace.id"  prop="id"></el-input>
               <!--<input type="number" class="input" v-model="searchFace.id" maxlength="5" v-on:input="getMoneyb(form.moneyb)"  placeholder=""-->
                      <!--onkeyup="this.value=this.value.replace(/\.\d{2,}$/,this.value.substr(this.value.indexOf('.'),3))" />-->
               <!--</el-input>-->
@@ -158,13 +159,6 @@
             </el-col>
             <el-col :span="7" style="padding: 0;margin: 0;">
               <el-form-item label='成交金额：' prop="price"  label-width="100px">
-                <!--<el-input v-model='item.price' v-on:input='inputFun(item.price)'></el-input>-->
-                <!--<input type="number" class="input" v-model="item.price"-->
-                       <!--v-on:input="inputFun(item.price)"  placeholder=""-->
-                       <!--onkeyup="this.value=this.value.replace(/\.\d{2,}$/,this.value.substr(this.value.indexOf('.'),3))" />-->
-                <!--<input type="text" class="input" v-model="form.moneya"  maxlength="11"-->
-                       <!--onkeyup="this.value=this.value.replace(/\D/g,'')"-->
-                       <!--onafterpaste="this.value=this.value.replace(/\D/g,'')"/>-->
                 <el-input v-model.trim="item.price" v-on:input="inputFun(index)" value="" :maxlength="inputMaxL">
                 </el-input>
               </el-form-item>
@@ -227,7 +221,7 @@
       </div>
     </el-dialog>
     <!--编辑-->
-    <el-dialog :title="takeTitle" center :visible.sync="editVisible" :before-close="dialogCloseEdit">
+    <el-dialog title="编辑" center :visible.sync="editVisible" :before-close="dialogCloseEdit">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
           <el-date-picker
@@ -239,7 +233,7 @@
         <el-form-item label="人脸编号：" prop="faceID">
           <el-row>
             <el-col :span='10'>
-              <el-input v-model="editForm.traffic.customer_id"></el-input>
+              <el-input v-model.trim="editForm.traffic.customer_id"></el-input>
             </el-col>
             <el-col :span='2'>
               <el-button @click="editFindGuestByFaceId()">查询</el-button>
@@ -272,7 +266,7 @@
             </el-col>
             <el-col :span='7'>
               <el-form-item label='成交金额：' prop="price">
-                <el-input v-model='item.price' v-on:input='editInputFun()'></el-input>
+                <el-input v-model.trim='item.price' v-on:input='editInputFun()'></el-input>
               </el-form-item>
             </el-col>
             <el-col :span='1'>
@@ -338,7 +332,7 @@
     </el-dialog>
 
     <!--查看-->
-    <el-dialog title="查看" center :visible.sync="viewVisible">
+    <el-dialog title="查看" center :visible.sync="viewVisible" :before-close="viewDialogClose">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
           <el-date-picker disabled

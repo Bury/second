@@ -1,6 +1,8 @@
 <template>
   <div class="guest-list-page">
-
+    <div class="top-box" style="margin-bottom: 20px;padding-bottom: 20px;border-bottom: 1px solid rgb(220,223,230);">
+      <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;">返回</el-button>
+    </div>
     <div class="top-box" style="text-align: center;border-bottom:1px solid #dcdfe6;margin-bottom: 2rem;">
       <ul style="display: flex">
         <li @click="step01">

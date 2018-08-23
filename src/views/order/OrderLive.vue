@@ -1,28 +1,26 @@
 <template>
   <div class="guest-list-page">
-
+    <div class="top-box">
+      <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;">返回</el-button>
+    </div>
     <div class="top-box" style="text-align: center">
-      <ul style="display: flex">
+      <ul class="ui-tab">
         <li @click="step01">
-          <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" >1</span>
+          <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" ></span>
           <p class="circleFont">确认人脸</p>
         </li>
-        <li @click="step02">
-          <span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" >2</span>
+        <li @click="step02" class=" circleFont2">
+          <span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" ></span>
           <p class="circleFont">确认信息</p>
         </li>
         <li @click="step03">
-          <span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}">3</span>
+          <span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}"></span>
           <p class="circleFont">订单录入</p>
-        </li>
-        <li>
-          <span :class="{'circles':step_4 ===1,'circlesR':step_4 ===2}">4</span>
-          <p class="circleFont">完成</p>
         </li>
       </ul>
     </div>
 
-    <div style="border-top:1px solid #dcdfe6;margin-top: 2rem">
+    <div>
       <!--拍摄人脸确认身份-->
       <div class="get_a" style="" v-show="step01_block">
         <div>
@@ -35,8 +33,8 @@
           <div class="showImg" id="getCn" v-show="actionDialogVisible">
             <canvas id="canvas" width="480" height="320"></canvas>
             <el-row style="flex-direction: column;margin-left: 2rem;align-items: center;margin-bottom: 3rem" id="getNn" >
-              <el-button @click="takePictureAgain" style="margin-top: 1rem;margin-left: 1rem">重拍</el-button>
-              <el-button style="margin-top: 5rem;" @click="recognition">智能识别</el-button>
+              <el-button type="primary" @click="takePictureAgain" style="margin-top: 1rem;margin-left: 1rem">重新拍摄</el-button>
+              <el-button type="primary" style="margin-top: 5rem;" @click="recognition">智能识别</el-button>
             </el-row>
           </div>
         </div>

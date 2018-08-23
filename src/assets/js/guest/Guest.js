@@ -93,14 +93,16 @@ export default {
               }else{
                 this.$data.noData = false;
               }
-              this.$data.pagination.currentPage = result.data.pagination.currentPage;
+              console.log(result.data.pagination.currentPage);
+              // this.$data.pagination.currentPage = result.data.pagination.currentPage;
               this.$data.pagination.totalCount = result.data.pagination.totalCount;
             }
           })
         },
 
         handleCurrentChange(currentPage) {
-          this.$data.tableData = [];
+          console.log(currentPage)
+          // this.$data.tableData = [];
             this.$data.requestParameters.page = currentPage;
             this.lists();
         },

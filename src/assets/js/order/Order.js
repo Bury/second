@@ -266,7 +266,7 @@ export default {
           this.$data.tableData = res.data.data.list;
           this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
           this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-
+          this.$data.requestParameters.page = 1;
         }
       })
 		},
@@ -440,7 +440,7 @@ export default {
 			let qs = require('querystring');
 			orderApi.editOrder(qs.stringify(list)).then((res) => {
 				if(res.data.errno === 0) {
-					this.lists();					
+					this.lists();
 					this.$message({
 						type: 'success',
 						message: '修改成功!'
@@ -448,7 +448,7 @@ export default {
 				} else {
 					this.$message.error(res.data.msg);
 				}
-				this.$data.editVisible = false;			
+				this.$data.editVisible = false;
 				this.editClearData();
 			})
 			this.$data.submitFlag = true;
@@ -494,12 +494,12 @@ export default {
 		//计算总价
 		inputFun(index) {
 			this.$data.inputMaxL = /^\d+\.?\d{0,1}$/.test(this.$data.addProList[index].price) ? null : this.$data.addProList[index].price.length - 1;
-			
+
 			let n = 0;
 			for(let i = 0; i < this.$data.addProList.length; i++) {
 				n += parseFloat(this.$data.addProList[i].price == "" ? 0 : this.$data.addProList[i].price);
 			}
-			
+
 			this.$data.allNum = this.$data.addProList.length;
 			if(isNaN(n) == true) {
 				this.$message({
@@ -564,6 +564,9 @@ export default {
 			this.$data.editAllNum = '';
 			this.$data.editImgAvatar = [];
 			this.$data.editRequestParameters = [];
+			this.$data.item.material = '';
+			this.$data.item.style = '';
+			this.$data.item.price = '';
 		},
 
 		//删除商品
@@ -615,7 +618,7 @@ export default {
 									this.$message.error(res.data.msg);
 								}
 								this.$data.submitFlag = true;
-								this.$data.faceVisible = false;															
+								this.$data.faceVisible = false;
 							})
 
 
@@ -690,7 +693,18 @@ export default {
               })
             }
         },
-				
+    fnReset(){
+		  this.$data.requestParameters.sn = '';
+		  this.$data.requestParameters.material = '';
+		  this.$data.requestParameters.style = '';
+		  this.$data.requestParameters.visited = '';
+		  this.$data.requestParameters.price_start = '';
+		  this.$data.requestParameters.price_end = '';
+		  this.$data.requestParameters.cashTimes = ['', ''];
+		  this.$data.requestParameters.createdTimes = ['', ''];
+		  this.lists();
+    },
+
 
 		}
 
