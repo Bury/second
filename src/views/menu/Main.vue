@@ -5,7 +5,9 @@
           <div class="logo">
             <img src="../../assets/images/logo.png" />
           </div>
-            <div class="company">鹰眼门店管理系统</div>
+            <div class="company">
+              <img src="../../assets/images/logoname.png" />
+            </div>
             <!--<div style="float:left;margin-top:20px;color:#ffffff;">-->
                 <!--{{store_name}}-->
             <!--</div>-->

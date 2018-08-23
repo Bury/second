@@ -11,14 +11,14 @@
             <el-form-item prop="password">
               <el-input type="password" v-model="loginInfo.password" @keydown.enter.native="enterLogin" auto-complete="off" placeholder="密码" />
             </el-form-item>
-            <div class="login-btn-box">   
+            <div class="login-btn-box">
               <el-button @click="forget" class="login-btn" v-bind:disabled="status==0">忘记密码</el-button>
               <el-button type="primary" @click="login" class="login-btn" >登录</el-button>
             </div>
         </el-form>
       </el-card>
       <!--忘记密码-->
-      <el-dialog title="忘记密码" :visible.sync="passwordVisible" :before-close="dialogClose">
+      <el-dialog center title="忘记密码" :visible.sync="passwordVisible" :before-close="dialogClose">
         <el-form :model='passwordForm' ref="passwordForm" :rules="rules" label-width="100px" class="demo-ruleForm">
           <el-form-item label="账号名:" prop="username">
             <el-col :span="15"><el-input v-model="passwordForm.username"></el-input></el-col>
@@ -34,7 +34,7 @@
         </div>
       </el-dialog>
       <!--忘记密码第二步-->
-      <el-dialog title="忘记密码" :visible.sync="passwordVisibleSecod" :before-close="dialogClose">
+      <el-dialog center title="忘记密码" :visible.sync="passwordVisibleSecod" :before-close="dialogClose">
         <el-form>
           <el-form-item label="手机号:" prop="phone">
             <el-row>
@@ -52,7 +52,7 @@
         </div>
       </el-dialog>
       <!--忘记密码第三步-->
-      <el-dialog title="忘记密码" :visible.sync="passwordVisibleThird" :before-close="dialogClose">
+      <el-dialog center title="忘记密码" :visible.sync="passwordVisibleThird" :before-close="dialogClose">
         <el-form>
           <el-form-item label="新密码:" prop="password">
             <el-col :span="15"><el-input v-model="passwordForm.new_password" type="password"></el-input></el-col>
@@ -67,7 +67,7 @@
         </div>
       </el-dialog>
       <!--修改密码-->
-      <el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="min-width:800px;" :before-close="dialogCloseEdit">
+      <el-dialog center title="修改密码" :visible.sync="dialogFormVisible" style="min-width:800px;" :before-close="dialogCloseEdit">
         <el-form :model="passwordEditForm" :rules="rulesPasswordEdit" ref="passwordEditForm" label-width="100px" class="demo-passwordEditForm">
           <el-form-item label="当前密码：" prop="passwordOld">
             <el-input type="password" v-model="passwordEditForm.passwordOld" ></el-input>

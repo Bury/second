@@ -110,7 +110,7 @@
     </table>
     <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>    <!--补单-->
     <!--补单-->
-    <el-dialog title="补单" :visible.sync="FormVisible" :before-close="dialogClose">
+    <el-dialog title="补单" center :visible.sync="FormVisible" :before-close="dialogClose">
       <el-form :model='formName' ref="formName" :rules="fromRules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间："  prop="cash_t">
           <el-date-picker
@@ -227,7 +227,7 @@
       </div>
     </el-dialog>
     <!--编辑-->
-    <el-dialog :title="takeTitle" :visible.sync="editVisible" :before-close="dialogCloseEdit">
+    <el-dialog :title="takeTitle" center :visible.sync="editVisible" :before-close="dialogCloseEdit">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
           <el-date-picker
@@ -338,7 +338,7 @@
     </el-dialog>
 
     <!--查看-->
-    <el-dialog title="查看" :visible.sync="viewVisible">
+    <el-dialog title="查看" center :visible.sync="viewVisible">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
           <el-date-picker disabled

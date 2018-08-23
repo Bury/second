@@ -1,6 +1,6 @@
 <template>
 
-    <el-dialog title="编辑" :visible.sync="editFormVisible">
+    <el-dialog center title="编辑" :visible.sync="editFormVisible">
         <el-form :model="editFormData" :rules="editRules" ref="editFormData" label-width="100px" class="demo-ruleForm">
             <el-form-item label="岗位：" prop="role_id">
             <el-select v-model="editFormData.role_id" placeholder="岗位">

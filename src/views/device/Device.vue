@@ -35,7 +35,7 @@
         </table>
 
 				<!-- 编辑 -->
-				<el-dialog title="编辑" :visible.sync="editFormVisible" :before-close="dialogClose">
+				<el-dialog title="编辑" center :visible.sync="editFormVisible" :before-close="dialogClose">
 				 	<el-form :model="editForm" :rules="editRules" ref="editForm" label-width="100px" class="demo-ruleForm" style="margin-bottom:50px;">
 					    <el-form-item label="类型：">
 					    	<el-select v-model="editForm.locate" placeholder="请选择" ref="locate_select">

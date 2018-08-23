@@ -122,6 +122,8 @@ export default {
         id:'',
         avatar:'',
       },
+      remarkString:'',
+
     };
   },
 
@@ -701,7 +703,7 @@ export default {
       }
       let list = {
         'goods_info':sendData,
-        'remark':this.$data.pushRemk,
+        'remark':this.$data.remarkString,
         'files_web':listArry,
         'customer_id':this.$data.isNoMyself,
       }
@@ -715,21 +717,20 @@ export default {
             center: true
           });
         }
-
-        this.$router.push({path: '/Order'});
-        this.$message({
-          message: '创建订单成功',
-          type: 'success',
-          center: true
-        });
-        //完成订单之后，跳回列表页面
-        if(res.data.error == 0){
+        if(this.$data.item.material != '' && this.$data.item.style != '' && this.$data.item.money != ''){
+          this.$router.push({path: '/Order'});
           this.$message({
             message: '创建订单成功',
-            type: 'warning',
+            type: 'success',
             center: true
           });
 
+        }else{
+          this.$message.warning('请填写商品信息')
+        }
+
+        //完成订单之后，跳回列表页面
+        if(res.data.error == 0){
           this.$refs.upload.clearFiles();
           this.step_1=2;
           this.step_2=2;
