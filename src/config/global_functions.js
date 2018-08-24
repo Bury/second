@@ -32,7 +32,7 @@ const functions={
 					// this.$router.replace({
 					// 	name: 'UserLogin'
 					// });
-					window.location.href = window.location.hostname;
+					window.location.href = '/';
 				}else{
 					message.error(res.ata.msg);
 				}
