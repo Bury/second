@@ -50,8 +50,8 @@
             <th class="col-md-1 text-center">姓名</th>
             <th class="col-md-1 text-center">性别</th>
             <th class="col-md-1 text-center">年龄</th>
-            <th class="col-md-1 text-center">新客/熟客</th>
-            <th class="col-md-1 text-center">未购/已购</th>
+            <th class="col-md-1 text-center">客户类型</th>
+            <th class="col-md-1 text-center">消费状态</th>
             <th class="col-md-1 text-center">拍摄位置</th>
             <th class="col-md-2 text-center">进店时间</th>
             <th class="col-md-2 text-center">操作</th>

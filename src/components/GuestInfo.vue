@@ -6,8 +6,8 @@
                 <li class="user-phone">手机： {{guestInfo.phone}}</li>
                 <li class="user-sex">性别： {{guestInfo.gender == 1 ? '男' : '女'}}</li>
                 <li class="user-age">年龄： {{guestInfo.age}}</li>
-                <li class="user-type">新客/熟客：{{guestInfo.is_new == 1 ? '新客' : '熟客'}}</li>
-                <li class="user-type">未购/已购：{{guestInfo.is_bought_to_text}}</li>
+                <li class="user-type">客户类型：{{guestInfo.is_new == 1 ? '新客' : '熟客'}}</li>
+                <li class="user-type">消费状态：{{guestInfo.is_bought_to_text}}</li>
             </ul>
             <div class="img-box">
                 <div class="img-wrap">
@@ -40,10 +40,10 @@
                 <el-form-item label="年龄：" prop="age">
                     <el-input v-model="editGuestInfoData.age"></el-input>
                 </el-form-item>
-                <el-form-item label="新客/熟客：">
+                <el-form-item label="客户类型：">
                     {{editGuestInfoData.is_new_to_text}}
                 </el-form-item>
-                <el-form-item label="未购/已购：">
+                <el-form-item label="消费状态：">
                  {{editGuestInfoData.vip_level == 0 ? '未购' : '已购'}}
                     <!--<el-radio-group v-model="editGuestInfoData.vip_level" >-->
                       <!--&lt;!&ndash;<el-radio :label="0">已购</el-radio>&ndash;&gt;-->
