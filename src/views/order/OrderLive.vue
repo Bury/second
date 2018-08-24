@@ -4,7 +4,7 @@
       <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;">返回</el-button>
     </div>
     <div class="top-box" style="text-align: center">
-      <ul class="ui-tab">
+      <ul class="ui-tab" style="display:flex">
         <li @click="step01">
           <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" ></span>
           <p class="circleFont">确认人脸</p>

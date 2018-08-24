@@ -1,13 +1,13 @@
 
 .guest-list-page{
   .ui-tab{
-    position: absolute;
-    margin: 7rem 0 0 5rem;
-    padding-right: 3rem;
-    border-right: 1px solid #c8c8c8;
+    //position: absolute;
+    //margin: 7rem 0 0 5rem;
+    //padding-right: 3rem;
+    border-bottom: 1px solid #c8c8c8;
   }
   .circleFont2{
-    margin: 10rem 0;
+    margin:0 3rem;
   }
   .circles,.circlesR{
     display: inline-block;
@@ -17,10 +17,10 @@
   }
   .circles{
     position: relative;
-    left: 6rem;
-    top: 3rem;
+    //left: 6rem;
+    top: 5rem;
     border:1px solid #fafafa;
-    background-color: #ff6953;
+    background-color: rgb(17,159,255);
     z-index: 99;
   }
   .circlesR{
