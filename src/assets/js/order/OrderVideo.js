@@ -181,11 +181,11 @@ export default {
 
     //确认人脸
     step01:function (){
-      console.log('确认人脸');
+      // console.log('确认人脸');
     },
     //确认信息
     step02:function (){
-      console.log('确认信息');
+      // console.log('确认信息');
       //一下都是测试开启，勿动
       // this.userNew = true;
       // this.phoneIsMySqlA = true;
@@ -199,7 +199,7 @@ export default {
     },
     //订单录入
     step03:function (){
-      console.log('订单录入');
+      // console.log('订单录入');
       // this.step03_block = true
     },
 
@@ -207,7 +207,7 @@ export default {
 
     //智能识别人脸身份
     recognition(id){
-      console.log(id)
+      // console.log(id)
       this.step02_block=true;
       this.step01_block=false;
       this.step03_block=false;
@@ -227,8 +227,8 @@ export default {
       };
       let qs = require('querystring')
       OrderApi.videoFindFace(qs.stringify(list)).then((res) => {
-        console.log(res);
-        console.log(res.data.data)
+        // console.log(res);
+        // console.log(res.data.data)
         if(res.data.msg === '服务器内部错误'){
           this.$message({
             message: '您获取的照片不合法',
@@ -239,7 +239,7 @@ export default {
           this.step01_block=true;
           this.step03_block=false;
         }else if(res.data.errno === -1){
-          console.log("获取照片失败");
+          // console.log("获取照片失败");
           this.$message({
             message: '获取人脸失败',
             type: 'warning',
@@ -254,8 +254,8 @@ export default {
           this.step_2=1;
           this.step_3=2;
           this.step_4=2;
-          console.log('获取到照片了');
-          console.log(res.data.errno);
+          // console.log('获取到照片了');
+          // console.log(res.data.errno);
           this.$data.faceIdIs = res.data.data.customer_id;
           if(res.data.data.is_new === 1){
             this.$data.NewRuleForm.images = res.data.data.avatar;
@@ -300,7 +300,7 @@ export default {
     //  有人脸且手机号正确-走下一步
     userOldIs(){
       this.getAll();
-      console.log(this.$data.NewRuleForm.textarea2);
+      // console.log(this.$data.NewRuleForm.textarea2);
       if(this.$data.NewRuleForm.textarea2 === ''){
         this.$message({
           message: '请填写备注信息',
@@ -318,15 +318,15 @@ export default {
         this.step_4=2;
         //不管有没有为新手机号，最终走向消费，传值一次,更一次手机号
         //这里的 this.$data.faceI 有两种可能，是本人和不是本人
-        console.log(this.$data.isNoMyself);
+        // console.log(this.$data.isNoMyself);
         let list = {
           'phone': this.$data.form.newPhone,
           'customer_id':this.$data.isNoMyself,
         }
         let qs = require('querystring');
         OrderApi.addNPhone(qs.stringify(list)).then((res) => {
-          console.log(res);
-          console.log(res.data.msg)
+          // console.log(res);
+          // console.log(res.data.msg)
           // this.$message({
           //   message: res.data.msg,
           //   type: 'warning',
@@ -357,8 +357,8 @@ export default {
       }
       let qs = require('querystring');
       OrderApi.postPhone(qs.stringify(list)).then((res) => {
-        console.log(res);
-        console.log(res.data.errno);
+        // console.log(res);
+        // console.log(res.data.errno);
         if(res.data.errno === 1000002){
           this.$message({
             message: res.data.msg,
@@ -402,7 +402,7 @@ export default {
       }
       let qs = require('querystring');
       OrderApi.getMsg(qs.stringify(list)).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.phoneIsMySql = true;
       });
     },
@@ -453,8 +453,8 @@ export default {
               message: '验证码填写错误!'
             });
           }else{
-            console.log(res);
-            console.log(res.data.data.avatar);
+            // console.log(res);
+            // console.log(res.data.data.avatar);
             this.$data.ruleForm.image = res.data.data.avatar;
             this.$data.ruleForm.name = res.data.data.name;
             this.$data.ruleForm.textarea2 = res.data.data.remark;
@@ -492,7 +492,7 @@ export default {
         OrderApi.postMe(qs.stringify(list)).then((res) => {
           //是本人的时候，人脸id为查询手机号返回人脸id
           this.$data.isNoMyself = this.$data.faceIdNo;
-          console.log(res);
+          // console.log(res);
           this.step03_block=true;
           this.step02_block=false;
           this.step01_block=false;
@@ -516,14 +516,14 @@ export default {
       OrderApi.postMe(qs.stringify(list)).then((res) => {
         //不是本人的时候，人脸id为人脸识别返回id
         this.$data.isNoMyself = this.$data.faceIdIs;
-        console.log(res);
-        console.log(0)
+        // console.log(res);
+        // console.log(0)
         this.userOld = true;
         this.ifIsOld = true;
         this.checkoutCallBack = false;
         //人脸为拍摄人脸
-        console.log(this.$data.newNewP);
-        console.log(this.$data.NewRuleForm.images);
+        // console.log(this.$data.newNewP);
+        // console.log(this.$data.NewRuleForm.images);
         this.$data.NewRuleForm.images = this.$data.newNewP;
         this.$data.NewRuleForm.phone = this.$data.form.newPhone;
         this.$data.NewRuleForm.sex = this.$data.newNewQ;
@@ -550,7 +550,7 @@ export default {
 
     //第二步返回第一步
     backA(){
-      console.log(0)
+      // console.log(0)
       this.step01_block=true;
       this.step02_block=false;
       this.step03_block=false;
@@ -599,7 +599,7 @@ export default {
     },
 
     addAGood(){
-      console.log('新增一条');
+      // console.log('新增一条');
       let obj = {
         material : null,
         style : null,
@@ -621,13 +621,9 @@ export default {
         // this.isCan = 1;
         obj.length = 9;
       }
-      console.log(0);
-      // console.log(this.$data.requestNewCreate.money);
       let m = 0;
       for(let i = 0; i< this.$data.addProList.length; i++){
-        console.log(this.$data.addProList[i].money);
         m += Number(this.$data.addProList[i].money);
-        console.log(m);
       }
       this.$data.allGoodLenght =this.$data.addProList.length
       this.$data.allMoney = m;
@@ -640,9 +636,7 @@ export default {
       //删除一条之后，需要再计算金额
       let m = 0;
       for(let i = 0; i< this.$data.addProList.length; i++){
-        console.log(this.$data.addProList[i].money);
         m += parseInt(this.$data.addProList[i].money);
-        console.log(m);
       }
       this.$data.allGoodLenght =this.$data.addProList.length
       this.$data.allMoney = m;
@@ -650,18 +644,18 @@ export default {
 
     //  上传图片
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.actionDialogVisible = true;
-      console.log(file)
-      console.log(this.dialogImageUrl)
+      // console.log(file)
+      // console.log(this.dialogImageUrl)
     },
     // 上传成功后的回调
     uploadSuccess (response, file, fileList) {
-      console.log('上传文件', response);
-      console.log(response.msg)
+      // console.log('上传文件', response);
+      // console.log(response.msg)
 
       // if (response.errno == 1000000 || response.msg=='access-token不能为空' || response.msg=='用户不存在') {
       //   console.log(0)
@@ -674,14 +668,14 @@ export default {
       // }else{
       //
       // }
-      console.log(response.data.path);
+      // console.log(response.data.path);
       this.$data.imageListF.push(response.data.path);
-      console.log(this.$data.imageListF);
+      // console.log(this.$data.imageListF);
     },
 
     //最后的计算
     allPostM(){
-      console.log(this.$data.addProList);
+      // console.log(this.$data.addProList);
       let arrAs= {};
       for(let i = 0; i< this.$data.addProList.length; i++){
         arrAs = {
@@ -691,11 +685,8 @@ export default {
         };
         this.$data.pushGoods.push(arrAs);
       }
-      // console.log(this.$data.pushGoods);
       let sendData = JSON.stringify(this.$data.pushGoods);
-      // console.log(sendData);
       let listArry =  this.$data.imageListF.join(',');
-      // console.log(listArry);
       if(this.$data.NewRuleForm.textarea2 === ''){
         this.$data.pushRemk = this.$data.ruleForm.textarea2;
       }else if(this.$data.ruleForm.textarea2 === ''){
@@ -710,6 +701,7 @@ export default {
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         // console.log(res);
+        this.$data.pushGoods = [];
         if(res.data.msg != ''){
           this.$message({
             message: res.data.msg,
@@ -717,16 +709,15 @@ export default {
             center: true
           });
         }
-        if(this.$data.item.material != '' && this.$data.item.style != '' && this.$data.item.money != ''){
+        if(res.data.errno === 0){
           this.$router.push({path: '/Order'});
           this.$message({
             message: '创建订单成功',
             type: 'success',
             center: true
           });
-
         }else{
-          this.$message.warning('请填写商品信息')
+          this.$message.warning(res.data.msg)
         }
 
         //完成订单之后，跳回列表页面

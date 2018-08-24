@@ -704,6 +704,10 @@ export default {
 		  this.$data.requestParameters.createdTimes = ['', ''];
 		  this.lists();
     },
+    viewDialogClose(){
+		  this.$data.viewVisible = false;
+      this.editClearData();
+    },
 
 
 		}

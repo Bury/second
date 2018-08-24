@@ -82,7 +82,7 @@ export default {
             this.$data.value4 = ['',''];
             this.lists();
           }
-          this.$data.requestParameters.page = 1;
+          // this.$data.requestParameters.page = 1;
           let qs = require('querystring');
           guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
             let result = res.data;
@@ -93,21 +93,19 @@ export default {
               }else{
                 this.$data.noData = false;
               }
-              console.log(result.data.pagination.currentPage);
-              // this.$data.pagination.currentPage = result.data.pagination.currentPage;
+              this.$data.pagination.currentPage = result.data.pagination.currentPage;
               this.$data.pagination.totalCount = result.data.pagination.totalCount;
             }
           })
         },
 
         handleCurrentChange(currentPage) {
-          console.log(currentPage)
-          // this.$data.tableData = [];
             this.$data.requestParameters.page = currentPage;
             this.lists();
         },
 
         onSubmit() {
+          this.$data.requestParameters.page = 1;
           this.lists();
         },
       fnGoback(){
