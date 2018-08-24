@@ -61,10 +61,14 @@ router.beforeEach((to, from, next) => {
   let knock_knock = window.localStorage.getItem('knock_knock')
   if (to.matched.some(
         record => record.meta.requiresAuth)&& (!knock_knock || knock_knock === null)) {
-    next({
-      path: '/UserLogin',
-      query: { redirect: to.fullPath }
-    })
+        	
+        window.location.href = '/';
+        
+        
+//  next({
+//    path: '/UserLogin',
+//    query: { redirect: to.fullPath }
+//  })
   } else {
     next()
   }
