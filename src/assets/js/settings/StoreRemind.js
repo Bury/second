@@ -2,7 +2,7 @@ import globalFunctions from '@/config/global_functions'
 
 import settingsApi from '@/api/settings'
 
-const typeOptions = ['新客未购买',  '熟客未购买', '熟客已购买'];
+const typeOptions = ['新客未购',  '熟客未购', '熟客已购'];
 
 const typeId = ["1","3","4"]
 

@@ -18,7 +18,7 @@
             <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="新客/熟客：">
+        <el-form-item label="客户等级：">
           <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
             <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
           </el-select>
