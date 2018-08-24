@@ -240,7 +240,7 @@
             </el-col>
           </el-row>
           <el-form-item :data="faceSearch">
-            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
+            <div style="width:200px;height:200px;border:1px solid #eee;margin:40px 0 0 0;">
               <template>
                 <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar">
               </template>
@@ -348,7 +348,7 @@
             </el-col>
           </el-row>
           <el-form-item :data="faceSearch">
-            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:60px;">
+            <div style="width:200px;height:200px;border:1px solid #eee;margin:40px 0 0 0;">
               <template>
                 <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar" @click="imgView($event)">
               </template>

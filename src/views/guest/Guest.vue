@@ -108,7 +108,7 @@
     </div>
     <!-- 弹窗 -->
     <el-dialog :visible.sync="dialogVisible" center style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">
-      <el-tabs tab-position="left" v-model="activeName1" @tab-click="checkout">
+      <el-tabs v-model="activeName1" @tab-click="checkout">
           <el-tab-pane label="个人信息" name="first">
             <guest-info :customerId="currentCustomerId" :traffic="trafficId" :editShow="dialogVisible" :showInfoEdit="showInfoEdit"></guest-info>
           </el-tab-pane>

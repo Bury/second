@@ -1,25 +1,21 @@
 <template>
   <div class="guest-list-page">
-    <div class="top-box" style="margin-bottom: 20px;padding-bottom: 20px;border-bottom: 1px solid rgb(220,223,230);">
+    <div class="top-box">
       <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;">返回</el-button>
     </div>
     <div class="top-box" style="text-align: center;border-bottom:1px solid #dcdfe6;margin-bottom: 2rem;">
       <ul style="display: flex">
         <li @click="step01">
-          <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" >1</span>
+          <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" ></span>
           <p class="circleFont">确认人脸</p>
         </li>
         <li @click="step02">
-          <span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" >2</span>
+          <span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" ></span>
           <p class="circleFont">确认信息</p>
         </li>
         <li @click="step03">
-          <span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}">3</span>
+          <span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}"></span>
           <p class="circleFont">订单录入</p>
-        </li>
-        <li>
-          <span :class="{'circles':step_4 ===1,'circlesR':step_4 ===2}">4</span>
-          <p class="circleFont">完成</p>
         </li>
       </ul>
     </div>
@@ -239,4 +235,4 @@
 
 <script src="@/assets/js/order/OrderVideo.js"></script>
 
-<style lang="scss" scoped src="@/assets/css/order/OrderLive.scss">
+<style lang="scss" scoped src="@/assets/css/order/OrderVideo.scss">
