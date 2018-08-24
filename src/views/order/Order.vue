@@ -59,7 +59,7 @@
     </div>
 
     <div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
-      <el-button type="primary" @click="orderLive">现场开单(拍摄)</el-button>
+      <!--<el-button type="primary" @click="orderLive">现场开单(拍摄)</el-button>-->
       <el-button type="primary" @click="orderVideo">现场开单(视频流)</el-button>
       <el-button type="primary" @click="orderNotLive">补单</el-button>
     </div>
