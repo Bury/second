@@ -702,7 +702,7 @@ export default {
 		  this.$data.requestParameters.price_end = '';
 		  this.$data.requestParameters.cashTimes = ['', ''];
 		  this.$data.requestParameters.createdTimes = ['', ''];
-		  this.lists();
+		  // this.lists();
     },
     viewDialogClose(){
 		  this.$data.viewVisible = false;

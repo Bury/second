@@ -37,7 +37,7 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    // { path: '/UserLogin',name: 'UserLogin',component: UserLogin},
+    { path: '/UserLogin',name: 'UserLogin',component: UserLogin},
     {
       path: '/',
       meta: { requiresAuth: true },
@@ -61,14 +61,14 @@ router.beforeEach((to, from, next) => {
   let knock_knock = window.localStorage.getItem('knock_knock')
   if (to.matched.some(
         record => record.meta.requiresAuth)&& (!knock_knock || knock_knock === null)) {
-        	
-        window.location.href = '/';
-        
-        
-//  next({
-//    path: '/UserLogin',
-//    query: { redirect: to.fullPath }
-//  })
+
+        // window.location.href = '/';
+
+
+ next({
+   path: '/UserLogin',
+   query: { redirect: to.fullPath }
+ })
   } else {
     next()
   }

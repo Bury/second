@@ -29,7 +29,8 @@ export default{
                     { required: true, message: '请输入位置', trigger: 'blur' },
                     { min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
                 ]
-            }
+            },
+          local_desc:[],
         }
     },
 
@@ -74,6 +75,7 @@ export default{
         fnEdit(row){
             this.$data.editId=row.id;
             this.$data.editLocationDesc=row.locate_desc,
+              console.log(this.$data.editLocationDesc);
             this.$data.editForm = {
                 locate: row.locate == '' ? 'other' : row.locate,
                 locate_desc: row.locate_desc
@@ -84,21 +86,21 @@ export default{
         editSubmit(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    let list = {
+                      let list = {
                         'id': this.$data.editId,
                         'locate': this.$data.editForm.locate,
                         'locate_desc': this.$data.editForm.locate_desc
-                    }
-                    let qs = require('querystring');
-                    deviceApi.edit(qs.stringify(list)).then((res) => {
-                        if(res.data.errno === 0){
-                            this.lists();
-                            this.editCancel();
-                        }else{
-
+                      }
+                      let qs = require('querystring');
+                      deviceApi.edit(qs.stringify(list)).then((res) => {
+                        if (res.data.errno === 0) {
+                          this.lists();
+                          this.editCancel();
+                        } else {
+                          this.$message.error(res.data.msg);
                         }
 
-                    })
+                      })
                 }
             });
         },

@@ -9,10 +9,10 @@
           <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" ></span>
           <p class="circleFont">确认人脸</p>
         </li>
-        <li @click="step02">
-          <span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" ></span>
-          <p class="circleFont">确认信息</p>
-        </li>
+        <!--<li @click="step02">-->
+          <!--<span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" ></span>-->
+          <!--<p class="circleFont">确认信息</p>-->
+        <!--</li>-->
         <li @click="step03">
           <span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}"></span>
           <p class="circleFont">订单录入</p>
@@ -48,118 +48,118 @@
 
                 </div>
               </td>
-              <td><el-button style="" @click="recognition(item.id)">智能识别</el-button></td>
+              <td><el-button style="" @click="recognition(item.id)">确定</el-button></td>
             </tr>
           </tbody>
         </table>
         </div>
 
       <!--确认信息-->
-      <div class="get_a" style="" v-show="step02_block">
-        <!--确认信息-有人脸-->
-        <div style="display: flex;flex-direction: column;align-items: center" v-show="userOld">
-          <div class="showImg">
-            <div style="display: flex;flex-direction: column;align-items: center">
-              <img :src="NewRuleForm.images" alt="" style="width: 20rem;height: 20rem">
-            </div>
-          </div>
-          <el-form :model="NewRuleForm" :rules="rule" ref="NewRuleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="姓名:" prop="name" style="width: 30rem">
-              <el-input v-model="NewRuleForm.name" ></el-input>
-            </el-form-item>
-            <el-form-item label="手机号:" prop="phone" style="width: 30rem;">
-              <el-input v-model="NewRuleForm.phone" style="width: 13rem" :disabled="true"></el-input>
-              <el-button style="margin-left: 2rem" @click="userOldNoPhone" v-show="ifIsOld">纠错</el-button>
-              <p style="margin-left: 2rem;color: red" v-show="ifIsNew">此号码为新号码</p>
-            </el-form-item>
-            <el-form-item label="性别:" prop="sex" style="width: 30rem">
-              <el-input v-model="NewRuleForm.sex" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="类型:" prop="type" style="width: 30rem">
-              <el-input v-model="NewRuleForm.type" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="备注:" prop="type" style="width: 30rem">
-              <el-input
-                type="textarea"
-                autosize
-                placeholder="请输入内容"
-                v-model="NewRuleForm.textarea2">
-              </el-input>
-            </el-form-item>
-          </el-form>
-          <el-row style="margin-top: 3rem">
-            <el-button @click="backA">上一步</el-button>
-            <el-button @click="userOldIs" style="margin-left: 15rem">下一步</el-button>
-          </el-row>
-        </div>
+      <!--<div class="get_a" style="" v-show="step02_block">-->
+        <!--&lt;!&ndash;确认信息-有人脸&ndash;&gt;-->
+        <!--<div style="display: flex;flex-direction: column;align-items: center" v-show="userOld">-->
+          <!--<div class="showImg">-->
+            <!--<div style="display: flex;flex-direction: column;align-items: center">-->
+              <!--<img :src="NewRuleForm.images" alt="" style="width: 20rem;height: 20rem">-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<el-form :model="NewRuleForm" :rules="rule" ref="NewRuleForm" label-width="100px" class="demo-ruleForm">-->
+            <!--<el-form-item label="姓名:" prop="name" style="width: 30rem">-->
+              <!--<el-input v-model="NewRuleForm.name" ></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="手机号:" prop="phone" style="width: 30rem;">-->
+              <!--<el-input v-model="NewRuleForm.phone" style="width: 13rem" :disabled="true"></el-input>-->
+              <!--<el-button style="margin-left: 2rem" @click="userOldNoPhone" v-show="ifIsOld">纠错</el-button>-->
+              <!--<p style="margin-left: 2rem;color: red" v-show="ifIsNew">此号码为新号码</p>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="性别:" prop="sex" style="width: 30rem">-->
+              <!--<el-input v-model="NewRuleForm.sex" :disabled="true"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="类型:" prop="type" style="width: 30rem">-->
+              <!--<el-input v-model="NewRuleForm.type" :disabled="true"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="备注:" prop="type" style="width: 30rem">-->
+              <!--<el-input-->
+                <!--type="textarea"-->
+                <!--autosize-->
+                <!--placeholder="请输入内容"-->
+                <!--v-model="NewRuleForm.textarea2">-->
+              <!--</el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-form>-->
+          <!--<el-row style="margin-top: 3rem">-->
+            <!--<el-button @click="backA">上一步</el-button>-->
+            <!--<el-button @click="userOldIs" style="margin-left: 15rem">下一步</el-button>-->
+          <!--</el-row>-->
+        <!--</div>-->
 
-        <!--有人脸，但是手机错误-->
-        <div v-show="userNew">
-          <!--纠错-去数据库查找这个手机-->
-          <el-form ref="form" :model="form"  :rules="rulesA" label-width="80px">
-            <el-form-item style="width: 30rem" v-show="firstNewC">
-              <p style="color: red;font-size: 1.2rem">人脸识别该顾客为新顾客，请输入手机！</p>
-            </el-form-item>
-            <el-form-item label="手机:" style="width: 30rem;" prop="newPhone">
-              <el-input v-model="form.newPhone" style="width: 10rem" maxlength="11" @focus="needsC"></el-input>
-              <el-button plain style="float: right" @click="checkoutPhone">查找</el-button>
-            </el-form-item>
-            <!--数据库找到这个手机，验证更改信息-->
-            <el-form-item v-show="phoneIsMySqlA" label="验证码:" style="width: 30rem;">
-              <el-input v-model="form.newTakeNum" style="width: 10rem"></el-input>
-              <el-button plain style="float: right" @click="GetSendM" :class="{disabled: !this.canClick}">{{getClickName}}</el-button>
-            </el-form-item>
-            <el-form-item label="" style="width: 30rem;margin-top: 5rem;margin-right: 10rem">
-              <el-button v-show="phoneIsMySql" @click="getUpMsg">上一步</el-button>
-              <el-button style="margin-left: 5rem" v-show="phoneIsMySql" @click="GetMsgPull">确认</el-button>
-            </el-form-item>
-            <!--数据库没有找到这个手机，显示为新号码-->
-            <el-form-item v-show="phoneNoMySql" label="" style="width: 30rem;">
-              <p style="color: red">此号码为新号码</p>
-            </el-form-item>
-            <el-form-item label="" style="width: 30rem;margin-top: 5rem;margin-right: 10rem">
-              <el-button style="margin-left: 5rem" v-show="phoneNoMySql" @click="GetNOMysql">确认</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
+        <!--&lt;!&ndash;有人脸，但是手机错误&ndash;&gt;-->
+        <!--<div v-show="userNew">-->
+          <!--&lt;!&ndash;纠错-去数据库查找这个手机&ndash;&gt;-->
+          <!--<el-form ref="form" :model="form"  :rules="rulesA" label-width="80px">-->
+            <!--<el-form-item style="width: 30rem" v-show="firstNewC">-->
+              <!--<p style="color: red;font-size: 1.2rem">人脸识别该顾客为新顾客，请输入手机！</p>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="手机:" style="width: 30rem;" prop="newPhone">-->
+              <!--<el-input v-model="form.newPhone" style="width: 10rem" maxlength="11" @focus="needsC"></el-input>-->
+              <!--<el-button plain style="float: right" @click="checkoutPhone">查找</el-button>-->
+            <!--</el-form-item>-->
+            <!--&lt;!&ndash;数据库找到这个手机，验证更改信息&ndash;&gt;-->
+            <!--<el-form-item v-show="phoneIsMySqlA" label="验证码:" style="width: 30rem;">-->
+              <!--<el-input v-model="form.newTakeNum" style="width: 10rem"></el-input>-->
+              <!--<el-button plain style="float: right" @click="GetSendM" :class="{disabled: !this.canClick}">{{getClickName}}</el-button>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="" style="width: 30rem;margin-top: 5rem;margin-right: 10rem">-->
+              <!--<el-button v-show="phoneIsMySql" @click="getUpMsg">上一步</el-button>-->
+              <!--<el-button style="margin-left: 5rem" v-show="phoneIsMySql" @click="GetMsgPull">确认</el-button>-->
+            <!--</el-form-item>-->
+            <!--&lt;!&ndash;数据库没有找到这个手机，显示为新号码&ndash;&gt;-->
+            <!--<el-form-item v-show="phoneNoMySql" label="" style="width: 30rem;">-->
+              <!--<p style="color: red">此号码为新号码</p>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="" style="width: 30rem;margin-top: 5rem;margin-right: 10rem">-->
+              <!--<el-button style="margin-left: 5rem" v-show="phoneNoMySql" @click="GetNOMysql">确认</el-button>-->
+            <!--</el-form-item>-->
+          <!--</el-form>-->
+        <!--</div>-->
 
-        <!--通过验证码，验证之后，显现顾客信息-->
-        <div style="display: flex;flex-direction: column;align-items: center" v-show="checkoutCallBack">
-          <div class="showImg">
-            <div style="display: flex;flex-direction: column;align-items: center">
-              <img :src="ruleForm.image" alt=""  style="width: 20rem;height: 20rem">
-            </div>
-          </div>
-          <el-form :model="ruleForm" :rules="rule" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="姓名:" prop="name" style="width: 30rem">
-              <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-            <el-form-item label="手机:" prop="phone" style="width: 30rem">
-              <el-input v-model="ruleForm.phone" :disabled="true"></el-input>
-              <!--<el-button style="margin-left: 2rem">纠错</el-button>-->
-            </el-form-item>
-            <el-form-item label="性别:" prop="sex" style="width: 30rem">
-              <el-input v-model="ruleForm.sex" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="类型:" prop="type" style="width: 30rem">
-              <el-input v-model="ruleForm.type" :disabled="true"></el-input>
-            </el-form-item>
-            <el-form-item label="备注:" prop="type" style="width: 30rem">
-              <el-input
-                type="textarea"
-                autosize
-                placeholder="请输入内容"
-                v-model="ruleForm.textarea2">
-              </el-input>
-            </el-form-item>
-          </el-form>
-          <el-row style="margin-top: 3rem">
-            <el-button @click="backLine">上一步</el-button>
-            <el-button style="margin-left: 15rem" @click="isNoAndPass">不是本人</el-button>
-            <el-button style="margin-left: 5rem" @click="isTrueAndPass">是本人</el-button>
-          </el-row>
-        </div>
-      </div>
+        <!--&lt;!&ndash;通过验证码，验证之后，显现顾客信息&ndash;&gt;-->
+        <!--<div style="display: flex;flex-direction: column;align-items: center" v-show="checkoutCallBack">-->
+          <!--<div class="showImg">-->
+            <!--<div style="display: flex;flex-direction: column;align-items: center">-->
+              <!--<img :src="ruleForm.image" alt=""  style="width: 20rem;height: 20rem">-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<el-form :model="ruleForm" :rules="rule" ref="ruleForm" label-width="100px" class="demo-ruleForm">-->
+            <!--<el-form-item label="姓名:" prop="name" style="width: 30rem">-->
+              <!--<el-input v-model="ruleForm.name"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="手机:" prop="phone" style="width: 30rem">-->
+              <!--<el-input v-model="ruleForm.phone" :disabled="true"></el-input>-->
+              <!--&lt;!&ndash;<el-button style="margin-left: 2rem">纠错</el-button>&ndash;&gt;-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="性别:" prop="sex" style="width: 30rem">-->
+              <!--<el-input v-model="ruleForm.sex" :disabled="true"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="类型:" prop="type" style="width: 30rem">-->
+              <!--<el-input v-model="ruleForm.type" :disabled="true"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="备注:" prop="type" style="width: 30rem">-->
+              <!--<el-input-->
+                <!--type="textarea"-->
+                <!--autosize-->
+                <!--placeholder="请输入内容"-->
+                <!--v-model="ruleForm.textarea2">-->
+              <!--</el-input>-->
+            <!--</el-form-item>-->
+          <!--</el-form>-->
+          <!--<el-row style="margin-top: 3rem">-->
+            <!--<el-button @click="backLine">上一步</el-button>-->
+            <!--<el-button style="margin-left: 15rem" @click="isNoAndPass">不是本人</el-button>-->
+            <!--<el-button style="margin-left: 5rem" @click="isTrueAndPass">是本人</el-button>-->
+          <!--</el-row>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <!--订单录入-->
       <div class="get_a" v-show="step03_block" style="text-align: center">
@@ -185,8 +185,7 @@
                 <el-button plain @click="delGoods(index)">删除</el-button>
               </el-form-item>
             </div>
-          </el-form>
-        </div>
+
         <el-row style="margin-top: 3rem;margin-right: 3rem">
           <el-button style="margin-left: 5rem;float: right" @click="addAGood">新增商品</el-button>
         </el-row>
@@ -200,30 +199,31 @@
           </div>
         </el-row>
         <!--长传小票-->
+        <!--<el-row>-->
+          <!--<el-upload v-model="item.file"-->
+                     <!--:action="importFileUrl()"-->
+                     <!--list-type="picture-card"-->
+                     <!--:data="upLoadData"-->
+                     <!--:on-preview="handlePictureCardPreview"-->
+                     <!--:on-remove="handleRemove"-->
+                     <!--:onSuccess="uploadSuccess">-->
+            <!--<i class="el-icon-plus"></i>-->
+          <!--</el-upload>-->
+        <!--</el-row>-->
         <el-row>
-          <el-upload v-model="item.file"
-                     :action="importFileUrl()"
-                     list-type="picture-card"
-                     :data="upLoadData"
-                     :on-preview="handlePictureCardPreview"
-                     :on-remove="handleRemove"
-                     :onSuccess="uploadSuccess">
-            <i class="el-icon-plus"></i>
-          </el-upload>
-          <!--<el-dialog :visible.sync="actionDialogVisible">-->
-          <!--<img width="100%" :src="dialogImageUrl" alt="">-->
-          <!--</el-dialog>-->
-        </el-row>
-        <el-row  style="width: 50rem;margin-bottom: 3rem;margin-top: 2rem;display: flex">
-          <p style="width: 3rem">备注:</p>
+          <el-form-item label="备注：" style="float: left;margin-left: 10%;">
           <el-input
             type="textarea"
-            autosize
             placeholder="请输入内容"
             maxlength=200
+            rows="3"
+            size="mini"
             v-model="remarkString">
           </el-input>
+          </el-form-item>
         </el-row>
+          </el-form>
+        </div>
         <el-row style="margin-top: 3rem">
           <el-button style="margin-left: 15rem;margin-right: 10rem;float: right" @click="allPostM">确认</el-button>
           <el-button style=" float: right" @click="backB">上一步</el-button>

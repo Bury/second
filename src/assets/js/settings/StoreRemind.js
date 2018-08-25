@@ -58,9 +58,15 @@ export default {
         },
 
         handleCheckAllChange(val) {
-            this.checkedType = val ? typeId : [];
-            this.isIndeterminate = true;
-            console.log(this.checkedType)
+            if(val == false){
+              this.isIndeterminate = true;
+              this.$data.checkAll = false;
+              this.checkedType = val ? typeId : [];
+            }else if(val == true){
+              this.$data.checkAll = true;
+              this.isIndeterminate = false;
+              this.checkedType = val ? typeId : [];
+            }
         },
 
         fnChangeType(value) {

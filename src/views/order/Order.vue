@@ -18,7 +18,7 @@
             <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="客户等级：">
+        <el-form-item label="客户类型：">
           <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
             <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
           </el-select>
@@ -60,8 +60,8 @@
 
     <div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
       <!--<el-button type="primary" @click="orderLive">现场开单(拍摄)</el-button>-->
-      <el-button type="primary" @click="orderVideo">现场开单(视频流)</el-button>
-      <el-button type="primary" @click="orderNotLive">补单</el-button>
+      <el-button type="primary" @click="orderVideo">现场开单</el-button>
+      <!--<el-button type="primary" @click="orderNotLive">补单</el-button>-->
     </div>
 
     <table width="99%" class="table">

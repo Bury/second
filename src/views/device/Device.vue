@@ -6,7 +6,6 @@
           <tr height="40">
             <th class="col-md-1 text-center">序号</th>
             <th class="col-md-2 text-center">编号</th>
-            <th class="col-md-1 text-center">版本</th>
             <th class="col-md-1 text-center">类型</th>
             <th class="col-md-2 text-center">位置</th>
             <th class="col-md-1 text-center">状态</th>
@@ -17,11 +16,8 @@
           <tr v-for="(item,index) in tableData" :key="index" height="40">
             <td>{{item.id}}</td>
             <td>{{item.device_id}}</td>
-            <td>{{item.version}}</td>
             <td>
-              {{item.locate == 'other' ? '其他' : '收银'}}
-              <!--<span v-if="item.locate = 'other'">其他</span>-->
-              <!--<span v-else>收银</span>-->
+              {{item.locate == 'other' ? '进店' : '收银'}}
             </td>
             <td>
               {{item.locate_desc}}
@@ -40,7 +36,7 @@
 					    <el-form-item label="类型：">
 					    	<el-select v-model="editForm.locate" placeholder="请选择" ref="locate_select">
 						        <el-option label="收银" value="cashier"></el-option>
-						        <el-option label="其他" value="other"></el-option>
+						        <el-option label="进店" value="other"></el-option>
 						    </el-select>
 					    </el-form-item>
 					    <el-form-item label="位置：" prop="locate_desc">

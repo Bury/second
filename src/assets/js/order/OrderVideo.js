@@ -208,9 +208,9 @@ export default {
     //智能识别人脸身份
     recognition(id){
       // console.log(id)
-      this.step02_block=true;
+      // this.step02_block=true;
       this.step01_block=false;
-      this.step03_block=false;
+      this.step03_block=true;
       //直接点击智能识别的时候一切都回到原始状态
       this.userNew = false;
       this.userOld = false;
@@ -227,6 +227,7 @@ export default {
       };
       let qs = require('querystring')
       OrderApi.videoFindFace(qs.stringify(list)).then((res) => {
+        this.getAll();
         // console.log(res);
         // console.log(res.data.data)
         if(res.data.msg === '服务器内部错误'){
@@ -251,11 +252,9 @@ export default {
         }
         else{
           this.step_1=2;
-          this.step_2=1;
-          this.step_3=2;
-          this.step_4=2;
-          // console.log('获取到照片了');
-          // console.log(res.data.errno);
+          // this.step_2=1;
+          this.step_3=1;
+          // this.step_4=2;
           this.$data.faceIdIs = res.data.data.customer_id;
           if(res.data.data.is_new === 1){
             this.$data.NewRuleForm.images = res.data.data.avatar;
@@ -588,14 +587,14 @@ export default {
 
     //第三步返回第二步
     backB(){
-      this.step01_block=false;
-      this.step02_block=true;
+      this.step01_block=true;
+      // this.step02_block=true;
       this.step03_block=false;
 
-      this.step_1=2;
-      this.step_2=1;
+      this.step_1=1;
+      // this.step_2=1;
       this.step_3=2;
-      this.step_4=2;
+      // this.step_4=2;
     },
 
     addAGood(){
@@ -696,7 +695,7 @@ export default {
         'goods_info':sendData,
         'remark':this.$data.remarkString,
         'files_web':listArry,
-        'customer_id':this.$data.isNoMyself,
+        'customer_id':this.$data.faceIdIs,
       }
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {

@@ -27,7 +27,7 @@ export default {
 					type: 'line' //line/column
 				},
 				title: {
-					text: '客流量占比'
+					text: '客流占比'
 				},
 				xAxis: {
 					categories: []
@@ -36,7 +36,7 @@ export default {
 					allowDecimals:false,
 					title: {
 						text: '人数'
-					}					
+					}
 
 				},
 				credits: {
@@ -58,7 +58,7 @@ export default {
 	},
 
 	watch: {
-		guestData: function() {			
+		guestData: function() {
 			this.getData(this.$props.guestData);
 		},
 		chartClass: function() {
@@ -66,7 +66,7 @@ export default {
 		}
 
 	},
-	created:function(){		
+	created:function(){
 		Highcharts.setOptions({
 				lang: {
 					thousandsSep: ',',
@@ -78,18 +78,18 @@ export default {
 	methods: {
 		getData(value) {
 			let isdata = value.sum.every(function(val){return val == 0})
-			
+
 			let guestCharts = this.$refs.guestCharts;
 			guestCharts.delegateMethod('showLoading', 'Loading...');
-			guestCharts.removeSeries();  
+			guestCharts.removeSeries();
 			setTimeout(() => {
 				guestCharts.hideLoading();
-				
+
 				guestCharts.addSeries({
-					name: ' 客流量统计',
+					name: ' 客流统计',
 					data: (isdata && [] ) ||  value.sum
 				});
-				guestCharts.getChart().xAxis[0].setCategories(value.time);				
+				guestCharts.getChart().xAxis[0].setCategories(value.time);
 				guestCharts.getChart().series[0].update({
 					type: this.$props.chartClass
 				})

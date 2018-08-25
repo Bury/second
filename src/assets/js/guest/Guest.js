@@ -108,13 +108,13 @@ export default {
           this.$data.requestParameters.page = 1;
           this.lists();
         },
-      fnGoback(){
+      fnReset(){
           this.$data.value4 = ['',''];
           this.$data.requestParameters.visited = '';
           this.$data.requestParameters.bought = '';
           this.$data.requestParameters.age = '';
           this.$data.requestParameters.gender = '';
-          this.lists();
+          // this.lists();
       },
 
         showDialog(row) {
