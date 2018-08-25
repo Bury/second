@@ -30,7 +30,7 @@ export default{
                     { min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
                 ]
             },
-          local_desc:[],
+          locate:'',
         }
     },
 
@@ -59,6 +59,16 @@ export default{
             deviceApi.lists().then((res) => {
                 if(res.data.errno === 0){
                     this.$data.tableData = res.data.data.list;
+                    for(let item of res.data.data.list){
+                      console.log(item.locate);
+                      if(item.locate == null){
+                        this.$data.locate = '--';
+                      }else if(item.locate == "other"){
+                        this.$data.locate = '进店';
+                      }else if(item.locate == 'cashier'){
+                        this.$data.locate = '收银台';
+                      }
+                    }
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
                     this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                 }else{

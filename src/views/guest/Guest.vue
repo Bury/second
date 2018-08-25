@@ -84,7 +84,6 @@
           </tr>
           </tbody>
         </table>
-
       </el-tab-pane>
 
       <el-tab-pane label="屏蔽列表" name="second">
@@ -92,20 +91,7 @@
       </el-tab-pane>
 
     </el-tabs>
-    <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>
-    <!-- 分页 -->
-    <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
-      <el-pagination
-        background
-        class="pagination"
-        layout="prev, pager, next"
-        small
-        @current-change="handleCurrentChange"
-        :current-page="pagination.currentPage"
-        :page-size="requestParameters.page_size"
-        :total="pagination.totalCount">
-      </el-pagination>
-    </div>
+
     <!-- 弹窗 -->
     <el-dialog :visible.sync="dialogVisible" center style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">
       <el-tabs v-model="activeName1" @tab-click="checkout">

@@ -17,10 +17,12 @@
             <td>{{item.id}}</td>
             <td>{{item.device_id}}</td>
             <td>
-              {{item.locate == 'other' ? '进店' : '收银'}}
+              <span v-if="item.locate == null">--</span>
+              <span v-else-if="item.locate == 'other'">进店</span>
+              <span v-else-if="item.locate == 'cashier'">收银台</span>
             </td>
             <td>
-              {{item.locate_desc}}
+              {{item.locate_desc != null ? item.locate_desc : '--'}}
             </td>
             <td>{{item.status == 0 ? '断开' : '正常'}}</td>
             <td>

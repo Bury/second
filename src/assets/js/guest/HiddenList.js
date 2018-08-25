@@ -8,6 +8,7 @@ export default {
 
     data(){
         return{
+            idNum:1,
             tableData: [],
             pagination:{
                 currentPage:1,
@@ -15,7 +16,7 @@ export default {
             },
             requestParameters: {
                 page: 1,
-                page_size:10,
+                page_size:20,
             },
         }
     },

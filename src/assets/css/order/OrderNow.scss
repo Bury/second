@@ -40,7 +40,7 @@
     margin-top: 1rem;
   }
   .get_a{
-    margin-top: 5rem;
+    margin: 5rem auto;
   }
   .showImg{
     display: flex;
@@ -80,5 +80,17 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+  }
+  .name{
+    width: 60px;
+    line-height: 40px;
+  }
+  .el_col{
+    display: flex;
+    margin-right: 1.5rem;
+  }
+  .el_row{
+    text-align: center;
+    margin:2% 10%;
   }
 }

@@ -672,7 +672,7 @@ export default {
 				},
 				orderVideo() {
 					this.$router.push({
-						path: '/OrderVideo'
+						path: '/OrderNow'
 					})
 				},
 				//补单

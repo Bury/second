@@ -3,22 +3,22 @@
     <div class="top-box">
       <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;">返回</el-button>
     </div>
-    <div class="top-box" style="text-align: center;border-bottom:1px solid #dcdfe6;margin-bottom: 2rem;">
-      <ul style="display: flex">
-        <li @click="step01">
-          <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" ></span>
-          <p class="circleFont">确认人脸</p>
-        </li>
-        <!--<li @click="step02">-->
-          <!--<span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" ></span>-->
-          <!--<p class="circleFont">确认信息</p>-->
+    <!--<div class="top-box" style="text-align: center;border-bottom:1px solid #dcdfe6;margin-bottom: 2rem;">-->
+      <!--<ul style="display: flex">-->
+        <!--<li @click="step01">-->
+          <!--<span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" ></span>-->
+          <!--<p class="circleFont">确认人脸</p>-->
         <!--</li>-->
-        <li @click="step03">
-          <span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}"></span>
-          <p class="circleFont">订单录入</p>
-        </li>
-      </ul>
-    </div>
+        <!--&lt;!&ndash;<li @click="step02">&ndash;&gt;-->
+          <!--&lt;!&ndash;<span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" ></span>&ndash;&gt;-->
+          <!--&lt;!&ndash;<p class="circleFont">确认信息</p>&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--<li @click="step03">-->
+          <!--<span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}"></span>-->
+          <!--<p class="circleFont">订单录入</p>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
 
 
     <div style="margin-top: 2rem;overflow: hidden;">
@@ -29,29 +29,40 @@
             <el-button @click="reFresh">刷新</el-button>
           </div>
         </div>
-        <table width="90%" style="margin-top:2rem;">
-          <thead style="font-size:2rem;">
-          <tr height="60">
-            <th class="col-md-5 text-center">人脸</th>
-            <th class="col-md-3 text-center">操作</th>
-          </tr>
+        <div class="orderVideo">
+          <div  v-for="(item,index) in tableData" :key="index">
+            <div class="videoImg" style="width: 100%;margin-bottom: 1rem;overflow: hidden;">
+              <div style="width:30%;">
+                <img :src="item.avatar" style="width: 100%;height: 100%;" />
+              </div>
+            </div>
+            <el-button style="" @click="recognition(item.id)">选择</el-button>
+          </div>
 
-          </thead>
-          <tbody>
-            <tr v-for="(item,index) in tableData" :key="index"
-                style="text-align: center;">
-              <td>
-                <div class="videoImg" style="width: 100%;margin-bottom: 1rem;overflow: hidden;">
-                  <div style="width:45%;">
-                    <img :src="item.avatar" style="width: 100%;height: 100%;" />
-                  </div>
+        </div>
+        <!--<table width="90%" style="margin-top:2rem;">-->
+          <!--<thead style="font-size:2rem;">-->
+          <!--<tr height="60">-->
+            <!--<th class="col-md-5 text-center">人脸</th>-->
+            <!--<th class="col-md-3 text-center">操作</th>-->
+          <!--</tr>-->
 
-                </div>
-              </td>
-              <td><el-button style="" @click="recognition(item.id)">确定</el-button></td>
-            </tr>
-          </tbody>
-        </table>
+          <!--</thead>-->
+          <!--<tbody>-->
+            <!--<tr v-for="(item,index) in tableData" :key="index"-->
+                <!--style="text-align: center;">-->
+              <!--<td>-->
+                <!--<div class="videoImg" style="width: 100%;margin-bottom: 1rem;overflow: hidden;">-->
+                  <!--<div style="width:45%;">-->
+                    <!--<img :src="item.avatar" style="width: 100%;height: 100%;" />-->
+                  <!--</div>-->
+
+                <!--</div>-->
+              <!--</td>-->
+              <!--<td><el-button style="" @click="recognition(item.id)">确定</el-button></td>-->
+            <!--</tr>-->
+          <!--</tbody>-->
+        <!--</table>-->
         </div>
 
       <!--确认信息-->

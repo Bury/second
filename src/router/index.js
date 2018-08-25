@@ -16,7 +16,8 @@ import Guest from '../views/guest/Guest'
 //订单管理
 import Order from '../views/order/Order'
 import OrderLive from '../views/order/OrderLive'
-import OrderVideo from '../views/order/OrderVideo'
+// import OrderVideo from '../views/order/OrderVideo'
+import OrderNow from '../views/order/OrderNow'
 
 //设备管理
 import Device from '../views/device/Device'
@@ -47,7 +48,8 @@ const router = new Router({
         {path: 'Guest',name: 'Guest',component: Guest},
         {path: 'Order',name: 'Order',component: Order},
         {path: 'OrderLive',name: 'OrderLive',component: OrderLive},
-        {path: 'OrderVideo',name: 'OrderVideo',component: OrderVideo},
+        // {path: 'OrderVideo',name: 'OrderVideo',component: OrderVideo},
+        {path: 'OrderNow',name: 'OrderNow',component: OrderNow},
         {path: 'Device',name: 'Device',component: Device},
         {path: 'User',name:'User',component:User},
         {path: 'StoreRemind',name: 'StoreRemind',component: StoreRemind},
