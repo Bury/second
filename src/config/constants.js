@@ -15,7 +15,11 @@ global.FILE_UPLOAD = `${SERVER_IP}${COMMON}user/upload`//图片上传地址 //PH
 // post analysis/customer
 global.GET_CUSTOMER = `${SERVER_IP}${COMMON}analysis/customer`
 
+//特征折线图
 global.StatisticsFeature = `${SERVER_IP}${COMMON}analysis/feature`
+
+global.GET_GRAPH_FEATURE = `${SERVER_IP}${COMMON}analysis/graph-feature`
+
 
 
 

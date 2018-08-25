@@ -59,12 +59,8 @@
         <div style="text-align: center;" v-show="noTimeHide"><span>请选择时间</span></div>
         <ul class="charts-type" v-show="!noTimeHide">
                 <li class="charts-wrap">
-                	<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>
-                    <div style="padding:10px 0 20px;text-align:center;">
-                    <el-button :type="chartClass == 'line' ? 'primary' : ''"  size="small" @click="switchChart('line')">折线图</el-button>
-                    <el-button :type="chartClass == 'column' ? 'primary' : ''"  size="small" @click="switchChart('column')">柱状图</el-button>
-                    </div>                    
-                    <guest-chart :guestData="guestData" :chartClass="chartClass"></guest-chart>
+                	<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>                 
+                    <guest-chart :guestData="guestParameters" :changFlag="changFlag"></guest-chart>
                 </li>
                 
                 <li class="charts-wrap">

@@ -30,6 +30,9 @@ export default{
             credits: {
                 text: '',
             },
+            tooltip: {
+				pointFormat:'{series.name}: <b>{point.y}</b><br/>占比:{point.percentage:.1f}%'
+			},
             colors:[
                 '#66E2B0',
                 '#FFC200',

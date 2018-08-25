@@ -32,6 +32,7 @@ export default {
     data () {
         return {    
         	noTimeHide:false,
+        	changFlag:true,
             goStoreNum:'',
             timeType: 'day',
             day:'',
@@ -40,8 +41,6 @@ export default {
             year:'',
             userDefined:[],
             ctrlTimeType:[true,false,false,false,false],
-            chartClass:'line',
-            guestData:{},
             guestVisitedInfoData:[],
             guestBoughtInfoData:[],
             ageData:[],
@@ -69,16 +68,6 @@ export default {
         getS(value){
             var formatTimeS = new Date(value).getTime()/1000;
             return  formatTimeS 
-        },
-
-        //客流量
-        getCustomer(parameters){
-            let qs = require('querystring');
-            statisticsApi.getCustomer(qs.stringify(parameters)).then((res) => {
-                if(res.data.errno === 0){      
-                    this.$data.guestData = res.data.data;
-                }
-            })
         },
         
         //到店人数
@@ -155,11 +144,6 @@ export default {
                 }
             })
 
-        },
-         
-         //切换折现和柱状图
-        switchChart(value){
-            this.$data.chartClass = value;
         },
         //搜索
         onSubmit(){ 
@@ -299,7 +283,7 @@ export default {
         },
 
         requestData(){
-                this.getCustomer(this.$data.guestParameters);
+        	    this.$data.changFlag = !this.$data.changFlag;
                 this.statisticsFeature(this.$data.guestParameters, 'face');
                 this.statisticsFeature(this.$data.guestParameters, 'buy');
                 this.statisticsFeature(this.$data.guestParameters, 'age');

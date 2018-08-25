@@ -27,6 +27,9 @@ export default{
             title: {
                 text: '未购/已购客户占比'
             },
+            tooltip: {
+				pointFormat:'{series.name}: <b>{point.y}</b><br/>占比:{point.percentage:.1f}%'
+			},
             credits: {
                 text: '',
             },

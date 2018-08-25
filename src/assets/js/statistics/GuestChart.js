@@ -1,6 +1,7 @@
 import Highcharts from 'highcharts';
 import HighchartsNoData from 'highcharts-no-data-to-display';
 import VueHighcharts from 'vue2-highcharts'
+import statisticsApi from '@/api/statistics'
 HighchartsNoData(Highcharts)
 
 export default {
@@ -11,8 +12,10 @@ export default {
 		VueHighcharts
 	},
 
-	props: {
-		chartClass: String,
+	props: {	
+		changFlag:{
+			type:Boolean
+		},
 		guestData: {
 			type: Object,
 		}
@@ -22,12 +25,13 @@ export default {
 
 		return {
 			Highcharts:Highcharts,
+			chartOptionsType:0,
 			options: {
 				chart: {
-					type: 'line' //line/column
+					type: 'line' 
 				},
 				title: {
-					text: '客流占比'
+					text: '客流量'
 				},
 				xAxis: {
 					categories: []
@@ -37,7 +41,6 @@ export default {
 					title: {
 						text: '人数'
 					}
-
 				},
 				credits: {
 					text: '',
@@ -58,13 +61,9 @@ export default {
 	},
 
 	watch: {
-		guestData: function() {
-			this.getData(this.$props.guestData);
+		changFlag: function() {
+			this.postType();
 		},
-		chartClass: function() {
-			this.getData(this.$props.guestData)
-		}
-
 	},
 	created:function(){
 		Highcharts.setOptions({
@@ -73,26 +72,85 @@ export default {
 					noData: '暂无数据'
 				}
 		});
+		this.getCustomer();
 	},
 
 	methods: {
+	    
+	    postType(){
+	    	if(this.$data.chartOptionsType === 0){
+				this.getCustomer();
+			}else if(this.$data.chartOptionsType === 1){
+				this.statisticsType("face")
+			}else if(this.$data.chartOptionsType === 2){
+				this.statisticsType("age")
+			}else if(this.$data.chartOptionsType === 3){
+				this.statisticsType("gender")
+			}
+	    },	    
+		//统计类型切换
+		customerType(){
+			this.postType();
+		},
+		
+		//客流量分类
+		statisticsType(val){
+			let qs = require('querystring');
+			let list = {
+				feature:val,
+				begin_time:this.$props.guestData.begin_time,
+				end_time:this.$props.guestData.end_time
+			};
+			statisticsApi.getGraphFeature(qs.stringify(list)).then((res) => {
+				if(res.data.errno === 0){  
+					if(res.data.data.length > 0){
+						let listData = res.data.data,newData = [];
+						for(let i=0;i<listData.length;i++){
+							newData.push({
+								name:listData[i].value,
+								data:listData[i].sum,
+								time:listData[i].time,
+							})
+						};
+						this.getData(newData);  
+					}else{
+						this.getData([]);  
+					}
+                	        
+                }
+				
+			})
+		},	
+		
+		//客流量默认
+        getCustomer(){
+            let qs = require('querystring');
+            statisticsApi.getCustomer(qs.stringify(this.$props.guestData)).then((res) => {
+                if(res.data.errno === 0){  
+                	let listData = res.data.data,newData = [];
+                	newData.push({
+                		name:'总客流',
+						data:listData.sum,
+						time:listData.time,
+                	})
+                 	this.getData(newData);                    
+                }else{
+                	this.getData([])
+                }
+            })
+        },
+		
 		getData(value) {
-			let isdata = value.sum.every(function(val){return val == 0})
-
 			let guestCharts = this.$refs.guestCharts;
 			guestCharts.delegateMethod('showLoading', 'Loading...');
 			guestCharts.removeSeries();
 			setTimeout(() => {
 				guestCharts.hideLoading();
-
-				guestCharts.addSeries({
-					name: ' 客流统计',
-					data: (isdata && [] ) ||  value.sum
-				});
-				guestCharts.getChart().xAxis[0].setCategories(value.time);
-				guestCharts.getChart().series[0].update({
-					type: this.$props.chartClass
-				})
+                guestCharts.getChart().xAxis[0].setCategories(value[0].time);
+                for(let j=0;j<value.length;j++){
+                	guestCharts.addSeries(value[j]);
+                }
+				
 			}, 100)
 		},
 	}

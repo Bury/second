@@ -35,6 +35,17 @@ export default {
 	        reject(err)
 	      })
 	    })
+	},	
+	
+	//特征折线图
+	getGraphFeature (list) {
+	    return new Promise((resolve, reject) => {
+	      axios.post(global.GET_GRAPH_FEATURE,list).then((res) => {
+	        resolve(res)
+	      }).catch((err) => {
+	        reject(err)
+	      })
+	    })
 	},
 	
 }
