@@ -1,5 +1,6 @@
 <template>
 	<div class="left-menu1">
+
     <el-menu :default-active="currentMenu"
              router
              class="el-menu-vertical-demo"
@@ -9,14 +10,14 @@
             active-text-color="#fff">
 
       <template v-for="(item,index) in tableData">
-        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" class="aaa">
+        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" style="text-align: center;">
         	<!-- <template slot="title"> -->
             <i :class="item.front_icon" style="color: #fff;"></i>
             <span slot="title">{{item.name}}</span>
           <!-- </template>   -->
         </el-menu-item>
 
-        <el-submenu v-else :key="index"  :index="item.front_url" >
+        <el-submenu v-else :key="index"  :index="item.front_url" style="text-align: center">
          <template slot="title">
           <i :class="item.front_icon"  style="color: #fff;"></i>
           <span slot="title">{{item.name}}</span>

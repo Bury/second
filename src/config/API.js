@@ -11,7 +11,7 @@ if (process.env.NODE_ENV == 'development') {
    apiUrl = "https://api.yy.ibetwo.com/";
    DEBUG = false;
 }else if(process.env.NODE_ENV == 'testing'){
-   apiUrl = "https://test-api.yy.ibetwo.com/";
+   apiUrl = "https://dev-api.yy.ibetwo.com/";
    DEBUG = false;
 }
 export default{

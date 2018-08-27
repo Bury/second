@@ -27,8 +27,13 @@
         </div>
         <div class="left-menu-wrap">
           <div class="arrow">
-            <div class="arrow1"></div>
+            <div class="arrow1">
+              <div style="margin-left: 40%;margin-top: -3px;"><img src="../../assets/images/menuLeft-1.png" /></div>
+            </div>
           </div>
+          <!--<div>-->
+            <!--<div class="peach"></div>-->
+          <!--</div>-->
             <!--<el-radio-group v-model="isCollapse">-->
                 <!--<el-radio-button :label="false" v-if="isCollapse">展开</el-radio-button>-->
                 <!--<el-radio-button :label="true" v-if="!isCollapse">收起</el-radio-button>-->
