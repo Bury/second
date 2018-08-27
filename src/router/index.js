@@ -64,13 +64,13 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(
         record => record.meta.requiresAuth)&& (!knock_knock || knock_knock === null)) {
 
-        // window.location.href = '/';
+        window.location.href = '/';
 
 
- next({
-   path: '/UserLogin',
-      query: { redirect: to.fullPath }
-  })
+ // next({
+ //   path: '/UserLogin',
+ //      query: { redirect: to.fullPath }
+ //  })
   } else {
     next()
   }
