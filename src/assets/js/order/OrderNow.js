@@ -103,7 +103,8 @@ export default {
         avatar:'',
       },
       remarkString:'',
-
+      noData:false,
+      imgData:true,
     };
   },
 
@@ -123,7 +124,15 @@ export default {
     chooseLists(){
       OrderApi.chooseLists().then((res) => {
         if(res.data.errno === 0){
-          this.$data.tableData = res.data.data.list;
+          console.log(res.data.data.list);
+          if(res.data.data == null){
+            this.$message.error(res.data.msg);
+          }else if(res.data.data.list.length == 0){
+            this.$data.noData = true;
+            this.$data.imgData = false;
+          }else{
+            this.$data.tableData = res.data.data.list;
+          }
         }
       })
     },
@@ -219,6 +228,7 @@ export default {
         }
         else{
           this.$data.NewRuleForm = res.data.data;
+          console.log(res.data.data);
           this.$data.faceIdIs = res.data.data.customer_id;
           if(res.data.data.is_new === 1){
             this.$data.NewRuleForm.images = res.data.data.avatar;

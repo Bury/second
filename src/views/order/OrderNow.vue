@@ -5,6 +5,8 @@
       </div>
 
       <div style="margin-top: 2rem;overflow: hidden;">
+
+
         <!--第一步-->
         <div class="get_a" v-show="step01_block">
           <div style="position: relative;margin-bottom: 2rem;overflow: hidden;">
@@ -12,7 +14,8 @@
               <el-button @click="reFresh">刷新</el-button>
             </div>
           </div>
-          <div class="orderVideo">
+          <div v-if="noData" style="margin: 0 auto;text-align: center">暂无数据~</div>
+          <div class="orderVideo" v-if="imgData">
             <div  v-for="(item,index) in tableData" :key="index" style="display: flex;flex-direction: column;width: 15%;">
               <div class="videoImg" style="width: 100%;margin-bottom: 1rem;overflow: hidden;">
                 <div style="width:100%;">
