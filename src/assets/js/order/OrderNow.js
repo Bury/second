@@ -124,17 +124,16 @@ export default {
     chooseLists(){
       OrderApi.chooseLists().then((res) => {
         if(res.data.errno === 0){
-          console.log(res.data.data.list);
-          if(res.data.data == null){
-            this.$message.error(res.data.msg);
-            this.$data.noData = true;
-            this.$data.imgData = false;
-          }else if(res.data.data.list.length == 0){
-            this.$data.noData = true;
-            this.$data.imgData = false;
-          }else{
+          if(res.data.data.list.length > 0){
             this.$data.tableData = res.data.data.list;
+          }else{
+            this.$data.noData = true;
+            this.$data.imgData = false;
           }
+        }else{
+          this.$message.error(res.data.msg);
+          this.$data.noData = true;
+          this.$data.imgData = false;
         }
       })
     },
@@ -165,31 +164,6 @@ export default {
           }
         }
       })
-    },
-
-
-    //确认人脸
-    step01:function (){
-      // console.log('确认人脸');
-    },
-    //确认信息
-    step02:function (){
-      // console.log('确认信息');
-      //一下都是测试开启，勿动
-      // this.userNew = true;
-      // this.phoneIsMySqlA = true;
-      // this.step01_block = false;
-      // this.step02_block = true;
-      // this.userNew= false;
-      // this.userOld = true;
-      // this.firstNewC = false;
-      // this.ifIsOld=true;
-      // this.ifIsNew=false;
-    },
-    //订单录入
-    step03:function (){
-      // console.log('订单录入');
-      // this.step03_block = true
     },
 
 
@@ -397,7 +371,12 @@ export default {
             center: true
           });
         }else{
-          this.$message.warning(res.data.msg)
+          // this.$message.warning(res.data.msg)
+          this.$message({
+            type:"warning",
+            message:res.data.data,
+            duration:8000
+          })
         }
 
         //完成订单之后，跳回列表页面

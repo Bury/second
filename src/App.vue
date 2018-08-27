@@ -61,4 +61,7 @@ ul,li{list-style: none;}
 .el-menu-item .is-active {
   background-color: red !important;
 }
+.el-message .el-message__icon{
+  margin: 0 10px;
+}
 </style>
