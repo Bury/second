@@ -60,7 +60,6 @@ export default{
                 if(res.data.errno === 0){
                     this.$data.tableData = res.data.data.list;
                     for(let item of res.data.data.list){
-                      console.log(item.locate);
                       if(item.locate == null){
                         this.$data.locate = '--';
                       }else if(item.locate == "other"){
@@ -85,7 +84,6 @@ export default{
         fnEdit(row){
             this.$data.editId=row.id;
             this.$data.editLocationDesc=row.locate_desc,
-              console.log(this.$data.editLocationDesc);
             this.$data.editForm = {
                 locate: row.locate == '' ? 'other' : row.locate,
                 locate_desc: row.locate_desc

@@ -8,7 +8,6 @@ export default {
 
     data(){
         return{
-            idNum:1,
             tableData: [],
             pagination:{
                 currentPage:1,

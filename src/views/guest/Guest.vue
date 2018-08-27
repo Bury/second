@@ -59,7 +59,7 @@
           </thead>
           <tbody style="text-align: center">
           <tr v-for="(item,index) in tableData" :key="index" height="40">
-            <td>{{item.id}}</td>
+            <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
             <td>
               <div style="height: 90%;width: 90%;padding: 5%;box-sizing: border-box">
               <img :src="item.avatar" style="display:block;margin:0 auto;width:100%;">

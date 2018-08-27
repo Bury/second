@@ -14,7 +14,7 @@
           </thead>
           <tbody style="text-align: center">
           <tr v-for="(item,index) in tableData" :key="index" height="40">
-            <td>{{item.id}}</td>
+            <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
             <td>{{item.device_id}}</td>
             <td>
               <span v-if="item.locate == null">--</span>

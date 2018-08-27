@@ -196,7 +196,6 @@ export default {
 
 		// 上传成功后的回调
 		uploadSuccess(response, file, fileList) {
-      console.log(response)
 			if(response.errno === 0) {
 				let image = response.data.path;
 				if(this.$data.imageListF.length < 3) {
@@ -213,8 +212,8 @@ export default {
 
 		//编辑--上传图片的删除、添加地址
 		editHandleRemove(file, fileList) {
-			console.log(file, fileList);
-			console.log(this.$data.dialogImageUrl)
+			// console.log(file, fileList);
+			// console.log(this.$data.dialogImageUrl)
 
 		},
 
@@ -225,7 +224,7 @@ export default {
 
 		//编辑上传图片成功后的回调
 		editUploadSuccess(response, file, fileList) {
-			console.log(response)
+			// console.log(response)
 			if(response.errno === 0) {
 				for(let i = 0; i < this.$data.editForm.avatar.length; i++) {
 					this.$data.editImgAvatar.push(this.$data.editForm.avatar[i]);
@@ -254,10 +253,7 @@ export default {
 			let qs = require('querystring');
       orderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
         if (res.data.errno === 0) {
-          console.log(res.data.data.list);
-          console.log(res.data.data.list.length);
           if(res.data.data.list.length === 0){
-            console.log(res.data.data.list.length);
             this.$data.noData = true;
           }else{
             this.$data.noData = false;
@@ -317,9 +313,7 @@ export default {
 			orderApi.view(qs.stringify({
 				id: id,
 			})).then((res) => {
-				console.log(res);
 				if(res.data.errno === 0) {
-					console.log(res.data.data);
 					res.data.data.avatar === null && (res.data.data.avatar = [])
 					this.$data.editForm = res.data.data;
 					let time = new Date(res.data.data.cash_t * 1000);
@@ -402,7 +396,6 @@ export default {
 
 		//编辑查询人脸信息
 		editFindGuestByFaceId() {
-			console.log(0)
 			let list = {
 				'id': this.$data.editForm.traffic.customer_id,
 			}
@@ -603,7 +596,6 @@ export default {
 								'customer_id': this.$data.faceSearch.customer_id
 							}
 							let qs = require('querystring');
-							console.log(list)
 							orderApi.addsNotLive(qs.stringify(list)).then((res) => {
 								if(res.data.errno === 0) {
 									this.lists();
@@ -677,7 +669,6 @@ export default {
 				},
 				//补单
 				orderNotLive() {
-					console.log(this.$data.faceVisible)
 					this.$data.FormVisible = true;
 					//点击补单的时候，清空一下数据
 					this.$data.imageListF = [];

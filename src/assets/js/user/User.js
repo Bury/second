@@ -99,8 +99,7 @@ export default{
             userApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.tableData = res.data.data.list;
-                    console.log(res.data.data.list.storeRole);
-                    // if()
+                    // console.log(res.data.data.list.storeRole);
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
                     this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                 }else{
