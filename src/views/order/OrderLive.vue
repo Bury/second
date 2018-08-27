@@ -1,28 +1,26 @@
 <template>
   <div class="guest-list-page">
-
+    <div class="top-box">
+      <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;">返回</el-button>
+    </div>
     <div class="top-box" style="text-align: center">
-      <ul style="display: flex">
+      <ul class="ui-tab" style="display:flex">
         <li @click="step01">
-          <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" >1</span>
+          <span :class="{'circles':step_1 ===1,'circlesR':step_1 ===2}" ></span>
           <p class="circleFont">确认人脸</p>
         </li>
-        <li @click="step02">
-          <span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" >2</span>
+        <li @click="step02" class=" circleFont2">
+          <span :class="{'circles':step_2 ===1,'circlesR':step_2 ===2}" ></span>
           <p class="circleFont">确认信息</p>
         </li>
         <li @click="step03">
-          <span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}">3</span>
+          <span :class="{'circles':step_3 ===1,'circlesR':step_3 ===2}"></span>
           <p class="circleFont">订单录入</p>
-        </li>
-        <li>
-          <span :class="{'circles':step_4 ===1,'circlesR':step_4 ===2}">4</span>
-          <p class="circleFont">完成</p>
         </li>
       </ul>
     </div>
 
-    <div style="border-top:1px solid #dcdfe6;margin-top: 2rem">
+    <div>
       <!--拍摄人脸确认身份-->
       <div class="get_a" style="" v-show="step01_block">
         <div>
@@ -33,10 +31,10 @@
             </el-row>
           </div>
           <div class="showImg" id="getCn" v-show="actionDialogVisible">
-            <canvas id="canvas" width="640" height="480"></canvas>
+            <canvas id="canvas" width="480" height="320"></canvas>
             <el-row style="flex-direction: column;margin-left: 2rem;align-items: center;margin-bottom: 3rem" id="getNn" >
-              <el-button @click="takePictureAgain" style="margin-top: 1rem;margin-left: 1rem">重拍</el-button>
-              <el-button style="margin-top: 5rem;" @click="recognition">智能识别</el-button>
+              <el-button type="primary" @click="takePictureAgain" style="margin-top: 1rem;margin-left: 1rem">重新拍摄</el-button>
+              <el-button type="primary" style="margin-top: 5rem;" @click="recognition">智能识别</el-button>
             </el-row>
           </div>
         </div>
@@ -95,7 +93,7 @@
             <!--数据库找到这个手机，验证更改信息-->
             <el-form-item v-show="phoneIsMySqlA" label="验证码:" style="width: 30rem;">
               <el-input v-model="form.newTakeNum" style="width: 10rem"></el-input>
-              <el-button plain style="float: right" @click="GetSendM">获取验证码</el-button>
+              <el-button plain style="float: right" @click="GetSendM" :class="{disabled: !this.canClick}">{{getClickName}}</el-button>
             </el-form-item>
             <el-form-item label="" style="width: 30rem;margin-top: 5rem;margin-right: 10rem">
               <el-button v-show="phoneIsMySql" @click="getUpMsg">上一步</el-button>
@@ -164,9 +162,9 @@
                   <el-option  v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="成交总额：">
+              <el-form-item label="成交总额：" prop="money">
                 <el-col :span="15">
-                  <el-input v-model="item.money" v-on:input="getMoney(item.money)" value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></el-input>
+                  <el-input v-model="item.money" v-on:input="getMoney(item.money)"  value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1" v-bind:disabled="isCan==1" ></el-input>
                 </el-col>
               </el-form-item>
               <el-form-item>
@@ -183,13 +181,14 @@
             <p>共计</p>
             <input class="lastNum" disabled v-model="allGoodLenght">
             <p>件，</p><p>总价</p>
-            <input class="lastNum" disabled v-model="allMoney" value="0">
+            <input class="lastNums" disabled v-model="allMoney" value="0">
             <p>元</p>
           </div>
         </el-row>
-        <!--长传小票-->
+        <!--上传小票-->
         <el-row>
           <el-upload v-model="item.file"
+                     ref='upload'
                      :action="importFileUrl()"
                      list-type="picture-card"
                      :data="upLoadData"
@@ -198,9 +197,16 @@
                      :onSuccess="uploadSuccess">
             <i class="el-icon-plus"></i>
           </el-upload>
-          <!--<el-dialog :visible.sync="actionDialogVisible">-->
-          <!--<img width="100%" :src="dialogImageUrl" alt="">-->
-          <!--</el-dialog>-->
+        </el-row>
+        <el-row  style="width: 50rem;margin-bottom: 3rem;margin-top: 2rem;display: flex">
+          <p style="width: 3rem">备注:</p>
+          <el-input
+            type="textarea"
+            autosize
+            placeholder="请输入内容"
+            maxlength=200
+            v-model="remarkString">
+          </el-input>
         </el-row>
         <el-row style="margin-top: 3rem">
           <el-button style="margin-left: 15rem;margin-right: 10rem;float: right" @click="allPostM">确认</el-button>

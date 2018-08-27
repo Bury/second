@@ -16,6 +16,8 @@ import Guest from '../views/guest/Guest'
 //订单管理
 import Order from '../views/order/Order'
 import OrderLive from '../views/order/OrderLive'
+// import OrderVideo from '../views/order/OrderVideo'
+import OrderNow from '../views/order/OrderNow'
 
 //设备管理
 import Device from '../views/device/Device'
@@ -36,17 +38,18 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    { path: '/',name: 'UserLogin',component: UserLogin},
     { path: '/UserLogin',name: 'UserLogin',component: UserLogin},
     {
       path: '/',
       meta: { requiresAuth: true },
       component: Main,
       children: [
-        {path: '/',name: 'Statistics',component: Statistics},
+        {path: 'Statistics',name: 'Statistics',component: Statistics},
         {path: 'Guest',name: 'Guest',component: Guest},
         {path: 'Order',name: 'Order',component: Order},
         {path: 'OrderLive',name: 'OrderLive',component: OrderLive},
+        // {path: 'OrderVideo',name: 'OrderVideo',component: OrderVideo},
+        {path: 'OrderNow',name: 'OrderNow',component: OrderNow},
         {path: 'Device',name: 'Device',component: Device},
         {path: 'User',name:'User',component:User},
         {path: 'StoreRemind',name: 'StoreRemind',component: StoreRemind},
@@ -60,10 +63,14 @@ router.beforeEach((to, from, next) => {
   let knock_knock = window.localStorage.getItem('knock_knock')
   if (to.matched.some(
         record => record.meta.requiresAuth)&& (!knock_knock || knock_knock === null)) {
-    next({
-      path: '/UserLogin',
-      query: { redirect: to.fullPath }
-    })
+
+        // window.location.href = '/';
+
+
+ next({
+   path: '/UserLogin',
+   query: { redirect: to.fullPath }
+ })
   } else {
     next()
   }

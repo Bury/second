@@ -50,11 +50,20 @@ export default {
                 visit_time_start:'',
                 visit_time_end:'',
                 //level:'',
+                visited:'',
+                bought:'',
                 age:'',
                 gender:'',
             },
             currentCustomerId:'',
-            showInfoEdit:false
+            trafficId:'',
+            showInfoEdit:false,
+            pickerOptionsSet: {
+              disabledDate(time) {
+                return time.getTime() > Date.now() - 8.64e6
+              }
+            },
+          noData:false,
         }
     },
 
@@ -66,23 +75,28 @@ export default {
 
         //列表
         lists(){
-            // this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 || '';
-            // this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000 || '';
-
-            let qs = require('querystring');
-
-            guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
-                let result = res.data;
-                if(result.errno === 0){
-                    var i='';
-                    this.tableData = result.data.list;
-                    console.log(this.tableData)
-                    this.$data.pagination.currentPage = result.data.pagination.currentPage;
-                    this.$data.pagination.totalCount = result.data.pagination.totalCount;
-                }else{
-
-                }
-            })
+          if(this.$data.value4 != null){
+            this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 ;
+            this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000;
+          }else{
+            this.$data.value4 = ['',''];
+            this.lists();
+          }
+          // this.$data.requestParameters.page = 1;
+          let qs = require('querystring');
+          guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
+            let result = res.data;
+            if(result.errno === 0){
+              this.tableData = result.data.list;
+              if(result.data.list.length == 0){
+                this.$data.noData = true;
+              }else{
+                this.$data.noData = false;
+              }
+              this.$data.pagination.currentPage = result.data.pagination.currentPage;
+              this.$data.pagination.totalCount = result.data.pagination.totalCount;
+            }
+          })
         },
 
         handleCurrentChange(currentPage) {
@@ -91,12 +105,23 @@ export default {
         },
 
         onSubmit() {
-            this.lists();
+          this.$data.requestParameters.page = 1;
+          this.lists();
         },
+      fnReset(){
+          this.$data.value4 = ['',''];
+          this.$data.requestParameters.visited = '';
+          this.$data.requestParameters.bought = '';
+          this.$data.requestParameters.age = '';
+          this.$data.requestParameters.gender = '';
+          // this.lists();
+      },
 
         showDialog(row) {
+          // console.log(row);
             this.$data.showInfoEdit = false;
             this.$data.currentCustomerId = row.customer_id;
+            this.$data.trafficId = row.id;
             this.$data.activeName1 = 'first';
             this.$data.dialogVisible = true;
         },

@@ -172,4 +172,41 @@ export default {
     })
   },
 
+    //个人中心修改手机号
+    phoneSms (list) {
+      return new Promise((resolve, reject) => {
+        axios.post(global.USER_SEND_PHONE, list).then((res) => {
+          resolve(res)
+        }).catch((err) => {
+          reject(err)
+        })
+      })
+    },
+    phoneCheck (list) {
+      return new Promise((resolve, reject) => {
+        axios.post(global.USER_CKECK_PHONE, list).then((res) => {
+          resolve(res)
+        }).catch((err) => {
+          reject(err)
+        })
+      })
+    },
+    savePhone (list) {
+      return new Promise((resolve, reject) => {
+        axios.post(global.USER_SAVE_CHANGE_PHONE, list).then((res) => {
+          resolve(res)
+        }).catch((err) => {
+          reject(err)
+        })
+      })
+    },
+  menu (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.USER_MENU, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
 }

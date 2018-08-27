@@ -5,37 +5,43 @@
             <el-form :inline="true" class="demo-form-inline" size="mini">
                 <el-form-item label="时间选择：">
                     <el-date-picker
-                        v-if="ctrlTimeType[0]"
-                        v-model="day"
-                        type="datetime"
-                        placeholder="选择日期时间">
+                        v-show="ctrlTimeType[0]"
+                         v-model="day"
+                         type="date"
+                         format="yyyy 年 MM 月 dd 日"
+                         placeholder="选择日期时间"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                     <el-date-picker
-                        v-if="ctrlTimeType[1]"
+                        v-show="ctrlTimeType[1]"
                         v-model="week"
                         type="week"
                         format="yyyy 第 WW 周"
-                        placeholder="选择周">
+                        placeholder="选择周"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                     <el-date-picker
-                        v-if="ctrlTimeType[2]"
+                        v-show="ctrlTimeType[2]"
                         v-model="month"
                         type="month"
-                        placeholder="选择月">
+                        placeholder="选择月"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                     <el-date-picker
-                        v-if="ctrlTimeType[3]"
+                        v-show="ctrlTimeType[3]"
                         v-model="year"
                         type="year"
-                        placeholder="选择年">
+                        placeholder="选择年"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                     <el-date-picker
                         v-model="userDefined"
-                        v-if="ctrlTimeType[4]"
-                        type="datetimerange"
+                        v-show="ctrlTimeType[4]"
+                        type="daterange"
                         range-separator="至"
                         start-placeholder="开始日期"
-                        end-placeholder="结束日期">
+                        end-placeholder="结束日期"
+                        :picker-options="pickerOptionsSet">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item>
@@ -50,15 +56,11 @@
                 <el-tab-pane label="自定义统计" name="userDefined"></el-tab-pane>
             </el-tabs>
         </div>
-        <div class="noData" v-if="noData">暂无数据~</div>
-        <ul class="charts-type" v-else>
+        <div style="text-align: center;" v-show="noTimeHide"><span>请选择时间</span></div>
+        <ul class="charts-type" v-show="!noTimeHide">
                 <li class="charts-wrap">
-                    <div style="padding:10px 0 20px;text-align:center;">
-                    <el-button :chartClass="chartClass == 'line' ? 'primary' : ''" plain size="small" @click="switchChart('line')">折线图</el-button>
-                        <el-button :chartClass="chartClass == 'column' ? 'primary' : ''" plain size="small" @click="switchChart('column')">柱状图</el-button>
-                        <!-- <el-button chartClass="" plain size="small">饼形图</el-button> -->
-                    </div>
-                    <guest-chart :guestData="guestData" :chartClass="chartClass"></guest-chart>
+                	<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>                 
+                    <guest-chart :guestData="guestParameters" :changFlag="changFlag"></guest-chart>
                 </li>
                 
                 <li class="charts-wrap">
@@ -76,7 +78,7 @@
                 <li class="charts-wrap">
                     <guest-from-chart :guestFromData="guestFromData"></guest-from-chart>
                 </li>
-        </ul>
+         </ul>
         </div>
 </template>
 

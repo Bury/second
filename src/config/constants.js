@@ -15,12 +15,21 @@ global.FILE_UPLOAD = `${SERVER_IP}${COMMON}user/upload`//图片上传地址 //PH
 // post analysis/customer
 global.GET_CUSTOMER = `${SERVER_IP}${COMMON}analysis/customer`
 
+//特征折线图
 global.StatisticsFeature = `${SERVER_IP}${COMMON}analysis/feature`
+
+global.GET_GRAPH_FEATURE = `${SERVER_IP}${COMMON}analysis/graph-feature`
+
 
 
 
 /*订单管理*/
 global.ORDER_LISTS = `${SERVER_IP}${COMMON}order/list`
+//post order/choose-list 现场开单视频流
+global.ORDER_CHOOSE_LISTS = `${SERVER_IP}${COMMON}order/choose-list`
+// order/face-recognition2 视频流智能识别-查询人脸
+global.ORDER_FIND_FACE = `${SERVER_IP}${COMMON}order/face-recognition2`
+
 
 // post order/dele
 global.DELE_ORDER = `${SERVER_IP}${COMMON}order/dele`
@@ -58,7 +67,7 @@ global.GUEST_HIDDEN = `${SERVER_IP}${COMMON}customer/do-hidden`
 global.GUEST_HIDDEN_LISTS = `${SERVER_IP}${COMMON}customer/hidden-list`
 
 global.GUEST_EDIT = `${SERVER_IP}${COMMON}customer/edit-personal-info`
-global.GUEST_VIEW = `${SERVER_IP}${COMMON}customer/personal-info`
+global.GUEST_VIEW_INFO = `${SERVER_IP}${COMMON}customer/personal-info`
 global.GUEST_DELE = `${SERVER_IP}${COMMON}customer/del`
 
 //标签数据
@@ -69,7 +78,10 @@ global.Guest_Visited_Record_Lists = `${SERVER_IP}${COMMON}customer/store-recore`
 //来客订单记录
 global.ORDER_LISTS_USER_RESULTS = `${SERVER_IP}${COMMON}customer/order-recore`
 //post order/search-traffic 查询人脸信息
-global.GUEST_VIEW = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
+global.GUEST_VIEW_FACE = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
+
+//门店数据统计
+global.STORE_DATA_STATISTICS = `${SERVER_IP}${COMMON}store/data-statistics`
 
 
 
@@ -107,8 +119,13 @@ global.STORE_TIME_SET = `${SERVER_IP}${COMMON}store-config/business-time`
 global.USER_CURRENT_INFO = `${SERVER_IP}${COMMON}user/info`
 global.USER_PASSWORD_EDIT = `${SERVER_IP}${COMMON}user/change-password`
 
+//个人中心
 global.USER_LOGOUT = `${SERVER_IP}${COMMON}user/logout`
 global.USER_LOGIN = `${SERVER_IP}${COMMON}user/login`
 global.USER_PASSWORD_FORGET = `${SERVER_IP}${COMMON}user/change-password-forgot`
 global.USER_SEND_SMS = `${SERVER_IP}${COMMON}user/send-sms`
 global.USER_CHECK_SMS = `${SERVER_IP}${COMMON}user/check-sms`
+global.USER_SEND_PHONE = `${SERVER_IP}${COMMON}user/change-phone-sms`
+global.USER_CKECK_PHONE = `${SERVER_IP}${COMMON}user/change-phone-check`
+global.USER_SAVE_CHANGE_PHONE = `${SERVER_IP}${COMMON}user/change-phone-save`
+global.USER_MENU = `${SERVER_IP}${COMMON}user/left-menu`

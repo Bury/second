@@ -3,7 +3,7 @@
     <div class="top-box" v-show="topBoxSow">
 			  <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
           <el-form-item label="进店时间：">
-            <el-date-picker
+            <el-date-picker :picker-options="pickerOptionsSet"
                 v-model="value4"
                 type="datetimerange"
                 range-separator="至"
@@ -11,13 +11,13 @@
                 end-placeholder="结束时间">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="新客/熟客：">
-          <el-select v-model="requestParameters.level" placeholder="新客/熟客">
+          <el-form-item label="客户类型：">
+          <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
               <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="未购/已购：">
-          <el-select v-model="requestParameters.level" placeholder="未购/已购">
+          <el-form-item label="消费状态：">
+          <el-select v-model="requestParameters.bought" placeholder="未购/已购">
               <el-option v-for="(item, idx) in allGuestBoughtClass" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
@@ -33,6 +33,7 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button type="primary" @click="fnReset">重置</el-button>
           </el-form-item>
 			</el-form>
 		</div>
@@ -41,16 +42,16 @@
     <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
 
       <el-tab-pane label="来客列表" name="first">
-        <table width="99%" class="table-bordered">
-          <thead style="background-color: #d1d1d1">
+        <table width="99%" class="table">
+          <thead>
           <tr height="40">
             <th class="col-md-1 text-center">序号</th>
             <th class="col-md-1 text-center">人脸</th>
             <th class="col-md-1 text-center">姓名</th>
             <th class="col-md-1 text-center">性别</th>
             <th class="col-md-1 text-center">年龄</th>
-            <th class="col-md-1 text-center">新客/熟客</th>
-            <th class="col-md-1 text-center">未购/已购</th>
+            <th class="col-md-1 text-center">客户类型</th>
+            <th class="col-md-1 text-center">消费状态</th>
             <th class="col-md-1 text-center">拍摄位置</th>
             <th class="col-md-2 text-center">进店时间</th>
             <th class="col-md-2 text-center">操作</th>
@@ -58,13 +59,13 @@
           </thead>
           <tbody style="text-align: center">
           <tr v-for="(item,index) in tableData" :key="index" height="40">
-            <td>{{item.id}}</td>
+            <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
             <td>
               <div style="height: 90%;width: 90%;padding: 5%;box-sizing: border-box">
               <img :src="item.avatar" style="display:block;margin:0 auto;width:100%;">
               </div>
             </td>
-            <td>{{item.customerMerchant.name}}</td>
+            <td>{{item.customerMerchant.name == '' ? '--' : item.customerMerchant.name}}</td>
             <td>
               <span>{{item.gender == 1 ?'男':'女'}}</span>
             </td>
@@ -83,7 +84,7 @@
           </tr>
           </tbody>
         </table>
-        <!-- 分页 -->
+        <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>
         <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
           <el-pagination
             background
@@ -104,12 +105,11 @@
 
     </el-tabs>
 
-
     <!-- 弹窗 -->
-    <el-dialog :visible.sync="dialogVisible" style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">
+    <el-dialog :visible.sync="dialogVisible" center style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">
       <el-tabs v-model="activeName1" @tab-click="checkout">
           <el-tab-pane label="个人信息" name="first">
-            <guest-info :customerId="currentCustomerId" :showInfoEdit="showInfoEdit"></guest-info>
+            <guest-info :customerId="currentCustomerId" :traffic="trafficId" :editShow="dialogVisible" :showInfoEdit="showInfoEdit"></guest-info>
           </el-tab-pane>
 
           <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
@@ -129,4 +129,4 @@
 
 <script src="@/assets/js/guest/Guest.js"></script>
 
-<style lang="scss" scoped src="@/assets/css/guest/Guest.scss">
+<style lang="scss"  src="@/assets/css/guest/Guest.scss">

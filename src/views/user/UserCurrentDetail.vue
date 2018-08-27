@@ -3,6 +3,7 @@
 		<div class="top-box">
 			<h3>个人资料</h3>
 			<div class="editBtn">
+				<el-button type="primary" plain @click="fnChangeTel()">修改手机号</el-button>
 				<el-button type="primary" plain @click="fnPasswordEdit()">修改密码</el-button>
 			</div>
 		</div>
@@ -14,21 +15,21 @@
 		    	{{role_name}}
 		  	</el-form-item>
 		  	<el-form-item label="姓名：">
-		    	<el-input v-model="userEditForm.name"></el-input>
+					{{userEditForm.name}}
 		  	</el-form-item>
 		  	<el-form-item label="手机：">
-		    	<el-input v-model="userEditForm.phone"></el-input>
+					{{userEditForm.phone || "暂无手机号"}}
 		  	</el-form-item>
 	  		<div style="text-align:center;">
-				<el-button type="primary" @click="fnSaveSubmitForm('userEditForm')">保 存</el-button>
+				<!-- <el-button type="primary" @click="fnSaveSubmitForm('userEditForm')">保 存</el-button> -->
 			</div>
 		</el-form>
 
 		<!-- 修改密码 -->
-		<el-dialog title="修改密码" :visible.sync="dialogFormVisible" style="min-width:800px;">
+		<el-dialog title="修改密码" center :visible.sync="dialogFormVisible" style="min-width:800px;" :before-close="dialogClose">
 		  <el-form :model="passwordEditForm" :rules="rulesPasswordEdit" ref="passwordEditForm" label-width="100px" class="demo-passwordEditForm">
-		    <el-form-item label="当前密码：" prop="passwordOld">
-		      <el-input type="password" v-model="passwordEditForm.passwordOld" ></el-input>
+		    <el-form-item label="旧密码：" prop="passwordOld">
+		      <el-input type="password" v-model="passwordEditForm.passwordOld" :class="{'postError': errors ===1}"></el-input>
 		    </el-form-item>
 		    <el-form-item label="新的密码：" prop="passwordCurrent">
 		      <el-input type="password" v-model="passwordEditForm.passwordCurrent" ></el-input>
@@ -42,9 +43,27 @@
 		    <el-button type="primary" @click="fnPasswordEditSubmitForm('passwordEditForm')">确 定</el-button>
 		  </div>
 		</el-dialog>
+		<!--修改手机号 -->
+		 <el-dialog title="修改手机号" center :visible.sync="dialogFormVisibleTel" :before-close="dialogCloseTel" style="min-width:800px;">
+      <el-form :model="telForm" :rules="rules" ref="telForm" label-width="100px" class="demo-ruleForm">
+        <el-row>
+        <el-form-item label="新手机号：" prop="phone">
+         <el-col :span="16"> <el-input type="tel" v-model="telForm.phone"></el-input></el-col>
+          <el-button type="primary" plain @click="code"  :class="{disabled: !this.canClick}">{{getClickName}}</el-button>
+        </el-form-item>
+        </el-row>
+        <el-form-item label="验证码：" prop="code">
+         <el-col :span="16"> <el-input type="text" v-model="telForm.code" ></el-input></el-col>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelTel">取 消</el-button>
+        <el-button type="primary" @click="submitFromTel('telForm')">确 定</el-button>
+      </div>
+    </el-dialog>
 	</div>
 </template>
 
 <script src="@/assets/js/user/UserCurrentDetail.js"></script>
 
-<style lang="scss" scoped src="@/assets/css/user/UserCurrentDetail.scss">
+<style lang="scss"  src="@/assets/css/user/UserCurrentDetail.scss">

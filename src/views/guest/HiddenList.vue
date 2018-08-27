@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<!-- 屏蔽列表 -->
-    <table width="99%" class="table-bordered">
-      <thead style="background-color: #d1d1d1">
+    <table width="99%" class="table">
+      <thead>
       <tr height="40">
         <th class="col-md-1 text-center">序号</th>
         <th class="col-md-1 text-center">人脸</th>
@@ -17,13 +17,13 @@
       </thead>
       <tbody style="text-align: center">
       <tr v-for="(item,index) in tableData" :key="index" height="40">
-        <td>{{item.id}}</td>
+        <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
         <td>
           <div style="height: 90%;width: 90%;padding: 5%;box-sizing: border-box">
             <img :src="item.avatar" style="display:block;margin:0 auto;width:100%;">
           </div>
         </td>
-        <td>{{item.customerMerchant.name}}</td>
+        <td>{{item.customerMerchant.name == '' ? '--' : item.customerMerchant.name}}</td>
         <td>
           <span>{{item.gender == 1 ?'男':'女'}}</span>
         </td>
@@ -56,3 +56,15 @@
 </template>
 
 <script src="@/assets/js/guest/HiddenList.js"></script>
+<style>
+  .table thead{
+    color: #999;
+  }
+  .table tbody tr td{
+    color: #2a2a2a;
+    vertical-align: middle;
+  }
+  .table tbody tr:hover{
+    background-color: #f5fbfe;
+  }
+</style>

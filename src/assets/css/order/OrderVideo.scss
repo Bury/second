@@ -1,13 +1,9 @@
 
 .guest-list-page{
-  .ui-tab{
-    //position: absolute;
-    //margin: 7rem 0 0 5rem;
-    //padding-right: 3rem;
-    border-bottom: 1px solid #c8c8c8;
-  }
-  .circleFont2{
-    margin:0 3rem;
+  .circleFont{
+    font-size: 1.8rem;
+    margin-top: 1rem;
+    color: #469fff;
   }
   .circles,.circlesR{
     display: inline-block;
@@ -18,25 +14,32 @@
   .circles{
     position: relative;
     //left: 6rem;
-    top: 5rem;
+    top: 5.6rem;
     border:1px solid #fafafa;
     background-color: rgb(17,159,255);
     z-index: 99;
   }
-  .circlesR{
-    position: relative;
-    left: 6rem;
-    top: -12rem;
-    border:1px solid #aaa;
-    background-color: #fff;
-  }
+  //.circlesR{
+  //  position: relative;
+  //  left: 6rem;
+  //  //top: -12rem;
+  //  border:1px solid #aaa;
+  //  background-color: #fff;
+  //}
+  /*.v-modal {*/
+  /*position: fixed;*/
+  /*left: 0;*/
+  /*top: 0;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
+  /*opacity: 0;*/
+  /*background: #000;*/
+  /*}*/
   .circleFont{
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin-top: 1rem;
-    color: #469fff;
   }
   .get_a{
-    /*border:1px solid black;*/
     margin-top: 5rem;
   }
   .showImg{
@@ -48,22 +51,20 @@
   .moneyL{
     display: flex;
     justify-content: space-between;
-    width: 25rem;
+    //width: 15rem;
     text-align: center;
     float: right;
-    margin-right: 5rem;
+    margin-right: 6rem;
+    line-height: 3rem;
   }
   .lastNum{
     display: inline-block;
     border:1px solid #bababa;
-    width: 3rem;
-    height: 1.5rem;
-  }
-  .lastNums{
-    display: inline-block;
-    border:1px solid #bababa;
-    width: 8rem;
-    height: 1.5rem;
+    width: 5rem;
+    height: 3rem;
+    border-radius:3px;
+    margin: 0 1rem;
+    text-align: center;
   }
   .upload-demo{
     margin-left: 2rem;
@@ -75,10 +76,9 @@
   .el-icon-plus{
     font-size: 5rem;
   }
-  .disabled{
-    background-color: #ddd;
-    border-color: #ddd;
-    color:#57a3f3;
-    cursor: not-allowed; // 鼠标变化
+  .orderVideo{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
   }
 }

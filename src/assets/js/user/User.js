@@ -12,6 +12,7 @@ export default{
         return{
             allRoles:'',
             targetUserId:0,
+          isClick:0,
             tableData: [],
             pagination:{
                 currentPage:1,
@@ -28,15 +29,15 @@ export default{
                 truename:'',
                 username: '',
                 phone:'',
-                username:'',
+                // username:'',
                 password:'',
             },
             addRules:{
                 //role_id:globalRules.rules.common.id(),
-                name:globalRules.rules.user.truename(),
+                truename:globalRules.rules.user.minMax(1,15),
                 phone:globalRules.rules.user.phone(),
-                username:globalRules.rules.user.username(4,20,'请输入帐号'),
-                password:globalRules.rules.user.password(6,20,'请输入密码：'),
+                username:globalRules.rules.user.username('请输入帐号'),
+                password:globalRules.rules.user.password('请输入密码'),
             },
             avatarFormVisible:false,
             editFormVisible:false,
@@ -48,7 +49,7 @@ export default{
                 status:''
             },
             editRules:{
-                name:globalRules.rules.user.truename(),
+                truename:globalRules.rules.user.minMax(1,15),
                 phone:globalRules.rules.user.phone(),
             },
             resetPasswordFormVisible:false,
@@ -58,7 +59,7 @@ export default{
                 repassword:'',
             },
             resetPasswordRules:{
-                password:globalRules.rules.user.password(6,20,'请输入当前密码：'),
+                password:globalRules.rules.user.password(6,20,'请输入当前密码'),
                 repassword:[
                     { required: true, message: '请再次输入密码', trigger: 'blur' },
                     {
@@ -98,7 +99,7 @@ export default{
             userApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.tableData = res.data.data.list;
-                    console.log(this.$data.tableData);
+                    // console.log(res.data.data.list.storeRole);
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
                     this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                 }else{
@@ -158,8 +159,17 @@ export default{
                 truename:'',
                 phone:'',
                 status:''
-            }
+            };
+          setTimeout(() =>{
+            this.$refs.editFormData.resetFields();
+          },0)
         },
+      dialogClose(){
+        this.$data.editFormVisible = false;
+        setTimeout(() =>{
+          this.$refs.editFormData.resetFields();
+        },0)
+      },
 
         //编辑提交
         editSubmit(formName){
@@ -180,7 +190,9 @@ export default{
                                 status:''
                             }
                             this.$data.editFormVisible = false;
-
+                          setTimeout(() =>{
+                            this.$refs.editFormData.resetFields();
+                          },0)
                         }else{
                             this.$message.error(res.data.msg);
                         }
@@ -193,13 +205,28 @@ export default{
 
         //重置密码
         fnResetPassword(row){
+          console.log(row)
+          // if(row.status === 1){
+          //   this.$data.isClick = 0;
+          // }else if(row.status === 0){
+          //   this.$data.isClick = 1;
+          // }
             this.$data.targetUserId=row.id;
             this.$data.resetPasswordFormVisible = true;
             this.fnResetPasswordClearData();
         },
+      resetClose(){
+        this.$data.resetPasswordFormVisible = false;
+        setTimeout(() =>{
+          this.$refs.resetPasswordFormData.resetFields();
+        },0)
+      },
 
         resetPasswordCancel(){
             this.$data.resetPasswordFormVisible = false;
+            setTimeout(() =>{
+              this.$refs.resetPasswordFormData.resetFields();
+            },0)
             this.fnResetPasswordClearData();
         },
 
@@ -250,6 +277,9 @@ export default{
         addCancel(){
             this.$data.addFormVisible = false;
             this.fnAddsFormClearData();
+          setTimeout(() =>{
+            this.$refs.addFormData.resetFields();
+          },0)
         },
 
         fnAddsSubmit(formName){
@@ -275,13 +305,10 @@ export default{
         },
 
         closeChange(done){
-            // done();
-            if(this.$data.avatarFormVisible){
-                this.$data.avatarFormVisible = false;
-            }else{
-                done()
-            }
-
+          this.$data.addFormVisible = false;
+          setTimeout(() =>{
+            this.$refs.addFormData.resetFields();
+          },0)
         },
 
         fnStatusUpdate(id,status){

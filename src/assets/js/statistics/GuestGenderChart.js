@@ -1,4 +1,7 @@
+import Highcharts from 'highcharts';
+import HighchartsNoData from 'highcharts-no-data-to-display';
 import VueHighcharts from 'vue2-highcharts'
+HighchartsNoData(Highcharts)
 export default{
     name:'guest-gender-chart',
     components: {
@@ -11,6 +14,7 @@ export default{
     },
     data(){
       return{
+      	Highcharts:Highcharts,
         options: {
             chart: {
                 type: 'pie'
@@ -21,6 +25,9 @@ export default{
             credits: {
                 text: '',
             },
+            tooltip: {
+				pointFormat:'{series.name}: <b>{point.y}</b><br/>占比:{point.percentage:.1f}%'
+			},
             colors:[
                 '#FFC200',
                 '#57B4F7',
@@ -34,15 +41,23 @@ export default{
          this.getData(this.$props.guestGenderData);
       }
     },
+    created:function(){		
+		Highcharts.setOptions({
+				lang: {
+					thousandsSep: ',',
+					noData: '暂无数据'
+				}
+		});
+	},
     methods: {
       getData(value){
-        // console.log(value)
         let guestGenderCharts = this.$refs.guestGenderCharts;
         guestGenderCharts.delegateMethod('showLoading', 'Loading...');
         guestGenderCharts.removeSeries();
         setTimeout(() => {
-              guestGenderCharts.addSeries({data: value});
-              guestGenderCharts.hideLoading();
+        	  guestGenderCharts.hideLoading();
+              guestGenderCharts.addSeries({name:'人数',data: value});
+             
           }, 100)
       },
 

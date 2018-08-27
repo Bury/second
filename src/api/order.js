@@ -4,15 +4,16 @@
 import axios from 'axios'
 
 export default {
-	orderList (list) {
+
+	lists (list) {
 	    return new Promise((resolve, reject) => {
-	      axios.post(global.GET_ORDER_LIST,list).then((res) => {
+	      axios.post(global.ORDER_LISTS,list).then((res) => {
 					resolve(res)
 	      }).catch((err) => {
 	        reject(err)
 	      })
 	    })
-	},
+  },
 	deleOrder (list) {
 	    return new Promise((resolve, reject) => {
 	      axios.post(global.DELE_ORDER,list).then((res) => {
@@ -23,7 +24,7 @@ export default {
 	    })
 	},
 
-	addOrder (list){
+	addsNotLive (list){
 		return new Promise((resolve, reject) => {
 			axios.post(global.ADD_ORDER_LIST,list).then((res) => {
 				resolve(res)
@@ -32,16 +33,7 @@ export default {
 			})
 		})
 	},
-	//查询人脸ID
-	findFaceId(list){
-		return new Promise((resolve, reject) => {
-			axios.post(global.FINDFACEID_ORDER,list).then((res) => {
-				resolve(res)
-			}).catch((err) => {
-				reject(err)
-			})
-		})
-	},
+
 	editOrder (list){
 		return new Promise((resolve, reject) => {
 			axios.post(global.EDIT_ORDER_LIST,list).then((res) => {
@@ -50,20 +42,19 @@ export default {
 				reject(err)
 			})
 		})
-	},
+  },
 
-	postFace(list){
-	  return new Promise((resolve,reject) =>{
-	    axios.post(global.POST_ORDER_FACE,list,{headers: {
-        'Content-Type': `multipart/form-data;`}}).then((res) => {
+  view (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.ORDER_VIEW,list).then((res) => {
         resolve(res)
-      }).then((res) => {
-	      resolve(res)
-      }).catch((err) =>{
+      }).catch((err) => {
         reject(err)
       })
     })
   },
+
+
   postPhone(list){
     return new Promise((resolve,reject) =>{
       axios.post(global.CHECK_USER_PHONE,list).then((res) => {
@@ -118,16 +109,54 @@ export default {
       })
     })
   },
-  //订单显示
-  orderView (list) {
+
+
+
+  listsUserResults(list){
     return new Promise((resolve, reject) => {
-      axios.post(global.VIEW_ORDER,list).then((res) => {
+      axios.post(global.ORDER_LISTS_USER_RESULTS, list).then((res) => {
         resolve(res)
       }).catch((err) => {
         reject(err)
       })
     })
   },
-
+  getAll(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.TAG_LISTS_RESULTS, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  checkFaceInfo(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.GUEST_VIEW_FACE, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  //视频流操作
+  chooseLists (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.ORDER_CHOOSE_LISTS,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
+  videoFindFace (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.ORDER_FIND_FACE,list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
 }
 

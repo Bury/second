@@ -9,6 +9,8 @@ import '../static/css/main.css'
 import '../static/font/iconfont.css'
 import http from './api/http.js'
 
+import 'babel-polyfill'
+
 import App from './App'
 import router from './router'
 import axios from 'axios'
@@ -23,6 +25,9 @@ Vue.prototype.moment = Moment
 Vue.use(ElementUI)
 Vue.use(globalFunction);
 Vue.filter('date', filters.dateFilter)
+Vue.filter('numberFilter', filters.numberFilter)
+Vue.filter('numbersFilter', filters.numbersFilter)
+Vue.filter('numThousand', filters.numThousand)
 
 Vue.config.productionTip = false
 

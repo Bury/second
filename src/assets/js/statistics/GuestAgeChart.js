@@ -1,4 +1,7 @@
+import Highcharts from 'highcharts';
+import HighchartsNoData from 'highcharts-no-data-to-display';
 import VueHighcharts from 'vue2-highcharts'
+HighchartsNoData(Highcharts)
 
 export default{
 
@@ -16,6 +19,7 @@ export default{
 
     data(){
       return{
+      	Highcharts:Highcharts,
         options: {
             chart: {
                 type: 'pie'
@@ -26,6 +30,9 @@ export default{
             credits: {
                 text: '',
             },
+            tooltip: {
+				pointFormat:'{series.name}: <b>{point.y}</b><br/>占比:{point.percentage:.1f}%'
+			},
             colors:[
                 '#66E2B0',
                 '#FFC200',
@@ -43,6 +50,14 @@ export default{
          this.getData(this.$props.ageData);
       }
     },
+    created:function(){		
+		Highcharts.setOptions({
+				lang: {
+					thousandsSep: ',',
+					noData: '暂无数据'
+				}
+		});
+	},
     
     methods: {
       getData(value){
@@ -50,8 +65,8 @@ export default{
         guestAgeCharts.delegateMethod('showLoading', 'Loading...');
         guestAgeCharts.removeSeries();
         setTimeout(() => {
-              guestAgeCharts.addSeries({data: value});
-              guestAgeCharts.hideLoading();
+        	  guestAgeCharts.hideLoading();
+              guestAgeCharts.addSeries({name:'人数',data: value});              
           }, 100)
       },
       

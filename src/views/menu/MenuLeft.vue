@@ -1,85 +1,79 @@
 <template>
 	<div class="left-menu1">
-		<el-menu :default-active="currentMenu"
-                 class="el-menu-vertical-demo"
-                 :collapse="isCollapse && isShow"
-                 background-color="#545c64"
-                 text-color="#fff"
-                 active-text-color="#409EFF">
-            <router-link :to="{name: 'Statistics'}">
-                <el-menu-item index="/">
-                    <i class="el-icon-menu"></i>
-                    <span slot="title">客流统计</span>
-                </el-menu-item>
-            </router-link>
-            <router-link :to="{name: 'Guest'}">
-                <el-menu-item index="/Guest">
-                    <i class="el-icon-service"></i>
-                    <span slot="title">来客列表</span>
-                </el-menu-item>
-            </router-link>
-            <router-link :to="{name: 'Order'}">
-                <el-menu-item index="/Order">
-                    <i class="el-icon-phone-outline"></i>
-                    <span slot="title">订单管理</span>
-                </el-menu-item>
-            </router-link>
-            <!--<router-link :to="{name: 'Label'}">
-                <el-menu-item index="/Label">
-                    <i class="el-icon-info"></i>
-                    <span slot="title">标签管理</span>
-                </el-menu-item>
-            </router-link>-->
-            <router-link :to="{name: 'Device'}">
-                <el-menu-item index="/Device">
-                    <i class="el-icon-view"></i>
-                    <span slot="title">设备管理</span>
-                </el-menu-item>
-            </router-link>
-            <router-link :to="{name: 'User'}">
-                <el-menu-item index="/User">
-                    <i class="el-icon-service"></i>
-                    <span slot="title">帐号管理</span>
-                </el-menu-item>
-            </router-link>
-            <el-submenu index="7-1" style="padding-bottom:200px;">
-                <template slot="title">
-                    <i class="el-icon-setting"></i>
-                    <span slot="title">系统设置</span>
-                </template>
-                <router-link :to="{name: 'StoreRemind'}">
-                    <el-menu-item index="/StoreRemind" style="padding-left:53px;">来客提醒</el-menu-item>
-                </router-link>
-                <router-link :to="{name: 'StoreTime'}">
-                    <el-menu-item index="/StoreTime" style="padding-left:53px;">营业时间</el-menu-item>
-                </router-link>
-            </el-submenu>
-        </el-menu>
+    <el-menu :default-active="currentMenu"
+             router
+             class="el-menu-vertical-demo"
+             :collapse="isCollapse && isShow"
+             background-color="#4588e6"
+             text-color="#fff"
+            active-text-color="#fff">
+
+      <template v-for="(item,index) in tableData">
+        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" class="aaa">
+        	<!-- <template slot="title"> -->
+            <i :class="item.front_icon" style="color: #fff;"></i>
+            <span slot="title">{{item.name}}</span>
+          <!-- </template>   -->
+        </el-menu-item>
+
+        <el-submenu v-else :key="index"  :index="item.front_url" >
+         <template slot="title">
+          <i :class="item.front_icon"  style="color: #fff;"></i>
+          <span slot="title">{{item.name}}</span>
+         </template>
+          <template v-for="(item1,index1) in item.children">
+          	<el-menu-item :key="index1" :index="item1.front_url" style="padding-left:53px;">{{item1.name}}</el-menu-item>
+          </template>
+        </el-submenu>
+      </template>
+
+    </el-menu>
+
 	</div>
 </template>
 <script>
+  import userApi from '../../api/user.js'
     export default {
         name:'word-item',
         props:{
             isCollapse: Boolean,
             isShow: Boolean,
+          // active_text_color:'',
         },
         data(){
             return{
-                currentMenu:'/'
+              tableData:[],
+              currentMenu: '',
             }
         },
-        created(){
-            this.getUrl();
+        watch:{
+          $route(to,from){
+    	         	this.$data.currentMenu = this.$route.name;
+    	      }
+        },
+        created:function(){
+          this.menu();
+        	this.getUrl();
         },
         methods:{
-            getUrl(){
-                let self = this;
-                let currentUrl = window.location.href;
-                self.currentMenu = currentUrl.split('#')[1];
-            }
-        }
+          menu() {
+            userApi.menu().then((res) => {
+              if(res.data.errno === 0){
+        		 for(let i=0;i<res.data.data.length;i++){
+        		 	  if(res.data.data[i].no_child === false){
+        		 	  	 res.data.data[i].front_url = String(i)
+        		 	  }
+        		 }
+        		 this.$data.tableData = res.data.data;
+        	 }
+
+            })
+          },
+          getUrl() {
+            this.$data.currentMenu = this.$route.name;
+          },
+        },
     }
 </script>
 
-<style lang="scss" scoped src="@/assets/css/menu/MenuLeft.scss">
+<style lang="scss" src="@/assets/css/menu/MenuLeft.scss">

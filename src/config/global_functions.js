@@ -32,13 +32,13 @@ const functions={
 					// this.$router.replace({
 					// 	name: 'UserLogin'
 					// });
-					router.push('/');//this.$router.replace({name: '/'})
+					window.location.href = '/';
 				}else{
 					message.error(res.ata.msg);
 				}
 			})
 
-			
+
 		}
 	},
 
@@ -92,8 +92,8 @@ const functions={
         }
 	}
 
-	
-	
+
+
 }
 
 export default {

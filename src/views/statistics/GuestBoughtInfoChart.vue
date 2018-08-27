@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-highcharts :options="options" ref="guestBoughtInfoCharts"></vue-highcharts>
+    <vue-highcharts :highcharts="Highcharts" :options="options" ref="guestBoughtInfoCharts"></vue-highcharts>
   </div>
 </template>
  

@@ -2,9 +2,9 @@ import globalFunctions from '@/config/global_functions'
 
 import settingsApi from '@/api/settings'
 
-const typeOptions = ['新客未购买', '新客已购买', '熟客未购买', '熟客已购买'];
+const typeOptions = ['新客未购',  '熟客未购', '熟客已购'];
 
-const typeId = ["1","2","3","4"]
+const typeId = ["1","3","4"]
 
 export default {
 
@@ -58,9 +58,15 @@ export default {
         },
 
         handleCheckAllChange(val) {
-            this.checkedType = val ? typeId : [];
-            this.isIndeterminate = false;
-            console.log(this.checkedType)
+            if(val == false){
+              this.isIndeterminate = true;
+              this.$data.checkAll = false;
+              this.checkedType = val ? typeId : [];
+            }else if(val == true){
+              this.$data.checkAll = true;
+              this.isIndeterminate = false;
+              this.checkedType = val ? typeId : [];
+            }
         },
 
         fnChangeType(value) {

@@ -29,7 +29,8 @@ export default{
                     { required: true, message: '请输入位置', trigger: 'blur' },
                     { min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
                 ]
-            }
+            },
+          locate:'',
         }
     },
 
@@ -58,6 +59,15 @@ export default{
             deviceApi.lists().then((res) => {
                 if(res.data.errno === 0){
                     this.$data.tableData = res.data.data.list;
+                    for(let item of res.data.data.list){
+                      if(item.locate == null){
+                        this.$data.locate = '--';
+                      }else if(item.locate == "other"){
+                        this.$data.locate = '进店';
+                      }else if(item.locate == 'cashier'){
+                        this.$data.locate = '收银台';
+                      }
+                    }
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
                     this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                 }else{
@@ -81,37 +91,44 @@ export default{
             this.locate_changed();
             this.$data.editFormVisible = true;
         },
-
-        editCancel(){
-            this.$data.editId=0;
-            this.$data.editForm = {
-                locate: '',
-                locate_desc: ''
-            }
-            this.$data.editFormVisible = false;
-        },
-
         editSubmit(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    let list = {
+                      let list = {
                         'id': this.$data.editId,
                         'locate': this.$data.editForm.locate,
                         'locate_desc': this.$data.editForm.locate_desc
-                    }
-                    let qs = require('querystring');
-                    deviceApi.edit(qs.stringify(list)).then((res) => {
-                        if(res.data.errno === 0){
-                            this.lists();
-                            this.editCancel();
-                        }else{
-
+                      }
+                      let qs = require('querystring');
+                      deviceApi.edit(qs.stringify(list)).then((res) => {
+                        if (res.data.errno === 0) {
+                          this.lists();
+                          this.editCancel();
+                        } else {
+                          this.$message.error(res.data.msg);
                         }
 
-                    })
+                      })
                 }
             });
-        }
+        },
+        dialogClose(){
+            this.$data.editFormVisible = false;
+            setTimeout(() => {
+              this.$refs.editForm.resetFields();
+            })
+        },
+        editCancel(){
+          this.$data.editId=0;
+          this.$data.editForm = {
+            locate: '',
+            locate_desc: ''
+          }
+          this.$data.editFormVisible = false;
+          setTimeout(() => {
+            this.$refs.editForm.resetFields();
+          })
+        },
 
     }
 
