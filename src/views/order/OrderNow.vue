@@ -2,6 +2,7 @@
     <div  class="guest-list-page">
       <div class="top-box">
         <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;">返回</el-button>
+        <el-button  @click="reFresh" style="margin-left: 5rem;">刷新</el-button>
       </div>
 
       <div style="margin-top: 2rem;overflow: hidden;">
@@ -9,11 +10,6 @@
 
         <!--第一步-->
         <div class="get_a" v-show="step01_block">
-          <div style="position: relative;margin-bottom: 2rem;overflow: hidden;">
-            <div style="float:right;">
-              <el-button @click="reFresh">刷新</el-button>
-            </div>
-          </div>
           <div v-if="noData" style="margin: 0 auto;text-align: center">暂无数据~</div>
           <div class="orderVideo" v-if="imgData">
             <div  v-for="(item,index) in tableData" :key="index" style="display: flex;flex-direction: column;width: 15%;">

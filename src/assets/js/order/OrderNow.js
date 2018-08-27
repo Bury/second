@@ -127,6 +127,8 @@ export default {
           console.log(res.data.data.list);
           if(res.data.data == null){
             this.$message.error(res.data.msg);
+            this.$data.noData = true;
+            this.$data.imgData = false;
           }else if(res.data.data.list.length == 0){
             this.$data.noData = true;
             this.$data.imgData = false;
