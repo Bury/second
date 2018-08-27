@@ -699,6 +699,10 @@ export default {
 		  this.$data.viewVisible = false;
       this.editClearData();
     },
+    overFlow(){
+      // this.$refs.topBox.style.overflow = visible;
+		  console.log(this.$refs.topBox.style.overflow);
+    }
 
 
 		}

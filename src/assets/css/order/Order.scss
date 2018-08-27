@@ -1,9 +1,15 @@
 .guest-list-page{
-  //.top-box{
-  //  margin-bottom:5px;
-  //  overflow: hidden;
-  //  background-color: #fff;
-  //}
+  .movement{
+    width: 10.5rem;
+    height: 2rem;
+  }
+.movement img{
+  animation: movement 1s infinite;
+}
+  @keyframes movement{
+    from{transform:translate(0,0)}
+    to{transform:translate(0,10px)}
+  }
   .el-form-item__label{
     font-size: 13px;
     color: #999;

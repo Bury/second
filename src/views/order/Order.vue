@@ -1,6 +1,7 @@
 <template>
   <div class="guest-list-page">
-    <div class="top-box">
+    <div class="top-box" ref="topBox" style="display: flex;height: 40px;overflow: hidden;">
+      <div class="left" style="width: 75%;">
       <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
         <el-form-item label="编号：">
           <el-input v-model.trim="requestParameters.sn"></el-input>
@@ -51,11 +52,19 @@
             end-placeholder="结束时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="lists">查询</el-button>
-          <el-button type="primary" @click="fnReset">重置</el-button>
-        </el-form-item>
       </el-form>
+      </div>
+
+      <div class="right">
+        <el-button type="primary" @click="lists">查询</el-button>
+        <el-button type="primary" @click="fnReset">重置</el-button>
+      </div>
+    </div>
+
+    <div class="movement" @click="overFlow">
+      <div style="position: relative;left: 40%;">
+        <img src="../../assets/images/bottom.png" />
+      </div>
     </div>
 
     <div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
