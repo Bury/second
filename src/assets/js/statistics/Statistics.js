@@ -51,6 +51,7 @@ export default {
                 end_time:'',
             },
             pickerOptionsSet:{
+            	firstDayOfWeek:1,
         		disabledDate(time) {
                    return time.getTime() > Date.now() - 8.64e6
         		}
