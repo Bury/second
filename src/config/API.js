@@ -14,7 +14,7 @@ let cancleHTTP = [];//取消请求头设置；
 //    apiUrl = "https://dev-api.yy.ibetwo.com/";
 //    DEBUG = true;
 // }
-const apiUrl = 'https://dev-api.yy.ibetwo.com/';
+const apiUrl = 'https://test-api.yy.ibetwo.com/';
 export default{
     apiUrl,
     // routerMode,
