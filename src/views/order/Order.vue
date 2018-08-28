@@ -2,56 +2,66 @@
   <div class="guest-list-page">
     <div class="top-box" ref="topBox">
       <div class="left" style="width: 75%;">
-      <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-        <el-form-item label="编号：">
-          <el-input v-model.trim="requestParameters.sn"></el-input>
-        </el-form-item>
-        <el-form-item label="材质：">
-          <el-select v-model="requestParameters.material" placeholder="请选择材质">
-            <el-option label="全部" value="">全部</el-option>
-            <el-option v-for="material in materials" :key="material.id" :label="material.name"
-                       :value="material.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="款式：">
-          <el-select v-model="requestParameters.style" placeholder="请选择款式">
-            <el-option label="全部" value="">全部</el-option>
-            <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="客户类型：">
-          <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
-            <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
-          </el-select>
-        </el-form-item>
-        <!--<br/>-->
-        <el-form-item label="金额：">
-          <el-col :span="11">
-            <el-input v-model.trim="requestParameters.price_start"></el-input>
-          </el-col>
-          <el-col class="line" :span="1">-</el-col>
-          <el-col :span="11">
-            <el-input v-model.trim="requestParameters.price_end"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="收银时间：">
-          <el-date-picker :picker-options="pickerOptionsSet"
-            v-model="cashTimes"
-            type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="创建时间：">
-          <el-date-picker :picker-options="pickerOptionsSet"
-            v-model="createdTimes"
-            type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间">
-          </el-date-picker>
-        </el-form-item>
+        <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
+          <el-row>
+            <el-form-item label="编号：">
+              <el-input v-model.trim="requestParameters.sn"></el-input>
+            </el-form-item>
+            <el-form-item label="材质：">
+              <el-select v-model="requestParameters.material" placeholder="请选择材质">
+                <el-option label="全部" value="">全部</el-option>
+                <el-option v-for="material in materials" :key="material.id" :label="material.name"
+                           :value="material.id"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="款式：">
+              <el-select v-model="requestParameters.style" placeholder="请选择款式">
+                <el-option label="全部" value="">全部</el-option>
+                <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
+              </el-select>
+            </el-form-item>
+        </el-row>
+        <el-row v-if="visibled">
+          <el-form-item label="客户类型：">
+            <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
+              <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="金额：">
+            <el-col :span="11">
+              <el-input v-model.trim="requestParameters.price_start"></el-input>
+            </el-col>
+            <el-col class="line" :span="1">-</el-col>
+            <el-col :span="11">
+              <el-input v-model.trim="requestParameters.price_end"></el-input>
+            </el-col>
+          </el-form-item>
+        </el-row>
+        <el-row v-if="visibled">
+          <el-form-item label="收银时间：">
+            <el-date-picker :picker-options="pickerOptionsSet"
+                            v-model="cashTimes"
+                            type="datetimerange"
+                            range-separator="至"
+                            start-placeholder="开始时间"
+                            end-placeholder="结束时间">
+            </el-date-picker>
+          </el-form-item>
+        </el-row>
+        <el-row v-if="visibled">
+          <el-form-item label="创建时间：">
+            <el-date-picker :picker-options="pickerOptionsSet"
+                            v-model="createdTimes"
+                            type="datetimerange"
+                            range-separator="至"
+                            start-placeholder="开始时间"
+                            end-placeholder="结束时间">
+            </el-date-picker>
+          </el-form-item>
+        </el-row>
+
+
+
       </el-form>
       </div>
 
