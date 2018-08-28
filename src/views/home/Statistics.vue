@@ -48,6 +48,7 @@
                     <el-button type="primary" @click="onSubmit">查询</el-button>
                 </el-form-item>
             </el-form>
+          <br/>
             <el-tabs v-model="timeType" type="card" @tab-click="cateChanged">
                 <el-tab-pane label="日统计" name="day"></el-tab-pane>
                 <el-tab-pane label="周统计" name="week"></el-tab-pane>
@@ -59,10 +60,10 @@
         <div style="text-align: center;" v-show="noTimeHide"><span>请选择时间</span></div>
         <ul class="charts-type" v-show="!noTimeHide">
                 <li class="charts-wrap">
-                	<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>                 
+                	<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>
                     <guest-chart :guestData="guestParameters" :changFlag="changFlag"></guest-chart>
                 </li>
-                
+
                 <li class="charts-wrap">
                     <guest-visited-info-chart :guestVisitedInfoData="guestVisitedInfoData"></guest-visited-info-chart>
                 </li>
