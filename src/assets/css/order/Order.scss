@@ -1,7 +1,16 @@
 .guest-list-page{
+  .top-box{
+    display: flex;
+    height: 40px;
+    overflow: hidden;
+  }
   .movement{
     width: 10.5rem;
     height: 2rem;
+  }
+  .movement_image{
+    position: relative;
+    left: 40%;
   }
 .movement img{
   animation: movement 1s infinite;

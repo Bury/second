@@ -1,23 +1,24 @@
 <template>
 	<div class="remind-list-page">
-    <div class="top-box" v-show="topBoxSow">
-			  <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
+    <div class="top-box"  ref="topBox" v-show="topBoxSow">
+      <div class="left" style="width: 75%;">
+        <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
           <el-form-item label="进店时间：">
             <el-date-picker :picker-options="pickerOptionsSet"
-                v-model="value4"
-                type="datetimerange"
-                range-separator="至"
-                start-placeholder="开始时间"
-                end-placeholder="结束时间">
+                            v-model="value4"
+                            type="datetimerange"
+                            range-separator="至"
+                            start-placeholder="开始时间"
+                            end-placeholder="结束时间">
             </el-date-picker>
           </el-form-item>
           <el-form-item label="客户类型：">
-          <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
+            <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
               <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="消费状态：">
-          <el-select v-model="requestParameters.bought" placeholder="未购/已购">
+            <el-select v-model="requestParameters.bought" placeholder="未购/已购">
               <el-option v-for="(item, idx) in allGuestBoughtClass" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
@@ -31,15 +32,27 @@
               <el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-            <el-button type="primary" @click="fnReset">重置</el-button>
-          </el-form-item>
-			</el-form>
+        </el-form>
+      </div>
+      <div class="right">
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="fnReset">重置</el-button>
+      </div>
+
 		</div>
 
-    <!--tabel 分页-->
-    <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
+    <div class="movement">
+      <div class="movement_image" v-if="bottom"  @click="movementBottom">
+        <img src="../../assets/images/bottom.png" />
+      </div>
+      <div class="movement_image" v-if="top" @click="movementTop">
+        <img src="../../assets/images/top.png" />
+      </div>
+    </div>
+
+    <!--tabel-->
+    <el-tabs style="margin-top: 20px;"
+      v-model="activeName2" type="card" @tab-click="handleClick">
 
       <el-tab-pane label="来客列表" name="first">
         <table width="99%" class="table">

@@ -64,6 +64,8 @@ export default {
               }
             },
           noData:false,
+          top:false,
+          bottom: true,
         }
     },
 
@@ -192,7 +194,19 @@ export default {
           	 this.$data.topBoxSow = true
           	 this.lists();
           }
-        }
+        },
+      movementBottom(){
+        this.$refs.topBox.style.overflow = 'visible';
+        this.$refs.topBox.style.height = 'auto';
+        this.$data.top = true;
+        this.$data.bottom = false;
+      },
+      movementTop(){
+        this.$refs.topBox.style.overflow = 'hidden';
+        this.$refs.topBox.style.height = '40px';
+        this.$data.top = false;
+        this.$data.bottom = true;
+      },
 
     },
 

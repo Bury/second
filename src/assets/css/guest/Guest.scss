@@ -1,3 +1,23 @@
+.top-box{
+  display: flex;
+  height: 40px;
+  overflow: hidden;
+}
+.movement{
+  width: 10.5rem;
+  height: 2rem;
+}
+.movement_image{
+  position: relative;
+  left: 40%;
+}
+.movement img{
+  animation: movement 1s infinite;
+}
+@keyframes movement{
+  from{transform:translate(0,0)}
+  to{transform:translate(0,10px)}
+}
 .el-table thead{
     color:#333;
 }

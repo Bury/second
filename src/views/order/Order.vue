@@ -1,6 +1,6 @@
 <template>
   <div class="guest-list-page">
-    <div class="top-box" ref="topBox" style="display: flex;height: 40px;overflow: hidden;">
+    <div class="top-box" ref="topBox">
       <div class="left" style="width: 75%;">
       <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
         <el-form-item label="编号：">
@@ -24,12 +24,12 @@
             <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
           </el-select>
         </el-form-item>
-        <br/>
+        <!--<br/>-->
         <el-form-item label="金额：">
           <el-col :span="11">
             <el-input v-model.trim="requestParameters.price_start"></el-input>
           </el-col>
-          <el-col class="line" :span="2">-</el-col>
+          <el-col class="line" :span="1">-</el-col>
           <el-col :span="11">
             <el-input v-model.trim="requestParameters.price_end"></el-input>
           </el-col>
@@ -61,15 +61,18 @@
       </div>
     </div>
 
-    <div class="movement" @click="overFlow">
-      <div style="position: relative;left: 40%;">
+    <div class="movement">
+      <div class="movement_image" v-if="bottom"  @click="movementBottom">
         <img src="../../assets/images/bottom.png" />
+      </div>
+      <div class="movement_image" v-if="top" @click="movementTop">
+        <img src="../../assets/images/top.png" />
       </div>
     </div>
 
     <div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
       <!--<el-button type="primary" @click="orderLive">现场开单(拍摄)</el-button>-->
-      <el-button type="primary" @click="orderVideo">现场开单</el-button>
+      <el-button type="primary" @click="orderVideo">开单</el-button>
       <!--<el-button type="primary" @click="orderNotLive">补单</el-button>-->
     </div>
 
