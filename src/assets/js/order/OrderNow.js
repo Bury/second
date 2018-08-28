@@ -375,7 +375,6 @@ export default {
           this.$message({
             type:"warning",
             message:res.data.data,
-            duration:8000
           })
         }
 
