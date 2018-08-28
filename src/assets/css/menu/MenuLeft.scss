@@ -1,11 +1,14 @@
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 180px;
+    //width: 180px;
 }
 .el-menu{
     border:0;
 }
 .left-menu1{
-  width: 180px;
+  width: 15rem;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
 }
 .left-menu1 .el-menu-item.is-active {
   background-color: #95c7ff !important;
