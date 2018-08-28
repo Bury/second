@@ -3,7 +3,8 @@
 		<div class="top-box">
 			<h3>个人资料</h3>
 			<div class="editBtn">
-				<el-button type="primary" plain @click="fnChangeTel()">修改手机号</el-button>
+				<el-button type="primary" plain @click="fnSetting()">个人设置</el-button>
+				<el-button type="primary" plain @click="fnChangeTel()">修改手机</el-button>
 				<el-button type="primary" plain @click="fnPasswordEdit()">修改密码</el-button>
 			</div>
 		</div>
@@ -61,9 +62,28 @@
         <el-button type="primary" @click="submitFromTel('telForm')">确 定</el-button>
       </div>
     </el-dialog>
+
+    <!-- 个人设置 -->
+    <el-dialog title="个人设置" center :visible.sync="settingVisible" style="min-width:800px;" :before-close="dialogCloseSetting">
+      <el-form :model="settingForm" ref="settingForm" class="demo-passwordEditForm">
+        <el-form-item label="报表默认时间：">
+          <el-select v-model="settingForm.unit" placeholder="请选择">
+            <el-option label="按天" value="d"></el-option>
+            <el-option label="按周" value="w"></el-option>
+            <el-option label="按月" value="m"></el-option>
+            <el-option label="按年" value="y"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="fnSettingCancel">取 消</el-button>
+        <el-button type="primary" @click="fnSettingSubmit()">确 定</el-button>
+      </div>
+    </el-dialog>
+
 	</div>
 </template>
 
 <script src="@/assets/js/user/UserCurrentDetail.js"></script>
 
-<style lang="scss"  src="@/assets/css/user/UserCurrentDetail.scss">
+<style lang="scss" scoped src="@/assets/css/user/UserCurrentDetail.scss">

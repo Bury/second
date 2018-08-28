@@ -55,7 +55,10 @@ export default {
             getClickName:'获取验证码',
             waitTime:60,
             canClick: true,
-
+          settingVisible: false,
+          settingForm:{
+              unit:'',
+          },
         }
     },
 
@@ -221,7 +224,7 @@ export default {
         this.canClick = true  //这里重新开启
         setTimeout(() => {
           this.$refs.telForm.resetFields();
-          this.$data.dialogFormVisibleTel = false;         
+          this.$data.dialogFormVisibleTel = false;
         })
       },
       dialogCloseTel(){
@@ -231,7 +234,7 @@ export default {
           this.canClick = true  //这里重新开启
         setTimeout(() => {
           this.$refs.telForm.resetFields();
-          this.$data.dialogFormVisibleTel = false;         
+          this.$data.dialogFormVisibleTel = false;
         })
       },
       getMsg(){
@@ -256,6 +259,36 @@ export default {
               message:'请输入正确的手机号'
             })
           }
+
+      },
+
+      //个人设置
+      fnSetting(){
+          this.$data.settingVisible = true;
+      },
+      fnSettingCancel(){
+        this.$data.settingVisible = false;
+        this.$data.settingForm.unit = '';
+      },
+      dialogCloseSetting(){
+          this.$data.settingVisible = false;
+          this.$data.settingForm.unit = '';
+      },
+      fnSettingSubmit(){
+          console.log(this.$data.settingForm.unit)
+          let list ={
+            'unit':this.$data.settingForm.unit,
+          }
+          let qs = require('querystring');
+          userApi.setting(qs.stringify(list)).then((res) => {
+            if(res.data.errno === 0){
+              this.$data.settingVisible = false;
+              this.$data.settingForm.unit = '';
+            }else if(res.data.errno == 1000002){
+              this.$message.error('请选择报表默认时间')
+            }
+          })
+
 
       },
 

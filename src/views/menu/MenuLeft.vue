@@ -1,7 +1,8 @@
 <template>
 	<div class="left-menu1">
 
-    <el-menu :default-active="currentMenu"
+    <el-menu style="width: 100%;"
+      :default-active="currentMenu"
              router
              class="el-menu-vertical-demo"
              :collapse="isCollapse && isShow"
