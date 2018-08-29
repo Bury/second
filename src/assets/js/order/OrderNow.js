@@ -371,11 +371,11 @@ export default {
             center: true
           });
         }else{
-          // this.$message.warning(res.data.msg)
-          this.$message({
-            type:"warning",
-            message:res.data.data,
-          })
+          this.$message.warning(res.data.msg)
+          // this.$message({
+          //   type:"warning",
+          //   message:res.data.data,
+          // })
         }
 
         //完成订单之后，跳回列表页面
