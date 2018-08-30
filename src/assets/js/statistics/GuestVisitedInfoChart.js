@@ -19,7 +19,7 @@ export default {
 
 	data() {
 		return {
-			Highcharts:Highcharts,
+			Highcharts: Highcharts,
 			options: {
 				chart: {
 					type: 'pie'
@@ -31,11 +31,15 @@ export default {
 					text: '',
 				},
 				tooltip: {
-				    pointFormat:'{series.name}: <b>{point.y}</b><br/>占比:{point.percentage:.1f}%'
-			    },
+					pointFormat: '{series.name}: <b>{point.y}</b><br/>占比:{point.percentage:.1f}%'
+				},
 				colors: [
+					'#7CB5EC',
 					'#FFC200',
-					'#57B4F7',
+					'#F15780',
+					'#8085E9',
+					'#90ED7D',
+					'#909399'
 				],
 				series: []
 			}
@@ -47,16 +51,16 @@ export default {
 			this.getData(this.$props.guestVisitedInfoData);
 		}
 	},
-	created:function(){		
+	created: function() {
 		Highcharts.setOptions({
-				lang: {
-					thousandsSep: ',',
-					noData: '暂无数据'
-				}
+			lang: {
+				thousandsSep: ',',
+				noData: '暂无数据'
+			}
 		});
 	},
 	methods: {
-		getData(value) {	
+		getData(value) {
 			let newOldCharts = this.$refs.newOldCharts;
 			newOldCharts.delegateMethod('showLoading', 'Loading...');
 			newOldCharts.removeSeries();
@@ -65,7 +69,7 @@ export default {
 				newOldCharts.addSeries({
 					name: '人数',
 					data: value
-				});								
+				});
 			}, 100)
 		},
 	}
