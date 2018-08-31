@@ -17,7 +17,7 @@ import GuestFromChart from '@/views/statistics/GuestFromChart'
 import * as utils from '@/utils/index'
 
 export default {
-    
+
     name: 'dashboard',
 
     components: {
@@ -30,7 +30,7 @@ export default {
     },
 
     data () {
-        return {    
+        return {
         	noTimeHide:false,
         	changFlag:true,
             goStoreNum:'',
@@ -60,6 +60,24 @@ export default {
     },
 
     created:function(){
+      let unit = localStorage.getItem("unit") || '';
+      if(unit === 'd'){
+        this.$data.ctrlTimeType = [false, false, false, false, false];
+        this.$data.ctrlTimeType[0] = true;
+        this.$data.timeType = 'day';
+      }else if(unit === 'w'){
+        this.$data.ctrlTimeType = [false, false, false, false, false];
+        this.$data.ctrlTimeType[1] = true;
+        this.$data.timeType = 'week';
+      }else if(unit === 'm'){
+        this.$data.ctrlTimeType = [false, false, false, false, false];
+        this.$data.ctrlTimeType[2] = true;
+        this.$data.timeType = 'month';
+      }else if(unit === 'y'){
+        this.$data.ctrlTimeType = [false, false, false, false, false];
+        this.$data.ctrlTimeType[3] = true;
+        this.$data.timeType = 'year';
+      };
         this.setData();
     },
 
@@ -68,9 +86,9 @@ export default {
         //时间转为秒
         getS(value){
             var formatTimeS = new Date(value).getTime()/1000;
-            return  formatTimeS 
+            return  formatTimeS
         },
-        
+
         //到店人数
         storeStatistics(d){
         	let timeData = {
@@ -82,7 +100,7 @@ export default {
             	if(res.data.errno === 0){
             		this.$data.goStoreNum = res.data.data.passenger_flow
             	}
-              
+
             })
         },
 
@@ -147,44 +165,44 @@ export default {
 
         },
         //搜索
-        onSubmit(){ 
+        onSubmit(){
         	if(this.$data.ctrlTimeType[0]){
         		if(this.$data.day == null) { return false}
             	this.$data.guestParameters.begin_time = this.getS(this.$data.day);
-                this.$data.guestParameters.end_time =   this.getS(this.$data.day) + 86399; 
-                
+                this.$data.guestParameters.end_time =   this.getS(this.$data.day) + 86399;
+
            }else if(this.$data.ctrlTimeType[1]){
            	    if(this.$data.week == null) { return false}
             	this.$data.guestParameters.begin_time = this.getS(this.$data.week);
                 this.$data.guestParameters.end_time =   this.getS(this.$data.week) + 604799;
-                
-            }else if(this.$data.ctrlTimeType[2]){  
+
+            }else if(this.$data.ctrlTimeType[2]){
             	if(this.$data.month== null) { return false}
-            	let nexty,nextm;  
-            	let t = new Date(this.$data.month);            	
-            	let m = t.getMonth() + 1;      
+            	let nexty,nextm;
+            	let t = new Date(this.$data.month);
+            	let m = t.getMonth() + 1;
             	let y = t.getFullYear();
             	m === 12 ? (nexty = y + 1,nextm = 1):(nexty = y,nextm = m + 1)
             	this.$data.guestParameters.begin_time = t.getTime() / 1000;
                 this.$data.guestParameters.end_time =  this.getS(`${nexty}/${nextm}/01 00:00:00`) - 1;
-                
+
             }else if(this.$data.ctrlTimeType[3]){
             	if(this.$data.year == null) {return false;}
             	let yearDate = new Date(this.$data.year);
             	let y = yearDate.getFullYear();
             	this.$data.guestParameters.begin_time = this.getS(`${y}/01/01 00:00:00`);
-                this.$data.guestParameters.end_time =  this.getS(`${y}/12/31 23:59:59`);  
-                
+                this.$data.guestParameters.end_time =  this.getS(`${y}/12/31 23:59:59`);
+
             }else if(this.$data.ctrlTimeType[4]){
             	if(this.$data.userDefined == null || this.$data.userDefined.length == 0) {
             		this.$data.noTimeHide = true;
             		return false;
             	}else{
             		this.$data.noTimeHide = false;
-            	}            	
+            	}
             	this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
                 this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
-                
+
             }
         	this.requestData();
         },
@@ -195,24 +213,24 @@ export default {
         cateChanged(tab, event){
             var nowIdx = tab.index;
             this.$data.ctrlTimeType = [false,false,false,false,false];
-            this.$data.ctrlTimeType[nowIdx] = true; 
+            this.$data.ctrlTimeType[nowIdx] = true;
             (nowIdx !== 4) && (this.$data.noTimeHide = false);
             this.setData();
         },
-        
+
         //绑定默认时间
-        modelDate(t){        	
+        modelDate(t){
         	let d = new Date(t*1000);
-            return d;        	
-        },          
+            return d;
+        },
         getBeginEnd(val){
         	let t = new Date();
             let y = t.getFullYear();
             let m = t.getMonth() + 1;
-            let d = t.getDate();    
-            let weekd  = t.getDay();            
+            let d = t.getDate();
+            let weekd  = t.getDay();
             switch (val){
-	       	case "day":	       	    
+	       	case "day":
 	       	    this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/${d} 00:00:00`);
                 this.$data.guestParameters.end_time =  this.getS(`${y}/${m}/${d} 23:59:59`);
                 this.$data.day = this.modelDate(this.$data.guestParameters.begin_time)
@@ -224,7 +242,7 @@ export default {
                 this.$data.week =  this.modelDate(this.$data.guestParameters.begin_time)
 	       		break;
 	       	case "month":
-	       	    let nexty,nextm;            	
+	       	    let nexty,nextm;
             	m === 12 ? (nexty = y + 1,nextm = 1):(nexty = y,nextm = m + 1)
             	this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/01 00:00:00`);
             	this.$data.guestParameters.end_time =  this.getS(`${nexty}/${nextm}/01 00:00:00`) - 1;
@@ -242,7 +260,7 @@ export default {
                     this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
 	       	    }else{
 	       	    	this.$data.noTimeHide = true;
-	       	    }	       	    
+	       	    }
 	       	    break;
 	        }
         },
@@ -250,7 +268,7 @@ export default {
         setData(){
             if(this.$data.ctrlTimeType[0]){
                 //日
-               
+
                 this.getBeginEnd("day")
                 this.requestData();
                 return false;
@@ -260,7 +278,7 @@ export default {
                 this.getBeginEnd("week")
                 this.requestData();
                 return false;
-                
+
             }
             if(this.$data.ctrlTimeType[2]){
                 //月
@@ -277,7 +295,7 @@ export default {
             if(this.$data.ctrlTimeType[4]){
                 //自定义
                 this.getBeginEnd("select")
-                this.requestData();  
+                this.requestData();
                 return false;
             }
 
@@ -289,11 +307,11 @@ export default {
                 this.statisticsFeature(this.$data.guestParameters, 'buy');
                 this.statisticsFeature(this.$data.guestParameters, 'age');
                 this.statisticsFeature(this.$data.guestParameters, 'gender');
-                this.statisticsFeature(this.$data.guestParameters, 'camera'); 
+                this.statisticsFeature(this.$data.guestParameters, 'camera');
                 this.storeStatistics(this.$data.guestParameters)
         },
-        
-        
+
+
 
     }
 

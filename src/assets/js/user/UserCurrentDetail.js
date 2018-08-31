@@ -279,6 +279,8 @@ export default {
           userApi.setting(qs.stringify(list)).then((res) => {
             if(res.data.errno === 0){
               this.$data.settingVisible = false;
+              this.$message("设置成功");
+              this.getUserCurrentInfo();
             }else if(res.data.errno == 1000002){
               this.$message.error('请选择报表默认时间')
             }
