@@ -16,7 +16,7 @@
 		    	{{role_name}}
 		  	</el-form-item>
 		  	<el-form-item label="姓名：">
-					{{userEditForm.name}}
+					{{userEditForm.truename}}
 		  	</el-form-item>
 		  	<el-form-item label="手机：">
 					{{userEditForm.phone || "暂无手机号"}}
@@ -68,7 +68,7 @@
       <el-form class="demo-passwordEditForm">
         <el-form-item label="报表默认时间：">
           <el-select v-model="unit" placeholder="请选择">
-            <el-option label="按天" value="d"></el-option>
+            <el-option label="按日" value="d"></el-option>
             <el-option label="按周" value="w"></el-option>
             <el-option label="按月" value="m"></el-option>
             <el-option label="按年" value="y"></el-option>

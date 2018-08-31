@@ -14,10 +14,7 @@ export default {
             username:'',
             role_name:'',
             errors:0,
-            userEditForm: {
-                name:'',
-                phone:'',
-            },
+            userEditForm: {},
             rulesUserEdit: {
                 name: globalRules.rules.user.minMax(1,15,'请输入帐号'),
                 phone: globalRules.rules.user.phone()
@@ -69,10 +66,11 @@ export default {
         getUserCurrentInfo(){
             userApi.getUserCurrentInfo().then((res) => {
                 if(res.data.errno === 0){
+                  console.log(res.data.data.user);
+                  this.$data.userEditForm = res.data.data.user;
                     this.$data.username = res.data.data.user.username;
                     this.$data.role_name = res.data.data.user.role_name;
-                    this.$data.userEditForm.name = res.data.data.user.truename;
-                    this.$data.userEditForm.phone = res.data.data.user.phone;
+                    this.$data.unit = res.data.data.user.analysis_unit;
                 }else{
                     this.$message.error(res.data.msg);
                 }
@@ -266,9 +264,11 @@ export default {
       },
       fnSettingCancel(){
         this.$data.settingVisible = false;
+        this.$data.unit = this.$data.userEditForm.analysis_unit;
       },
       dialogCloseSetting(){
           this.$data.settingVisible = false;
+          this.$data.unit = this.$data.userEditForm.analysis_unit;
       },
       fnSettingSubmit(){
           console.log(this.$data.unit)
