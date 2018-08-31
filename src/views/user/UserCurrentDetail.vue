@@ -65,9 +65,9 @@
 
     <!-- 个人设置 -->
     <el-dialog title="个人设置" center :visible.sync="settingVisible" style="min-width:800px;" :before-close="dialogCloseSetting">
-      <el-form :model="settingForm" ref="settingForm" class="demo-passwordEditForm">
+      <el-form class="demo-passwordEditForm">
         <el-form-item label="报表默认时间：">
-          <el-select v-model="settingForm.unit" placeholder="请选择">
+          <el-select v-model="unit" placeholder="请选择">
             <el-option label="按天" value="d"></el-option>
             <el-option label="按周" value="w"></el-option>
             <el-option label="按月" value="m"></el-option>

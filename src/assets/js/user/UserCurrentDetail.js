@@ -56,9 +56,7 @@ export default {
             waitTime:60,
             canClick: true,
           settingVisible: false,
-          settingForm:{
-              unit:'按日',
-          },
+          unit:'',
         }
     },
 
@@ -273,9 +271,9 @@ export default {
           this.$data.settingVisible = false;
       },
       fnSettingSubmit(){
-          console.log(this.$data.settingForm.unit)
+          console.log(this.$data.unit)
           let list ={
-            'unit':this.$data.settingForm.unit,
+            'unit':this.$data.unit,
           }
           let qs = require('querystring');
           userApi.setting(qs.stringify(list)).then((res) => {
