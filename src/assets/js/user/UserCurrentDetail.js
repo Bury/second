@@ -57,7 +57,7 @@ export default {
             canClick: true,
           settingVisible: false,
           settingForm:{
-              unit:'',
+              unit:'按日',
           },
         }
     },
@@ -268,11 +268,9 @@ export default {
       },
       fnSettingCancel(){
         this.$data.settingVisible = false;
-        this.$data.settingForm.unit = '';
       },
       dialogCloseSetting(){
           this.$data.settingVisible = false;
-          this.$data.settingForm.unit = '';
       },
       fnSettingSubmit(){
           console.log(this.$data.settingForm.unit)
@@ -283,7 +281,6 @@ export default {
           userApi.setting(qs.stringify(list)).then((res) => {
             if(res.data.errno === 0){
               this.$data.settingVisible = false;
-              this.$data.settingForm.unit = '';
             }else if(res.data.errno == 1000002){
               this.$message.error('请选择报表默认时间')
             }
