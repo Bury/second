@@ -354,16 +354,17 @@ export default {
       }
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
-        this.isTrueAndPass();
-        this.$data.pushGoods = [];
-        if(res.data.msg != ''){
-          this.$message({
-            message: res.data.msg,
-            type: 'warning',
-            center: true
-          });
-        }
+
+        // if(res.data.msg != ''){
+        //   this.$message({
+        //     message: res.data.msg,
+        //     type: 'warning',
+        //     center: true
+        //   });
+        // }
         if(res.data.errno === 0){
+          this.isTrueAndPass();
+          this.$data.pushGoods = [];
           this.$router.push({path: '/Order'});
           this.$message({
             message: '创建订单成功',
@@ -372,10 +373,6 @@ export default {
           });
         }else{
           this.$message.warning(res.data.msg)
-          // this.$message({
-          //   type:"warning",
-          //   message:res.data.data,
-          // })
         }
 
         //完成订单之后，跳回列表页面
