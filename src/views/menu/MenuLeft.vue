@@ -35,6 +35,7 @@
 </template>
 <script>
   import userApi from '../../api/user.js'
+  import globalFunctions from '@/config/global_functions'
     export default {
         name:'word-item',
         props:{
@@ -51,11 +52,12 @@
         watch:{
           $route(to,from){
     	         	this.$data.currentMenu = this.$route.name;
-    	      }
+    	      },
         },
         created:function(){
           this.menu();
         	this.getUrl();
+
         },
         methods:{
           menu() {
@@ -67,12 +69,25 @@
         		 	  }
         		 }
         		 this.$data.tableData = res.data.data;
+        		 this.refreash();
         	 }
 
             })
           },
           getUrl() {
             this.$data.currentMenu = this.$route.name;
+          },
+          refreash(){
+            let arr = [];
+            console.log(this.$data.tableData);
+            for(let item of this.$data.tableData){
+              console.log(item.front_url);
+              arr.push(item.front_url)
+            }
+            console.log(arr);
+            if(arr.indexOf(this.$data.currentMenu) == -1){
+              globalFunctions.functions.user.logout(userApi,this.$router,this.$message);
+            }
           },
         },
     }
