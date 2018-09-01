@@ -126,7 +126,7 @@ export default {
                         if(types == 'buy'){
                             let newData = [];
                             for(var i=0; i<thisData.buy.length; i++){
-                                newData.push([thisData.buy[i],thisData.sum[i]])
+                                newData.push([thisData.buy[i],thisData.count[i]])
                             }
                             this.$data.guestBoughtInfoData = newData;
                         }
@@ -147,7 +147,7 @@ export default {
                         if(types == 'camera'){
                             let newData = [];
                             for(var i=0; i<thisData.camera.length; i++){
-                                newData.push([thisData.camera[i],thisData.sum[i]])
+                                newData.push([thisData.camera[i],thisData.count[i]])
                             }
                             this.$data.guestFromData = newData;
                         }

@@ -31,6 +31,7 @@ export default{
                 ]
             },
           locate:'',
+          statusColor:0,
         }
     },
 
@@ -60,12 +61,9 @@ export default{
                 if(res.data.errno === 0){
                     this.$data.tableData = res.data.data.list;
                     for(let item of res.data.data.list){
-                      if(item.locate == null){
-                        this.$data.locate = '--';
-                      }else if(item.locate == "other"){
-                        this.$data.locate = '进店';
-                      }else if(item.locate == 'cashier'){
-                        this.$data.locate = '收银台';
+                      if(item.status == 0){
+                        this.$data.statusColor = 1;
+                        console.log("252525")
                       }
                     }
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
