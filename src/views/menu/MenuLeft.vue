@@ -79,12 +79,9 @@
           },
           refreash(){
             let arr = [];
-            console.log(this.$data.tableData);
             for(let item of this.$data.tableData){
-              console.log(item.front_url);
               arr.push(item.front_url)
             }
-            console.log(arr);
             if(arr.indexOf(this.$data.currentMenu) == -1){
               globalFunctions.functions.user.logout(userApi,this.$router,this.$message);
             }

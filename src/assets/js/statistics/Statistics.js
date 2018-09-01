@@ -147,7 +147,7 @@ export default {
                         if(types == 'camera'){
                             let newData = [];
                             for(var i=0; i<thisData.camera.length; i++){
-                                newData.push([thisData.camera[i],thisData.count[i]])
+                                newData.push([thisData.camera[i],thisData.sum[i]])
                             }
                             this.$data.guestFromData = newData;
                         }
