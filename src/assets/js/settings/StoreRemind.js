@@ -29,10 +29,10 @@ export default {
             settingsApi.remindView().then((res) => {
                 if(res.data.errno === 0){
                     console.log(res);
-                    if(res.data.data.remind_ids.length > 1){
-                      this.checkedType = res.data.data.remind_ids.split(",");
-                    }
-
+                  res.data.data.remind_ids != "" ?
+                    this.$data.checkedType = res.data.data.remind_ids.split(",") :
+                    this.$data.checkedType = [];
+                    // this.checkedType = res.data.data.remind_ids.split(",");
                     if(this.checkedType.length == this.types.length){
                         this.checkAll = true;
                         this.isIndeterminate = false;

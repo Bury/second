@@ -694,8 +694,8 @@ export default {
 		  this.$data.requestParameters.visited = '';
 		  this.$data.requestParameters.price_start = '';
 		  this.$data.requestParameters.price_end = '';
-		  this.$data.requestParameters.cashTimes = ['', ''];
-		  this.$data.requestParameters.createdTimes = ['', ''];
+		  this.$data.cashTimes = [];
+		  this.$data.createdTimes = [];
 		  // this.lists();
     },
     viewDialogClose(){
