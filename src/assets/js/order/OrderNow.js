@@ -354,22 +354,14 @@ export default {
       }
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
-
-        // if(res.data.msg != ''){
-        //   this.$message({
-        //     message: res.data.msg,
-        //     type: 'warning',
-        //     center: true
-        //   });
-        // }
+        this.$data.item = {};
+        this.$data.pushGoods = [];
         if(res.data.errno === 0){
           this.isTrueAndPass();
-          this.$data.pushGoods = [];
           this.$router.push({path: '/Order'});
           this.$message({
             message: '创建订单成功',
             type: 'success',
-            center: true
           });
         }else{
           this.$message.warning(res.data.msg)

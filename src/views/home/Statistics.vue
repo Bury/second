@@ -67,9 +67,9 @@
                 <li class="charts-wrap">
                     <guest-visited-info-chart :guestVisitedInfoData="guestVisitedInfoData"></guest-visited-info-chart>
                 </li>
-                <li class="charts-wrap">
-                    <guest-bought-info-chart :guestBoughtInfoData="guestBoughtInfoData"></guest-bought-info-chart>
-                </li>
+                <!--<li class="charts-wrap">-->
+                    <!--<guest-bought-info-chart :guestBoughtInfoData="guestBoughtInfoData"></guest-bought-info-chart>-->
+                <!--</li>-->
                 <li class="charts-wrap">
                     <guest-age-chart :ageData="ageData"></guest-age-chart>
                 </li>
