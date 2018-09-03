@@ -170,7 +170,6 @@ export default {
 
     //智能识别人脸身份
     recognition(id){
-      // console.log(id)
       this.step02_block=true;
       this.step01_block=true;
       this.step03_block=true;
@@ -190,7 +189,6 @@ export default {
       };
       let qs = require('querystring')
       OrderApi.videoFindFace(qs.stringify(list)).then((res) => {
-        console.log(res);
         this.getAll();
         if(res.data.msg === '服务器内部错误'){
           this.$message({
@@ -204,13 +202,11 @@ export default {
         }
         else{
           this.$data.NewRuleForm = res.data.data;
-          console.log(res.data.data);
           this.$data.faceIdIs = res.data.data.customer_id;
           if(res.data.data.is_new === 1){
             this.$data.NewRuleForm.images = res.data.data.avatar;
             // this.$data.NewRuleForm.phone = res.data.data.avatar;
             if(res.data.data.gender === 0){
-              console.log(111111)
               this.$data.NewRuleForm.sex = '女'
             }else{
               this.$data.NewRuleForm.sex = '男'
@@ -249,7 +245,6 @@ export default {
 
     //  返回的顾客信息，是本人直接走消费
     isTrueAndPass(){
-      console.log(this.$data.faceIdIs);
       let list = {
         'name': this.$data.NewRuleForm.name,
         'phone': this.$data.NewRuleForm.phone,
@@ -260,7 +255,6 @@ export default {
       OrderApi.postMe(qs.stringify(list)).then((res) => {
         //是本人的时候，人脸id为查询手机号返回人脸id
         this.$data.isNoMyself = this.$data.faceIdNo;
-        console.log(res);
         this.step03_block=true;
         this.step02_block=true;
         this.step01_block=true;
@@ -268,7 +262,6 @@ export default {
     },
 
     addAGood(){
-      // console.log('新增一条');
       let obj = {
         material : null,
         style : null,
@@ -354,29 +347,17 @@ export default {
       }
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
-        this.isTrueAndPass();
+        this.$data.item = {};
         this.$data.pushGoods = [];
-        if(res.data.msg != ''){
-          this.$message({
-            message: res.data.msg,
-            type: 'warning',
-            center: true
-          });
-        }
         if(res.data.errno === 0){
+          this.isTrueAndPass();
           this.$router.push({path: '/Order'});
           this.$message({
             message: '创建订单成功',
             type: 'success',
-            center: true
           });
         }else{
-          // this.$message.warning(res.data.msg)
-          this.$message({
-            type:"warning",
-            message:res.data.data,
-            duration:8000
-          })
+          this.$message.warning(res.data.msg)
         }
 
         //完成订单之后，跳回列表页面

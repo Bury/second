@@ -26,9 +26,23 @@
             </div>
         </div>
         <div class="left-menu-wrap">
+          <el-radio-group v-model="isCollapse">
           <div class="arrow">
-            <div class="arrow1"></div>
+            <div class="arrow1">
+              <!--<div style="margin-left: 40%;margin-top: -3px;">-->
+                <!--<img src="../../assets/images/menuLeft-1.png" />-->
+              <!--</div>-->
+              <div class="movement">
+                <div class="movement_image" v-if="left" @click="movementLeft">
+                  <img src="../../assets/images/left.png" />
+                </div>
+                <div class="movement_image" v-if="right" @click="movementRight">
+                  <img src="../../assets/images/right.png" />
+                </div>
+              </div>
+            </div>
           </div>
+          </el-radio-group>
             <!--<el-radio-group v-model="isCollapse">-->
                 <!--<el-radio-button :label="false" v-if="isCollapse">展开</el-radio-button>-->
                 <!--<el-radio-button :label="true" v-if="!isCollapse">收起</el-radio-button>-->
@@ -37,7 +51,7 @@
         </div>
         <div ref="content">
           <!--<div class="marginTop"></div>-->
-          <div class="content-wrap"><router-view></router-view></div>
+          <div class="content-wrap"  ref="content"><router-view></router-view></div>
         </div>
     </div>
 </template>

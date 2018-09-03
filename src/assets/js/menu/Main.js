@@ -23,7 +23,10 @@ export default {
                 leftMenu2:false,
                 leftMenu3:false,
                 leftMenu4:false
-            }
+            },
+          left:true,
+          right:false,
+
         }
     },
 
@@ -42,15 +45,15 @@ export default {
                     this.$data.leftMenu[nowI] = true;
                 }
             }
-            
+
         },
 
         handleOpen(key, keyPath) {
-            console.log(key, keyPath);
+            // console.log(key, keyPath);
         },
 
         handleClose(key, keyPath) {
-            console.log(key, keyPath);
+            // console.log(key, keyPath);
         },
 
         logout(){
@@ -61,7 +64,17 @@ export default {
 
         user_current_detail(){
             this.$router.push('/UserCurrentDetail')
-        }
+        },
+      movementLeft(){
+        this.$data.right = true;
+        this.$data.left = false;
+        this.$data.isCollapse = true;
+      },
+      movementRight(){
+          this.$data.right = false;
+          this.$data.left = true;
+        this.$data.isCollapse = false;
+      },
 
     }
 

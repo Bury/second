@@ -22,7 +22,7 @@
         <td>{{item.username != '' ? item.username : '--'}}</td>
         <td>{{item.storeRole.name == null ? '--' :item.storeRole.name }}</td>
         <td>{{item.truename != '' ? item.truename : '--'}}</td>
-        <td>{{item.phone}}</td>
+        <td>{{item.phone != '' ? item.phone : '--'}}</td>
         <td>
           <span @click=fnStatusUpdate(item.id,item.status)>{{item.status == 1 ? '启用' : '禁用'}}</span>
         </td>

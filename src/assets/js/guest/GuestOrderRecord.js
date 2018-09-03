@@ -38,8 +38,6 @@ export default{
     methods:{
 
         lists(customerId){
-          // console.log(document.referrer,111111);
-          console.log(this.$props.customerId)
             let list = {
                     'customer_id':customerId,
                     'page':1,
@@ -49,12 +47,9 @@ export default{
             orderApi.listsUserResults(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.orderRecords = res.data.data;
-                    console.log(this.$data.orderRecords);
-                    console.log(res.data.data.list.length);
                     this.$data.listArr = res.data.data.list;
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
                     this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
-                    console.log(this.$data.orderRecords);
                 }else{
 
                 }

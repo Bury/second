@@ -64,6 +64,10 @@ export default {
               }
             },
           noData:false,
+          top:false,
+          bottom: true,
+          visibled:false,
+          imageShow:true,
         }
     },
 
@@ -118,7 +122,6 @@ export default {
       },
 
         showDialog(row) {
-          // console.log(row);
             this.$data.showInfoEdit = false;
             this.$data.currentCustomerId = row.customer_id;
             this.$data.trafficId = row.id;
@@ -187,12 +190,26 @@ export default {
         handleClick(tab, event) {
           this.$data.updateCount++;
           if(tab.index ===  "1"){
-          	 this.$data.topBoxSow = false
+          	 this.$data.topBoxSow = false;
+            this.$data.imageShow = false;
           }else{
           	 this.$data.topBoxSow = true
+          	 this.$data.imageShow = true
           	 this.lists();
           }
-        }
+        },
+      movementBottom(){
+        this.$refs.topBox.style.overflow = 'visible';
+        this.$data.visibled = true;
+        this.$data.top = true;
+        this.$data.bottom = false;
+      },
+      movementTop(){
+        this.$refs.topBox.style.overflow = 'hidden';
+        this.$data.visibled = false;
+        this.$data.top = false;
+        this.$data.bottom = true;
+      },
 
     },
 

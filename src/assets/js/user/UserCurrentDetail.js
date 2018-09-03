@@ -14,10 +14,7 @@ export default {
             username:'',
             role_name:'',
             errors:0,
-            userEditForm: {
-                name:'',
-                phone:'',
-            },
+            userEditForm: {},
             rulesUserEdit: {
                 name: globalRules.rules.user.minMax(1,15,'请输入帐号'),
                 phone: globalRules.rules.user.phone()
@@ -55,7 +52,8 @@ export default {
             getClickName:'获取验证码',
             waitTime:60,
             canClick: true,
-
+          settingVisible: false,
+          unit:'',
         }
     },
 
@@ -68,10 +66,10 @@ export default {
         getUserCurrentInfo(){
             userApi.getUserCurrentInfo().then((res) => {
                 if(res.data.errno === 0){
+                  this.$data.userEditForm = res.data.data.user;
                     this.$data.username = res.data.data.user.username;
                     this.$data.role_name = res.data.data.user.role_name;
-                    this.$data.userEditForm.name = res.data.data.user.truename;
-                    this.$data.userEditForm.phone = res.data.data.user.phone;
+                    this.$data.unit = res.data.data.user.analysis_unit;
                 }else{
                     this.$message.error(res.data.msg);
                 }
@@ -102,7 +100,6 @@ export default {
         },
 
         fnPasswordEditSubmitForm(formName){
-          // console.log(this.$data.passwordEditForm.passwordOld);
             this.$refs[formName].validate((valid) => {
                 if(this.$data.passwordEditForm.passwordOld==this.$data.passwordEditForm.passwordCurrent){
                     globalFunctions.functions.message(this,'error','新的密码与当前密码不能相同');
@@ -168,7 +165,6 @@ export default {
           };
           let qs = require('querystring');
           userApi.phoneSms(qs.stringify(list)).then((res) => {
-            console.log(res.data.msg)
             if(res.data.errno == -1){
               this.$message({
                 type: 'warning',
@@ -197,8 +193,6 @@ export default {
             })
           }
           this.$data.telForm.code = res.data.data.sign_code;
-          console.log(res.data.data);
-          console.log(this.$data.telForm);
           userApi.savePhone(qs.stringify(this.$data.telForm)).then((res) => {
             this.$message({
               type:'success',
@@ -221,7 +215,7 @@ export default {
         this.canClick = true  //这里重新开启
         setTimeout(() => {
           this.$refs.telForm.resetFields();
-          this.$data.dialogFormVisibleTel = false;         
+          this.$data.dialogFormVisibleTel = false;
         })
       },
       dialogCloseTel(){
@@ -231,7 +225,7 @@ export default {
           this.canClick = true  //这里重新开启
         setTimeout(() => {
           this.$refs.telForm.resetFields();
-          this.$data.dialogFormVisibleTel = false;         
+          this.$data.dialogFormVisibleTel = false;
         })
       },
       getMsg(){
@@ -256,6 +250,36 @@ export default {
               message:'请输入正确的手机号'
             })
           }
+
+      },
+
+      //个人设置
+      fnSetting(){
+          this.$data.settingVisible = true;
+      },
+      fnSettingCancel(){
+        this.$data.settingVisible = false;
+        this.$data.unit = this.$data.userEditForm.analysis_unit;
+      },
+      dialogCloseSetting(){
+          this.$data.settingVisible = false;
+          this.$data.unit = this.$data.userEditForm.analysis_unit;
+      },
+      fnSettingSubmit(){
+          let list ={
+            'unit':this.$data.unit,
+          }
+          let qs = require('querystring');
+          userApi.setting(qs.stringify(list)).then((res) => {
+            if(res.data.errno === 0){
+              this.$data.settingVisible = false;
+              this.$message("设置成功");
+              this.getUserCurrentInfo();
+            }else if(res.data.errno == 1000002){
+              this.$message.error('请选择报表默认时间')
+            }
+          })
+
 
       },
 

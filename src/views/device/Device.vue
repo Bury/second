@@ -13,10 +13,10 @@
           </tr>
           </thead>
           <tbody style="text-align: center">
-          <tr v-for="(item,index) in tableData" :key="index" height="40">
+          <tr v-for="(item,index) in tableData" :key="index" height="40" :class="item.status == 0 && 'break'">
             <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
             <td>{{item.device_id}}</td>
-            <td>
+            <td >
               <span v-if="item.locate == null">--</span>
               <span v-else-if="item.locate == 'other'">进店</span>
               <span v-else-if="item.locate == 'cashier'">收银台</span>
@@ -24,8 +24,13 @@
             <td>
               {{item.locate_desc != null ? item.locate_desc : '--'}}
             </td>
-            <td>{{item.status == 0 ? '断开' : '正常'}}</td>
-            <td>
+            <td >
+              <!--{{ item.status == 0 ? '断开' : '正常'}}-->
+              <span v-if="item.status == 0">断开</span>
+              <span v-else-if="item.status == 1">正常</span>
+              <span v-else-if="item.status == 2">/</span>
+            </td>
+            <td class="handle">
               <el-button @click="fnEdit(item)" type="text" size="small">编辑</el-button>
             </td>
           </tr>

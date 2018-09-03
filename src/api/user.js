@@ -209,4 +209,13 @@ export default {
       })
     })
   },
+  setting (list) {
+    return new Promise((resolve, reject) => {
+      axios.post(global.USER_SETTING, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
 }

@@ -31,6 +31,9 @@
 .table tbody tr:hover{
   background-color: #f5fbfe;
 }
+.break>td:not(.handle){
+  color: #f00;
+}
 
 
 

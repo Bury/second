@@ -1,66 +1,88 @@
 <template>
   <div class="guest-list-page">
-    <div class="top-box">
-      <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-        <el-form-item label="编号：">
-          <el-input v-model.trim="requestParameters.sn"></el-input>
-        </el-form-item>
-        <el-form-item label="材质：">
-          <el-select v-model="requestParameters.material" placeholder="请选择材质">
-            <el-option label="全部" value="">全部</el-option>
-            <el-option v-for="material in materials" :key="material.id" :label="material.name"
-                       :value="material.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="款式：">
-          <el-select v-model="requestParameters.style" placeholder="请选择款式">
-            <el-option label="全部" value="">全部</el-option>
-            <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="客户类型：">
-          <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
-            <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
-          </el-select>
-        </el-form-item>
-        <br/>
-        <el-form-item label="金额：">
-          <el-col :span="11">
-            <el-input v-model.trim="requestParameters.price_start"></el-input>
-          </el-col>
-          <el-col class="line" :span="2">-</el-col>
-          <el-col :span="11">
-            <el-input v-model.trim="requestParameters.price_end"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="收银时间：">
-          <el-date-picker :picker-options="pickerOptionsSet"
-            v-model="cashTimes"
-            type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="创建时间：">
-          <el-date-picker :picker-options="pickerOptionsSet"
-            v-model="createdTimes"
-            type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始时间"
-            end-placeholder="结束时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="lists">查询</el-button>
-          <el-button type="primary" @click="fnReset">重置</el-button>
-        </el-form-item>
+    <div class="top-box" ref="topBox">
+      <div class="left" style="width: 75%;">
+        <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
+          <el-row>
+            <el-form-item label="编号：">
+              <el-input v-model.trim="requestParameters.sn"></el-input>
+            </el-form-item>
+            <el-form-item label="材质：">
+              <el-select v-model="requestParameters.material" placeholder="请选择材质">
+                <el-option label="全部" value="">全部</el-option>
+                <el-option v-for="material in materials" :key="material.id" :label="material.name"
+                           :value="material.id"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="款式：">
+              <el-select v-model="requestParameters.style" placeholder="请选择款式">
+                <el-option label="全部" value="">全部</el-option>
+                <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
+              </el-select>
+            </el-form-item>
+        </el-row>
+        <el-row v-if="visibled">
+          <el-form-item label="客户类型：">
+            <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
+              <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="金额：">
+            <el-col :span="11">
+              <el-input v-model.trim="requestParameters.price_start"></el-input>
+            </el-col>
+            <el-col class="line" :span="1">-</el-col>
+            <el-col :span="11">
+              <el-input v-model.trim="requestParameters.price_end"></el-input>
+            </el-col>
+          </el-form-item>
+        </el-row>
+        <el-row v-if="visibled">
+          <el-form-item label="收银时间：">
+            <el-date-picker :picker-options="pickerOptionsSet"
+                            v-model="cashTimes"
+                            type="datetimerange"
+                            range-separator="至"
+                            start-placeholder="开始时间"
+                            end-placeholder="结束时间">
+            </el-date-picker>
+          </el-form-item>
+        </el-row>
+        <el-row v-if="visibled">
+          <el-form-item label="创建时间：">
+            <el-date-picker :picker-options="pickerOptionsSet"
+                            v-model="createdTimes"
+                            type="datetimerange"
+                            range-separator="至"
+                            start-placeholder="开始时间"
+                            end-placeholder="结束时间">
+            </el-date-picker>
+          </el-form-item>
+        </el-row>
+
+
+
       </el-form>
+      </div>
+
+      <div class="right">
+        <el-button type="primary" @click="lists">查询</el-button>
+        <el-button type="primary" @click="fnReset">重置</el-button>
+      </div>
+    </div>
+
+    <div class="movement">
+      <div class="movement_image" v-if="bottom"  @click="movementBottom">
+        <img src="../../assets/images/bottom.png" />
+      </div>
+      <div class="movement_image" v-if="top" @click="movementTop">
+        <img src="../../assets/images/top.png" />
+      </div>
     </div>
 
     <div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
       <!--<el-button type="primary" @click="orderLive">现场开单(拍摄)</el-button>-->
-      <el-button type="primary" @click="orderVideo">现场开单</el-button>
+      <el-button type="primary" @click="orderVideo">开单</el-button>
       <!--<el-button type="primary" @click="orderNotLive">补单</el-button>-->
     </div>
 
@@ -359,7 +381,7 @@
           <el-row>
             <el-col :span='7'>
               <el-form-item label="材质：" prop="material" label-width="60px">
-                <el-select v-model='item.material' disabled>
+                <el-select v-model='item.material_name' disabled>
                   <el-option v-for="material in materials" :key="material.id" :label="material.name"
                              :value="material.id"></el-option>
                 </el-select>
@@ -367,7 +389,7 @@
             </el-col>
             <el-col :span='7'>
               <el-form-item label="款式：" prop="style" label-width="60px">
-                <el-select v-model="item.style" disabled>
+                <el-select v-model="item.style_name" disabled>
                   <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
                 </el-select>
               </el-form-item>

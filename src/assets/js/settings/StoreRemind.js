@@ -28,8 +28,10 @@ export default {
         fnGetRemind(){
             settingsApi.remindView().then((res) => {
                 if(res.data.errno === 0){
-                    console.log(res);
-                    this.checkedType = res.data.data.remind_ids.split(",");
+                  res.data.data.remind_ids != "" ?
+                    this.$data.checkedType = res.data.data.remind_ids.split(",") :
+                    this.$data.checkedType = [];
+                    // this.checkedType = res.data.data.remind_ids.split(",");
                     if(this.checkedType.length == this.types.length){
                         this.checkAll = true;
                         this.isIndeterminate = false;
@@ -48,7 +50,6 @@ export default {
             let qs = require('querystring')
             settingsApi.remindSet(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
-                    console.log(res);
                     globalFunctions.functions.message(this,'success');
                     this.fnGetRemind();
                 }else{
@@ -70,7 +71,6 @@ export default {
         },
 
         fnChangeType(value) {
-            console.log(value)
             let checkedCount = value.length;
             this.checkAll = checkedCount === this.types.length;
             this.isIndeterminate = checkedCount > 0 && checkedCount < this.types.length;

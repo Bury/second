@@ -46,19 +46,19 @@ export default {
 	},
 
 	watch: {
-		customerId: function() {			
+		customerId: function() {
 			this.view(this.$props.customerId, this.$props.traffic);
 		},
 		editShow:function(){
 			this.$data.infoEdit = false;
-			
+
 		}
 	},
 
 	created: function() {
 		this.view(this.$props.customerId, this.$props.traffic)
 		this.getTagListsResults(this.$props.customerId)
-		
+
 	},
 
 	methods: {
@@ -71,7 +71,6 @@ export default {
 			let qs = require('querystring')
 			tagApi.lists_results(qs.stringify(list)).then((res) => {
 				if(res.data.errno === 0) {
-					console.log(res.data.data)
 					this.$data.labels = res.data.data
 				} else {
 
@@ -80,7 +79,6 @@ export default {
 		},
 
 		view(customerId, traffic) {
-			// console.log(customerId,traffic,141414);
 			this.$data.infoEdit = this.$props.showInfoEdit;
 			let qs = require('querystring');
 			let list = {
@@ -90,9 +88,7 @@ export default {
 			guestApi.viewInfo(qs.stringify(list)).then((res) => {
 				if(res.data.errno === 0) {
 					var is_new = this.$data.guestInfo.is_new;
-					// console.log(res.data.data.vip_level)
 					var vip_level = res.data.data.vip_level;
-					// console.log(vip_level);
 					this.$set(res.data.data, 'is_new_to_text', globalFunctions.functions.guest.getVisitInfo(is_new));
 					this.$set(res.data.data, 'is_bought_to_text', globalFunctions.functions.guest.getBoughtInfo(vip_level));
 					this.$data.guestInfo = res.data.data;
@@ -113,7 +109,6 @@ export default {
 		editGuestInfo() {
 			this.$data.editGuestInfoData = this.$data.guestInfo;
 			this.$data.infoEdit = true;
-			console.log(this.$data.editGuestInfoData);
 		},
 
 		guestInfoCancel() {
@@ -134,9 +129,7 @@ export default {
 				vip_level: this.$data.editGuestInfoData.vip_level,
 				remark: this.$data.editGuestInfoData.remark,
 			})).then((res) => {
-				console.log(res)
 				if(res.data.errno === 0) {
-					console.log(this.$data.editGuestInfoData.vip_level)
 					this.guestInfoCancel();
 					this.view(this.$props.customerId)
 				} else {

@@ -1,6 +1,8 @@
 <template>
 	<div class="left-menu1">
-    <el-menu :default-active="currentMenu"
+
+    <el-menu style="width: 100%;"
+      :default-active="currentMenu"
              router
              class="el-menu-vertical-demo"
              :collapse="isCollapse && isShow"
@@ -9,14 +11,14 @@
             active-text-color="#fff">
 
       <template v-for="(item,index) in tableData">
-        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" class="aaa">
+        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" style="text-align: center;">
         	<!-- <template slot="title"> -->
             <i :class="item.front_icon" style="color: #fff;"></i>
             <span slot="title">{{item.name}}</span>
           <!-- </template>   -->
         </el-menu-item>
 
-        <el-submenu v-else :key="index"  :index="item.front_url" >
+        <el-submenu v-else :key="index"  :index="item.front_url" style="text-align: center">
          <template slot="title">
           <i :class="item.front_icon"  style="color: #fff;"></i>
           <span slot="title">{{item.name}}</span>
@@ -33,6 +35,7 @@
 </template>
 <script>
   import userApi from '../../api/user.js'
+  import globalFunctions from '@/config/global_functions'
     export default {
         name:'word-item',
         props:{
@@ -49,11 +52,12 @@
         watch:{
           $route(to,from){
     	         	this.$data.currentMenu = this.$route.name;
-    	      }
+    	      },
         },
         created:function(){
           this.menu();
         	this.getUrl();
+
         },
         methods:{
           menu() {
@@ -65,12 +69,24 @@
         		 	  }
         		 }
         		 this.$data.tableData = res.data.data;
+        		 this.refreash();
         	 }
 
             })
           },
           getUrl() {
             this.$data.currentMenu = this.$route.name;
+          },
+          refreash(){
+            let arr = [];
+            for(let item of this.$data.tableData){
+              arr.push(item.front_url)
+            }
+            if(arr.indexOf(this.$data.currentMenu) == -1){
+              // window.location.href = 'https://test.yy.ibetwo.com/';
+              this.$message.warning('该账号的岗位状态有更改，需重新登录');
+              globalFunctions.functions.user.logout(userApi,this.$router,this.$message);
+            }
           },
         },
     }

@@ -46,8 +46,6 @@
         background: #4588e6;
         overflow-x:hidden;
         overflow-y:auto;
-        // -ms-overflow-style:none;
-        // overflow:-moz-scrollbars-none;
         .left-menu{
         }
       .arrow{
@@ -59,9 +57,24 @@
           border-top: 1px solid #459af4;
           border-bottom: 1px solid #459af4;
           background-color: #4588e6;
+          //margin: 0;
+          .movement_image{
+            position: relative;
+            left: 37%;
+            top: 4px;
+            width: 5rem;
+            margin: 0;
+            padding: 0 20px;
+          }
+          .movement img{
+            animation: movement 1s infinite;
+          }
+          @keyframes movement{
+            from{transform:translate(0,0)}
+            to{transform:translate(-10px,0)}
+          }
         }
       }
-
 
     }
     .left-menu-wrap::-webkit-scrollbar {

@@ -115,6 +115,9 @@ export default {
 			imgViewVisible: false,
 			imgViewBig: '',
 			submitFlag: true,
+      bottom:true,
+      top:false,
+      visibled:false,
 		}
 	},
 	watch:{
@@ -322,8 +325,8 @@ export default {
 					this.$data.editForm.price = Number(res.data.data.price).toFixed(2);
 					for(let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
 						let obj = {
-							'material': this.$data.editForm.orderGoods[i].material,
-							'style': this.$data.editForm.orderGoods[i].style,
+							'material': this.$data.editForm.orderGoods[i].material_name,
+							'style': this.$data.editForm.orderGoods[i].style_name,
 							'price': this.$data.editForm.orderGoods[i].price,
 						};
 						this.$data.editRequestParameters.push(obj);
@@ -691,13 +694,25 @@ export default {
 		  this.$data.requestParameters.visited = '';
 		  this.$data.requestParameters.price_start = '';
 		  this.$data.requestParameters.price_end = '';
-		  this.$data.requestParameters.cashTimes = ['', ''];
-		  this.$data.requestParameters.createdTimes = ['', ''];
+		  this.$data.cashTimes = [];
+		  this.$data.createdTimes = [];
 		  // this.lists();
     },
     viewDialogClose(){
 		  this.$data.viewVisible = false;
       this.editClearData();
+    },
+    movementBottom(){
+      this.$refs.topBox.style.overflow = 'visible';
+      this.$data.visibled = true;
+      this.$data.top = true;
+      this.$data.bottom = false;
+    },
+    movementTop(){
+      this.$refs.topBox.style.overflow = 'hidden';
+      this.$data.visibled = false;
+      this.$data.top = false;
+      this.$data.bottom = true;
     },
 
 
