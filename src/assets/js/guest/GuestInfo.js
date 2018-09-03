@@ -107,15 +107,19 @@ export default {
 		},
 
 		editGuestInfo() {
+		  this.$data.ids = [];
+		  this.view(this.$props.customerId, this.$props.traffic);
 			this.$data.editGuestInfoData = this.$data.guestInfo;
 			this.$data.infoEdit = true;
+			for(let item of this.$data.guestInfo.tag){
+        this.$data.ids.push(item.id);
+      }
 		},
 
 		guestInfoCancel() {
 			this.$data.infoEdit = false;
-			this.ids = []
+			this.$data.ids = []
 		},
-
 		guestInfoEditSubmit(formName) {
 
 			let qs = require('querystring');
