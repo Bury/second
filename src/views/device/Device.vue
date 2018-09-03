@@ -25,9 +25,10 @@
               {{item.locate_desc != null ? item.locate_desc : '--'}}
             </td>
             <td >
-              <!--{{item.status == 0 ? '断开' : '正常'}}-->
-              <span v-if="item.status == 0" :class="{'ststusNormal':statusColor === 1}">断开</span>
+              <!--{{ item.status == 0 ? '断开' : '正常'}}-->
+              <span v-if="item.status == 0">断开</span>
               <span v-else-if="item.status == 1">正常</span>
+              <span v-else-if="item.status == 2">/</span>
             </td>
             <td class="handle">
               <el-button @click="fnEdit(item)" type="text" size="small">编辑</el-button>
