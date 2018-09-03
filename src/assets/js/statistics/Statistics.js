@@ -173,9 +173,8 @@ export default {
 
            }else if(this.$data.ctrlTimeType[1]){
            	    if(this.$data.week == null) { return false}
-            	this.$data.guestParameters.begin_time = this.getS(this.$data.week);
-                this.$data.guestParameters.end_time =   this.getS(this.$data.week) + 604799;
-
+            	  this.$data.guestParameters.begin_time = this.getS(this.$data.week) - 86400;
+                this.$data.guestParameters.end_time =   this.getS(this.$data.week) + 518399;
             }else if(this.$data.ctrlTimeType[2]){
             	if(this.$data.month== null) { return false}
             	let nexty,nextm;
@@ -236,12 +235,9 @@ export default {
                 this.$data.day = this.modelDate(this.$data.guestParameters.begin_time)
 	       		break;
 	       	case "week":
-	       	  console.log(weekd);
 	       	    if(weekd === 0){ weekd = 7 }
             	this.$data.guestParameters.begin_time = this.getS(`${y}/${m}/${d} 00:00:00`) - 86400*(weekd-1);
                 this.$data.guestParameters.end_time =  this.getS(`${y}/${m}/${d} 23:59:59`) + 86400*(7 - weekd);
-                console.log(this.$data.guestParameters.begin_time);
-                console.log(this.$data.guestParameters.end_time);
                 this.$data.week =  this.modelDate(this.$data.guestParameters.begin_time)
 	       		break;
 	       	case "month":
