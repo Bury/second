@@ -112,7 +112,7 @@
         <td>
           <div style="width: 100%;display: flex;padding: 5%;">
             <div style="width:45%;">
-              <img :src="item.traffic.avatar" style="width:100%;">
+              <img :src="item.traffic_avatar" style="width:100%;">
             </div>
             <div style="width:55%;padding:5% 0 0 8%;text-align:left">
               ID:{{item.traffic.customer_id}}<br/>

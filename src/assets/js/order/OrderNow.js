@@ -22,6 +22,7 @@ export default {
 
   data(){
     return {
+      traffic_id:'',
       upLoadData: {
         access_token: localStorage.getItem('knock_knock'),
       },
@@ -170,6 +171,8 @@ export default {
 
     //智能识别人脸身份
     recognition(id){
+      this.$data.traffic_id = id;
+      console.log(this.$data.traffic_id)
       this.step02_block=true;
       this.step01_block=true;
       this.step03_block=true;
@@ -255,6 +258,7 @@ export default {
       OrderApi.postMe(qs.stringify(list)).then((res) => {
         //是本人的时候，人脸id为查询手机号返回人脸id
         this.$data.isNoMyself = this.$data.faceIdNo;
+
         this.step03_block=true;
         this.step02_block=true;
         this.step01_block=true;
@@ -344,6 +348,7 @@ export default {
         'remark':this.$data.remarkString,
         'files_web':listArry,
         'customer_id':this.$data.faceIdIs,
+        'traffic_id':this.$data.traffic_id,
       }
       let qs = require('querystring');
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
