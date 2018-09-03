@@ -325,8 +325,8 @@ export default {
 					this.$data.editForm.price = Number(res.data.data.price).toFixed(2);
 					for(let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
 						let obj = {
-							'material': this.$data.editForm.orderGoods[i].material,
-							'style': this.$data.editForm.orderGoods[i].style,
+							'material': this.$data.editForm.orderGoods[i].material_name,
+							'style': this.$data.editForm.orderGoods[i].style_name,
 							'price': this.$data.editForm.orderGoods[i].price,
 						};
 						this.$data.editRequestParameters.push(obj);
