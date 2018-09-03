@@ -83,6 +83,8 @@
               arr.push(item.front_url)
             }
             if(arr.indexOf(this.$data.currentMenu) == -1){
+              // window.location.href = 'https://test.yy.ibetwo.com/';
+              this.$message.warning('该账号的岗位状态有更改，需重新登录');
               globalFunctions.functions.user.logout(userApi,this.$router,this.$message);
             }
           },
