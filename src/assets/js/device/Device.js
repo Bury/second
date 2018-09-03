@@ -63,7 +63,6 @@ export default{
                     for(let item of res.data.data.list){
                       if(item.status == 0){
                         this.$data.statusColor = 1;
-                        console.log("252525")
                       }
                     }
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;

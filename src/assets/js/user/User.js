@@ -99,7 +99,6 @@ export default{
             userApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
                 if(res.data.errno === 0){
                     this.$data.tableData = res.data.data.list;
-                    // console.log(res.data.data.list.storeRole);
                     this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
                     this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
                 }else{
@@ -174,7 +173,6 @@ export default{
         //编辑提交
         editSubmit(formName){
             this.$refs[formName].validate((valid) => {
-                console.log(valid)
                 if (valid) {
                     let qs = require('querystring')
                     this.$data.editFormData.status = this.$data.editFormData.status? 1 : 0;
@@ -205,7 +203,6 @@ export default{
 
         //重置密码
         fnResetPassword(row){
-          console.log(row)
           // if(row.status === 1){
           //   this.$data.isClick = 0;
           // }else if(row.status === 0){
@@ -284,12 +281,10 @@ export default{
 
         fnAddsSubmit(formName){
             this.$refs[formName].validate((valid) => {
-                console.log(valid)
                 if (valid) {
                     let qs = require('querystring')
                     userApi.adds(qs.stringify(this.$data.addFormData)).then((res) => {
                         if(res.data.errno === 0){
-                            console.log(res)
                             globalFunctions.functions.message(this,'success');
                             this.lists();
                             this.fnAddsFormClearData();
@@ -344,7 +339,7 @@ export default{
         },
 
         changeSwitch (data) {
-            console.log(this.$data.editFormData.status)
+            // console.log(this.$data.editFormData.status)
         }
 
     }

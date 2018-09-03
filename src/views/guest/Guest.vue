@@ -47,7 +47,7 @@
 
 		</div>
 
-    <div class="movement">
+    <div class="movement"  v-if="imageShow">
       <div class="movement_image" v-if="bottom"  @click="movementBottom">
         <img src="../../assets/images/bottom.png" />
       </div>

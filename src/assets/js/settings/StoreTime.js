@@ -23,7 +23,6 @@ export default {
         fnGetTime(){
             settingsApi.timeView().then((res) => {
                 if(res.data.errno === 0){
-                    console.log(res.data.data);
                     this.$data.startTime = res.data.data.start_time;
                     this.$data.endTime = res.data.data.end_time;
                 }else{
@@ -51,7 +50,6 @@ export default {
             let qs = require('querystring')
             settingsApi.timeSet(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
-                    // console.log(res)
                     globalFunctions.functions.message(this,'success','操作成功',1500);
 
                 }else{

@@ -13,7 +13,7 @@ export default {
   data () {
 
     return {
-        
+
         allRoles:'',
 
         editFormVisible:false,
@@ -24,7 +24,7 @@ export default {
             phone:'',
             username:'',
         },
-        
+
         editRules:{
             name:globalRules.rules.user.minMax(1,15),
             phone:globalRules.rules.user.phone(),
@@ -40,7 +40,6 @@ export default {
     getRoles(){
         roleApi.lists_results().then((res) => {
             if(res.data.errno === 0){
-                console.log(res.data.data)
                 this.$data.allRoles=res.data.data;
             }else{
                 this.$message.error(res.data.msg);
@@ -64,7 +63,6 @@ export default {
     //编辑提交
     editSubmit(formName){
         this.$refs[formName].validate((valid) => {
-            console.log(valid)
             if (valid) {
                 let qs = require('querystring')
                 userApi.edit(qs.stringify(this.$data.editFormData)).then((res) => {
@@ -81,11 +79,11 @@ export default {
                         this.$data.editFormVisible = false;
 
                     }else{
-                        this.$message.error(res.data.msg);	
-                    }		        			
-                    
+                        this.$message.error(res.data.msg);
+                    }
+
                 })
-            } 
+            }
         });
     },
 

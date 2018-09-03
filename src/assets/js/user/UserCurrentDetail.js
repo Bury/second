@@ -66,7 +66,6 @@ export default {
         getUserCurrentInfo(){
             userApi.getUserCurrentInfo().then((res) => {
                 if(res.data.errno === 0){
-                  console.log(res.data.data.user);
                   this.$data.userEditForm = res.data.data.user;
                     this.$data.username = res.data.data.user.username;
                     this.$data.role_name = res.data.data.user.role_name;
@@ -101,7 +100,6 @@ export default {
         },
 
         fnPasswordEditSubmitForm(formName){
-          // console.log(this.$data.passwordEditForm.passwordOld);
             this.$refs[formName].validate((valid) => {
                 if(this.$data.passwordEditForm.passwordOld==this.$data.passwordEditForm.passwordCurrent){
                     globalFunctions.functions.message(this,'error','新的密码与当前密码不能相同');
@@ -167,7 +165,6 @@ export default {
           };
           let qs = require('querystring');
           userApi.phoneSms(qs.stringify(list)).then((res) => {
-            console.log(res.data.msg)
             if(res.data.errno == -1){
               this.$message({
                 type: 'warning',
@@ -196,8 +193,6 @@ export default {
             })
           }
           this.$data.telForm.code = res.data.data.sign_code;
-          console.log(res.data.data);
-          console.log(this.$data.telForm);
           userApi.savePhone(qs.stringify(this.$data.telForm)).then((res) => {
             this.$message({
               type:'success',
@@ -271,7 +266,6 @@ export default {
           this.$data.unit = this.$data.userEditForm.analysis_unit;
       },
       fnSettingSubmit(){
-          console.log(this.$data.unit)
           let list ={
             'unit':this.$data.unit,
           }
