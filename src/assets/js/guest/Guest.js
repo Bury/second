@@ -165,7 +165,7 @@ export default {
                 'id': row.id
             }
             let qs = require('querystring');
-            guestApi.del(qs.stringify(list)).then((res) => {
+            guestApi.dele(qs.stringify(list)).then((res) => {
                 if(res.data.errno === 0){
                     globalFunctions.functions.message(this,'success');
                     this.lists();
