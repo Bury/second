@@ -323,13 +323,49 @@ export default {
 					this.$data.editForm.cash_t = time;
 					this.$data.editForm.remark = res.data.data.remark;
 					this.$data.editForm.price = Number(res.data.data.price).toFixed(2);
+
 					for(let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
-						let obj = {
-							'material': this.$data.editForm.orderGoods[i].material_name,
-							'style': this.$data.editForm.orderGoods[i].style_name,
-							'price': this.$data.editForm.orderGoods[i].price,
-						};
-						this.$data.editRequestParameters.push(obj);
+					  if(this.$data.materials == 0){
+              this.$data.editForm.orderGoods[i].material = this.$data.editForm.orderGoods[i].material_name;
+            }else{
+              for (let item of this.$data.materials){
+                if(item.name == this.$data.editForm.orderGoods[i].material){
+                  this.$data.editForm.orderGoods[i].material = item.name;
+                }else{
+                  this.$data.editForm.orderGoods[i].material = this.$data.editForm.orderGoods[i].material_name;
+                }
+              }
+            }
+
+            if(this.$data.styles.length == 0){
+              this.$data.editForm.orderGoods[i].style = this.$data.editForm.orderGoods[i].style_name;
+            }else{
+              for (let item of this.$data.styles){
+                if(item.name == this.$data.editForm.orderGoods[i].style){
+                  this.$data.editForm.orderGoods[i].style = item.name;
+                }else{
+                  this.$data.editForm.orderGoods[i].style = this.$data.editForm.orderGoods[i].style_name;
+                }
+              }
+            }
+
+					  if(this.$data.editForm.orderGoods[i].material != 0 && this.$data.editForm.orderGoods[i].style != 0){
+              let obj = {
+                'material': this.$data.editForm.orderGoods[i].material,
+                'style': this.$data.editForm.orderGoods[i].style,
+                'price': this.$data.editForm.orderGoods[i].price,
+              };
+              this.$data.editRequestParameters.push(obj);
+            }else{
+					    let obj = {
+                'material': null,
+                'style': null,
+                'price': this.$data.editForm.orderGoods[i].price,
+              }
+              this.$data.editRequestParameters.push(obj);
+            }
+
+
 					}
 					this.$data.editAllNum = this.$data.editForm.orderGoods.length;
 					if(this.$data.editForm.avatar != null) {

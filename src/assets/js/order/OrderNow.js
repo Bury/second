@@ -256,12 +256,16 @@ export default {
       }
       let qs = require('querystring');
       OrderApi.postMe(qs.stringify(list)).then((res) => {
-        //是本人的时候，人脸id为查询手机号返回人脸id
-        this.$data.isNoMyself = this.$data.faceIdNo;
+        if(res.data.errno === 0){
+          //是本人的时候，人脸id为查询手机号返回人脸id
+          this.$data.isNoMyself = this.$data.faceIdNo;
 
-        this.step03_block=true;
-        this.step02_block=true;
-        this.step01_block=true;
+          this.step03_block=true;
+          this.step02_block=true;
+          this.step01_block=true;
+        }else if(res.data.errno == 1000002){
+          this.$message.error(res.data.msg)
+        }
       });
     },
 

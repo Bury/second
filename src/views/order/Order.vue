@@ -273,7 +273,7 @@
           <el-row>
             <el-col :span='7'>
               <el-form-item label="材质：" prop="material" label-width="60px">
-                <el-select v-model='item.material'>
+                <el-select v-model='item.material '>
                   <el-option v-for="material in materials" :key="material.id" :label="material.name"
                              :value="material.id"></el-option>
                 </el-select>

@@ -81,8 +81,7 @@
             let arr = [];
             arr.push('OrderNow');
             for(let item of this.$data.tableData){
-              arr.push(item.front_url)
-              console.log(item.front_url);
+              arr.push(item.front_url);
             }
             if(arr.indexOf(this.$data.currentMenu) == -1){
               // window.location.href = 'https://test.yy.ibetwo.com/';
