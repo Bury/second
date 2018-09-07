@@ -81,7 +81,7 @@ global.ORDER_LISTS_USER_RESULTS = `${SERVER_IP}${COMMON}customer/order-recore`
 global.GUEST_VIEW_FACE = `${SERVER_IP}${COMMON}order/search-traffic`//PHP对象错误
 
 //门店数据统计
-global.STORE_DATA_STATISTICS = `${SERVER_IP}${COMMON}store/data-statistics`
+global.STORE_DATA_STATISTICS = `${SERVER_IP}${COMMON}store/data-statistics-new`
 
 
 
