@@ -93,7 +93,7 @@
               <span>{{item.is_new == 1 ?'新客':'熟客'}}</span>
             </td>
             <td><span>{{item.vip_level == 1 ?'已购':'未购'}}</span></td>
-            <td>{{item.device_name}}</td>
+            <td>{{item.device_name != null ? '--' : item.device_name}}</td>
             <td>{{item.created_at | date(4)}}</td>
             <td>
               <el-button type="text" size="small" @click="showDialog(item)" >详情备注</el-button>
