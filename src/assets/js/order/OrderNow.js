@@ -22,6 +22,7 @@ export default {
 
   data(){
     return {
+      isMeFlag:true,
       traffic_id:'',
       upLoadData: {
         access_token: localStorage.getItem('knock_knock'),
@@ -172,7 +173,6 @@ export default {
     //智能识别人脸身份
     recognition(id){
       this.$data.traffic_id = id;
-      console.log(this.$data.traffic_id)
       this.step02_block=true;
       this.step01_block=true;
       this.step03_block=true;
@@ -263,8 +263,13 @@ export default {
           this.step03_block=true;
           this.step02_block=true;
           this.step01_block=true;
+          this.allPostM();
         }else if(res.data.errno == 1000002){
-          this.$message.error(res.data.msg)
+          this.$message.error(res.data.msg);
+          return false;
+        }else{
+          this.$message.error(res.data.msg);
+          return false;
         }
       });
     },
@@ -358,7 +363,7 @@ export default {
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         this.$data.item = {};
         this.$data.pushGoods = [];
-        this.isTrueAndPass();
+
         if(res.data.errno === 0){
 
           this.$router.push({path: '/Order'});

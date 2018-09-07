@@ -92,7 +92,7 @@
             </el-form>
           </div>
           <el-row style="margin-top: 3rem">
-            <el-button style="margin-left: 15rem;margin-right: 10rem;float: right" @click="allPostM">确认</el-button>
+            <el-button style="margin-left: 15rem;margin-right: 10rem;float: right" @click="isTrueAndPass">确认</el-button>
           </el-row>
         </div>
 

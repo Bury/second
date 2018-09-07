@@ -323,17 +323,17 @@ export default {
 					this.$data.editForm.cash_t = time;
 					this.$data.editForm.remark = res.data.data.remark;
 					this.$data.editForm.price = Number(res.data.data.price).toFixed(2);
-
+					let arrM = [];
+					let arrS = [];
 					for(let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
 					  if(this.$data.materials == 0){
               this.$data.editForm.orderGoods[i].material = null;
             }else{
               for (let item of this.$data.materials){
-                if(item.name == this.$data.editForm.orderGoods[i].material){
-                  this.$data.editForm.orderGoods[i].material = item.name;
-                }else{
-                  this.$data.editForm.orderGoods[i].material = null;
-                }
+               arrM.push(item.id);
+              }
+              if(arrM.indexOf(this.$data.editForm.orderGoods[i].material) == -1){
+                this.$data.editForm.orderGoods[i].material = null;
               }
             }
 
@@ -341,11 +341,10 @@ export default {
               this.$data.editForm.orderGoods[i].style = null;
             }else{
               for (let item of this.$data.styles){
-                if(item.name == this.$data.editForm.orderGoods[i].style){
-                  this.$data.editForm.orderGoods[i].style = item.name;
-                }else{
-                  this.$data.editForm.orderGoods[i].style = null;
-                }
+                arrS.push(item.id)
+              }
+              if(arrS.indexOf(this.$data.editForm.orderGoods[i].style) == -1){
+                this.$data.editForm.orderGoods[i].style = null;
               }
             }
 
