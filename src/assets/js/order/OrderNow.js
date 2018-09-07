@@ -358,8 +358,9 @@ export default {
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         this.$data.item = {};
         this.$data.pushGoods = [];
+        this.isTrueAndPass();
         if(res.data.errno === 0){
-          this.isTrueAndPass();
+
           this.$router.push({path: '/Order'});
           this.$message({
             message: '创建订单成功',

@@ -326,25 +326,25 @@ export default {
 
 					for(let i = 0; i < this.$data.editForm.orderGoods.length; i++) {
 					  if(this.$data.materials == 0){
-              this.$data.editForm.orderGoods[i].material = this.$data.editForm.orderGoods[i].material_name;
+              this.$data.editForm.orderGoods[i].material = null;
             }else{
               for (let item of this.$data.materials){
                 if(item.name == this.$data.editForm.orderGoods[i].material){
                   this.$data.editForm.orderGoods[i].material = item.name;
                 }else{
-                  this.$data.editForm.orderGoods[i].material = this.$data.editForm.orderGoods[i].material_name;
+                  this.$data.editForm.orderGoods[i].material = null;
                 }
               }
             }
 
             if(this.$data.styles.length == 0){
-              this.$data.editForm.orderGoods[i].style = this.$data.editForm.orderGoods[i].style_name;
+              this.$data.editForm.orderGoods[i].style = null;
             }else{
               for (let item of this.$data.styles){
                 if(item.name == this.$data.editForm.orderGoods[i].style){
                   this.$data.editForm.orderGoods[i].style = item.name;
                 }else{
-                  this.$data.editForm.orderGoods[i].style = this.$data.editForm.orderGoods[i].style_name;
+                  this.$data.editForm.orderGoods[i].style = null;
                 }
               }
             }
@@ -477,16 +477,19 @@ export default {
 						type: 'success',
 						message: '修改成功!'
 					});
+          this.$data.editVisible = false;
+          this.editClearData();
+          setTimeout(() => {
+            this.$refs.editForm.resetFields();
+          }, 0)
 				} else {
 					this.$message.error(res.data.msg);
 				}
-				this.$data.editVisible = false;
-				this.editClearData();
+
+
 			})
 			this.$data.submitFlag = true;
-			setTimeout(() => {
-				this.$refs.editForm.resetFields();
-			}, 0)
+
 		},
 
 		cancelE(editFrom) {
