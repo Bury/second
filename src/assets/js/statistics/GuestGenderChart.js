@@ -61,6 +61,7 @@ export default {
 			setTimeout(() => {
 				guestGenderCharts.hideLoading();
 				guestGenderCharts.addSeries({
+          innerSize: '80%',
 					name: '人数',
 					data: value
 				});

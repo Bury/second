@@ -69,6 +69,7 @@ export default {
 			setTimeout(() => {
 				guestBoughtInfoCharts.hideLoading();
 				guestBoughtInfoCharts.addSeries({
+          // innerSize: '80%',
 					name: '人数',
 					data: value
 				});

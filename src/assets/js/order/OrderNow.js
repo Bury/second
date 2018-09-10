@@ -107,6 +107,8 @@ export default {
       remarkString:'',
       noData:false,
       imgData:true,
+      see:[true,true,true,true,true,true],
+      saw:[false,false,false,false,false,false]
     };
   },
 
@@ -171,7 +173,12 @@ export default {
 
 
     //智能识别人脸身份
-    recognition(id){
+    recognition(id,index){
+      this.$data.see = [true,true,true,true,true,true];
+      this.$data.saw = [false,false,false,false,false,false];
+      this.$data.saw[index] = true;
+      this.$data.see[index] = false;
+      // (nowIdx !== 4) && (this.$data.saw = false);
       this.$data.traffic_id = id;
       this.step02_block=true;
       this.step01_block=true;
@@ -306,15 +313,18 @@ export default {
 
     //  删除一条新增的商品数据
     delGoods(index){
-      //  删除
-      this.$data.addProList.splice(index,1);
-      //删除一条之后，需要再计算金额
-      let m = 0;
-      for(let i = 0; i< this.$data.addProList.length; i++){
-        m += parseInt(this.$data.addProList[i].money);
+      if(this.$data.addProList.length > 1){
+        //  删除
+        this.$data.addProList.splice(index,1);
+        //删除一条之后，需要再计算金额
+        let m = 0;
+        for(let i = 0; i< this.$data.addProList.length; i++){
+          m += parseInt(this.$data.addProList[i].money);
+        }
+        this.$data.allGoodLenght =this.$data.addProList.length
+        this.$data.allMoney = m;
       }
-      this.$data.allGoodLenght =this.$data.addProList.length
-      this.$data.allMoney = m;
+
     },
 
     //  上传图片

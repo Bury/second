@@ -67,6 +67,7 @@ export default {
 			setTimeout(() => {
 				newOldCharts.hideLoading();
 				newOldCharts.addSeries({
+          innerSize: '80%',
 					name: '人数',
 					data: value
 				});
