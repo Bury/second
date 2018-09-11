@@ -200,7 +200,7 @@ export default {
             		this.$data.noTimeHide = false;
             	}
             	this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
-                this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]);
+                this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]) + 86399;
 
             }
         	this.requestData();
