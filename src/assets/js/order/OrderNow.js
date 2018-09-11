@@ -313,9 +313,12 @@ export default {
 
     //  删除一条新增的商品数据
     delGoods(index){
-      if(this.$data.addProList.length > 1){
-        //  删除
-        this.$data.addProList.splice(index,1);
+      this.$data.addProList.splice(index,1);
+      if(this.$data.addProList.length == 1){
+        if(this.$data.addProList[0].money == ''){
+          this.$data.allMoney = '';
+        }
+      }else{
         //删除一条之后，需要再计算金额
         let m = 0;
         for(let i = 0; i< this.$data.addProList.length; i++){
@@ -324,7 +327,6 @@ export default {
         this.$data.allGoodLenght =this.$data.addProList.length
         this.$data.allMoney = m;
       }
-
     },
 
     //  上传图片

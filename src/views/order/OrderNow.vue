@@ -65,7 +65,7 @@
                   </el-col>
                 </el-form-item>
                 <el-form-item>
-                  <div @click="delGoods(index)">
+                  <div v-if="addProList.length > 1" @click="delGoods(index)">
                     <img src="@/assets/images/dele.png" />
                   </div>
                   <!--<el-button plain @click="delGoods(index)">删除</el-button>-->
