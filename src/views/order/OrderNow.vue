@@ -26,6 +26,19 @@
 
             </div>
           </div>
+          <!--分页-->
+          <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
+            <el-pagination
+              background
+              class="pagination"
+              layout="prev, pager, next"
+              small
+              @current-change="handleCurrentChange"
+              :current-page="pagination.currentPage"
+              :page-size="requestParameters.page_size"
+              :total="pagination.totalCount">
+            </el-pagination>
+          </div>
         </div>
 
         <!--第二步-->
@@ -106,6 +119,7 @@
             <el-button @click="isTrueAndPass">确认</el-button>
           </el-row>
         </div>
+
 
       </div>
 

@@ -108,28 +108,34 @@ export default {
       noData:false,
       imgData:true,
       see:[true,true,true,true,true,true],
-      saw:[false,false,false,false,false,false]
+      saw:[false,false,false,false,false,false],
+      pagination: {
+        currentPage: 1,
+        totalCount: 0,
+      },
+      requestParameters:{
+        page: 1,
+        page_size: 6,
+      }
     };
   },
 
   created:function () {
-    // this.getAll();
-
-    // this.postFace();
-    // this.view();
     this.chooseLists();
-  },
-
-  mounted:function(){
-    // this.camera_process();
   },
 
   methods:{
     chooseLists(){
-      OrderApi.chooseLists().then((res) => {
+      let list = {
+        'page':this.$data.requestParameters.page
+      }
+      let qs = require('querystring')
+      OrderApi.chooseLists(qs.stringify(list)).then((res) => {
         if(res.data.errno === 0){
           if(res.data.data.list.length > 0){
             this.$data.tableData = res.data.data.list;
+            this.$data.pagination.currentPage = res.data.data.pagination.currentPage;
+            this.$data.pagination.totalCount = res.data.data.pagination.totalCount;
           }else{
             this.$data.noData = true;
             this.$data.imgData = false;
@@ -142,6 +148,7 @@ export default {
       })
     },
     reFresh(){
+      this.$data.requestParameters.page = 1;
       this.chooseLists();
     },
     //  上传图片动态地址
@@ -401,6 +408,14 @@ export default {
     },
     fnGoback(){
       this.$router.push('/Order')
+    },
+    handleCurrentChange(currentPage) {
+      this.$data.see = [true,true,true,true,true,true,true];
+      this.$data.saw = [false,false,false,false,false,false];
+      this.$data.step02_block = false;
+      this.$data.step03_block = false;
+      this.$data.requestParameters.page = currentPage;
+      this.chooseLists();
     },
 
   }
