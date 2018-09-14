@@ -10,28 +10,29 @@
                               type="datetimerange"
                               range-separator="至"
                               start-placeholder="开始时间"
-                              end-placeholder="结束时间">
+                              end-placeholder="结束时间"
+                              onclick="clickTotal('001','进店时间',1)">
               </el-date-picker>
             </el-form-item>
             <el-form-item label="客户类型：">
-              <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
+              <el-select v-model="requestParameters.visited" placeholder="新客/熟客" onclick="clickTotal('002','客户类型',1)">
                 <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
               </el-select>
             </el-form-item>
           </el-row>
           <el-row v-if="visibled">
             <el-form-item label="消费状态：">
-              <el-select v-model="requestParameters.bought" placeholder="未购/已购">
+              <el-select v-model="requestParameters.bought" placeholder="未购/已购" onclick="clickTotal('003','消费状态',1)">
                 <el-option v-for="(item, idx) in allGuestBoughtClass" :key="idx" :label="item" :value="idx"></el-option>
               </el-select>
             </el-form-item>
             <!--<el-form-item label="年龄：">-->
-              <!--<el-select v-model="requestParameters.age" placeholder="年龄">-->
+              <!--<el-select v-model="requestParameters.age" placeholder="年龄" onclick="clickTotal('004','年龄',1)">-->
                 <!--<el-option v-for="(item, idx) in allAgeScope" :key="idx" :label="item" :value="idx"></el-option>-->
               <!--</el-select>-->
             <!--</el-form-item>-->
             <!--<el-form-item label="性别：">-->
-              <!--<el-select v-model="requestParameters.gender" placeholder="性别">-->
+              <!--<el-select v-model="requestParameters.gender" placeholder="性别" onclick="clickTotal('005','性别',1)">-->
                 <!--<el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>-->
               <!--</el-select>-->
             <!--</el-form-item>-->
@@ -41,8 +42,8 @@
         </el-form>
       </div>
       <div class="right">
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-        <el-button type="primary" @click="fnReset">重置</el-button>
+        <el-button type="primary" @click="onSubmit" onclick="clickTotal('006','查询',1)">查询</el-button>
+        <el-button type="primary" @click="fnReset" onclick="clickTotal('007','重置',1)">重置</el-button>
       </div>
 
 		</div>
