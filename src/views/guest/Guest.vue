@@ -25,16 +25,16 @@
                 <el-option v-for="(item, idx) in allGuestBoughtClass" :key="idx" :label="item" :value="idx"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="年龄：">
-              <el-select v-model="requestParameters.age" placeholder="年龄">
-                <el-option v-for="(item, idx) in allAgeScope" :key="idx" :label="item" :value="idx"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="性别：">
-              <el-select v-model="requestParameters.gender" placeholder="性别">
-                <el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>
-              </el-select>
-            </el-form-item>
+            <!--<el-form-item label="年龄：">-->
+              <!--<el-select v-model="requestParameters.age" placeholder="年龄">-->
+                <!--<el-option v-for="(item, idx) in allAgeScope" :key="idx" :label="item" :value="idx"></el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="性别：">-->
+              <!--<el-select v-model="requestParameters.gender" placeholder="性别">-->
+                <!--<el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
           </el-row>
 
 
