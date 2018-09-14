@@ -42,9 +42,9 @@
       <!-- 测试 -->
       _czc.push(["_setAccount", "1274752858"]);
       function clickTotal(id,name,type) {
-        console.log(id);
-        console.log(name);
-        console.log(type);
+        // console.log(id);
+        // console.log(name);
+        // console.log(type);
         if(type == 1){
           timer = 0;
           action = '点击次数';
@@ -54,13 +54,13 @@
           action = '点击次数';
           time1 = setInterval(function getTime(){
             timer ++;
-            console.log(timer)
+            // console.log(timer)
           },1000);
           _czc.push(["_trackEvent",'门店端', name,  action, 1, id]);
         }else if(type == 3){
           action = '操作时长';
           window.clearInterval(time1);
-          console.log(timer);
+          // console.log(timer);
           _czc.push(["_trackEvent",'门店端', name,  action, timer, id]);
         }
 
@@ -69,6 +69,8 @@
   </head>
   <body>
     <div id="app"></div>
-    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274752858'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274752858' type='text/javascript'%3E%3C/script%3E"));</script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ?
+      " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274752858'%3E%3C/span%3E%3Cscript src='"
+      + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274752858' type='text/javascript'%3E%3C/script%3E"));</script>
   </body>
 </html>
