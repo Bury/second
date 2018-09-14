@@ -116,7 +116,7 @@
             </el-form>
           </div>
           <el-row style="margin-top: 3rem">
-            <el-button @click="isTrueAndPass" onclick="clickTotal('022','开单确定',1)">确认</el-button>
+            <el-button @click="isTrueAndPass" onclick="clickTotal('022','订单管理开单',3)">确认</el-button>
           </el-row>
         </div>
 

@@ -49,15 +49,20 @@
           timer = 0;
           action = '点击次数';
           window.clearInterval(time1);
+          _czc.push(["_trackEvent",'门店端', name,  action, 1, id]);
         }else if(type == 2){
-          action = '操作时长';
+          action = '点击次数';
           time1 = setInterval(function getTime(){
             timer ++;
             console.log(timer)
           },1000);
+          _czc.push(["_trackEvent",'门店端', name,  action, 1, id]);
+        }else if(type == 3){
+          action = '操作时长';
+          console.log(timer);
+          _czc.push(["_trackEvent",'门店端', name,  action, timer, id]);
         }
-        console.log(timer)
-        _czc.push(["_trackEvent",'门店端', name,  action, timer, id]);
+
       }
     </script>
   </head>
