@@ -1,7 +1,7 @@
 <template>
     <div  class="guest-list-page">
       <div class="top-box">
-        <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;">返回</el-button>
+        <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;" onclick="clickTotal('023','开单返回',1)">返回</el-button>
         <el-button  @click="reFresh" style="margin-left: 5rem;">刷新</el-button>
       </div>
 
@@ -116,7 +116,7 @@
             </el-form>
           </div>
           <el-row style="margin-top: 3rem">
-            <el-button @click="isTrueAndPass">确认</el-button>
+            <el-button @click="isTrueAndPass" onclick="clickTotal('022','开单确定',1)">确认</el-button>
           </el-row>
         </div>
 

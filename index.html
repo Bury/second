@@ -33,11 +33,9 @@
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-      // let timer = 0;
-      // function getTime(){
-      //   timer ++;
-      //   console.log(timer)
-      // }
+      let timer = 0;
+      var time1;
+
       var _czc = _czc || [];
 
       <!-- 测试 -->
@@ -46,12 +44,16 @@
         console.log(id);
         console.log(name);
         console.log(type);
-        // if(type == 1){
-        //   window.clearInterval(getTime);
-        // }else if(type == 2){
-        //   self.setInterval(getTime,1000);
-        // }
-        _czc.push(["_trackEvent", '菜单', name, '', 1, id]);
+        if(type == 1){
+          window.clearInterval(time1);
+        }else if(type == 2){
+          time1 = setInterval(function getTime(){
+            timer ++;
+            console.log(timer)
+          },1000);
+        }
+        console.log(timer)
+        _czc.push(["_trackEvent", '菜单', name, '', timer, id]);
       }
     </script>
   </head>

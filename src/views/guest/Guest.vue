@@ -99,7 +99,7 @@
             <td>
               <el-button type="text" size="small" @click="showDialog(item)" >详情备注</el-button>
               <el-button type="text" size="small" @click="filter_process(item)" >屏蔽此人</el-button>
-              <el-button type="text" size="small" @click="dele(item)" >删除</el-button>
+              <!--<el-button type="text" size="small" @click="dele(item)" >删除</el-button>-->
             </td>
           </tr>
           </tbody>

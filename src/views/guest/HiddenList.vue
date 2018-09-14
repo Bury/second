@@ -34,7 +34,7 @@
         <td><span>{{item.vip_level == 1 ?'已购':'未购'}}</span></td>
         <td>{{item.created_at | date(4)}}</td>
         <td>
-          <el-button type="text" size="small" @click="return_process(item)" >撤销屏蔽</el-button>
+          <el-button type="text" size="small" @click="return_process(item) " onclick="clickTotal('008','撤销屏蔽',1)" >撤销屏蔽</el-button>
         </td>
       </tr>
       </tbody>
