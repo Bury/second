@@ -84,7 +84,7 @@
 
     <div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
       <!--<el-button type="primary" @click="orderLive">现场开单(拍摄)</el-button>-->
-      <el-button type="primary" @click="orderVideo" onclick="clickTotal('018','订单管理开单',2)">开单</el-button>
+      <el-button type="primary" @click="orderVideo" onclick="clickTotal('018','订单开单',2)">开单</el-button>
       <!--<el-button type="primary" @click="orderNotLive">补单</el-button>-->
     </div>
 
