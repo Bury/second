@@ -66,9 +66,9 @@
           <tr height="40">
             <th class="col-md-1 text-center">序号</th>
             <th class="col-md-1 text-center">人脸</th>
-            <th class="col-md-1 text-center">姓名</th>
-            <th class="col-md-1 text-center">性别</th>
-            <th class="col-md-1 text-center">年龄</th>
+            <th class="col-md-2 text-center">姓名</th>
+            <!--<th class="col-md-1 text-center">性别</th>-->
+            <!--<th class="col-md-1 text-center">年龄</th>-->
             <th class="col-md-1 text-center">客户类型</th>
             <th class="col-md-1 text-center">消费状态</th>
             <th class="col-md-1 text-center">拍摄位置</th>
@@ -85,10 +85,10 @@
               </div>
             </td>
             <td>{{item.customerMerchant.name == '' ? '--' : item.customerMerchant.name}}</td>
-            <td>
-              <span>{{item.gender == 1 ?'男':'女'}}</span>
-            </td>
-            <td>{{item.age}}</td>
+            <!--<td>-->
+              <!--<span>{{item.gender == 1 ?'男':'女'}}</span>-->
+            <!--</td>-->
+            <!--<td>{{item.age}}</td>-->
             <td>
               <span>{{item.is_new == 1 ?'新客':'熟客'}}</span>
             </td>

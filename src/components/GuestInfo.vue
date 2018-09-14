@@ -4,8 +4,8 @@
             <ul class="detail-left">
                 <li class="user-name">姓名： {{guestInfo.name}}</li>
                 <li class="user-phone">手机： {{guestInfo.phone}}</li>
-                <li class="user-sex">性别： {{guestInfo.gender == 1 ? '男' : '女'}}</li>
-                <li class="user-age">年龄： {{guestInfo.age}}</li>
+                <!--<li class="user-sex">性别： {{guestInfo.gender == 1 ? '男' : '女'}}</li>-->
+                <!--<li class="user-age">年龄： {{guestInfo.age}}</li>-->
                 <li class="user-type">客户类型：{{guestInfo.is_new == 1 ? '新客' : '熟客'}}</li>
                 <li class="user-type">消费状态：{{guestInfo.is_bought_to_text}}</li>
             </ul>
@@ -31,15 +31,15 @@
                 <el-form-item label="手机："  prop="phone">
                     <el-input v-model="editGuestInfoData.phone"></el-input>
                 </el-form-item>
-                <el-form-item label="性别：" prop="gender">
-                    <el-radio-group v-model="editGuestInfoData.gender">
-                        <el-radio :label="1">男</el-radio>
-                        <el-radio :label="0">女</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item label="年龄：" prop="age">
-                    <el-input v-model="editGuestInfoData.age"></el-input>
-                </el-form-item>
+                <!--<el-form-item label="性别：" prop="gender">-->
+                    <!--<el-radio-group v-model="editGuestInfoData.gender">-->
+                        <!--<el-radio :label="1">男</el-radio>-->
+                        <!--<el-radio :label="0">女</el-radio>-->
+                    <!--</el-radio-group>-->
+                <!--</el-form-item>-->
+                <!--<el-form-item label="年龄：" prop="age">-->
+                    <!--<el-input v-model="editGuestInfoData.age"></el-input>-->
+                <!--</el-form-item>-->
                 <el-form-item label="客户类型：">
                     {{editGuestInfoData.is_new_to_text}}
                 </el-form-item>
