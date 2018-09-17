@@ -29,10 +29,10 @@ axios.interceptors.response.use(function (res) {
             localStorage.setItem('knock_knock', '')
             localStorage.setItem('username', '')
             window.location.href = '/';
-         // router.replace({
-         //     path: '/UserLogin',
-         //     query: {redirect: router.currentRoute.fullPath}
-         // })
+        //  router.replace({
+        //      path: '/UserLogin',
+        //      query: {redirect: router.currentRoute.fullPath}
+        //  })
         }
     return res;
   }, function (err) {
@@ -40,11 +40,12 @@ axios.interceptors.response.use(function (res) {
             localStorage.setItem('knock_knock', '')
             localStorage.setItem('username', '')
             window.location.href = '/';
-         // router.replace({
-         //     path: '/UserLogin',
-         //     query: {redirect: router.currentRoute.fullPath}
-         // })
+        //  router.replace({
+        //      path: '/UserLogin',
+        //      query: {redirect: router.currentRoute.fullPath}
+        //  })
         }
     return Promise.reject(err);
   });
 
+  
