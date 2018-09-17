@@ -5,17 +5,17 @@
         <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
           <el-row>
             <el-form-item label="编号：">
-              <el-input v-model.trim="requestParameters.sn"></el-input>
+              <el-input v-model.trim="requestParameters.sn" onclick="clickTotal('009','编号',1)"></el-input>
             </el-form-item>
             <el-form-item label="材质：">
-              <el-select v-model="requestParameters.material" placeholder="请选择材质">
+              <el-select v-model="requestParameters.material" placeholder="请选择材质" onclick="clickTotal('010','材质',1)">
                 <el-option label="全部" value="">全部</el-option>
                 <el-option v-for="material in materials" :key="material.id" :label="material.name"
                            :value="material.id"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="款式：">
-              <el-select v-model="requestParameters.style" placeholder="请选择款式">
+              <el-select v-model="requestParameters.style" placeholder="请选择款式"  onclick="clickTotal('011','款式',1)">
                 <el-option label="全部" value="">全部</el-option>
                 <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
               </el-select>
@@ -23,17 +23,17 @@
         </el-row>
         <el-row v-if="visibled">
           <el-form-item label="客户类型：">
-            <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
+            <el-select v-model="requestParameters.visited" placeholder="新客/熟客" onclick="clickTotal('012','客户类型',1)">
               <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="金额：">
             <el-col :span="11">
-              <el-input v-model.trim="requestParameters.price_start"></el-input>
+              <el-input v-model.trim="requestParameters.price_start" onclick="clickTotal('013','金额',1)"></el-input>
             </el-col>
             <el-col class="line" :span="1">-</el-col>
             <el-col :span="11">
-              <el-input v-model.trim="requestParameters.price_end"></el-input>
+              <el-input v-model.trim="requestParameters.price_end" onclick="clickTotal('013','金额',1)"></el-input>
             </el-col>
           </el-form-item>
         </el-row>
@@ -44,7 +44,8 @@
                             type="datetimerange"
                             range-separator="至"
                             start-placeholder="开始时间"
-                            end-placeholder="结束时间">
+                            end-placeholder="结束时间"
+                            onclick="clickTotal('014','收银时间',1)">
             </el-date-picker>
           </el-form-item>
         </el-row>
@@ -55,7 +56,8 @@
                             type="datetimerange"
                             range-separator="至"
                             start-placeholder="开始时间"
-                            end-placeholder="结束时间">
+                            end-placeholder="结束时间"
+                            onclick="clickTotal('015','创建时间',1)">
             </el-date-picker>
           </el-form-item>
         </el-row>
@@ -66,8 +68,8 @@
       </div>
 
       <div class="right">
-        <el-button type="primary" @click="lists">查询</el-button>
-        <el-button type="primary" @click="fnReset">重置</el-button>
+        <el-button type="primary" @click="lists" onclick="clickTotal('016','订单管理查询',1)">查询</el-button>
+        <el-button type="primary" @click="fnReset" onclick="clickTotal('017','订单管理重置',1)">重置</el-button>
       </div>
     </div>
 
@@ -82,7 +84,7 @@
 
     <div style="text-align:right;border-top:1px solid #dcdfe6;padding:20px 0;">
       <!--<el-button type="primary" @click="orderLive">现场开单(拍摄)</el-button>-->
-      <el-button type="primary" @click="orderVideo">开单</el-button>
+      <el-button type="primary" @click="orderVideo" onclick="clickTotal('018','订单开单',2)">开单</el-button>
       <!--<el-button type="primary" @click="orderNotLive">补单</el-button>-->
     </div>
 
@@ -124,9 +126,9 @@
         <td>{{item.cash_t | date(4)}}</td>
         <td>{{item.created_at | date(4)}}</td>
         <td>
-          <el-button @click="fnView(item)" type="text" size="small">查看</el-button>
-          <el-button @click="fnEdit(item)" type="text" size="small">编辑</el-button>
-          <el-button @click="fnRemove(item)" type="text" size="small">删除</el-button>
+          <el-button @click="fnView(item)" type="text" size="small" onclick="clickTotal('019','订单管理查看',1)">查看</el-button>
+          <el-button @click="fnEdit(item)" type="text" size="small" onclick="clickTotal('020','订单管理编辑',1)">编辑</el-button>
+          <el-button @click="fnRemove(item)" type="text" size="small" onclick="clickTotal('021','订单管理删除',1)">删除</el-button>
         </td>
       </tr>
       </tbody>
@@ -258,7 +260,7 @@
               <el-input v-model.trim="editForm.traffic.customer_id"></el-input>
             </el-col>
             <el-col :span='2'>
-              <el-button @click="editFindGuestByFaceId()">查询</el-button>
+              <el-button @click="editFindGuestByFaceId()" onclick="clickTotal('0201','人脸编号',1)">查询</el-button>
             </el-col>
           </el-row>
           <el-form-item :data="faceSearch">
@@ -273,7 +275,7 @@
           <el-row>
             <el-col :span='7'>
               <el-form-item label="材质：" prop="material" label-width="60px">
-                <el-select v-model='item.material '>
+                <el-select v-model='item.material ' onclick="clickTotal('0202','编辑材质',1)">
                   <el-option v-for="material in materials" :key="material.id" :label="material.name"
                              :value="material.id"></el-option>
                 </el-select>
@@ -281,14 +283,14 @@
             </el-col>
             <el-col :span='7'>
               <el-form-item label="款式：" prop="style" label-width="60px">
-                <el-select v-model="item.style">
+                <el-select v-model="item.style" onclick="clickTotal('0203','编辑款式',1)">
                   <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span='7'>
               <el-form-item label='成交金额：' prop="price">
-                <el-input v-model.trim='item.price' v-on:input='editInputFun()'></el-input>
+                <el-input v-model.trim='item.price' v-on:input='editInputFun()' onclick="clickTotal('0204','编辑金额',1)"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span='1'>
@@ -303,7 +305,7 @@
         <div class="addproduct">
           <div>
             <el-form-item label=''>
-              <el-button @click='editAddProduct()'>新增商品</el-button>
+              <el-button @click='editAddProduct()' onclick="clickTotal('0205','新增商品',1)">新增商品</el-button>
             </el-form-item>
           </div>
         </div>
@@ -330,7 +332,8 @@
                      :data="upLoadData"
                      :on-preview="editHandlePictureCardPreview"
                      :on-remove="editHandleRemove"
-                     :onSuccess="editUploadSuccess">
+                     :onSuccess="editUploadSuccess"
+                     onclick="clickTotal('0206','编辑小票',1)">
             <i class="el-icon-plus"></i>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
@@ -342,14 +345,15 @@
             type="textarea"
             maxlength=200
             placeholder="请输入内容"
-            v-model="editForm.remark">
+            v-model="editForm.remark"
+            onclick="clickTotal('0207','编辑备注',1)">
           </el-input>
         </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelE()">取 消</el-button>
-        <el-button type="primary" @click="EditFormSubmit(editForm)" v-show="isForChange">确 定</el-button>
+        <el-button type="primary" @click="EditFormSubmit(editForm)" v-show="isForChange" onclick="clickTotal('0208','编辑确定',1)">确 定</el-button>
       </div>
     </el-dialog>
 

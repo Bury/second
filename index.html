@@ -28,13 +28,52 @@
       background-image: linear-gradient(to bottom, #009edf, #002f44);
     }
     </style>
-    <script src="https://cdn.staticfile.org/particles.js/2.0.0/particles.js"></script>
-	<link rel="stylesheet" href="static/css/bootstrap.css"> 
-	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> 
-	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> 
-	<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>  
+	<link rel="stylesheet" href="static/css/bootstrap.css">
+	<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+	<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      var timer = 0;
+      var time1;
+      var _czc = _czc || [];
+      var action;
+      var obj;
+      var localhostUrl = window.location.href.split('//')[1].split('.')[0];
+      if(localhostUrl == 'web'){
+        obj = '1274752858';
+      }
+      _czc.push(["_setAccount", obj]);
+      function clickTotal(id,name,type) {
+        if(type == 1){
+          timer = 0;
+          action = '点击次数';
+          window.clearInterval(time1);
+          _czc.push(["_trackEvent",'门店端', name,  action, 1, id]);
+        }else if(type == 2){
+          action = '点击次数';
+          time1 = setInterval(function getTime(){
+            timer ++;
+          },1000);
+          _czc.push(["_trackEvent",'门店端', name,  action, 1, id]);
+        }else if(type == 3){
+          action = '操作时长';
+          window.clearInterval(time1);
+          _czc.push(["_trackEvent",'门店端', name,  action, timer, id]);
+        }
+
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
+    <script type="text/javascript">
+      var localhostUrl = window.location.href.split('//')[1].split('.')[0];
+      if(localhostUrl == 'web'){
+        var num = '1274752858';
+      }
+      var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+      document.write(unescape("%3Cspan id='cnzz_stat_icon_"+num+"'%3E%3C/span%3E%3Cscript src='"
+        + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D"+num+"' type='text/javascript'%3E%3C/script%3E"));
+    </script>
   </body>
 </html>

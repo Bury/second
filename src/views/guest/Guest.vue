@@ -10,39 +10,40 @@
                               type="datetimerange"
                               range-separator="至"
                               start-placeholder="开始时间"
-                              end-placeholder="结束时间">
+                              end-placeholder="结束时间"
+                              onclick="clickTotal('001','进店时间',1)">
               </el-date-picker>
             </el-form-item>
             <el-form-item label="客户类型：">
-              <el-select v-model="requestParameters.visited" placeholder="新客/熟客">
+              <el-select v-model="requestParameters.visited" placeholder="新客/熟客" onclick="clickTotal('002','客户类型',1)">
                 <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
               </el-select>
             </el-form-item>
           </el-row>
           <el-row v-if="visibled">
             <el-form-item label="消费状态：">
-              <el-select v-model="requestParameters.bought" placeholder="未购/已购">
+              <el-select v-model="requestParameters.bought" placeholder="未购/已购" onclick="clickTotal('003','消费状态',1)">
                 <el-option v-for="(item, idx) in allGuestBoughtClass" :key="idx" :label="item" :value="idx"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="年龄：">
-              <el-select v-model="requestParameters.age" placeholder="年龄">
-                <el-option v-for="(item, idx) in allAgeScope" :key="idx" :label="item" :value="idx"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="性别：">
-              <el-select v-model="requestParameters.gender" placeholder="性别">
-                <el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>
-              </el-select>
-            </el-form-item>
+            <!--<el-form-item label="年龄：">-->
+              <!--<el-select v-model="requestParameters.age" placeholder="年龄" onclick="clickTotal('004','年龄',1)">-->
+                <!--<el-option v-for="(item, idx) in allAgeScope" :key="idx" :label="item" :value="idx"></el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="性别：">-->
+              <!--<el-select v-model="requestParameters.gender" placeholder="性别" onclick="clickTotal('005','性别',1)">-->
+                <!--<el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
           </el-row>
 
 
         </el-form>
       </div>
       <div class="right">
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-        <el-button type="primary" @click="fnReset">重置</el-button>
+        <el-button type="primary" @click="onSubmit" onclick="clickTotal('006','查询',1)">查询</el-button>
+        <el-button type="primary" @click="fnReset" onclick="clickTotal('007','重置',1)">重置</el-button>
       </div>
 
 		</div>
@@ -66,9 +67,9 @@
           <tr height="40">
             <th class="col-md-1 text-center">序号</th>
             <th class="col-md-1 text-center">人脸</th>
-            <th class="col-md-1 text-center">姓名</th>
-            <th class="col-md-1 text-center">性别</th>
-            <th class="col-md-1 text-center">年龄</th>
+            <th class="col-md-2 text-center">姓名</th>
+            <!--<th class="col-md-1 text-center">性别</th>-->
+            <!--<th class="col-md-1 text-center">年龄</th>-->
             <th class="col-md-1 text-center">客户类型</th>
             <th class="col-md-1 text-center">消费状态</th>
             <th class="col-md-1 text-center">拍摄位置</th>
@@ -85,10 +86,10 @@
               </div>
             </td>
             <td>{{item.customerMerchant.name == '' ? '--' : item.customerMerchant.name}}</td>
-            <td>
-              <span>{{item.gender == 1 ?'男':'女'}}</span>
-            </td>
-            <td>{{item.age}}</td>
+            <!--<td>-->
+              <!--<span>{{item.gender == 1 ?'男':'女'}}</span>-->
+            <!--</td>-->
+            <!--<td>{{item.age}}</td>-->
             <td>
               <span>{{item.is_new == 1 ?'新客':'熟客'}}</span>
             </td>
@@ -98,7 +99,7 @@
             <td>
               <el-button type="text" size="small" @click="showDialog(item)" >详情备注</el-button>
               <el-button type="text" size="small" @click="filter_process(item)" >屏蔽此人</el-button>
-              <el-button type="text" size="small" @click="dele(item)" >删除</el-button>
+              <!--<el-button type="text" size="small" @click="dele(item)" >删除</el-button>-->
             </td>
           </tr>
           </tbody>

@@ -11,20 +11,25 @@
             active-text-color="#fff">
 
       <template v-for="(item,index) in tableData">
-        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" style="text-align: center;">
-        	<!-- <template slot="title"> -->
+        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" style="text-align: center;" :id="item.id">
+          <div onclick="clickTotal(this.parentNode.id,this.id,1)" :id="item.name">
             <i :class="item.front_icon" style="color: #fff;"></i>
             <span slot="title">{{item.name}}</span>
-          <!-- </template>   -->
+          </div>
         </el-menu-item>
 
         <el-submenu v-else :key="index"  :index="item.front_url" style="text-align: center">
-         <template slot="title">
-          <i :class="item.front_icon"  style="color: #fff;"></i>
-          <span slot="title">{{item.name}}</span>
-         </template>
+            <template slot="title">
+                <i :class="item.front_icon"  style="color: #fff;"></i>
+                <span slot="title">{{item.name}}</span>
+            </template>
+
           <template v-for="(item1,index1) in item.children">
-          	<el-menu-item :key="index1" :index="item1.front_url" style="padding-left:53px;">{{item1.name}}</el-menu-item>
+              <el-menu-item :key="index1" :index="item1.front_url" style="padding-left:53px;" :id="item1.id">
+                <div  onclick="clickTotal(this.parentNode.id,this.id,1)" :id="item1.name">
+                {{item1.name}}
+                </div>
+              </el-menu-item>
           </template>
         </el-submenu>
       </template>
@@ -41,7 +46,6 @@
         props:{
             isCollapse: Boolean,
             isShow: Boolean,
-          // active_text_color:'',
         },
         data(){
             return{
@@ -69,6 +73,7 @@
         		 	  }
         		 }
         		 this.$data.tableData = res.data.data;
+
         		 this.refreash();
         	 }
 

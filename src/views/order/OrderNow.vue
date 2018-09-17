@@ -1,7 +1,7 @@
 <template>
     <div  class="guest-list-page">
       <div class="top-box">
-        <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;">返回</el-button>
+        <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;" onclick="clickTotal('023','开单返回',1)">返回</el-button>
         <el-button  @click="reFresh" style="margin-left: 5rem;">刷新</el-button>
       </div>
 
@@ -25,6 +25,19 @@
               </div>
 
             </div>
+          </div>
+          <!--分页-->
+          <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
+            <el-pagination
+              background
+              class="pagination"
+              layout="prev, pager, next"
+              small
+              @current-change="handleCurrentChange"
+              :current-page="pagination.currentPage"
+              :page-size="requestParameters.page_size"
+              :total="pagination.totalCount">
+            </el-pagination>
           </div>
         </div>
 
@@ -74,7 +87,7 @@
 
               <el-row style="margin-top: 3rem;">
                 <div @click="addAGood">
-                  <img src="@/assets/images/plus.png" style="margin-right: 1rem;"/>添加订单
+                  <img src="@/assets/images/plus.png" style="margin-right: 1rem;"/>添加商品
                 </div>
                 <!--<el-button style="margin-left: 5rem;float: right" @click="addAGood">新增商品</el-button>-->
               </el-row>
@@ -103,9 +116,10 @@
             </el-form>
           </div>
           <el-row style="margin-top: 3rem">
-            <el-button @click="isTrueAndPass">确认</el-button>
+            <el-button @click="isTrueAndPass" onclick="clickTotal('022','订单管理开单',3)">确认</el-button>
           </el-row>
         </div>
+
 
       </div>
 
