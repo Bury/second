@@ -66,10 +66,10 @@ router.beforeEach((to, from, next) => {
 
         window.location.href = '/';
 
- next({
-   path: '/UserLogin',
-      query: { redirect: to.fullPath }
-  })
+//  next({
+//    path: '/UserLogin',
+//       query: { redirect: to.fullPath }
+//   })
   } else {
     next()
   }
