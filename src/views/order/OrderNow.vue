@@ -87,7 +87,7 @@
 
               <el-row style="margin-top: 3rem;">
                 <div @click="addAGood">
-                  <img src="@/assets/images/plus.png" style="margin-right: 1rem;"/>添加订单
+                  <img src="@/assets/images/plus.png" style="margin-right: 1rem;"/>添加商品
                 </div>
                 <!--<el-button style="margin-left: 5rem;float: right" @click="addAGood">新增商品</el-button>-->
               </el-row>
