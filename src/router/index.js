@@ -47,7 +47,7 @@ const router = new Router({
         {path: 'Statistics',name: 'Statistics',component: Statistics},
         {path: 'Guest',name: 'Guest',component: Guest},
         {path: 'Order',name: 'Order',component: Order},
-        {path: 'OrderLive',name: 'OrderLive',component: OrderLive},
+        // {path: 'OrderLive',name: 'OrderLive',component: OrderLive},
         // {path: 'OrderVideo',name: 'OrderVideo',component: OrderVideo},
         {path: 'OrderNow',name: 'OrderNow',component: OrderNow},
         {path: 'Device',name: 'Device',component: Device},
