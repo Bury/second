@@ -40,30 +40,41 @@
         <el-row v-if="visibled">
           <el-form-item label="收银时间：">
             <el-date-picker :picker-options="pickerOptionsSet"
-                            v-model="cashTimes"
-                            type="datetimerange"
-                            range-separator="至"
-                            start-placeholder="开始时间"
-                            end-placeholder="结束时间"
-                            onclick="clickTotal('014','收银时间',1)">
+                            v-model="cash_time_start"
+                            type="date"
+                            placeholder="开始时间"
+                            :clearable=false
+                            onclick="clickTotal('014','收银开始时间',1)">
+            </el-date-picker>
+            -
+            <el-date-picker :picker-options="pickerOptionsSet"
+                            v-model="cash_time_end"
+                            type="date"
+                            placeholder="结束时间"
+                            :clearable=false
+                            onclick="clickTotal('0141','收银结束时间',1)">
             </el-date-picker>
           </el-form-item>
         </el-row>
         <el-row v-if="visibled">
           <el-form-item label="创建时间：">
             <el-date-picker :picker-options="pickerOptionsSet"
-                            v-model="createdTimes"
-                            type="datetimerange"
-                            range-separator="至"
-                            start-placeholder="开始时间"
-                            end-placeholder="结束时间"
-                            onclick="clickTotal('015','创建时间',1)">
+                            v-model="create_time_start"
+                            type="date"
+                            placeholder="开始时间"
+                            :clearable=false
+                            onclick="clickTotal('015','创建开始时间',1)">
+            </el-date-picker>
+            -
+            <el-date-picker :picker-options="pickerOptionsSet"
+                            v-model="create_time_end"
+                            type="date"
+                            placeholder="结束时间"
+                            :clearable=false
+                            onclick="clickTotal('0151','创建结束时间',1)">
             </el-date-picker>
           </el-form-item>
         </el-row>
-
-
-
       </el-form>
       </div>
 
