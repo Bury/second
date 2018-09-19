@@ -260,6 +260,7 @@
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
         <el-form-item label="收银时间：" prop="cash_t">
           <el-date-picker
+            disabled
             v-model="editForm.cash_t"
             type="datetime"
             placeholder="选择日期时间">
