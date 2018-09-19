@@ -70,7 +70,8 @@ export default {
           imageShow:true,
           store_visited_start:'',
           store_visited_end:'',
-
+          filterProcess:false,
+          filterProcessId:'',
         }
     },
 
@@ -142,24 +143,21 @@ export default {
         },
 
         //点击屏蔽此人
-        filter_process(row){
+      filter_process(row){
+        this.$data.filterProcess = true;
+        this.$data.filterProcessId = row.customer_id;
+      },
+      submitForm(){
         	 let qs = require('querystring');
-
-        	 this.$confirm('是否屏蔽此人？','提示',{
-        	 	confirmButtonText:'确认',
-        	 	cancelButtonText:'取消',
-        	 	type:'warning'
-        	 }).then(() => {
-        	 	guestApi.hidden(qs.stringify({id:row.customer_id,is_hidden:1 })).then((res) => {
-             	   if(res.data.errno === 0){
-             		    this.lists();
-                        globalFunctions.functions.message(this,'success');
-             	   }else{
-             		    this.$message(res.data.msg);
-             	   }
-                })
-        	 })
-
+        	 	guestApi.hidden(qs.stringify({id:this.$data.filterProcessId,is_hidden:1 })).then((res) => {
+               if(res.data.errno === 0){
+                   this.lists();
+                   this.$data.filterProcess = false;
+                   globalFunctions.functions.message(this,'success');
+               }else{
+                  this.$message(res.data.msg);
+               }
+              })
         },
 
         checkout(tab, event) {
@@ -189,8 +187,6 @@ export default {
         },
 
         closeChangeMachie(done){
-            done();
-            // window.location.reload();
             this.lists();
             this.$data.showInfoEdit = false;
         },
@@ -222,6 +218,12 @@ export default {
         this.$data.top = false;
         this.$data.bottom = true;
       },
+      cancel(){
+        this.$data.filterProcess = false;
+      },
+      closeFilterProcess(){
+        this.$data.filterProcess = false;
+      }
 
     },
 

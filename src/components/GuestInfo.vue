@@ -20,7 +20,7 @@
                 <el-tag v-for="(item,key) in guestInfo.tag" :key="key" style="margin-right:10px;">{{guestInfo.tag[key].name}}</el-tag>
             </div>
             <p class="user-remarks">备注： {{guestInfo.remark === '' ? '暂无' : guestInfo.remark}}</p>
-            <el-button type="primary" plain size="small" class="edit-btn" @click="editGuestInfo()">编辑</el-button>
+            <el-button type="primary" plain size="small" class="edit-btn" @click="editGuestInfo()" onclick="clickTotal('204','详情备注-个人信息编辑',1)">编辑</el-button>
         </div>
       <!--编辑-->
         <div class="user-info-edit" v-if="infoEdit">

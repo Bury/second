@@ -134,22 +134,32 @@
 
     <!-- 弹窗 -->
     <el-dialog :visible.sync="dialogVisible" center style="min-width:1200px;z-index:2010;" :before-close="closeChangeMachie" :append-to-body="true">
-      <el-tabs v-model="activeName1" @tab-click="checkout">
-          <el-tab-pane label="个人信息" name="first">
-            <guest-info :customerId="currentCustomerId" :traffic="trafficId" :editShow="dialogVisible" :showInfoEdit="showInfoEdit"></guest-info>
-          </el-tab-pane>
-
+      <el-tabs v-model="activeName1" @tab-click="checkout" onclick="clickTotal('201',event.target,4)">
+        <el-tab-pane label="个人信息" name="first">
+          <guest-info  :customerId="currentCustomerId" :traffic="trafficId" :editShow="dialogVisible" :showInfoEdit="showInfoEdit"></guest-info>
+        </el-tab-pane>
           <el-tab-pane label="到店记录" name="second" style="min-height:415px;">
 			    	<guest-visited-record :customerId="currentCustomerId"></guest-visited-record>
 			    </el-tab-pane>
-
-          <el-tab-pane label="订单记录" name="third">
+          <el-tab-pane label="订单记录" name="third" onclick="clickTotal('203','详情备注-订单记录',1)">
 			    	<guest-order-record :customerId="currentCustomerId" style="min-height:415px;"></guest-order-record>
 			    </el-tab-pane>
 
       </el-tabs>
     </el-dialog>
 
+    <el-dialog title="提示" center :visible.sync="filterProcess"  style="min-width:500px;z-index:2010;" :before-close="closeFilterProcess">
+      <el-row>
+        <div style="padding-left: 3rem;">
+          <i class="el-icon-warning" style="color: rgb(245,175,55);font-size: 3rem;"></i>
+          <span style="font-size: 1.8rem;margin-left: 2rem;">是否屏蔽此人？</span>
+        </div>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancel()">取 消</el-button>
+        <el-button type="primary" @click="submitForm()" onclick="clickTotal('0','屏蔽此人确定',1)">确 定</el-button>
+      </div>
+    </el-dialog>
 	</div>
 
 </template>
