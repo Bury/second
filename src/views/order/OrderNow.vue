@@ -74,7 +74,7 @@
                 </el-form-item>
                 <el-form-item label="成交总额：">
                   <el-col :span="15">
-                    <input class="inputStyle" type="number" v-model="item.money" v-on:input="getMoney(item.money)" value="0" :maxlength="7"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></input>
+                    <input class="inputStyle" type="number" v-model="item.money" v-on:input="getMoney(item.money)" value="0" oninput="if(value.length>7)value=value.slice(0,7)"></input>
 
                   </el-col>
                 </el-form-item>
