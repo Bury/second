@@ -56,7 +56,7 @@
         <!--第三步--创建订单-->
         <div class="get_a" v-show="step03_block" style="text-align: center">
           <div>
-            <el-form :inline="true" :model="item" :rules="rulesD" ref="item" size="small" style="text-align: center">
+            <el-form :inline="true" :model="item" ref="item" size="small" style="text-align: center">
               <div v-for='(item,index) in addProList' v-if="addProList">
                 <el-form-item label="材质：">
                   <el-col :span="20">
@@ -74,14 +74,14 @@
                 </el-form-item>
                 <el-form-item label="成交总额：">
                   <el-col :span="15">
-                    <el-input v-model="item.money" v-on:input="getMoney(item.money)" value="0" :maxlength="inputMaxL"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></el-input>
+                    <input class="inputStyle" type="number" v-model="item.money" v-on:input="getMoney(item.money)" value="0" :maxlength="7"  @input="inputMaxL = /^\d+\.?\d{0,1}$/.test(item.money) ? null : item.money.length - 1"></input>
+
                   </el-col>
                 </el-form-item>
                 <el-form-item>
                   <div v-if="addProList.length > 1" @click="delGoods(index)">
                     <img src="@/assets/images/dele.png" />
                   </div>
-                  <!--<el-button plain @click="delGoods(index)">删除</el-button>-->
                 </el-form-item>
               </div>
 
@@ -92,9 +92,9 @@
                 <!--<el-button style="margin-left: 5rem;float: right" @click="addAGood">新增商品</el-button>-->
               </el-row>
               <el-row style="margin-top: 3rem;margin-left: 2rem;">
-                <div class="moneyL" style="">
+                <div class="moneyL">
                   <p>共计</p>
-                  <input class="lastNum" disabled v-model="allGoodLenght">
+                  <input class="lastNum" disabled v-model="allGoodLenght" style="width: 4rem;">
                   <p>件，</p><p>总价</p>
                   <input class="lastNum" disabled v-model="allMoney" value="0">
                   <p>元</p>

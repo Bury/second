@@ -195,14 +195,6 @@ export default {
                 this.$data.guestParameters.end_time =  this.getS(`${y}/12/31 23:59:59`);
 
             }else if(this.$data.ctrlTimeType[4]){
-            	// if(this.$data.userDefined == null || this.$data.userDefined.length == 0) {
-            	// 	this.$data.noTimeHide = true;
-            	// 	return false;
-            	// }else{
-            	// 	this.$data.noTimeHide = false;
-            	// }
-            console.log(this.getS(this.$data.times_start));
-            console.log(this.getS(this.$data.times_end) + 86399);
             let startTime = this.getS(this.$data.times_start);
             let endTime = this.getS(this.$data.times_end) + 86399;
             if(startTime > endTime){
