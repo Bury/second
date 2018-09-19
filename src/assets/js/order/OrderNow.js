@@ -33,7 +33,6 @@ export default {
       step01_block:true,
       step02_block:false,
       step03_block:false,
-      inputMaxL:9,
       showVideo:true,
       actionDialogVisible: false,
       userOld:false,
@@ -75,12 +74,6 @@ export default {
         sex:'',
         type:'',
         textarea2:'',
-      },
-      rulesD:{
-        money:[
-          { required: true, message: '最高输入金额一百万', trigger: 'change' },
-          // { min: 3, max: 9, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ]
       },
       form:{
         newPhone:'',
@@ -301,20 +294,25 @@ export default {
 
     //  实时计算输入金额
     getMoney(obj){
-      if(obj.length > 11){
+      if(obj.length >= 7){
         this.$message({
-          message: '最高输入金额为一百万',
+          message: '最高输入金额为百万元',
           type: 'warning',
-          center: true
         });
-        // this.isCan = 1;
-        obj.length = 9;
       }
       let m = 0;
       for(let i = 0; i< this.$data.addProList.length; i++){
         m += Number(this.$data.addProList[i].money);
       }
-      this.$data.allGoodLenght =this.$data.addProList.length
+      // if(m>= 100000000){
+      //   console.log("超过一个亿啦！");
+      //   m = m.toFixed(2);
+      //   console.log(m)
+      //   // this.$data.allMoney =
+      // }else{
+      //   this.$data.allMoney = m;
+      // }
+      this.$data.allGoodLenght =this.$data.addProList.length;
       this.$data.allMoney = m;
     },
 

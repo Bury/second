@@ -118,6 +118,10 @@ export default {
       bottom:true,
       top:false,
       visibled:false,
+      cash_time_start:'',
+      cash_time_end:'',
+      create_time_start:'',
+      create_time_end:'',
 		}
 	},
 	watch:{
@@ -240,19 +244,28 @@ export default {
 				})
 			}
 		},
-
+    //时间转为秒
+    getS(value) {
+      var formatTimeS = new Date(value).getTime() / 1000;
+      return formatTimeS
+    },
 		//列表
 		lists() {
-			if((this.$data.cashTimes != null) && (this.$data.createdTimes != null)) {
-				this.$data.requestParameters.cash_t_start = utils.getDateTime(this.$data.cashTimes[0]);
-				this.$data.requestParameters.cash_t_end = utils.getDateTime(this.$data.cashTimes[1]);
-				this.$data.requestParameters.created_at_start = utils.getDateTime(this.$data.createdTimes[0]);
-				this.$data.requestParameters.created_at_end = utils.getDateTime(this.$data.createdTimes[1]);
-			} else {
-				this.$data.cashTimes = ['', ''];
-				this.$data.createdTimes = ['', ''];
-				this.lists();
-			}
+		  let cashTimeStart = this.getS(this.$data.cash_time_start);
+		  let cashTimeEnd = this.getS(this.$data.cash_time_end) + 86399;
+		  let createTimeStart = this.getS(this.$data.create_time_start) ;
+		  let createTimeEnd = this.getS(this.$data.create_time_end) + 86399;
+		  if((cashTimeStart > cashTimeEnd) || (createTimeStart > createTimeEnd)){
+        this.$confirm('您选择的结束时间应该大于开始时间','日期选择警告',{
+          confirmButtonText:'知道了',
+          showCancelButton:false,
+          type:'warning'
+        })
+      }
+      this.$data.requestParameters.cash_t_start = this.getS(this.$data.cash_time_start) ;
+      this.$data.requestParameters.cash_t_end = this.getS(this.$data.cash_time_end) + 86399;
+      this.$data.requestParameters.created_at_start = this.getS(this.$data.create_time_start) ;
+      this.$data.requestParameters.created_at_end = this.getS(this.$data.create_time_end) + 86399;
 			let qs = require('querystring');
       orderApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
         if (res.data.errno === 0) {
@@ -732,8 +745,10 @@ export default {
 		  this.$data.requestParameters.visited = '';
 		  this.$data.requestParameters.price_start = '';
 		  this.$data.requestParameters.price_end = '';
-		  this.$data.cashTimes = [];
-		  this.$data.createdTimes = [];
+		  this.$data.cash_time_start = '';
+		  this.$data.cash_time_end = '';
+		  this.$data.create_time_start = '';
+		  this.$data.create_time_end = '';
 		  // this.lists();
     },
     viewDialogClose(){
