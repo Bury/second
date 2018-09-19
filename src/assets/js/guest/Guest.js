@@ -41,19 +41,19 @@ export default {
             activeName1: 'first',
             activeName2: 'first',
             dialogVisible:false,//弹窗是否显示
-            value4: ['',''],
+            // value4: ['',''],
             topBoxSow:true,
             updateCount:0,
             requestParameters: {
                 page: 1,
                 page_size:20,
-                visit_time_start:'',
-                visit_time_end:'',
+              store_time_start:'',
+              store_time_end:'',
                 //level:'',
                 visited:'',
                 bought:'',
-                age:'',
-                gender:'',
+                // age:'',
+                // gender:'',
             },
             currentCustomerId:'',
             trafficId:'',
@@ -68,6 +68,9 @@ export default {
           bottom: true,
           visibled:false,
           imageShow:true,
+          store_visited_start:'',
+          store_visited_end:'',
+
         }
     },
 
@@ -76,17 +79,25 @@ export default {
     },
 
     methods: {
+      //时间转为秒
+      getS(value) {
+        var formatTimeS = new Date(value).getTime() / 1000;
+        return formatTimeS
+      },
 
         //列表
         lists(){
-          if(this.$data.value4 != null){
-            this.$data.requestParameters.store_time_start = Date.parse(this.$data.value4[0])/1000 ;
-            this.$data.requestParameters.store_time_end = Date.parse(this.$data.value4[1])/1000;
-          }else{
-            this.$data.value4 = ['',''];
-            this.lists();
+          let startTime = this.getS(this.$data.store_visited_start);
+          let entTime = this.getS(this.$data.store_visited_end) + 86399;
+          if(startTime > entTime){
+            this.$confirm('您选择的结束时间应该大于开始时间','日期选择警告',{
+              confirmButtonText:'知道了',
+              showCancelButton:false,
+              type:'warning'
+            })
           }
-          // this.$data.requestParameters.page = 1;
+          this.$data.requestParameters.store_time_start = startTime ;
+          this.$data.requestParameters.store_time_end = entTime;
           let qs = require('querystring');
           guestApi.lists(qs.stringify(this.$data.requestParameters)).then((res) => {
             let result = res.data;
@@ -113,7 +124,8 @@ export default {
           this.lists();
         },
       fnReset(){
-          this.$data.value4 = ['',''];
+          this.$data.store_visited_start = '';
+          this.$data.store_visited_end = '';
           this.$data.requestParameters.visited = '';
           this.$data.requestParameters.bought = '';
           this.$data.requestParameters.age = '';

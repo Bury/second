@@ -6,12 +6,19 @@
           <el-row>
             <el-form-item label="进店时间：">
               <el-date-picker :picker-options="pickerOptionsSet"
-                              v-model="value4"
-                              type="datetimerange"
-                              range-separator="至"
-                              start-placeholder="开始时间"
-                              end-placeholder="结束时间"
-                              onclick="clickTotal('001','进店时间',1)">
+                              v-model="store_visited_start"
+                              type="date"
+                              placeholder="开始时间"
+                              :clearable=false
+                              onclick="clickTotal('001','进店开始时间',1)">
+              </el-date-picker>
+              -
+              <el-date-picker :picker-options="pickerOptionsSet"
+                              v-model="store_visited_end"
+                              type="date"
+                              placeholder="结束时间"
+                              :clearable=false
+                              onclick="clickTotal('0011','进店结束时间',1)">
               </el-date-picker>
             </el-form-item>
             <el-form-item label="客户类型：">
