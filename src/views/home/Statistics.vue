@@ -49,7 +49,7 @@
                                   type="date"
                                   placeholder="开始时间"
                                   :clearable=false
-                                  onclick="clickTotal('001','进店开始时间',1)">
+                                  >
                   </el-date-picker>
                   <span v-show="ctrlTimeType[4]">-</span>
                   <el-date-picker :picker-options="pickerOptionsSet"
@@ -58,7 +58,7 @@
                                   type="date"
                                   placeholder="结束时间"
                                   :clearable=false
-                                  onclick="clickTotal('0011','进店结束时间',1)">
+                                  >
                   </el-date-picker>
                 </el-form-item>
                 <el-form-item>
