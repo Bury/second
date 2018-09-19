@@ -56,6 +56,8 @@ export default {
                    return time.getTime() > Date.now() - 8.64e6
         		}
         	},
+          times_start:'',
+          times_end:'',
         }
     },
 
@@ -193,14 +195,29 @@ export default {
                 this.$data.guestParameters.end_time =  this.getS(`${y}/12/31 23:59:59`);
 
             }else if(this.$data.ctrlTimeType[4]){
-            	if(this.$data.userDefined == null || this.$data.userDefined.length == 0) {
-            		this.$data.noTimeHide = true;
-            		return false;
-            	}else{
-            		this.$data.noTimeHide = false;
-            	}
-            	this.$data.guestParameters.begin_time = utils.getDateTime(this.userDefined[0]);
-                this.$data.guestParameters.end_time =  utils.getDateTime(this.userDefined[1]) + 86399;
+            	// if(this.$data.userDefined == null || this.$data.userDefined.length == 0) {
+            	// 	this.$data.noTimeHide = true;
+            	// 	return false;
+            	// }else{
+            	// 	this.$data.noTimeHide = false;
+            	// }
+            console.log(this.getS(this.$data.times_start));
+            console.log(this.getS(this.$data.times_end) + 86399);
+            let startTime = this.getS(this.$data.times_start);
+            let endTime = this.getS(this.$data.times_end) + 86399;
+            if(startTime > endTime){
+              // this.$data.noTimeHide = true;
+              this.$confirm('您选择的结束时间应该大于开始时间','日期选择警告',{
+                confirmButtonText:'知道了',
+                showCancelButton:false,
+                type:'warning'
+              })
+
+            }else if(startTime < endTime){
+              this.$data.noTimeHide = false;
+              this.$data.guestParameters.begin_time = this.getS(this.$data.times_start);
+              this.$data.guestParameters.end_time =  this.getS(this.$data.times_end) + 86399;
+            }
 
             }
         	this.requestData();

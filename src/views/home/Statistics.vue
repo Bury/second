@@ -34,15 +34,32 @@
                         placeholder="选择年"
                         :picker-options="pickerOptionsSet">
                     </el-date-picker>
-                    <el-date-picker
-                        v-model="userDefined"
-                        v-show="ctrlTimeType[4]"
-                        type="daterange"
-                        range-separator="至"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        :picker-options="pickerOptionsSet">
-                    </el-date-picker>
+                    <!--<el-date-picker-->
+                        <!--v-model="userDefined"-->
+                        <!--v-show="ctrlTimeType[4]"-->
+                        <!--type="daterange"-->
+                        <!--range-separator="至"-->
+                        <!--start-placeholder="开始日期"-->
+                        <!--end-placeholder="结束日期"-->
+                        <!--:picker-options="pickerOptionsSet">-->
+                    <!--</el-date-picker>-->
+                  <el-date-picker :picker-options="pickerOptionsSet"
+                                  v-model="times_start"
+                                  v-show="ctrlTimeType[4]"
+                                  type="date"
+                                  placeholder="开始时间"
+                                  :clearable=false
+                                  onclick="clickTotal('001','进店开始时间',1)">
+                  </el-date-picker>
+                  <span v-show="ctrlTimeType[4]">-</span>
+                  <el-date-picker :picker-options="pickerOptionsSet"
+                                  v-model="times_end"
+                                  v-show="ctrlTimeType[4]"
+                                  type="date"
+                                  placeholder="结束时间"
+                                  :clearable=false
+                                  onclick="clickTotal('0011','进店结束时间',1)">
+                  </el-date-picker>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit">查询</el-button>
