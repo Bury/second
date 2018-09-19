@@ -187,6 +187,7 @@ export default {
         },
 
         closeChangeMachie(done){
+            done();
             this.lists();
             this.$data.showInfoEdit = false;
         },
