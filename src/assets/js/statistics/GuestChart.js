@@ -57,9 +57,9 @@ export default {
           series:{
             dataLabels:{
               border: 1,
-              align: 'left',
+              align: 'center',
               enabled: true,
-              rotation: -45,
+              rotation: -30,
               x: 2,
               y: -10
             }
