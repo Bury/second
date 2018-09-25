@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #fff;padding-bottom: 6rem;">
     <div class="left"></div>
 	  <div class="remind-set-page">
         <h3 class="top-box">来客提醒配置</h3>

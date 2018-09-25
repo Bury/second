@@ -3,7 +3,7 @@
 		<!-- 屏蔽列表 -->
     <table width="99%" class="table">
       <thead>
-      <tr height="40">
+      <tr height="58px">
         <th class="col-md-1 text-center">序号</th>
         <th class="col-md-1 text-center">人脸</th>
         <th class="col-md-1 text-center">姓名</th>
@@ -16,10 +16,10 @@
       </tr>
       </thead>
       <tbody style="text-align: center">
-      <tr v-for="(item,index) in tableData" :key="index" height="40">
+      <tr v-for="(item,index) in tableData" :key="index" height="58px">
         <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
         <td>
-          <div style="height: 90%;width: 90%;padding: 5%;box-sizing: border-box">
+          <div class="imgHover">
             <img :src="item.avatar" style="display:block;margin:0 auto;width:100%;">
           </div>
         </td>
@@ -67,4 +67,15 @@
   .table tbody tr:hover{
     background-color: #f5fbfe;
   }
+  .imgHover{
+    height: 50%;
+    width: 50%;
+    padding: 5%;
+    box-sizing: border-box
+  }
+  .imgHover:hover{
+    height: 90%;
+    width: 90%;
+  }
+
 </style>

@@ -7,22 +7,33 @@
         //z-index:9;
         width:100%;
         background:#fff;
+      padding: 2rem;
     }
     .charts-type{
         margin:0 auto;
-        padding:5px;
-        width: 98%;
         overflow:hidden;
         .charts-wrap{
-            float:left;
             margin: 15px 0;
-            width: 49%;
-            height: 520px;
-        }
-        .charts-wrap:nth-child(2n){
-            float:right;
+            height: 260px;
         }
     }
+  .charts-top{
+    display: flex;
+    flex-wrap: wrap;
+    .charts-wrap{
+      margin: 10px 10px 0 0;
+      overflow: hidden;
+    }
+  }
+  .charts-bottom{
+    display: flex;
+    flex-wrap: wrap;
+    .charts-wrap{
+      overflow: hidden;
+      width: 49%;
+      margin: 10px 10px 0 0;
+    }
+  }
     .noData{
         text-align:center;
         color:#999;

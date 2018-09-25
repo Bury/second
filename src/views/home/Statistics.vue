@@ -34,15 +34,6 @@
                         placeholder="选择年"
                         :picker-options="pickerOptionsSet">
                     </el-date-picker>
-                    <!--<el-date-picker-->
-                        <!--v-model="userDefined"-->
-                        <!--v-show="ctrlTimeType[4]"-->
-                        <!--type="daterange"-->
-                        <!--range-separator="至"-->
-                        <!--start-placeholder="开始日期"-->
-                        <!--end-placeholder="结束日期"-->
-                        <!--:picker-options="pickerOptionsSet">-->
-                    <!--</el-date-picker>-->
                   <el-date-picker :picker-options="pickerOptionsSet"
                                   v-model="times_start"
                                   v-show="ctrlTimeType[4]"
@@ -65,37 +56,49 @@
                     <el-button type="primary" @click="onSubmit">查询</el-button>
                 </el-form-item>
             </el-form>
-          <br/>
-            <el-tabs v-model="timeType" type="card" @tab-click="cateChanged">
-                <el-tab-pane label="日统计" name="day"></el-tab-pane>
-                <el-tab-pane label="周统计" name="week"></el-tab-pane>
-                <el-tab-pane label="月统计" name="month"></el-tab-pane>
-                <el-tab-pane label="年统计" name="year"></el-tab-pane>
-                <el-tab-pane label="自定义统计" name="userDefined"></el-tab-pane>
-            </el-tabs>
+          <el-tabs v-model="timeType" type="card" @tab-click="cateChanged">
+            <el-tab-pane label="日统计" name="day" style="margin-right: 10px;"></el-tab-pane>
+            <el-tab-pane label="周统计" name="week"></el-tab-pane>
+            <el-tab-pane label="月统计" name="month"></el-tab-pane>
+            <el-tab-pane label="年统计" name="year"></el-tab-pane>
+            <el-tab-pane label="自定义统计" name="userDefined"></el-tab-pane>
+          </el-tabs>
         </div>
         <div style="text-align: center;" v-show="noTimeHide"><span>请选择时间</span></div>
         <ul class="charts-type" v-show="!noTimeHide">
-                <li class="charts-wrap">
-                	<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>
-                    <guest-chart :guestData="guestParameters" :changFlag="changFlag"></guest-chart>
-                </li>
+          <li>
+            <ul class="charts-top">
+              <li class="charts-wrap">
+                <total-guest :totalData="totalParameters"></total-guest>
+              </li>
+              <li class="charts-wrap" style="width: 68%;background: #fff">
+                <!--<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>-->
+                <guest-chart :guestData="guestParameters" :changFlag="changFlag"></guest-chart>
+              </li>
+            </ul>
+          </li>
 
-                <li class="charts-wrap">
-                    <guest-visited-info-chart :guestVisitedInfoData="guestVisitedInfoData"></guest-visited-info-chart>
-                </li>
-                <!--<li class="charts-wrap">-->
-                    <!--<guest-bought-info-chart :guestBoughtInfoData="guestBoughtInfoData"></guest-bought-info-chart>-->
-                <!--</li>-->
-                <li class="charts-wrap">
-                    <guest-age-chart :ageData="ageData"></guest-age-chart>
-                </li>
-                <li class="charts-wrap">
-                    <guest-gender-chart :guestGenderData="guestGenderData"></guest-gender-chart>
-                </li>
-                <li class="charts-wrap">
-                    <guest-from-chart :guestFromData="guestFromData"></guest-from-chart>
-                </li>
+          <li>
+            <ul class="charts-bottom">
+              <li class="charts-wrap">
+                <guest-visited-info-chart :guestVisitedInfoData="guestVisitedInfoData"></guest-visited-info-chart>
+              </li>
+              <!--<li class="charts-wrap">-->
+              <!--<guest-bought-info-chart :guestBoughtInfoData="guestBoughtInfoData"></guest-bought-info-chart>-->
+              <!--</li>-->
+              <li class="charts-wrap">
+                <guest-age-chart :ageData="ageData"></guest-age-chart>
+              </li>
+              <li class="charts-wrap">
+                <guest-gender-chart :guestGenderData="guestGenderData"></guest-gender-chart>
+              </li>
+              <li class="charts-wrap">
+                <guest-from-chart :guestFromData="guestFromData"></guest-from-chart>
+              </li>
+            </ul>
+          </li>
+
+
          </ul>
         </div>
 </template>

@@ -3,41 +3,44 @@
 		<div class="top-box">
 			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
-    <table width="99%" class="table">
-      <thead>
-      <tr height="40">
-        <th class="col-md-1 text-center">序号</th>
-        <th class="col-md-1 text-center">账号</th>
-        <th class="col-md-1 text-center">岗位</th>
-        <th class="col-md-1 text-center">姓名</th>
-        <th class="col-md-1 text-center">手机</th>
-        <th class="col-md-1 text-center">状态</th>
-        <th class="col-md-2 text-center">创建时间</th>
-        <th class="col-md-2 text-center">操作</th>
-      </tr>
-      </thead>
-      <tbody style="text-align: center">
-      <tr v-for="(item,index) in tableData" :key="index" height="40">
-        <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
-        <td>{{item.username != '' ? item.username : '--'}}</td>
-        <td>{{item.storeRole.name == null ? '--' :item.storeRole.name }}</td>
-        <td>{{item.truename != '' ? item.truename : '--'}}</td>
-        <td>{{item.phone != '' ? item.phone : '--'}}</td>
-        <td>
-          <span @click=fnStatusUpdate(item.id,item.status)>{{item.status == 1 ? '启用' : '禁用'}}</span>
-        </td>
-        <td>{{item.created_at | date(4)}}</td>
-        <td>
-          <el-button type="primary" plain icon="el-icon-view" circle size="small"
-                     @click="fnResetPassword(item)" v-bind:disabled="item.status==0"></el-button>
-          <el-button type="warning" plain icon="el-icon-edit" circle size="small"
-                     @click="fnEdit(item)"></el-button>
-          <el-button type="danger" plain icon="el-icon-delete" circle size="small"
-                     @click="fnRemove(item)"></el-button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div style="background: #fff;padding: 1rem;">
+      <table width="99%" class="table">
+        <thead>
+        <tr height="40">
+          <th class="col-md-1 text-center">序号</th>
+          <th class="col-md-1 text-center">账号</th>
+          <th class="col-md-1 text-center">岗位</th>
+          <th class="col-md-1 text-center">姓名</th>
+          <th class="col-md-1 text-center">手机</th>
+          <th class="col-md-1 text-center">状态</th>
+          <th class="col-md-2 text-center">创建时间</th>
+          <th class="col-md-2 text-center">操作</th>
+        </tr>
+        </thead>
+        <tbody style="text-align: center">
+        <tr v-for="(item,index) in tableData" :key="index" height="40">
+          <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
+          <td>{{item.username != '' ? item.username : '--'}}</td>
+          <td>{{item.storeRole.name == null ? '--' :item.storeRole.name }}</td>
+          <td>{{item.truename != '' ? item.truename : '--'}}</td>
+          <td>{{item.phone != '' ? item.phone : '--'}}</td>
+          <td>
+            <span @click=fnStatusUpdate(item.id,item.status)>{{item.status == 1 ? '启用' : '禁用'}}</span>
+          </td>
+          <td>{{item.created_at | date(4)}}</td>
+          <td>
+            <el-button type="primary" plain icon="el-icon-view" circle size="small"
+                       @click="fnResetPassword(item)" v-bind:disabled="item.status==0"></el-button>
+            <el-button type="warning" plain icon="el-icon-edit" circle size="small"
+                       @click="fnEdit(item)"></el-button>
+            <el-button type="danger" plain icon="el-icon-delete" circle size="small"
+                       @click="fnRemove(item)"></el-button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
 
 	    <!-- 分页 -->
 	    <div v-if="tableData.length > 0" style="margin:0 auto;width:961px;">

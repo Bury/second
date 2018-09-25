@@ -1,77 +1,80 @@
 <template>
 	<div class="remind-list-page">
-    <div class="top-box"  ref="topBox" v-show="topBoxSow">
-      <div class="left" style="width: 75%;">
-        <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
-          <el-row>
-            <el-form-item label="进店时间：">
-              <el-date-picker :picker-options="pickerOptionsSet"
-                              v-model="store_visited_start"
-                              type="date"
-                              placeholder="开始时间"
-                              :clearable=false
-                              onclick="clickTotal('001','进店开始时间',1)">
-              </el-date-picker>
-              -
-              <el-date-picker :picker-options="pickerOptionsSet"
-                              v-model="store_visited_end"
-                              type="date"
-                              placeholder="结束时间"
-                              :clearable=false
-                              onclick="clickTotal('0011','进店结束时间',1)">
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="客户类型：">
-              <el-select v-model="requestParameters.visited" placeholder="新客/熟客" onclick="clickTotal('002','客户类型',1)">
-                <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-row>
-          <el-row v-if="visibled">
-            <el-form-item label="消费状态：">
-              <el-select v-model="requestParameters.bought" placeholder="未购/已购" onclick="clickTotal('003','消费状态',1)">
-                <el-option v-for="(item, idx) in allGuestBoughtClass" :key="idx" :label="item" :value="idx"></el-option>
-              </el-select>
-            </el-form-item>
-            <!--<el-form-item label="年龄：">-->
+    <div class="top-box"  ref="topBox" v-show="topBox">
+      <div style="display: flex;" v-show="topBoxShow">
+        <div class="left" style="width: 75%;" >
+          <el-form :inline="true" :model="requestParameters" class="demo-form-inline" size="mini">
+            <el-row>
+              <el-form-item label="进店时间：">
+                <el-date-picker :picker-options="pickerOptionsSet"
+                                v-model="store_visited_start"
+                                type="date"
+                                placeholder="开始时间"
+                                :clearable=false
+                                onclick="clickTotal('001','进店开始时间',1)">
+                </el-date-picker>
+                -
+                <el-date-picker :picker-options="pickerOptionsSet"
+                                v-model="store_visited_end"
+                                type="date"
+                                placeholder="结束时间"
+                                :clearable=false
+                                onclick="clickTotal('0011','进店结束时间',1)">
+                </el-date-picker>
+              </el-form-item>
+              <el-form-item label="客户类型：">
+                <el-select v-model="requestParameters.visited" placeholder="新客/熟客" onclick="clickTotal('002','客户类型',1)">
+                  <el-option v-for="(item, idx) in allGuestVisitClass" :key="idx" :label="item" :value="idx"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-row>
+            <el-row v-if="visibled">
+              <el-form-item label="消费状态：">
+                <el-select v-model="requestParameters.bought" placeholder="未购/已购" onclick="clickTotal('003','消费状态',1)">
+                  <el-option v-for="(item, idx) in allGuestBoughtClass" :key="idx" :label="item" :value="idx"></el-option>
+                </el-select>
+              </el-form-item>
+              <!--<el-form-item label="年龄：">-->
               <!--<el-select v-model="requestParameters.age" placeholder="年龄" onclick="clickTotal('004','年龄',1)">-->
-                <!--<el-option v-for="(item, idx) in allAgeScope" :key="idx" :label="item" :value="idx"></el-option>-->
+              <!--<el-option v-for="(item, idx) in allAgeScope" :key="idx" :label="item" :value="idx"></el-option>-->
               <!--</el-select>-->
-            <!--</el-form-item>-->
-            <!--<el-form-item label="性别：">-->
+              <!--</el-form-item>-->
+              <!--<el-form-item label="性别：">-->
               <!--<el-select v-model="requestParameters.gender" placeholder="性别" onclick="clickTotal('005','性别',1)">-->
-                <!--<el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>-->
+              <!--<el-option v-for="(item, idx) in allGenderScope" :key="idx" :label="item" :value="idx"></el-option>-->
               <!--</el-select>-->
-            <!--</el-form-item>-->
-          </el-row>
+              <!--</el-form-item>-->
+            </el-row>
 
 
-        </el-form>
+          </el-form>
+        </div>
+        <div class="right">
+          <el-button type="primary" size="mini" @click="onSubmit" onclick="clickTotal('006','查询',1)">查询</el-button>
+          <el-button type="primary" size="mini" @click="fnReset" onclick="clickTotal('007','重置',1)">重置</el-button>
+        </div>
       </div>
-      <div class="right">
-        <el-button type="primary" @click="onSubmit" onclick="clickTotal('006','查询',1)">查询</el-button>
-        <el-button type="primary" @click="fnReset" onclick="clickTotal('007','重置',1)">重置</el-button>
-      </div>
 
+      <div class="movement"  v-if="imageShow">
+        <div class="movement_image" v-if="bottom"  @click="movementBottom">
+          <img src="../../assets/images/bottom.png" />
+        </div>
+        <div class="movement_image" v-if="top" @click="movementTop">
+          <img src="../../assets/images/top.png" />
+        </div>
+      </div>
 		</div>
 
-    <div class="movement"  v-if="imageShow">
-      <div class="movement_image" v-if="bottom"  @click="movementBottom">
-        <img src="../../assets/images/bottom.png" />
-      </div>
-      <div class="movement_image" v-if="top" @click="movementTop">
-        <img src="../../assets/images/top.png" />
-      </div>
-    </div>
+
 
     <!--tabel-->
-    <el-tabs style="margin-top: 20px;"
+    <el-tabs style="margin-top: 10px;background: #fff;padding: 1rem;"
       v-model="activeName2" type="card" @tab-click="handleClick">
 
       <el-tab-pane label="来客列表" name="first">
         <table width="99%" class="table">
           <thead>
-          <tr height="40">
+          <tr height="58px">
             <th class="col-md-1 text-center">序号</th>
             <th class="col-md-1 text-center">人脸</th>
             <th class="col-md-2 text-center">姓名</th>
@@ -85,10 +88,10 @@
           </tr>
           </thead>
           <tbody style="text-align: center">
-          <tr v-for="(item,index) in tableData" :key="index" height="40">
+          <tr v-for="(item,index) in tableData" :key="index" height="58px">
             <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
             <td>
-              <div style="height: 90%;width: 90%;padding: 5%;box-sizing: border-box">
+              <div class="imgHover">
               <img :src="item.avatar" style="display:block;margin:0 auto;width:100%;">
               </div>
             </td>

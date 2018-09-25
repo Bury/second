@@ -42,7 +42,8 @@ export default {
             activeName2: 'first',
             dialogVisible:false,//弹窗是否显示
             // value4: ['',''],
-            topBoxSow:true,
+            topBoxShow:true,
+            topBox:true,
             updateCount:0,
             requestParameters: {
                 page: 1,
@@ -199,10 +200,12 @@ export default {
         handleClick(tab, event) {
           this.$data.updateCount++;
           if(tab.index ===  "1"){
-          	 this.$data.topBoxSow = false;
+          	 this.$data.topBoxShow = false;
+          	 this.$data.topBox = false;
             this.$data.imageShow = false;
           }else{
-          	 this.$data.topBoxSow = true
+          	 this.$data.topBoxShow = true
+          	 this.$data.topBox = true
           	 this.$data.imageShow = true
           	 this.lists();
           }

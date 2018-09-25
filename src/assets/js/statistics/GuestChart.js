@@ -28,10 +28,12 @@ export default {
 			chartOptionsType: 0,
 			options: {
 				chart: {
-					type: 'line'
+					type: 'line',
+          width:600,
+          height:260,
 				},
 				title: {
-					text: '客流量'
+					text: '客流趋势图'
 				},
 				xAxis: {
 					categories: []

@@ -2,6 +2,7 @@ import remindApi from '@/api/remind'
 
 import statisticsApi from '@/api/statistics'
 
+import TotalGuest from '@/views/statistics/TotalGuest'
 import GuestChart from '@/views/statistics/GuestChart'
 
 import GuestVisitedInfoChart from '@/views/statistics/GuestVisitedInfoChart'
@@ -21,6 +22,7 @@ export default {
     name: 'dashboard',
 
     components: {
+        TotalGuest,
         GuestChart,
         GuestVisitedInfoChart,
         GuestBoughtInfoChart,
@@ -50,6 +52,10 @@ export default {
                 begin_time:'',
                 end_time:'',
             },
+          totalParameters:{
+            begin_time:'',
+            end_time:'',
+          },
             pickerOptionsSet:{
             	firstDayOfWeek:1,
         		disabledDate(time) {

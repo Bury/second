@@ -17,7 +17,8 @@ export default {
 			Highcharts: Highcharts,
 			options: {
 				chart: {
-					type: 'pie'
+					type: 'pie',
+          height:260,
 				},
 				title: {
 					text: '性别占比'
@@ -61,7 +62,7 @@ export default {
 			setTimeout(() => {
 				guestGenderCharts.hideLoading();
 				guestGenderCharts.addSeries({
-          innerSize: '80%',
+          innerSize: '60%',
 					name: '人数',
 					data: value
 				});

@@ -22,7 +22,8 @@ export default {
 			Highcharts: Highcharts,
 			options: {
 				chart: {
-					type: 'pie'
+					type: 'pie',
+          height:260,
 				},
 				title: {
 					text: '年龄段占比'

@@ -21,7 +21,8 @@ export default {
 			Highcharts: Highcharts,
 			options: {
 				chart: {
-					type: 'pie'
+					type: 'pie',
+          height:260,
 				},
 				title: {
 					text: '客流量来源设备占比'
