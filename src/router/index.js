@@ -2,34 +2,45 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // 模板框架
-import Main from '../views/menu/Main'
+// import Main from '../views/menu/Main'
+const Main = resolve => require(['@/views/menu/Main'],resolve)
 
 // 登录页面
-import UserLogin from '../views/user/UserLogin'
+// import UserLogin from '../views/user/UserLogin'
+const UserLogin = resolve => require(['@/views/user/UserLogin'],resolve)
 
 //客流统计
-import Statistics from '../views/home/Statistics'
+// import Statistics from '../views/home/Statistics'
+const Statistics = resolve => require(['@/views/home/Statistics'],resolve)
 
 //来客列表
-import Guest from '../views/guest/Guest'
+// import Guest from '../views/guest/Guest'
+const Guest = resolve => require(['@/views/guest/Guest'],resolve)
 
 //订单管理
-import Order from '../views/order/Order'
+// import Order from '../views/order/Order'
+const Order = resolve => require(['@/views/order/Order'],resolve)
 // import OrderLive from '../views/order/OrderLive'
 // import OrderVideo from '../views/order/OrderVideo'
-import OrderNow from '../views/order/OrderNow'
+// import OrderNow from '../views/order/OrderNow'
+const OrderNow = resolve => require(['@/views/order/OrderNow'],resolve)
 
 //设备管理
-import Device from '../views/device/Device'
+// import Device from '../views/device/Device'
+const Device = resolve => require(['@/views/device/Device'],resolve)
 
 //帐号管理
-import User from '../views/user/User'
-import UserCurrentDetail from '../views/user/UserCurrentDetail'
+// import User from '../views/user/User'
+const User = resolve => require(['@/views/user/User'],resolve)
+// import UserCurrentDetail from '../views/user/UserCurrentDetail'
+const UserCurrentDetail = resolve => require(['@/views/user/UserCurrentDetail'],resolve)
 
 //提醒设置
-import StoreRemind from '../views/settings/StoreRemind'
+// import StoreRemind from '../views/settings/StoreRemind'
+const StoreRemind = resolve => require(['@/views/settings/StoreRemind'],resolve)
 //营业时间设置
-import StoreTime from '../views/settings/StoreTime'
+// import StoreTime from '../views/settings/StoreTime'
+const StoreTime = resolve => require(['@/views/settings/StoreTime'],resolve)
 
 
 
@@ -66,10 +77,10 @@ router.beforeEach((to, from, next) => {
 
         window.location.href = '/';
 
-//  next({
-//    path: '/UserLogin',
-//       query: { redirect: to.fullPath }
-//   })
+ // next({
+ //   path: '/UserLogin',
+ //      query: { redirect: to.fullPath }
+ //  })
   } else {
     next()
   }

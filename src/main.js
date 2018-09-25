@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import ElementUI from 'element-ui'
+// import Vue from 'vue'
+// import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '../static/css/iconfont.css'
 import '../static/css/home.css'
@@ -22,7 +22,7 @@ import globalFunction from '@/assets/js/globalFunction'
 Vue.prototype.moment = Moment
 
 
-Vue.use(ElementUI)
+// Vue.use(ElementUI)
 Vue.use(globalFunction);
 Vue.filter('date', filters.dateFilter)
 Vue.filter('numberFilter', filters.numberFilter)
