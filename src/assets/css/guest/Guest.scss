@@ -5,7 +5,7 @@
   .top-box {
     overflow: hidden;
     background: #fff;
-    padding: 1rem;
+    padding: 2rem 0;
     button{
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
@@ -13,6 +13,13 @@
       width: 6rem;
       height:2.5rem
     }
+  }
+  .btn{
+      color: #2a2a2a;
+  }
+  .btn:focus-within{
+    border: 0;
+    outline: 0;
   }
   .movement {
     width: 10.5rem;
@@ -52,6 +59,7 @@
   }
   .table tbody tr td {
     color: #2a2a2a;
+    font-size: 1rem;
     vertical-align: middle;
   }
   .table tbody tr:hover {
