@@ -34,7 +34,7 @@
         <td><span>{{item.vip_level == 1 ?'已购':'未购'}}</span></td>
         <td>{{item.created_at | date(4)}}</td>
         <td>
-          <span class="btn" @click="return_process(item) " onclick="clickTotal('008','撤销屏蔽',1)" >撤销屏蔽</span>
+          <el-button type="text" size="small" @click="return_process(item) " onclick="clickTotal('008','撤销屏蔽',1)" >撤销屏蔽</el-button>
         </td>
       </tr>
       </tbody>
@@ -57,22 +57,11 @@
 
 <script src="@/assets/js/guest/HiddenList.js"></script>
 <style>
-  .btn{
-    color: #2a2a2a;
-  }
-  .btn:hover{
-    color: #ffc400;
-  }
-  .btn:focus-within{
-    border: 0;
-    outline: 0;
-  }
   .table thead{
     color: #999;
   }
   .table tbody tr td{
     color: #2a2a2a;
-    font-size: 1rem;
     vertical-align: middle;
   }
   .table tbody tr:hover{
