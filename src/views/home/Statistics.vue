@@ -69,10 +69,9 @@
           <li>
             <ul class="charts-top">
               <li class="charts-wrap">
-                <total-guest :totalData="totalParameters"></total-guest>
+                <total-guest :totalData="guestParameters" :changFlag="changFlag"></total-guest>
               </li>
               <li class="charts-wrap" style="width: 68%;background: #fff">
-                <!--<div>到店人数：<span>{{goStoreNum | numThousand}}</span>(人)</div>-->
                 <guest-chart :guestData="guestParameters" :changFlag="changFlag"></guest-chart>
               </li>
             </ul>

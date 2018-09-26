@@ -34,8 +34,7 @@ export default {
     data () {
         return {
         	noTimeHide:false,
-        	changFlag:true,
-            goStoreNum:'',
+        	changFlag:true,            
             timeType: 'day',
             day:'',
             week:'',
@@ -52,10 +51,6 @@ export default {
                 begin_time:'',
                 end_time:'',
             },
-          totalParameters:{
-            begin_time:'',
-            end_time:'',
-          },
             pickerOptionsSet:{
             	firstDayOfWeek:1,
         		disabledDate(time) {
@@ -95,21 +90,6 @@ export default {
         getS(value){
             var formatTimeS = new Date(value).getTime()/1000;
             return  formatTimeS
-        },
-
-        //到店人数
-        storeStatistics(d){
-        	let timeData = {
-        		time_start:d.begin_time,
-        		time_end:d.end_time,
-        	};
-        	let qs = require('querystring');
-            statisticsApi.storeStatistics(qs.stringify(timeData)).then((res) => {
-            	if(res.data.errno === 0){
-            		this.$data.goStoreNum = res.data.data.passenger_flow
-            	}
-
-            })
         },
 
         //特征
@@ -322,7 +302,6 @@ export default {
                 this.statisticsFeature(this.$data.guestParameters, 'age');
                 this.statisticsFeature(this.$data.guestParameters, 'gender');
                 this.statisticsFeature(this.$data.guestParameters, 'camera');
-                this.storeStatistics(this.$data.guestParameters)
         },
 
 
