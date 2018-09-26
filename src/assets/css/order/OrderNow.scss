@@ -1,5 +1,7 @@
 
 .guest-list-page{
+  background: #fff;
+  padding: 2rem;
   .circleFont{
     font-size: 1.8rem;
     margin-top: 1rem;
@@ -88,7 +90,6 @@
     height: 3rem;
     border: 0;
     border: 1px solid #dcdfe6;
-    border-radius: 3px;
     display: inline-block;
     padding: 0 3rem 0 1.5rem;
   }
@@ -96,6 +97,17 @@
     //border: 0;
     outline: 0;
   }
+}
+button{
+  width: 6rem;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+.el-input__inner{
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button{

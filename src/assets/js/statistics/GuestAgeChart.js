@@ -26,7 +26,8 @@ export default {
           height:260,
 				},
 				title: {
-					text: '年龄段占比'
+					text: '',
+          float:true,
 				},
 				credits: {
 					text: '',

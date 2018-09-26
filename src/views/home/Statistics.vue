@@ -64,34 +64,38 @@
             <el-tab-pane label="自定义统计" name="userDefined"></el-tab-pane>
           </el-tabs>
         </div>
-        <div style="text-align: center;" v-show="noTimeHide"><span>请选择时间</span></div>
+        <div style="text-align: center;background: #fff;padding: 2rem;" v-show="noTimeHide"><span>请选择时间</span></div>
         <ul class="charts-type" v-show="!noTimeHide">
           <li>
-            <ul class="charts-top">
+            <ul class="charts-top" style="width: 1300px;margin: 0 auto;">
               <li class="charts-wrap">
                 <total-guest :totalData="guestParameters" :changFlag="changFlag"></total-guest>
               </li>
-              <li class="charts-wrap" style="width: 68%;background: #fff">
+              <li class="charts-wrap" style="width: 779px;background: #fff;padding-top: 1rem;">
                 <guest-chart :guestData="guestParameters" :changFlag="changFlag"></guest-chart>
               </li>
             </ul>
           </li>
 
           <li>
-            <ul class="charts-bottom">
+            <ul class="charts-bottom" style="width: 1300px;margin: 0 auto;">
               <li class="charts-wrap">
+                <h4>新客/熟客占比</h4>
                 <guest-visited-info-chart :guestVisitedInfoData="guestVisitedInfoData"></guest-visited-info-chart>
               </li>
               <!--<li class="charts-wrap">-->
               <!--<guest-bought-info-chart :guestBoughtInfoData="guestBoughtInfoData"></guest-bought-info-chart>-->
               <!--</li>-->
-              <li class="charts-wrap">
+              <li class="charts-wrap" style="background: #fff;">
+                <h4>年龄段占比</h4>
                 <guest-age-chart :ageData="ageData"></guest-age-chart>
               </li>
               <li class="charts-wrap">
+                <h4>性别占比</h4>
                 <guest-gender-chart :guestGenderData="guestGenderData"></guest-gender-chart>
               </li>
               <li class="charts-wrap">
+                <h4>客流量来源设备占比</h4>
                 <guest-from-chart :guestFromData="guestFromData"></guest-from-chart>
               </li>
             </ul>

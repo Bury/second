@@ -304,14 +304,6 @@ export default {
       for(let i = 0; i< this.$data.addProList.length; i++){
         m += Number(this.$data.addProList[i].money);
       }
-      // if(m>= 100000000){
-      //   console.log("超过一个亿啦！");
-      //   m = m.toFixed(2);
-      //   console.log(m)
-      //   // this.$data.allMoney =
-      // }else{
-      //   this.$data.allMoney = m;
-      // }
       this.$data.allGoodLenght =this.$data.addProList.length;
       this.$data.allMoney = m;
     },
@@ -320,15 +312,22 @@ export default {
     delGoods(index){
       this.$data.addProList.splice(index,1);
       if(this.$data.addProList.length == 1){
-        if(this.$data.addProList[0].money == ''){
-          this.$data.allMoney = '';
-        }
+        // if(this.$data.addProList[0].money == ''){
+          this.$data.allMoney = this.$data.allMoney;
+          this.$data.allGoodLenght = 1;
+        // }
       }else{
         //删除一条之后，需要再计算金额
-        let m = 0;
+        let m ;
+        m = this.$data.allMoney;
+        m=0;
         for(let i = 0; i< this.$data.addProList.length; i++){
-          m += parseInt(this.$data.addProList[i].money);
+          if(this.$data.addProList[i].money){
+            m += parseInt(this.$data.addProList[i].money);
+          }
+
         }
+
         this.$data.allGoodLenght =this.$data.addProList.length
         this.$data.allMoney = m;
       }

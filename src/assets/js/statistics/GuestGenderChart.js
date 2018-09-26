@@ -21,7 +21,8 @@ export default {
           height:260,
 				},
 				title: {
-					text: '性别占比'
+          text: '',
+          float:true
 				},
 				credits: {
 					text: '',

@@ -93,9 +93,6 @@ export default {
 			fromRules:{
 				cash_t: [{required: true,message: '请选择创建时间',trigger: 'blur'}],
 				id: [{required: true,message: '请输入人脸编号',trigger: 'blur'}],
-//				material: [{required: true,message: '请选择材质信息',trigger: 'change'}],
-//				style: [{required: true,message: '请选择款式信息',trigger: 'change'}],
-//				price: [{required: true,message: '请输入商品价格',trigger: 'blur'}],
 			},
 			rules: {
 				cash_t: [{required: true,message: '请选择创建时间',trigger: 'blur'}],

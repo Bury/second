@@ -1,9 +1,8 @@
 .guest-list-page{
-
   .top-box{
     overflow: hidden;
     background: #fff;
-    padding: 1rem;
+    padding: 2rem 0;
     margin-bottom: 10px;
   }
   .movement{
@@ -32,6 +31,7 @@
   }
   .table tbody tr td{
     color: #2a2a2a;
+    font-size: 1rem;
     vertical-align: middle;
   }
   .table tbody tr:hover{
@@ -110,10 +110,13 @@
       }
   }
 }
-.el-input--mini, .el-input__inner{
+
+button{
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
 }
-button{
+.el-input__inner{
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;

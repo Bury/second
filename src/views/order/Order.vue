@@ -96,7 +96,7 @@
 
 
 
-    <div style="text-align:right;padding:20px 0;background: #fff;padding-right: 1rem;">
+    <div style="text-align:right;background: #fff;padding:2rem 3rem 1rem;">
       <!--<el-button type="primary" @click="orderLive">现场开单(拍摄)</el-button>-->
       <el-button type="primary" size="mini" @click="orderVideo" onclick="clickTotal('018','订单开单',2)">开单</el-button>
       <!--<el-button type="primary" @click="orderNotLive">补单</el-button>-->
@@ -105,20 +105,20 @@
     <div style="padding: 1rem;background: #fff;">
       <table width="99%" class="table">
         <thead>
-        <tr height="40">
+        <tr height="58px">
           <th class="col-md-1 text-center">序号</th>
-          <th class="col-md-2 text-center">编号</th>
-          <th class="col-md-2 text-center">材质/款式</th>
+          <th class="col-md-1 text-center">编号</th>
+          <th class="col-md-1 text-center">材质/款式</th>
           <th class="col-md-1 text-center">金额</th>
           <th class="col-md-2 text-center">客户</th>
-          <th class="col-md-1.5 text-center">收银时间</th>
-          <th class="col-md-1.5 text-center">创建时间</th>
-          <th class="col-md-1 text-center">操作</th>
+          <th class="col-md-2 text-center">收银时间</th>
+          <!--<th class="col-md-1 text-center">创建时间</th>-->
+          <th class="col-md-2 text-center">操作</th>
         </tr>
         </thead>
 
         <tbody style="text-align: center">
-        <tr v-for="(item,index) in tableData" :key="index" height="40">
+        <tr v-for="(item,index) in tableData" :key="index" height="58px">
           <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
           <td>{{item.sn}}</td>
           <td>
@@ -127,11 +127,11 @@
           <!--<td>{{parseFloat(item.price,2)}}</td>-->
           <td>{{item.price | numberFilter}}</td>
           <td>
-            <div style="width: 100%;display: flex;padding: 5%;">
-              <div style="width:45%;">
+            <div style="width: 100%;display: flex;padding: 5%;text-align: center">
+              <div style="width:30%;margin-left: 2rem;">
                 <img :src="item.traffic_avatar" style="width:100%;">
               </div>
-              <div style="width:55%;padding:5% 0 0 8%;text-align:left">
+              <div style="width:55%;text-align:left;margin-left: 1rem;">
                 ID:{{item.traffic.customer_id}}<br/>
                 姓名:{{item.customer_name}}<br/>
                 类型:{{item.traffic.is_new == 1 ?'新客':'熟客'}}
@@ -139,7 +139,7 @@
             </div>
           </td>
           <td>{{item.cash_t | date(4)}}</td>
-          <td>{{item.created_at | date(4)}}</td>
+          <!--<td>{{item.created_at | date(4)}}</td>-->
           <td>
             <el-button @click="fnView(item)" type="text" size="small" onclick="clickTotal('019','订单管理查看',1)">查看</el-button>
             <el-button @click="fnEdit(item)" type="text" size="small" onclick="clickTotal('020','订单管理编辑',1)">编辑</el-button>
@@ -149,117 +149,21 @@
         </tbody>
       </table>
       <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>
-    </div>
-    <!--补单-->
-    <el-dialog title="补单" center :visible.sync="FormVisible" :before-close="dialogClose">
-      <el-form :model='formName' ref="formName" :rules="fromRules" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="收银时间："  prop="cash_t">
-          <el-date-picker
-            v-model="formName.cash_t"
-            type="datetime"
-            placeholder="选择日期时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="人脸编号：" :model="searchFace">
-          <el-row>
-            <el-col :span='7'>
-              <el-input v-model.trim="searchFace.id"  prop="id"></el-input>
-              <!--<input type="number" class="input" v-model="searchFace.id" maxlength="5" v-on:input="getMoneyb(form.moneyb)"  placeholder=""-->
-                     <!--onkeyup="this.value=this.value.replace(/\.\d{2,}$/,this.value.substr(this.value.indexOf('.'),3))" />-->
-              <!--</el-input>-->
-            </el-col>
-            <el-col :span='7' style="margin-left: 10px;">
-              <el-button @click="findGuestByFaceId()">查询</el-button>
-            </el-col>
-          </el-row>
-          <el-form-item :data="faceSearch">
-            <div style="width:200px;height:200px;border:1px solid #eee;margin-top:40px;margin-left: 0px;"
-                 v-if="faceVisible">
-              <template>
-                <img :src="faceSearch.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar">
-              </template>
-            </div>
-          </el-form-item>
-        </el-form-item>
-        <div v-for="(item,index) in addProList" :key="index" v-if="addProList">
-          <el-row type="flex">
-            <el-col :span="7" style="padding: 0;margin: 0;">
-              <el-form-item label="材质：" prop="material" label-width="80px">
-                <el-select v-model='item.material' >
-                  <el-option v-for="material in materials" :key="material.id" :label="material.name" :value="material.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="7" style="padding: 0;margin: 0;">
-              <el-form-item label="款式：" prop="style" label-width="80px">
-                <el-select v-model="item.style">
-                  <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="7" style="padding: 0;margin: 0;">
-              <el-form-item label='成交金额：' prop="price"  label-width="100px">
-                <el-input v-model.trim="item.price" v-on:input="inputFun(index)" value="" :maxlength="inputMaxL">
-                </el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span='1' style="padding: 0;margin: 0;">
-              <div class='deleproduct'>
-                <div>
-                  <el-button v-if="addProList.length > 1" @click='deleProduct(index)'>删除</el-button>
-                </div>
-              </div>
-            </el-col>
-          </el-row>
-        </div>
-        <div class="addproduct">
-          <div>
-            <el-form-item label=''>
-              <el-button @click='addProduct()'>新增商品</el-button>
-            </el-form-item>
-          </div>
-        </div>
-        <div class="totalAll">
-          <p>共计
-            <input v-model='allNum' class='totalNumber' :disabled='true'/>件,总价
-            <input v-model="totalMoney" class='totalPrice' :disabled='true'/>元
-          </p>
-        </div>
-        <el-form-item></el-form-item>
-        <el-form-item></el-form-item>
-        <el-form-item></el-form-item>
-        <el-form-item label="小票" v-model="imageListF">
-          <el-upload  v-model="item.file"
-          	         :limit = 3
-                     ref='upload'
-                     :action="importFileUrl()"
-                     list-type="picture-card"
-                     :data="upLoadData"
-                     :on-preview="handlePictureCardPreview"
-                     :on-remove="handleRemove"
-                     :onSuccess="uploadSuccess"
-                     :on-exceed="handleExceed"
-                     :before-upload="beforeAvatarUpload">
-            <i class="el-icon-plus"></i>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="备注:" prop="type">
-          <el-input
-            type="textarea"
-            autosize
-            maxlength=200
-            placeholder="请输入内容"
-            v-model="formName.remark">
-          </el-input>
-        </el-form-item>
-
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel(formName)">取 消</el-button>
-        <el-button type="primary" @click="submitForm(formName)">确 定</el-button>
+      <!-- 分页 -->
+      <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;height: 4rem;background: #fff;">
+        <el-pagination
+          background
+          class="pagination"
+          layout="prev, pager, next"
+          small
+          @current-change="handleCurrentChange"
+          :current-page="pagination.currentPage"
+          :page-size="requestParameters.page_size"
+          :total="pagination.totalCount">
+        </el-pagination>
       </div>
-    </el-dialog>
+    </div>
+
     <!--编辑-->
     <el-dialog title="编辑" center :visible.sync="editVisible" :before-close="dialogCloseEdit">
       <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
@@ -457,19 +361,7 @@
         <el-button @click="viewClose()">取 消</el-button>
       </div>
     </el-dialog>
-    <!-- 分页 -->
-    <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
-      <el-pagination
-        background
-        class="pagination"
-        layout="prev, pager, next"
-        small
-        @current-change="handleCurrentChange"
-        :current-page="pagination.currentPage"
-        :page-size="requestParameters.page_size"
-        :total="pagination.totalCount">
-      </el-pagination>
-    </div>
+
     <!--查看放大图片-->
     <el-dialog :visible.sync="imgViewVisible">
       <div  class="imgView">

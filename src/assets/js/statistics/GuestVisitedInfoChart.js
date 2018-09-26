@@ -26,7 +26,8 @@ export default {
           height:260,
 				},
 				title: {
-					text: '新客/熟客占比'
+          text: '',
+          float:true
 				},
 				credits: {
 					text: '',

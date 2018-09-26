@@ -25,7 +25,8 @@ export default {
           height:260,
 				},
 				title: {
-					text: '客流量来源设备占比'
+					text: '',
+          float:true
 				},
 				credits: {
 					text: '',

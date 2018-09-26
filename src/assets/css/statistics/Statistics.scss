@@ -29,13 +29,29 @@
     display: flex;
     flex-wrap: wrap;
     .charts-wrap{
+      width: 560px;
+      height: 330px;
       overflow: hidden;
-      width: 49%;
       margin: 10px 10px 0 0;
+      background: #fff;
     }
   }
     .noData{
         text-align:center;
         color:#999;
     }
+}
+button{
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+h4{
+  border-bottom:1px solid #ededed;
+  height: 39px;
+  line-height: 39px;
+  text-align: center;
+  margin: 10px;
+  font-size: 14px;
+  color: #2a2a2a;
 }
