@@ -61,9 +61,6 @@ export default {
     }
 
   },
-  created:function (){
-    this.menu();
-  },
   methods: {
     reset() {
       this.$refs.loginForm.resetFields();
@@ -78,9 +75,10 @@ export default {
           userApi.login(qs.stringify(this.$data.loginInfo)).then((res) => {
             if (res.data.errno === 0) {
               localStorage.setItem('knock_knock', res.data.data.access_token);
+              localStorage.setItem('domain', res.data.data.user.domain);  
               localStorage.setItem('username', res.data.data.user.username);
               localStorage.setItem('store_id', res.data.data.user.store_id);
-              localStorage.setItem('store_name', res.data.data.user.store_name);
+              localStorage.setItem('store_name', res.data.data.user.store_name);                          
               if(res.data.data.user.is_change_pwd == 0){
                 this.$data.dialogFormVisible = true;
               }else{
@@ -108,6 +106,7 @@ export default {
             localStorage.setItem('username', '');
             localStorage.setItem('store_id', '');
             localStorage.setItem('store_name', '');
+            localStorage.setItem('domain', '');
 						return false;
 					};
           for(let i=0;i<res.data.data.length;i++){

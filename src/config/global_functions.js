@@ -29,6 +29,7 @@ const functions={
 			        localStorage.setItem('username', '');
 			        localStorage.setItem('store_id', '');
 			        localStorage.setItem('store_name', '');
+			        localStorage.setItem('domain', '');
 					// this.$router.replace({
 					// 	name: 'UserLogin'
 					// });
