@@ -3,7 +3,7 @@ import router from '../router/index'
 import qs from 'qs'
 axios.interceptors.request.use(function (config) {
     let knock_knock = localStorage.getItem('knock_knock');
-    let domain = localStorage.getItem('domain');    
+    let domain = localStorage.getItem('domain');
     if (knock_knock && knock_knock!==null && knock_knock!=='') {
             if(typeof config.data =='object'){
                 config.data.append('access_token',knock_knock);
@@ -33,11 +33,11 @@ axios.interceptors.response.use(function (res) {
             localStorage.setItem('knock_knock', '');
             localStorage.setItem('username', '');
             localStorage.setItem('domain', '');
-            // window.location.href = '/';
-         router.replace({
-             path: '/UserLogin',
-             query: {redirect: router.currentRoute.fullPath}
-         })
+            window.location.href = '/';
+         // router.replace({
+         //     path: '/UserLogin',
+         //     query: {redirect: router.currentRoute.fullPath}
+         // })
         }
     return res;
   }, function (err) {
@@ -45,13 +45,13 @@ axios.interceptors.response.use(function (res) {
             localStorage.setItem('knock_knock', '');
             localStorage.setItem('username', '');
             localStorage.setItem('domain', '')
-            // window.location.href = '/';
-         router.replace({
-             path: '/UserLogin',
-             query: {redirect: router.currentRoute.fullPath}
-         })
+            window.location.href = '/';
+         // router.replace({
+         //     path: '/UserLogin',
+         //     query: {redirect: router.currentRoute.fullPath}
+         // })
         }
     return Promise.reject(err);
   });
 
-  
+
