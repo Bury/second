@@ -58,21 +58,21 @@
           <div>
             <el-form :inline="true" :model="item" ref="item" size="small" style="text-align: center">
               <div v-for='(item,index) in addProList' v-if="addProList">
-                <el-form-item label="材质：">
+                <el-form-item label="材质:">
                   <el-col :span="20">
                   <el-select v-model="item.material" placeholder="请选择材质">
                     <el-option  v-for="material in materials" :key="material.id" :label="material.name" :value="material.id"></el-option>
                   </el-select>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="款式：">
+                <el-form-item label="款式:">
                   <el-col :span="20">
                   <el-select v-model="item.style" placeholder="请选择款式">
                     <el-option  v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
                   </el-select>
                   </el-col>
                 </el-form-item>
-                <el-form-item label="成交总额：">
+                <el-form-item label="成交总额:">
                   <el-col :span="15">
                     <input class="inputStyle" type="number" v-model="item.money" v-on:input="getMoney(item.money)" value="0" oninput="if(value.length>7)value=value.slice(0,7)"></input>
 
