@@ -1,7 +1,7 @@
 <template>
 	<div class="store-set-page">
 		<div class="top-box">
-			<el-button type="primary" size="small" class="add-btn" @click="fnAdds()">新增</el-button>
+			<el-button size="small" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
     <div style="background: #fff;padding: 1rem;">
       <table width="99%" class="table">
@@ -76,7 +76,7 @@
 			</el-form>
 		  <div slot="footer" class="dialog-footer">
 		    <el-button @click="editCancel">取 消</el-button>
-		    <el-button type="primary" @click="editSubmit('editFormData')">确 定</el-button>
+		    <el-button @click="editSubmit('editFormData')">确 定</el-button>
 		  </div>
 		</el-dialog>
 
@@ -92,7 +92,7 @@
 		  </el-form>
 		  <div slot="footer" class="dialog-footer">
 		    <el-button @click="resetPasswordCancel">取 消</el-button>
-		    <el-button type="primary" @click="fnResetPasswordSubmit('resetPasswordFormData')" v-bind:disabled="isClick==1">确 定</el-button>
+		    <el-button @click="fnResetPasswordSubmit('resetPasswordFormData')" v-bind:disabled="isClick==1">确 定</el-button>
 		  </div>
 		</el-dialog>
 
@@ -119,7 +119,7 @@
 		  </el-form>
 		  <div slot="footer" class="dialog-footer" v-if="!avatarFormVisible">
 		    <el-button @click="addCancel">取 消</el-button>
-		    <el-button type="primary" @click="fnAddsSubmit('addFormData')">确 定</el-button>
+		    <el-button @click="fnAddsSubmit('addFormData')">确 定</el-button>
 		  </div>
 		</el-dialog>
 

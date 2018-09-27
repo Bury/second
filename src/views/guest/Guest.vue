@@ -50,8 +50,8 @@
           </el-form>
         </div>
         <div class="right">
-          <el-button type="primary" size="mini" @click="onSubmit" onclick="clickTotal('006','查询',1)">查询</el-button>
-          <el-button type="primary" size="mini" @click="fnReset" onclick="clickTotal('007','重置',1)">重置</el-button>
+          <el-button size="mini" @click="onSubmit" onclick="clickTotal('006','查询',1)">查询</el-button>
+          <el-button size="mini" @click="fnReset" onclick="clickTotal('007','重置',1)">重置</el-button>
         </div>
       </div>
 
@@ -160,7 +160,7 @@
       </el-row>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel()">取 消</el-button>
-        <el-button type="primary" @click="submitForm()" onclick="clickTotal('0','屏蔽此人确定',1)">确 定</el-button>
+        <el-button @click="submitForm()" onclick="clickTotal('0','屏蔽此人确定',1)">确 定</el-button>
       </div>
     </el-dialog>
 	</div>

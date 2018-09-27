@@ -14,7 +14,7 @@
             </el-checkbox-group>
         </div>
 		<div class="saveBtn">
-            <el-button type="primary" class="save-btn" @click="fnSetRemind">保存</el-button>
+            <el-button class="save-btn" @click="fnSetRemind">保存</el-button>
         </div>
 	</div>
     <div class="right"></div>

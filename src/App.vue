@@ -38,6 +38,11 @@ export default {
   -moz-border-radius: 0;
   border-radius: 0;
 }
+button,.el-button{
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
 input, .el-select-dropdown, .el-textarea, .el-textarea__inner, .el-message-box, .el-message,
 .el-dropdown-menu, .el-button, .el-cascader-menu, .el-tooltip__popper, .el-picker-panel, .el-date-picker {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;

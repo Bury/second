@@ -1,5 +1,5 @@
 .personal-page{
-    margin:80px auto 0;
+    //margin:80px auto 0;
     padding:40px;
     width:540px;
     border:1px solid #d2d2d2;
@@ -21,4 +21,9 @@
     color:#57a3f3;
     cursor: not-allowed; // 鼠标变化
   }
+}
+button{
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
 }

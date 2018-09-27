@@ -1,11 +1,11 @@
 <template>
     <div  class="guest-list-page">
       <div class="top-box">
-        <el-button type="primary" @click="fnGoback" style="margin-left: 5rem;" onclick="clickTotal('023','开单返回',1)">返回</el-button>
-        <el-button  @click="reFresh" style="margin-left: 5rem;">刷新</el-button>
+        <el-button size="middle" @click="fnGoback" onclick="clickTotal('023','开单返回',1)">返回</el-button>
+        <el-button size="middle" @click="reFresh" style="margin-left: 3rem;">刷新</el-button>
       </div>
 
-      <div style="margin-top: 2rem;overflow: hidden;">
+      <div style="overflow: hidden;">
 
 
         <!--第一步-->
@@ -93,7 +93,7 @@
               </el-row>
               <el-row style="margin-top: 3rem;margin-left: 2rem;">
                 <div class="moneyL">
-                  <p>共计</p>
+                  <p>总计：共</p>
                   <input class="lastNum" disabled v-model="allGoodLenght" style="width: 4rem;">
                   <p>件，</p><p>总价</p>
                   <input class="lastNum" disabled v-model="allMoney" value="0">
@@ -116,7 +116,7 @@
             </el-form>
           </div>
           <el-row style="margin-top: 3rem">
-            <el-button @click="isTrueAndPass" onclick="clickTotal('022','订单管理开单',3)">确认</el-button>
+            <el-button size="middle" @click="isTrueAndPass" onclick="clickTotal('022','订单管理开单',3)">确认</el-button>
           </el-row>
         </div>
 
