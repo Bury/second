@@ -2,7 +2,7 @@
     <div class="device-list-page">
       <template>
         <table width="99%" class="table">
-          <thead>
+          <thead style="background: #fafafa;border: 1px solid #f5f5f5;border-bottom: 0;">
           <tr height="40">
             <th class="col-md-1 text-center">序号</th>
             <th class="col-md-2 text-center">编号</th>
@@ -31,7 +31,7 @@
               <span v-else-if="item.status == 2">/</span>
             </td>
             <td class="handle">
-              <el-button @click="fnEdit(item)" type="text" size="small">编辑</el-button>
+              <el-button @click="fnEdit(item)" icon="el-icon-edit" type="warning"  plain circle size="small"></el-button>
             </td>
           </tr>
           </tbody>

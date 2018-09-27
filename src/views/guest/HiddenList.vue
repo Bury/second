@@ -2,7 +2,7 @@
 	<div>
 		<!-- 屏蔽列表 -->
     <table width="99%" class="table">
-      <thead>
+      <thead style="background: #fafafa;border: 1px solid #f5f5f5;border-bottom: 0;">
       <tr height="58px">
         <th class="col-md-1 text-center">序号</th>
         <th class="col-md-1 text-center">人脸</th>

@@ -100,8 +100,8 @@
 
     <div style="padding: 1rem;background: #fff;">
       <table width="99%" class="table">
-        <thead>
-        <tr height="58px">
+        <thead style="background: #fafafa;border: 1px solid #f5f5f5;border-bottom: 0;">
+        <tr height="50px">
           <th class="col-md-1 text-center">序号</th>
           <th class="col-md-1 text-center">编号</th>
           <th class="col-md-1 text-center">材质/款式</th>
@@ -114,7 +114,7 @@
         </thead>
 
         <tbody style="text-align: center">
-        <tr v-for="(item,index) in tableData" :key="index" height="58px">
+        <tr v-for="(item,index) in tableData" :key="index" height="50px">
           <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
           <td>{{item.sn}}</td>
           <td>
@@ -137,9 +137,9 @@
           <td>{{item.cash_t | date(4)}}</td>
           <!--<td>{{item.created_at | date(4)}}</td>-->
           <td>
-            <el-button @click="fnView(item)" type="text" size="small" onclick="clickTotal('019','订单管理查看',1)">查看</el-button>
-            <el-button @click="fnEdit(item)" type="text" size="small" onclick="clickTotal('020','订单管理编辑',1)">编辑</el-button>
-            <el-button @click="fnRemove(item)" type="text" size="small" onclick="clickTotal('021','订单管理删除',1)">删除</el-button>
+            <el-button @click="fnView(item)" icon="el-icon-view" type="primary"  plain circle size="small" onclick="clickTotal('019','订单管理查看',1)"></el-button>
+            <el-button @click="fnEdit(item)" icon="el-icon-edit" type="warning"  plain circle  size="small" onclick="clickTotal('020','订单管理编辑',1)"></el-button>
+            <el-button @click="fnRemove(item)" icon="el-icon-delete" type="danger"  plain circle  size="small" onclick="clickTotal('021','订单管理删除',1)"></el-button>
           </td>
         </tr>
         </tbody>
@@ -181,7 +181,7 @@
             </el-col>
           </el-row>
           <el-form-item :data="faceSearch">
-            <div style="width:200px;height:200px;border:1px solid #eee;margin:2rem 0 0 0;">
+            <div style="width:200px;height:200px;border:1px solid #eee;margin:2rem 0 1rem 0;">
               <template>
                 <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar">
               </template>
@@ -257,7 +257,7 @@
             <img width="100%" :src="dialogImageUrl" alt="">
           </el-dialog>
         </el-form-item>
-        <el-form-item label="备注:" prop="type">
+        <el-form-item label="备注:" prop="type" style="margin-top: 1rem;">
           <el-input
             type="textarea"
             maxlength=200
@@ -291,7 +291,7 @@
             </el-col>
           </el-row>
           <el-form-item :data="faceSearch">
-            <div style="width:200px;height:200px;border:1px solid #eee;margin:2rem 0 0 0;">
+            <div style="width:200px;height:200px;border:1px solid #eee;margin:2rem 0 1rem 0;">
               <template>
                 <img :src="editForm.traffic.avatar" style="display:block;margin:0 auto;width:100%;" prop="avatar" @click="imgView($event)">
               </template>

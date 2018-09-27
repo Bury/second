@@ -5,7 +5,7 @@
 		</div>
     <div style="background: #fff;padding: 1rem;">
       <table width="99%" class="table">
-        <thead>
+        <thead style="background: #fafafa;border: 1px solid #f5f5f5;border-bottom: 0;">
         <tr height="40">
           <th class="col-md-1 text-center">序号</th>
           <th class="col-md-1 text-center">账号</th>
@@ -39,22 +39,23 @@
         </tr>
         </tbody>
       </table>
+      <!-- 分页 -->
+      <div v-if="tableData.length > 0" style="margin:0 auto;width:961px;height: 4rem;">
+        <el-pagination
+          background
+          class="pagination"
+          layout="prev, pager, next"
+          small
+          @current-change="handleCurrentChange"
+          :current-page="pagination.currentPage"
+          :page-size="requestParameters.page_size"
+          :total="pagination.totalCount">
+        </el-pagination>
+      </div>
     </div>
 
 
-	    <!-- 分页 -->
-	    <div v-if="tableData.length > 0" style="margin:0 auto;width:961px;">
-	    	<el-pagination
-				background
-	            class="pagination"
-	            layout="prev, pager, next"
-	            small
-	            @current-change="handleCurrentChange"
-	            :current-page="pagination.currentPage"
-	            :page-size="requestParameters.page_size"
-	            :total="pagination.totalCount">
-	        </el-pagination>
-	    </div>
+
 
 	    <!-- 编辑 -->
 	    <el-dialog title="编辑账号" center :visible.sync="editFormVisible" :before-close="dialogClose">
