@@ -94,8 +94,6 @@
       </div>
     </div>
 
-
-
     <div style="text-align:right;background: #fff;padding:2rem 3rem 1rem;">
       <el-button size="mini" @click="orderVideo" onclick="clickTotal('018','订单开单',2)">开单</el-button>
     </div>
@@ -190,10 +188,10 @@
             </div>
           </el-form-item>
         </el-form-item>
-        <div v-for="(item,index) in editRequestParameters" :key="index" v-if="editRequestParameters" :rules="rules">
+        <div v-for="(item,index) in editRequestParameters" :key="index" v-if="editRequestParameters">
           <el-row>
             <el-col :span='7'>
-              <el-form-item label="材质：" prop="material" label-width="60px">
+              <el-form-item label="材质:">
                 <el-select size="mini" v-model='item.material ' onclick="clickTotal('0202','编辑材质',1)">
                   <el-option v-for="material in materials" :key="material.id" :label="material.name"
                              :value="material.id"></el-option>
@@ -201,14 +199,14 @@
               </el-form-item>
             </el-col>
             <el-col :span='7'>
-              <el-form-item label="款式：" prop="style" label-width="60px">
+              <el-form-item label="款式:">
                 <el-select size="mini" v-model="item.style" onclick="clickTotal('0203','编辑款式',1)">
                   <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span='7'>
-              <el-form-item label='成交金额：' prop="price">
+              <el-form-item label='成交金额:'>
                 <el-input size="mini" v-model.trim='item.price' v-on:input='editInputFun()' onclick="clickTotal('0204','编辑金额',1)"></el-input>
               </el-form-item>
             </el-col>
@@ -229,19 +227,15 @@
           </el-row>
         </div>
         <div class="totalAll">
-          <div>
-            总计：共<input v-model='editAllNum' class='totalNumber'/>件,总价
+          <el-form-item label="总计:">
+            共<input v-model='editAllNum' class='totalNumber'/>件,总价
             <input v-model="editForm.price" class='totalPrice'/>元
-          </div>
-          <!--<p>共计-->
-            <!--<input v-model='editAllNum' class='totalNumber' :disabled='true' prop="editAllNum"/>件,总价-->
-            <!--<input v-model="editForm.price" class='totalPrice' :disabled='true' prop="price"/>元-->
-          <!--</p>-->
+          </el-form-item>
         </div>
-        <el-form-item></el-form-item>
-        <el-form-item></el-form-item>
-        <el-form-item></el-form-item>
-        <el-form-item label="小票" v-model="editForm.avatar">
+        <!--<el-form-item></el-form-item>-->
+        <!--<el-form-item></el-form-item>-->
+        <!--<el-form-item></el-form-item>-->
+        <el-form-item label="小票:" v-model="editForm.avatar">
           <div :model="editForm.avatar" :visible.sync="editImgVisible">
             <div class="editImg" v-for="item in editForm.avatar">
               <img :src="item" width="100%"/>
@@ -282,15 +276,15 @@
 
     <!--查看-->
     <el-dialog title="查看" center :visible.sync="viewVisible" :before-close="viewDialogClose">
-      <el-form :model='editForm' ref="editForm" :rules="rules" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="收银时间：" prop="cash_t">
+      <el-form :model='editForm' ref="editForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="收银时间:">
           <el-date-picker disabled size="mini"
             v-model="editForm.cash_t"
             type="datetime"
             placeholder="选择日期时间">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="人脸编号：" prop="faceID">
+        <el-form-item label="人脸编号:">
           <el-row>
             <el-col :span='10'>
               <el-input size="mini" v-model="editForm.traffic.customer_id" disabled></el-input>
@@ -304,40 +298,32 @@
             </div>
           </el-form-item>
         </el-form-item>
-        <div v-for="(item,index) in editForm.orderGoods" :key="index" v-if="editForm.orderGoods" :rules="rules">
+        <div v-for="(item,index) in editForm.orderGoods" :key="index" v-if="editForm.orderGoods">
           <el-row>
             <el-col :span='7'>
-              <el-form-item label="材质：" prop="material" label-width="60px">
-                <el-select size="mini" v-model='item.material_name' disabled>
-                  <el-option v-for="material in materials" :key="material.id" :label="material.name"
-                             :value="material.id"></el-option>
-                </el-select>
+              <el-form-item label="材质:">
+                <el-input size="mini" v-model="item.material_name" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :span='7'>
-              <el-form-item label="款式：" prop="style" label-width="60px">
-                <el-select size="mini" v-model="item.style_name" disabled>
-                  <el-option v-for="style in styles" :key="style.id" :label="style.name" :value="style.id"></el-option>
-                </el-select>
+              <el-form-item label="款式:">
+                <el-input size="mini" v-model="item.style_name" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :span='7'>
-              <el-form-item label='成交金额：'>
-                <p class="numberPrice">{{item.price | numberFilter}}</p>
-                <!--<el-input class="numberPrice" size="mini" v-model='' v-on:input='editInputFun()' disabled></el-input>-->
+              <el-form-item label='成交金额:'>
+                <el-input size="mini" v-model='item.price' disabled></el-input>
               </el-form-item>
             </el-col>
           </el-row>
         </div>
-        <div class="totalAll">
-          <p>共计
-            <input v-model='editAllNum' class='totalNumber' :disabled='true' prop="editAllNum"/>件,总价
+          <el-form-item label="总计:">
+            共<input v-model='editAllNum' class='totalNumber' :disabled='true' prop="editAllNum"/>件,总价
             <input v-model="editForm.price" class='totalPrice' :disabled='true' prop="price"/>元
-          </p>
-        </div>
-        <el-form-item></el-form-item>
-        <el-form-item></el-form-item>
-        <el-form-item></el-form-item>
+          </el-form-item>
+        <!--<el-form-item></el-form-item>-->
+        <!--<el-form-item></el-form-item>-->
+        <!--<el-form-item></el-form-item>-->
         <el-form-item label="小票:" v-model="editForm.avatar">
           <div :model="editForm.avatar" :visible.sync="editImgVisible">
           	<template v-if='editForm.avatar.length > 0'>
@@ -350,12 +336,11 @@
           </div>
         </el-form-item>
         <el-form-item label="备注:" prop="type">
-          <el-input disabled
+          <el-input disabled v-if="editForm.remark"
             type="textarea"
-            autosize
-            placeholder="请输入内容"
             v-model="editForm.remark">
           </el-input>
+          <span v-else>暂无备注</span>
         </el-form-item>
 
       </el-form>

@@ -47,28 +47,26 @@
   .line{
     text-align:center;
   }
-  .totalAll{
-    overflow:hidden;
     input{
       border: 0;
       background: 0;
     }
-    P{
-      float:right;
-      font-weight:700;
-      .totalNumber, .totalPrice{
-        padding:0;
-        margin:0 3px;
-        width:100px;
-        height:40px;
-        //border-radius: 3px;
-        border:0;
-        background: #eee;
-        border: 1px solid #999;
-        text-align:center;
-      }
+    .totalNumber{
+      width: 5rem;
     }
-  }
+    .totalPrice{
+      width: 9rem;
+    }
+    .totalNumber, .totalPrice{
+      padding:0;
+      margin:0 3px;
+      height:3.5rem;
+      border:0;
+      text-align:center;
+      color: #f47364;
+      font-size: 1.7rem;
+    }
+
   .addproduct{
     overflow:hidden;
     color: #55b7fd;
