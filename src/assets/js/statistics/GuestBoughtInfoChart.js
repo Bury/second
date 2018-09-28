@@ -22,7 +22,8 @@ export default {
 			Highcharts: Highcharts,
 			options: {
 				chart: {
-					type: 'pie'
+					type: 'pie',
+					 height:'320',
 				},
 				title: {
 					text: '未购/已购客户占比'

@@ -22,7 +22,7 @@ export default {
 			options: {
 				chart: {
 					type: 'pie',
-          height:260,
+                    height:'320',
 				},
 				title: {
 					text: '',

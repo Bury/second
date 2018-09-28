@@ -29,11 +29,15 @@
     z-index: 1;
     margin: 0;
 	}
+	.chartW{
+		margin-left: 0;
+		width: calc(100% - 120px);
+	}
 
 	.el-radio-select {
 		position: absolute;
-		top: 5rem;
-		right: 3rem;
+		top: 70px;
+		right: 30px;
 		z-index: 2;
 		div {
 			margin-bottom: 15px;

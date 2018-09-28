@@ -1,5 +1,5 @@
 <template>
-	<div style="width: 350px;background: #fff;height: 280px;">
+	<div style="background: #fff;">
 		<div class="top">
 			<div class="top-text">客流量</div>
 			<div class="top-num">{{goStoreNum.passenger_flow}}</div>
@@ -77,15 +77,17 @@
 	}
 
 	.top-text {
-		margin: 30px auto 24px;
-		color: #999;
+		margin: 40px auto 24px;
+		font-size: 17px;
+		color: #999999;
 	}
 
 	.top-num {
 		padding-bottom: 18px;
 		color: #ff6953;
 		font-size: 48px;
-		width: 300px;
+		width: 90%;
+		line-height: 100px;
 		border-bottom: 1px solid #ededed;
 	}
 
@@ -93,7 +95,7 @@
 		text-align: center;
 		display: flex;
 		overflow: hidden;
-		margin-top: 30px;
+		margin-top: 50px;
 	}
 
 	/*.bottom>div {*/
@@ -102,12 +104,11 @@
 
 	.bottom-num {
 		color: #2a2a2a;
-		font-size: 2rem;
-		margin-bottom: 0.5rem;
+		font-size:24px;
 	}
 
 	.bottom-text {
 		color: #999;
-		font-size: 1rem;
+		font-size: 14px;
 	}
 </style>

@@ -29,11 +29,11 @@ export default {
 			options: {
 				chart: {
 					type: 'line',
-          width:600,
-          height:260,
+					height:'320',
+					marginTop:'30'
 				},
 				title: {
-					text: '客流趋势图'
+					text: ''
 				},
 				xAxis: {
 					categories: []

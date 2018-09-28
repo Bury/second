@@ -1,57 +1,56 @@
-.statistics-page{
+.statistics-page {
     //padding-top:120px;
-    .top-box{
+    .top-box {
         //position: fixed;
         //padding-top:90px;
         //top:0;
         //z-index:9;
-        width:100%;
-        background:#fff;
-      padding: 2rem;
+        width: 100%;
+        background: #fff;
+        padding: 2rem;
     }
-    .charts-type{
-        margin:0 auto;
-        overflow:hidden;
-        .charts-wrap{
-            margin: 15px 0;
-            height: 280px;
+    .charts-type {
+        overflow: hidden;
+        .charts-wrap {
+            background-color: #fff;
+            margin-top: 10px;
+        }
+        li:nth-child(2n) {
+            float: right;
+        }
+        li:nth-child(2n+1) {
+            float: left;
+        }
+        .cwA{
+            width: 38%;
+            height: 379px;
+        }
+        .cwB{
+            width: calc(62% - 10px);
+        }
+        
+        .cwColumnPie{
+            width: calc(50% - 5px);
+            height: 380px;
+        }
+        h4 {
+            border-bottom: 1px solid #ededed;
+            height: 39px;
+            line-height: 39px;
+            text-align: center;
+            margin: 10px;
+            font-size: 17px;
+            color: #2a2a2a;
         }
     }
-  .charts-top{
-    display: flex;
-    flex-wrap: wrap;
-    .charts-wrap{
-      margin: 10px 10px 0 0;
-      overflow: hidden;
-    }
-  }
-  .charts-bottom{
-    display: flex;
-    flex-wrap: wrap;
-    .charts-wrap{
-      width: 565px;
-      height: 350px;
-      overflow: hidden;
-      margin: 10px 10px 0 0;
-      background: #fff;
-    }
-  }
-    .noData{
-        text-align:center;
-        color:#999;
+    .noData {
+        text-align: center;
+        color: #999;
     }
 }
-button{
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-h4{
-  border-bottom:1px solid #ededed;
-  height: 39px;
-  line-height: 39px;
-  text-align: center;
-  margin: 10px;
-  font-size: 14px;
-  color: #2a2a2a;
+
+button {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
