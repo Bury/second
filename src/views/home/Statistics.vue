@@ -67,18 +67,18 @@
         <div style="text-align: center;background: #fff;padding: 2rem;" v-show="noTimeHide"><span>请选择时间</span></div>
         <ul class="charts-type" v-show="!noTimeHide">
           <li>
-            <ul class="charts-top" style="width: 108rem;margin: 0 auto;">
+            <ul class="charts-top" style="width: 1150px;margin: 0 auto;">
               <li class="charts-wrap">
                 <total-guest :totalData="guestParameters" :changFlag="changFlag"></total-guest>
               </li>
-              <li class="charts-wrap" style="width: 65rem;background: #fff;padding-top: 1rem;">
+              <li class="charts-wrap" style="width: 780px;background: #fff;padding-top: 1rem;">
                 <guest-chart :guestData="guestParameters" :changFlag="changFlag"></guest-chart>
               </li>
             </ul>
           </li>
 
           <li>
-            <ul class="charts-bottom" style="width: 108rem;margin: 0 auto;">
+            <ul class="charts-bottom" style="width: 1150px;margin: 0 auto;">
               <li class="charts-wrap">
                 <h4>新客/熟客占比</h4>
                 <guest-visited-info-chart :guestVisitedInfoData="guestVisitedInfoData"></guest-visited-info-chart>
