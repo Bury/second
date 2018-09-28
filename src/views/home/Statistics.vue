@@ -2,6 +2,13 @@
 <template>
     <div class="statistics-page">
         <div class="top-box">
+        	<el-tabs v-model="timeType" type="card" @tab-click="cateChanged">
+            <el-tab-pane label="日统计" name="day" style="margin-right: 10px;"></el-tab-pane>
+            <el-tab-pane label="周统计" name="week"></el-tab-pane>
+            <el-tab-pane label="月统计" name="month"></el-tab-pane>
+            <el-tab-pane label="年统计" name="year"></el-tab-pane>
+            <el-tab-pane label="自定义统计" name="userDefined"></el-tab-pane>
+           </el-tabs>
             <el-form :inline="true" class="demo-form-inline" size="mini">
                 <el-form-item label="时间选择：">
                     <el-date-picker
@@ -56,13 +63,7 @@
                     <el-button @click="onSubmit">查询</el-button>
                 </el-form-item>
             </el-form>
-          <el-tabs v-model="timeType" type="card" @tab-click="cateChanged">
-            <el-tab-pane label="日统计" name="day" style="margin-right: 10px;"></el-tab-pane>
-            <el-tab-pane label="周统计" name="week"></el-tab-pane>
-            <el-tab-pane label="月统计" name="month"></el-tab-pane>
-            <el-tab-pane label="年统计" name="year"></el-tab-pane>
-            <el-tab-pane label="自定义统计" name="userDefined"></el-tab-pane>
-          </el-tabs>
+          
         </div>
         <div style="text-align: center;background: #fff;padding: 2rem;" v-show="noTimeHide"><span>请选择时间</span></div>
         <ul class="charts-type" v-show="!noTimeHide">
