@@ -1,18 +1,12 @@
 .remind-list-page {
-  input{
-    border-radius:0;
-  }
   .top-box {
     overflow: hidden;
     background: #fff;
     padding: 2rem 0;
-    button{
-      -webkit-border-radius: 0;
-      -moz-border-radius: 0;
-      border-radius: 0;
-      width: 6rem;
-      height:2.5rem
-    }
+    //button{
+    //  width: 6rem;
+    //  height:2.5rem
+    //}
   }
   .movement {
     width: 10.5rem;

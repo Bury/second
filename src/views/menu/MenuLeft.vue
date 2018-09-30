@@ -12,7 +12,7 @@
 
       <template v-for="(item,index) in tableData">
         <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" style="text-align: center;" :id="item.id">
-          <div onclick="clickTotal(this.parentNode.id,this.id,1)" :id="item.name">
+          <div class="iconfontSize" onclick="clickTotal(this.parentNode.id,this.id,1)" :id="item.name">
             <i :class="item.front_icon" style="color: #fff;"></i>
             <span slot="title">{{item.name}}</span>
           </div>
@@ -20,7 +20,7 @@
 
         <el-submenu v-else :key="index"  :index="item.front_url" style="text-align: center">
             <template slot="title">
-                <i :class="item.front_icon"  style="color: #fff;"></i>
+                <i :class="item.front_icon"  style="color: #fff;font-size:20px;"></i>
                 <span slot="title">{{item.name}}</span>
             </template>
 

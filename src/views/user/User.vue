@@ -1,7 +1,7 @@
 <template>
 	<div class="store-set-page">
 		<div class="top-box">
-			<el-button size="small" class="add-btn" @click="fnAdds()">新增</el-button>
+			<el-button size="mini" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
     <div style="background: #fff;padding: 1rem;">
       <table width="99%" class="table">

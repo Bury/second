@@ -11,7 +11,7 @@
 		      end: '23:59',
 		      maxTime: endTime}">
 	  		</el-time-select>
-	  		<span style="padding:0 10px;">至</span>
+	  		<span style="padding:0 10px;line-height: 37px;">至</span>
 			<el-time-select placeholder="结束时间" v-model="endTime"
 			    :picker-options="{
 			      start: '00:00',
