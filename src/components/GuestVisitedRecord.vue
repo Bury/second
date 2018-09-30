@@ -16,9 +16,9 @@
 			</li>
 		</ul>
 		<!-- 分页 -->
-		<div>
+		<div style="text-align: center">
 			<el-pagination
-				background
+        style="font-family: '微软雅黑';font-weight: 100;"
 	            class="pagination"
 	            layout="prev, pager, next"
 	            small
