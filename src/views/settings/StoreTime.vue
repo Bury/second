@@ -21,7 +21,7 @@
 			</el-time-select>
 		</div>
 		<div class="saveBtn">
-			<el-button class="save-btn" @click="fnSetTime">保存</el-button>
+			<el-button plain class="save-btn" @click="fnSetTime">保存</el-button>
 		</div>
 	</div>
     <div class="right"></div>

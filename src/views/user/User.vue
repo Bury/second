@@ -1,7 +1,7 @@
 <template>
 	<div class="store-set-page">
 		<div class="top-box">
-			<el-button size="mini" class="add-btn" @click="fnAdds()">新增</el-button>
+			<el-button plain size="mini" class="add-btn" @click="fnAdds()">新增</el-button>
 		</div>
     <div style="background: #fff;padding: 1rem;">
       <table width="99%" class="table">
@@ -47,9 +47,9 @@
         </tbody>
       </table>
       <!-- 分页 -->
-      <div v-if="tableData.length > 0" style="margin:0 auto;width:961px;height: 4rem;">
+      <div v-if="tableData.length > 0" style="margin:0 auto;width:961px;height: 4rem;text-align: center">
         <el-pagination
-          background
+          style="font-family: '微软雅黑';font-weight: 100;"
           class="pagination"
           layout="prev, pager, next"
           small

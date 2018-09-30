@@ -32,6 +32,7 @@ export default{
             },
           locate:'',
           statusColor:0,
+          noData:false,
         }
     },
 
@@ -59,6 +60,11 @@ export default{
             let qs = require('querystring');
             deviceApi.lists().then((res) => {
                 if(res.data.errno === 0){
+                  if(res.data.data.list.length == 0){
+                    this.$data.noData = true;
+                  }else{
+                    this.$data.noData = false;
+                  }
                     this.$data.tableData = res.data.data.list;
                     for(let item of res.data.data.list){
                       if(item.status == 0){

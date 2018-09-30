@@ -38,7 +38,7 @@
           </tr>
           </tbody>
         </table>
-
+        <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>
 				<!-- 编辑 -->
 				<el-dialog title="编辑" center :visible.sync="editFormVisible" :before-close="dialogClose">
 				 	<el-form :model="editForm" :rules="editRules" ref="editForm" label-width="100px" class="demo-ruleForm" style="margin-bottom:50px;">

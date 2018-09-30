@@ -80,8 +80,8 @@
         </div>
 
         <div class="right">
-          <el-button size="mini" @click="lists" onclick="clickTotal('016','订单管理查询',1)">查询</el-button>
-          <el-button size="mini" @click="fnReset" onclick="clickTotal('017','订单管理重置',1)">重置</el-button>
+          <el-button plain size="mini" @click="lists" onclick="clickTotal('016','订单管理查询',1)">查询</el-button>
+          <el-button plain size="mini" @click="fnReset" onclick="clickTotal('017','订单管理重置',1)">重置</el-button>
         </div>
       </div>
       <div class="movement">
@@ -95,7 +95,7 @@
     </div>
 
     <div style="text-align:right;background: #fff;padding:2rem 3rem 1rem;">
-      <el-button size="mini" @click="orderVideo" onclick="clickTotal('018','订单开单',2)">开单</el-button>
+      <el-button size="mini" plain @click="orderVideo" onclick="clickTotal('018','订单开单',2)">开单</el-button>
     </div>
 
     <div style="padding: 1rem;background: #fff;">
@@ -155,7 +155,7 @@
       <!-- 分页 -->
       <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;height: 4rem;background: #fff;text-align: center">
         <el-pagination
-          background
+          style="font-family: '微软雅黑';font-weight: 100;"
           class="pagination"
           layout="prev, pager, next"
           small
@@ -184,7 +184,7 @@
               <el-input size="mini" v-model.trim="editForm.traffic.customer_id"></el-input>
             </el-col>
             <el-col :span='2'>
-              <el-button size="mini" style="margin-left: 1rem;" @click="editFindGuestByFaceId()" onclick="clickTotal('0201','人脸编号',1)">查询</el-button>
+              <el-button plain size="mini" style="margin-left: 1rem;" @click="editFindGuestByFaceId()" onclick="clickTotal('0201','人脸编号',1)">查询</el-button>
             </el-col>
           </el-row>
           <el-form-item :data="faceSearch">

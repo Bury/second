@@ -60,10 +60,10 @@
                   </el-date-picker>
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="onSubmit">查询</el-button>
+                    <el-button plain @click="onSubmit">查询</el-button>
                 </el-form-item>
             </el-form>
-          
+
         </div>
         <div style="text-align: center;background: #fff;padding: 2rem;" v-show="noTimeHide"><span>请选择时间</span></div>
         <ul class="charts-type" v-show="!noTimeHide">

@@ -50,8 +50,8 @@
           </el-form>
         </div>
         <div class="right">
-          <el-button size="mini" @click="onSubmit" onclick="clickTotal('006','查询',1)">查询</el-button>
-          <el-button size="mini" @click="fnReset" onclick="clickTotal('007','重置',1)">重置</el-button>
+          <el-button plain size="mini" @click="onSubmit" onclick="clickTotal('006','查询',1)">查询</el-button>
+          <el-button plain size="mini" @click="fnReset" onclick="clickTotal('007','重置',1)">重置</el-button>
         </div>
       </div>
 
@@ -117,7 +117,7 @@
         <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>
         <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;text-align: center">
           <el-pagination
-            background
+            style="font-family: '微软雅黑';font-weight: 100;"
             class="pagination"
             layout="prev, pager, next"
             small

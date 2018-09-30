@@ -29,7 +29,7 @@
           <!--分页-->
           <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
             <el-pagination
-              background
+              style="font-family: '微软雅黑';font-weight: 100;"
               class="pagination"
               layout="prev, pager, next"
               small
