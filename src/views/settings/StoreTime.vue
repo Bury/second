@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #fff;padding-bottom: 6rem;">
+  <div style="background: #fff;padding-bottom: 6rem;min-height: 600px;">
     <div class="left"></div>
 	  <div class="open-time-set-page">
 		<h3 class="top-box">营业时间设置</h3>

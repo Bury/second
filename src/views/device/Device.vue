@@ -31,7 +31,9 @@
               <span v-else-if="item.status == 2">/</span>
             </td>
             <td class="handle">
-              <el-button @click="fnEdit(item)" icon="el-icon-edit" type="warning"  plain circle size="small"></el-button>
+              <div><i class="iconfont el-icon-yy-Group-" @click="fnEdit(item)"></i></div>
+
+              <!--<el-button @click="fnEdit(item)" icon="el-icon-edit"  plain size="mini"></el-button>-->
             </td>
           </tr>
           </tbody>

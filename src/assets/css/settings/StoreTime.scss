@@ -4,14 +4,23 @@ div{
     width: 25%;
   }
   .open-time-set-page{
+    height: 340px;
     flex: 1;
     margin:80px auto 0;
-    padding:40px;
-    border:1px solid #d2d2d2;
+    padding-bottom:30px;
+    border:1px solid #f0f0f0;
     display: flex;
     flex-direction: column;
     .top-box{
+      width: 100%;
+      text-align: center;
+      line-height: 60px;
       height: 60px;
+      font-size: 16px;
+      color: #666;
+      background-color: #fafafa;
+      border-bottom: 1px solid #f0f0f0;
+      margin: 0 0 38px 0;
     }
     .time-box{
       margin:0 auto 100px;;
@@ -23,7 +32,7 @@ div{
       .save-btn{
         position: absolute;
         bottom:0;
-        right:20px;
+        right:40px;
       }
     }
   }

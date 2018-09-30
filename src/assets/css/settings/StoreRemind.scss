@@ -4,20 +4,29 @@ div{
     width: 25%;
   }
   .remind-set-page{
+    height: 340px;
     flex: 1;
     margin:80px auto 0;
-    padding:40px;
-    border:1px solid #d2d2d2;
+    padding-bottom:30px;
+    border:1px solid #f0f0f0;
     display: flex;
     flex-direction: column;
     .top-box{
+      width: 100%;
+      text-align: center;
+      line-height: 60px;
       height: 60px;
+      font-size: 16px;
+      color: #666;
+      background-color: #fafafa;
+      border-bottom: 1px solid #f0f0f0;
+      margin: 0 0 38px 0;
     }
     .all-box{
-      margin-bottom:20px;
+      margin:0 0 45px 0;
     }
     .type-list{
-      margin-bottom:100px;
+      margin:0 0 45px 0;
     }
     .saveBtn{
       position:relative;
@@ -26,7 +35,7 @@ div{
       .save-btn{
         position: absolute;
         bottom:0;
-        right:0;
+        right:40px;
       }
     }
   }

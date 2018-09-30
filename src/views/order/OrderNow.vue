@@ -1,8 +1,8 @@
 <template>
     <div  class="guest-list-page">
       <div class="top-box">
-        <el-button size="middle" @click="fnGoback" onclick="clickTotal('023','开单返回',1)">返回</el-button>
-        <el-button size="middle" @click="reFresh" style="margin-left: 3rem;">刷新</el-button>
+        <el-button size="mini" @click="fnGoback" onclick="clickTotal('023','开单返回',1)">返回</el-button>
+        <el-button size="mini" @click="reFresh" style="margin-left: 3rem;">刷新</el-button>
       </div>
 
       <div style="overflow: hidden;">

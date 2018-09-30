@@ -89,6 +89,7 @@
 		width: 90%;
 		line-height: 100px;
 		border-bottom: 1px solid #ededed;
+    font-family: numFont;
 	}
 
 	.bottom {
@@ -96,6 +97,7 @@
 		display: flex;
 		overflow: hidden;
 		margin-top: 50px;
+    font-family: numFont;
 	}
 
 	/*.bottom>div {*/

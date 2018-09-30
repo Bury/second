@@ -28,13 +28,20 @@
             <span @click=fnStatusUpdate(item.id,item.status)>{{item.status == 1 ? '启用' : '禁用'}}</span>
           </td>
           <td>{{item.created_at | date(4)}}</td>
-          <td>
-            <el-button type="primary" plain icon="el-icon-view" circle size="small"
-                       @click="fnResetPassword(item)" v-bind:disabled="item.status==0"></el-button>
-            <el-button type="warning" plain icon="el-icon-edit" circle size="small"
-                       @click="fnEdit(item)"></el-button>
-            <el-button type="danger" plain icon="el-icon-delete" circle size="small"
-                       @click="fnRemove(item)"></el-button>
+          <td class="handle">
+            <div>
+              <div>
+                <i class="iconfont icon1 el-icon-yy-suo1" @click="fnResetPassword(item)" v-bind:disabled="item.status==0"></i>
+              </div>
+              <div><i class="iconfont icon2 el-icon-yy-Group-" @click="fnEdit(item)"></i></div>
+              <div><i class="iconfont icon3 el-icon-yy-shanchu" @click="fnRemove(item)" ></i></div>
+            </div>
+            <!--<el-button type="primary" plain icon="el-icon-yy-suo1" circle size="small"-->
+                       <!--@click="fnResetPassword(item)" v-bind:disabled="item.status==0"></el-button>-->
+            <!--<el-button type="warning" plain icon="el-icon-yy-Group-" circle size="small"-->
+                       <!--@click="fnEdit(item)"></el-button>-->
+            <!--<el-button type="danger" plain icon="el-icon-yy-shanchu" circle size="small"-->
+                       <!--@click="fnRemove(item)"></el-button>-->
           </td>
         </tr>
         </tbody>

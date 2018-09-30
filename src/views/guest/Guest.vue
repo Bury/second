@@ -115,7 +115,7 @@
           </tbody>
         </table>
         <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>
-        <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;">
+        <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;text-align: center">
           <el-pagination
             background
             class="pagination"

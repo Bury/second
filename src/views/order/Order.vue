@@ -136,17 +136,24 @@
           </td>
           <td>{{item.cash_t | date(4)}}</td>
           <!--<td>{{item.created_at | date(4)}}</td>-->
-          <td>
-            <el-button @click="fnView(item)" icon="el-icon-view" type="primary"  plain circle size="small" onclick="clickTotal('019','订单管理查看',1)"></el-button>
-            <el-button @click="fnEdit(item)" icon="el-icon-edit" type="warning"  plain circle  size="small" onclick="clickTotal('020','订单管理编辑',1)"></el-button>
-            <el-button @click="fnRemove(item)" icon="el-icon-delete" type="danger"  plain circle  size="small" onclick="clickTotal('021','订单管理删除',1)"></el-button>
+          <td class="handle">
+            <div>
+              <div>
+                <i class="iconfont icon1 el-icon-yy-chakan" @click="fnView(item)"  onclick="clickTotal('019','订单管理查看',1)"></i>
+              </div>
+              <div><i class="iconfont icon2 el-icon-yy-Group-" @click="fnEdit(item)" onclick="clickTotal('020','订单管理编辑',1)"></i></div>
+              <div><i class="iconfont icon3 el-icon-yy-shanchu" @click="fnRemove(item)" onclick="clickTotal('021','订单管理删除',1)" ></i></div>
+            </div>
+            <!--<el-button @click="fnView(item)" icon="el-icon-view" type="primary"  plain circle size="small" onclick="clickTotal('019','订单管理查看',1)"></el-button>-->
+            <!--<el-button @click="fnEdit(item)" icon="el-icon-yy-Group-" type="warning"  plain circle  size="small" onclick="clickTotal('020','订单管理编辑',1)"></el-button>-->
+            <!--<el-button @click="fnRemove(item)" icon="el-icon-yy-shanchu" type="danger"  plain circle  size="small" onclick="clickTotal('021','订单管理删除',1)"></el-button>-->
           </td>
         </tr>
         </tbody>
       </table>
       <div class="noData" v-if="noData" style="text-align: center;margin-top:2rem;font-size: 1.4rem;">暂无数据~</div>
       <!-- 分页 -->
-      <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;height: 4rem;background: #fff;">
+      <div v-if="tableData.length > 0" style="margin:0 auto;max-width:1551px;height: 4rem;background: #fff;text-align: center">
         <el-pagination
           background
           class="pagination"
@@ -269,8 +276,8 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelE()">取 消</el-button>
-        <el-button  @click="EditFormSubmit(editForm)" v-show="isForChange" onclick="clickTotal('0208','编辑确定',1)">确 定</el-button>
+        <el-button size="mini" @click="cancelE()">取 消</el-button>
+        <el-button size="mini" @click="EditFormSubmit(editForm)" v-show="isForChange" onclick="clickTotal('0208','编辑确定',1)">确 定</el-button>
       </div>
     </el-dialog>
 

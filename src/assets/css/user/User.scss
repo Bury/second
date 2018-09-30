@@ -37,3 +37,27 @@
 .table tbody tr:hover{
   background-color: #f5fbfe;
 }
+.handle div{
+  display: flex;
+  width: 108px;
+}
+.handle div div{
+  width: 18px;
+  height: 18px;
+  margin: 0 10px;
+  .icon1{
+    color: rgb(125,203,255);
+  }
+  .icon2{
+    color: rgb(125,203,255);
+  }
+  .icon3{
+    color: rgb(255,91,69);
+  }
+}
+.handle div div:hover{
+  cursor: pointer;
+  i{
+    color: #2a2a2a;
+  }
+}

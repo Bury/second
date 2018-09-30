@@ -13,7 +13,7 @@
             <!--</div>-->
             <div class="user">
                 <el-dropdown trigger="hover" >
-                    <span class="el-dropdown-link" style="color:#ffc400;">
+                    <span class="el-dropdown-link">
                       您好，{{username}}
                       <i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
