@@ -114,7 +114,7 @@ export default {
                         if(types == 'buy'){
                             let newData = [];
                             for(var i=0; i<thisData.buy.length; i++){
-                                newData.push([thisData.buy[i],thisData.count[i]])
+                                newData.push([thisData.buy[i],thisData.sum[i]])
                             }
                             this.$data.guestBoughtInfoData = newData;
                         }
