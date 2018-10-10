@@ -7,7 +7,7 @@
 		<div class="bottom">
 			<div style="width: 30%;">
 				<div class="bottom-num">{{goStoreNum.sales_singular}}</div>
-				<div class="bottom-text">订单数</div>
+				<div class="bottom-text">订单人数</div>
 			</div>
 			<div style="border-left: 1px solid #ededed;border-right: 1px solid #ededed;width: 40%;">
 				<div class="bottom-num">{{goStoreNum.sales_volume | numbersFilter}}</div>
