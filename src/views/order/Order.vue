@@ -214,7 +214,8 @@
             </el-col>
             <el-col :span='7'>
               <el-form-item label='成交金额:'>
-                <el-input size="mini" v-model.trim='item.price' v-on:input='editInputFun()' onclick="clickTotal('0204','编辑金额',1)"></el-input>
+                <input class="inputStyle" type="number" v-model="item.price" v-on:input="editInputFun()"onclick="clickTotal('0204','编辑金额',1)" value="0" oninput="if(value.length>7)value=value.slice(0,7)"></input>
+                <!--<el-input size="mini" v-model.trim='item.price' v-on:input='editInputFun()' onclick="clickTotal('0204','编辑金额',1)"></el-input>-->
               </el-form-item>
             </el-col>
             <el-col :span='1'>

@@ -56,10 +56,10 @@
   .line{
     text-align:center;
   }
-    input{
-      border: 0;
-      background: 0;
-    }
+    //input{
+    //  border: 0;
+    //  background: 0;
+    //}
     .totalNumber{
       width: 5rem;
     }
@@ -159,3 +159,19 @@
     color: #2a2a2a;
   }
 }
+.inputStyle{
+  width: 7.5rem;
+  height: 2.5rem;
+  border: 0;
+  border: 1px solid #dcdfe6;
+  display: inline-block;
+  padding: 1rem;
+}
+.inputStyle:focus-within{
+  outline: 0;
+}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+input[type="number"]{-moz-appearance:textfield;}
