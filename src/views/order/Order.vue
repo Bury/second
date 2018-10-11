@@ -121,7 +121,7 @@
             <span v-for="good in item.orderGoods" class="margin">[{{good.material_name}}/{{good.style_name}}]</span>
           </td>
           <!--<td>{{parseFloat(item.price,2)}}</td>-->
-          <td>{{item.price | numberFilter}}</td>
+          <td>{{item.price | numbersFilter}}</td>
           <td>
             <div style="width: 100%;display: flex;padding: 5%;text-align: center">
               <div style="width:30%;margin-left: 2rem;">
