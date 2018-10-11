@@ -113,8 +113,8 @@ export default {
 
 		//客流量分类
 		statisticsType(val) {
-			this.$data.meanValue = 0;
-			this.$data.meanFlag = false; // 隐藏平均线
+//			this.$data.meanValue = 0;
+//			this.$data.meanFlag = false; // 隐藏平均线
 			let qs = require('querystring');
 			let list = {
 				feature: val,
@@ -155,10 +155,10 @@ export default {
 						data: listData.sum,
 						time: listData.time,
 					})
-					if(typeof(res.data.data.mean) != 'undefined'){
-						this.$data.meanValue = res.data.data.mean.toFixed(1);
-						this.$data.meanFlag = true;
-					};
+//					if(typeof(res.data.data.mean) != 'undefined'){
+//						this.$data.meanValue = res.data.data.mean.toFixed(1);
+//						this.$data.meanFlag = true;
+//					};
 					this.getData(newData);
 				} else {
 					this.getData([])
@@ -174,24 +174,19 @@ export default {
 					tickPositioner: function() {
 						let positions = [],
 							increment;
-						if(meanValue > 10){
-							increment = parseFloat(meanValue) > this.dataMax ? Math.ceil(meanValue / 4) : 
-							Math.ceil(this.dataMax / 4);
-						}else{
-							increment = this.dataMax > 10 ? Math.ceil(this.dataMax / 4) : 2;
-						}
+//						if(meanValue > 10){
+//							increment = parseFloat(meanValue) > this.dataMax ? Math.ceil(meanValue / 4) : 
+//							Math.ceil(this.dataMax / 4);
+//						}else{
+//							increment = this.dataMax > 10 ? Math.ceil(this.dataMax / 4) : 2;
+//						}
+						increment = this.dataMax > 10 ? Math.ceil(this.dataMax / 4) : 2;
 						for(let i = 0; i < 6; i++) {
 							positions.push(increment * i)
 						}
 						return positions;
-					},
-					plotLines: [{
-						color: meanFlag ? 'rgba(255, 196, 1,1)' : 'rgba(255, 196, 1,0)', 
-						dashStyle: 'Dash', 
-						value: meanValue, 
-						width: 2,
-						zIndex:10
-					}]
+					}
+					
 				}
 			};
 			let guestCharts = this.$refs.guestCharts;
