@@ -83,4 +83,7 @@ ul,li{list-style: none;}
 .el-pagination--small .el-pager li:last-child{
   font-size: 13px;
 }
+.el-submenu__title i {
+    color: #FFFFFF;
+}
 </style>

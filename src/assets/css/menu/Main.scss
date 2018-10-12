@@ -7,85 +7,87 @@
         top: 0;
         left: 0;
         z-index:99;
-        height: 6.6rem;
+        height: 70px;
         width: 100%;
-        // min-width: 1204px;
+        min-width: 1204px;
         background: #fff;
-      .logo{
-        float: left;
-        background-color: #4588e6;
-        width: 15rem;
-        height: 100px;
-        img{
-          display: inline-block;
-          margin: 18px 0 0 48px;
-        }
-      }
-        .company{
-            float:left;
-            margin-left:30px;
-            //width:1.6rem;
-            line-height:74px;
-            font-size:20px;
-            text-align:center;
-            color:#4588e6;
+        .company {
+            float: left;
+            line-height: 70px;
+            text-align: center;
         }
         .user{
             position: absolute;
             right:50px;
-            top: 33px;
-            //line-height:80px;
+            top: 25px;
         }
     }
     .left-menu-wrap{
         position:fixed;
         left:0;
-        top:100px;
+        top:0px;
         z-index:999;
         height: 100%;
-        width: 15rem;
         background: #4588e6;
         overflow-x:hidden;
         overflow-y:auto;
-        .left-menu{
+        .leftNav {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
         }
-      .arrow{
-        border-top: 1px solid #4577d7;
-        border-bottom: 1px solid #4577d7;
-        .arrow1{
-          width: 15rem;
-          height:18px;
-          border-top: 1px solid #459af4;
-          border-bottom: 1px solid #459af4;
-          background-color: #4588e6;
-          //margin: 0;
-          .movement_image{
-            position: relative;
-            left: 37%;
-            top: 4px;
-            width: 5rem;
-            margin: 0;
-            padding: 0 20px;
-          }
-          .movement img{
-            animation: movement 1s infinite;
-          }
-          @keyframes movement{
-            from{transform:translate(0,0)}
-            to{transform:translate(-10px,0)}
-          }
+        .left-arrow {
+            border-top: 1px solid #4577d7;
+            border-bottom: 1px solid #4577d7;
+            .arrow-wrap {
+                border-top: 1px solid #459af4;
+                border-bottom: 1px solid #459af4;
+                background-color: #4588e6;
+                margin-bottom: 0;
+                text-align: center;
+                line-height: 15px;
+                height: 19px;
+            }
+            .moveImg {
+                animation: movement 2s linear infinite;
+            }
+            @keyframes movement {
+                0% {
+                    transform: translate(0, 0)
+                }
+                33% {
+                    transform: translate(-2px, 0)
+                }
+                66% {
+                    transform: translate(2px, 0)
+                }
+                100% {
+                    transform: translate(0, 0)
+                }
+            }
         }
-      }
 
     }
     .left-menu-wrap::-webkit-scrollbar {
-        // display: none;
+        width: 8px;
+        /*高宽分别对应横竖滚动条的尺寸*/
     }
-    .left-menu-wrap::-moz-scrollbar {
-        // display: none;
+    .left-menu-wrap::-webkit-scrollbar-thumb {
+        /*滚动条里面小方块*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        background: #D2D2D2;
+        border-radius: 10px;
+    }
+    .left-menu-wrap::-webkit-scrollbar-track {
+        /*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        background: #FFFFFF;
     }
   .content-wrap{
-    margin: 7.5rem 1rem 1rem 16rem;
+      margin-top: 80px;
+      margin-right: 10px;
+      margin-bottom: 10px;
     //margin:110px 20px 30px 200px;
     //padding:40px 30px 70px;
     //background-color: #fff;
@@ -97,10 +99,23 @@
     position: fixed;
   }
 }
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 160px;
-
-}
 .el-menu{
     border:0;
 }
+
+.ml74 {
+    margin-left: 74px;
+}
+
+.ml90 {
+    margin-left: 90px;
+}
+
+.ml170 {
+    margin-left: 170px;
+}
+
+.ml190 {
+    margin-left: 190px;
+}
+

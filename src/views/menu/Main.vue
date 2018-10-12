@@ -2,12 +2,7 @@
 <template>
     <div class="main-box">
         <div class="header-wrap">
-          <div class="logo">
-            <img src="../../assets/images/logo.png" />
-          </div>
-            <div class="company">
-              <img src="../../assets/images/logoname.png" />
-            </div>
+        	<div :class="[isCollapse ? 'ml90' : 'ml190' , 'company']"><img src="../../assets/images/logoname.png"/></div>
             <!--<div style="float:left;margin-top:20px;color:#ffffff;">-->
                 <!--{{store_name}}-->
             <!--</div>-->
@@ -26,23 +21,15 @@
             </div>
         </div>
         <div class="left-menu-wrap">
-          <el-radio-group v-model="isCollapse">
-          <div class="arrow">
-            <div class="arrow1">
-              <!--<div style="margin-left: 40%;margin-top: -3px;">-->
-                <!--<img src="../../assets/images/menuLeft-1.png" />-->
-              <!--</div>-->
-              <div class="movement">
-                <div class="movement_image" v-if="left" @click="movementLeft">
-                  <img src="../../assets/images/left.png" />
-                </div>
-                <div class="movement_image" v-if="right" @click="movementRight">
-                  <img src="../../assets/images/right.png" />
-                </div>
-              </div>
+        	<div class="leftNav">
+              <img  :width="isCollapse ? 54 : 84" src="../../assets/images/logo.png" />
             </div>
-          </div>
-          </el-radio-group>
+        	<div class="left-arrow">
+            	<ul class="arrow-wrap">
+            		<li v-if="isCollapse" @click="isCollapse = false"><img class="moveImg" src="../../assets/images/right.png"/></li>
+            		<li v-if="!isCollapse" @click="isCollapse = true"><img class="moveImg" src="../../assets/images/left.png"/></li>            		
+            	</ul>
+            </div>
             <!--<el-radio-group v-model="isCollapse">-->
                 <!--<el-radio-button :label="false" v-if="isCollapse">展开</el-radio-button>-->
                 <!--<el-radio-button :label="true" v-if="!isCollapse">收起</el-radio-button>-->
@@ -51,7 +38,7 @@
         </div>
         <div ref="content">
           <!--<div class="marginTop"></div>-->
-          <div class="content-wrap"  ref="content"><router-view></router-view></div>
+          <div :class="[ 'content-wrap' ,isCollapse ? 'ml74' :  'ml170']"   ref="content"><router-view></router-view></div>
         </div>
     </div>
 </template>

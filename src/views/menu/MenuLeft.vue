@@ -1,8 +1,8 @@
 <template>
 	<div class="left-menu1">
 
-    <el-menu style="width: 100%;"
-      :default-active="currentMenu"
+    <el-menu 
+              :default-active="currentMenu"
              router
              class="el-menu-vertical-demo"
              :collapse="isCollapse && isShow"
@@ -11,14 +11,14 @@
             active-text-color="#fff">
 
       <template v-for="(item,index) in tableData">
-        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" style="text-align: center;" :id="item.id">
+        <el-menu-item :key="index" :index="item.front_url" v-if="item.no_child" :id="item.id">
           <div class="iconfontSize" onclick="clickTotal(this.parentNode.id,this.id,1)" :id="item.name">
             <i :class="item.front_icon" style="color: #fff;"></i>
             <span slot="title">{{item.name}}</span>
           </div>
         </el-menu-item>
 
-        <el-submenu v-else :key="index"  :index="item.front_url" style="text-align: center">
+        <el-submenu v-else :key="index"  :index="item.front_url">
             <template slot="title">
                 <i :class="item.front_icon"  style="color: #fff;font-size:20px;"></i>
                 <span slot="title">{{item.name}}</span>
