@@ -76,13 +76,13 @@
           <thead style="background: #fafafa;border: 1px solid #f5f5f5;border-bottom: 0;">
           <tr height="58px">
             <th class="col-md-1 text-center">序号</th>
-            <th class="col-md-1 text-center">人脸</th>
+            <th class="col-md-2 text-center">人脸</th>
             <th class="col-md-2 text-center">姓名</th>
             <!--<th class="col-md-1 text-center">性别</th>-->
             <!--<th class="col-md-1 text-center">年龄</th>-->
             <th class="col-md-1 text-center">客户类型</th>
             <th class="col-md-1 text-center">消费状态</th>
-            <th class="col-md-1 text-center">拍摄位置</th>
+            <!--<th class="col-md-1 text-center">拍摄位置</th>-->
             <th class="col-md-2 text-center">进店时间</th>
             <th class="col-md-2 text-center">操作</th>
           </tr>
@@ -104,7 +104,7 @@
               <span>{{item.is_new == 1 ?'新客':'熟客'}}</span>
             </td>
             <td><span>{{item.vip_level == 1 ?'已购':'未购'}}</span></td>
-            <td>{{item.device_name != null ? '--' : item.device_name}}</td>
+            <!--<td>{{item.device_name != null ? '--' : item.device_name}}</td>-->
             <td>{{item.created_at | date(4)}}</td>
             <td>
               <el-button type="text" size="small" @click="showDialog(item)" >详情备注</el-button>
