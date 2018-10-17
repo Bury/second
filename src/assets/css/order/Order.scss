@@ -56,15 +56,13 @@
   .line{
     text-align:center;
   }
-    //input{
-    //  border: 0;
-    //  background: 0;
-    //}
     .totalNumber{
       width: 5rem;
+      background-color: #fff;
     }
     .totalPrice{
       width: 9rem;
+      background-color: #fff;
     }
     .totalNumber, .totalPrice{
       padding:0;
@@ -104,7 +102,6 @@
     height: 2.4rem;
     width: 8rem;
     background-color: #f5f7fa;
-    //border-radius:3px;
     text-align: center;
     color:#606266;
     line-height:2.4rem;

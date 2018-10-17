@@ -144,9 +144,6 @@
               <div><i class="iconfont icon2 el-icon-yy-Group-" @click="fnEdit(item)" onclick="clickTotal('020','订单管理编辑',1)"></i></div>
               <div><i class="iconfont icon3 el-icon-yy-shanchu" @click="fnRemove(item)" onclick="clickTotal('021','订单管理删除',1)" ></i></div>
             </div>
-            <!--<el-button @click="fnView(item)" icon="el-icon-view" type="primary"  plain circle size="small" onclick="clickTotal('019','订单管理查看',1)"></el-button>-->
-            <!--<el-button @click="fnEdit(item)" icon="el-icon-yy-Group-" type="warning"  plain circle  size="small" onclick="clickTotal('020','订单管理编辑',1)"></el-button>-->
-            <!--<el-button @click="fnRemove(item)" icon="el-icon-yy-shanchu" type="danger"  plain circle  size="small" onclick="clickTotal('021','订单管理删除',1)"></el-button>-->
           </td>
         </tr>
         </tbody>
@@ -240,9 +237,6 @@
             <input v-model="editForm.price" class='totalPrice'/>元
           </el-form-item>
         </div>
-        <!--<el-form-item></el-form-item>-->
-        <!--<el-form-item></el-form-item>-->
-        <!--<el-form-item></el-form-item>-->
         <el-form-item label="小票:" v-model="editForm.avatar">
           <div :model="editForm.avatar" :visible.sync="editImgVisible">
             <div class="editImg" v-for="item in editForm.avatar">
@@ -329,9 +323,6 @@
             共<input v-model='editAllNum' class='totalNumber' :disabled='true' prop="editAllNum"/>件,总价
             <input v-model="editForm.price" class='totalPrice' :disabled='true' prop="price"/>元
           </el-form-item>
-        <!--<el-form-item></el-form-item>-->
-        <!--<el-form-item></el-form-item>-->
-        <!--<el-form-item></el-form-item>-->
         <el-form-item label="小票:" v-model="editForm.avatar">
           <div :model="editForm.avatar" :visible.sync="editImgVisible">
           	<template v-if='editForm.avatar.length > 0'>
@@ -353,7 +344,7 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="viewClose()">取 消</el-button>
+        <el-button size="mini" @click="viewClose()">取 消</el-button>
       </div>
     </el-dialog>
 

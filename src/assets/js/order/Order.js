@@ -47,9 +47,6 @@ export default {
 				currentPage: 1,
 				totalCount: 0,
 			},
-			cashTimes: ['', ''],
-			createdTimes: ['', ''],
-			dialogTitle: '',
 			requestParameters: {
 				page: 1,
 				page_size: 20,
@@ -159,30 +156,6 @@ export default {
 		//上传图片动态地址
 		importFileUrl() {
 			return global.FILE_UPLOAD
-		},
-
-		//图片移除时操作
-		handleRemove(file, fileList) {
-
-			if(file.response.errno === 0) {
-				for(let i = 0; i < this.$data.imageListF.length; i++) {
-					this.$data.imageListF[i] == file.response.data.path && this.$data.imageListF.splice(i, 1)
-				}
-			}
-
-		},
-
-		//超出个数时操作
-		handleExceed(files, fileList) {
-			this.$message({
-				type: 'warning',
-				message: '只能上传三张小票信息',
-			})
-		},
-
-		handlePictureCardPreview(file) {
-			this.dialogImageUrl = file.url;
-			this.dialogVisible = true;
 		},
 		beforeAvatarUpload(file) {
 			const isJPEG = file.type === 'image/jpeg';
@@ -303,15 +276,7 @@ export default {
 			this.$data.requestParameters.page = currentPage;
 			this.lists();
 		},
-		dialogClose() {
-			this.$data.FormVisible = false;
-			this.$refs.upload.clearFiles();
-			setTimeout(() => {
-				this.$refs.formName.resetFields();
-				this.submitClearData();
-				this.$data.faceVisible = false;
-			}, 0)
-		},
+
 		dialogCloseEdit() {
 			this.$data.editVisible = false;
 			this.$refs.upload.clearFiles();
@@ -400,18 +365,6 @@ export default {
 				}
 			}
 			this.$data.editForm.price = n;
-		},
-
-		totalPrice() {
-			let n = 0;
-			for(let i = 0; i < this.$data.addProList.length; i++) {
-				if(this.$data.addProList[i].price.replace(/[^\.\d]/g, '')) {
-					n += parseInt(this.$data.addProList[i].price,2);
-				} else {
-					this.$data.addProList[i].price = 0;
-				}
-			}
-			this.$data.totalMoney = n;
 		},
 
 		//编辑添加商品
@@ -507,56 +460,6 @@ export default {
 			this.$refs.upload.clearFiles();
 		},
 
-		//根据人脸ID查询来客信息
-		findGuestByFaceId() {
-			this.$data.faceVisible = true;
-			let list = {
-				'id': this.$data.searchFace.id,
-			}
-			let qs = require('querystring');
-			orderApi.checkFaceInfo(qs.stringify(list)).then((res) => {
-				if(res.data.errno === 0) {
-					this.$data.faceSearch.avatar = res.data.data.avatar;
-					this.$data.faceSearch.customer_id = res.data.data.customer_id;
-				} else {
-					this.$message.error("没有该编号信息");
-					this.$data.faceVisible = false;
-				}
-			})
-		},
-
-		//添加商品
-		addProduct() {
-			let obj = {
-				material: null,
-				style: null,
-				price: ''
-			}
-			this.$data.addProList.push(obj);
-
-		},
-		//计算总价
-		inputFun(index) {
-			this.$data.inputMaxL = /^\d+\.?\d{0,1}$/.test(this.$data.addProList[index].price) ? null : this.$data.addProList[index].price.length - 1;
-
-			let n = 0;
-			for(let i = 0; i < this.$data.addProList.length; i++) {
-				n += parseFloat(this.$data.addProList[i].price == "" ? 0 : this.$data.addProList[i].price);
-			}
-
-			this.$data.allNum = this.$data.addProList.length;
-			if(isNaN(n) == true) {
-				this.$message({
-					message: '输入不合法，请重新输入',
-					type: 'warning',
-					center: true
-				});
-				this.$data.totalMoney = 0;
-			} else {
-				this.$data.totalMoney = n;
-			}
-		},
-
 		//清空数据
 		submitClearData() {
 			this.$data.formName = {
@@ -613,60 +516,6 @@ export default {
 			this.$data.item.price = '';
 		},
 
-		//删除商品
-		deleProduct(index) {
-			this.$data.addProList.splice(index, 1);
-			let n = 0;
-			for(let i = 0; i < this.$data.addProList.length; i++) {
-				if(this.$data.addProList[i].price.replace(/[^\.\d]/g, '')) {
-					n += parseFloat(this.$data.addProList[i].price, 2);
-				} else {
-					this.$data.addProList[i].price = 0;
-				}
-			}
-			this.$data.totalMoney = n;
-			this.$data.allNum = this.$data.addProList.length;
-		},
-
-		//补单
-		submitForm(formName) {
-			if(this.$data.submitFlag === false) {
-				return false;
-			}
-			this.$data.submitFlag = false;
-
-							let listArry;
-							this.$data.imageListF.length === 0 ? listArry = "" : listArry = this.$data.imageListF.join(',');
-							let sendData = JSON.stringify(this.$data.addProList);
-							let cashTime = this.$data.formName.cash_t / 1000;
-							let list = {
-								'goods_info': sendData,
-								'cash_t': cashTime,
-								'remark': this.$data.formName.remark,
-								'files_web': listArry,
-								'customer_id': this.$data.faceSearch.customer_id
-							}
-							let qs = require('querystring');
-							orderApi.addsNotLive(qs.stringify(list)).then((res) => {
-								if(res.data.errno === 0) {
-									this.lists();
-									this.submitClearData();
-									this.$message({
-										type: 'success',
-										message: '创建成功!'
-									});
-									this.$data.FormVisible = false;
-									this.$refs.upload.clearFiles();
-								} else {
-									this.$message.error(res.data.msg);
-								}
-								this.$data.submitFlag = true;
-								this.$data.faceVisible = false;
-							})
-
-
-				},
-
 				//删除
 				fnRemove(row) {
 					this.$confirm('确认删除该订单：' + row.sn + ' ？', '删除提示', {
@@ -691,39 +540,15 @@ export default {
 						})
 					}).catch(action => {})
 				},
-
-				//取消
-				cancel(name) {
-					this.$data.FormVisible = false;
-					this.submitClearData();
-					this.$data.faceVisible = false;
-					this.$data.imageListF = [];
-					this.$data.item.file = '';
-					this.$refs.upload.clearFiles();
-				},
 				//查看图片放大
 				imgView(event) {
 					this.$data.imgViewVisible = true;
 					this.$data.imgViewBig = event.currentTarget.src
 				},
-
-				//现场录单
-				orderLive() {
-					this.$router.push({
-						path: '/OrderLive'
-					})
-				},
 				orderVideo() {
 					this.$router.push({
 						path: '/OrderNow'
 					})
-				},
-				//补单
-				orderNotLive() {
-					this.$data.FormVisible = true;
-					//点击补单的时候，清空一下数据
-					this.$data.imageListF = [];
-					this.$data.item.file = [];
 				},
 				remark(val){
             if(val.length >= 200 ){
@@ -746,7 +571,6 @@ export default {
 		  this.$data.cash_time_end = '';
 		  this.$data.create_time_start = '';
 		  this.$data.create_time_end = '';
-		  // this.lists();
     },
     viewDialogClose(){
 		  this.$data.viewVisible = false;

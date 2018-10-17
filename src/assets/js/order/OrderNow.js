@@ -33,30 +33,9 @@ export default {
       step01_block:true,
       step02_block:false,
       step03_block:false,
-      showVideo:true,
-      actionDialogVisible: false,
-      userOld:false,
-      userNew:false,
-      msgGetNews:false,
-      phoneIsMySql:false,
-      checkoutCallBack:false,
-      phoneNoMySql:false,
-      ifIsOld:false,
-      ifIsNew:false,
-      firstNewC:false,
-      phoneIsMySqlA:false,
       faceIdIs:'',
-      faceIdNo:'',
-      takeImages:'',
-      goodsList:[],
-      allMoneyList:[],
       allGoodLenght:'',
       allMoney:'',
-      newNewP:'',
-      newNewQ:'',
-      newNewR:'',
-      oldOT:'',
-      imageListF:[],
       pushGoods:[],
       pushRemk:'',
       ruleForm: {
@@ -68,16 +47,10 @@ export default {
         textarea2:''
       },
       NewRuleForm:{
-        images:'',
         name:'',
         phone:'',
         sex:'',
         type:'',
-        textarea2:'',
-      },
-      form:{
-        newPhone:'',
-        newTakeNum:'',
       },
       item: {
         material: '',
@@ -90,9 +63,6 @@ export default {
         style: '',
         money:''
       }],
-      dialogImageUrl: '',
-      actionDialogVisible: false,
-      isNoMyself:'',
       tableData:{
         id:'',
         avatar:'',
@@ -144,10 +114,6 @@ export default {
       this.$data.requestParameters.page = 1;
       this.chooseLists();
     },
-    //  上传图片动态地址
-    importFileUrl(){
-      return global.FILE_UPLOAD
-    },
     getAll() {
       let list = {
         'all': 1,
@@ -170,90 +136,36 @@ export default {
       })
     },
 
-
-
-    //智能识别人脸身份
+    //选择人脸信息进行开单
     recognition(id,index){
       this.$data.see = [true,true,true,true,true,true];
       this.$data.saw = [false,false,false,false,false,false];
       this.$data.saw[index] = true;
       this.$data.see[index] = false;
-      // (nowIdx !== 4) && (this.$data.saw = false);
       this.$data.traffic_id = id;
       this.step02_block=true;
       this.step01_block=true;
       this.step03_block=true;
-      //直接点击智能识别的时候一切都回到原始状态
-      this.userNew = false;
-      this.userOld = false;
-      this.firstNewC =false;
-      this.$data.form.newPhone = '';
-      this.phoneIsMySqlA = false;
-      this.phoneIsMySql = false;
-      this.firstNewC = false;
-      this.phoneNoMySql = false;
-      this.checkoutCallBack = false;
-      //  请求接口，上传文件（头像）,返回0-新客，1-熟客
+      //  请求接口
       let list = {
         id:id
       };
       let qs = require('querystring')
       OrderApi.videoFindFace(qs.stringify(list)).then((res) => {
         this.getAll();
-        if(res.data.msg === '服务器内部错误'){
-          this.$message({
-            message: '您获取的照片不合法',
-            type: 'warning',
-            center: true
-          });
-          this.step02_block=false;
-          this.step01_block=true;
-          this.step03_block=false;
-        }
-        else{
           this.$data.NewRuleForm = res.data.data;
           this.$data.faceIdIs = res.data.data.customer_id;
-          if(res.data.data.is_new === 1){
-            this.$data.NewRuleForm.images = res.data.data.avatar;
-            // this.$data.NewRuleForm.phone = res.data.data.avatar;
+          if((res.data.data.is_new === 1) || (res.data.data.is_new === 0)){
             if(res.data.data.gender === 0){
               this.$data.NewRuleForm.sex = '女'
             }else{
               this.$data.NewRuleForm.sex = '男'
             }
-            //  老用户
-            this.userNew= false;
-            this.userOld = true;
-            this.firstNewC = false;
-            this.ifIsOld=true;
-            this.ifIsNew=false;
-            //回显数据
-          }else if(res.data.data.is_new === 0){
-            //  新用户
-            this.userNew = true;
-            this.userOld = false;
-            this.firstNewC =true;
-            this.$data.form.newPhone = '';
-            this.phoneIsMySqlA = false;
-            this.phoneIsMySql = false;
-            this.phoneNoMySql = false;
-            this.$data.newNewP = res.data.data.avatar;
-            if(res.data.data.gender === 1){
-              this.$data.NewRuleForm.sex = '男'
-            }else{
-              this.$data.NewRuleForm.sex = '女'
-            }
-            if(res.data.data.vip_level === 0){
-              this.$data.newNewR = '未购买'
-            }else{
-              this.$data.newNewR = '已购买'
-            }
           }
-        }
       })
     },
 
-    //  返回的顾客信息，是本人直接走消费
+    //  返回的顾客信息,进行消费
     isTrueAndPass(){
       let list = {
         'name': this.$data.NewRuleForm.name,
@@ -264,9 +176,6 @@ export default {
       let qs = require('querystring');
       OrderApi.postMe(qs.stringify(list)).then((res) => {
         if(res.data.errno === 0){
-          //是本人的时候，人脸id为查询手机号返回人脸id
-          this.$data.isNoMyself = this.$data.faceIdNo;
-
           this.step03_block=true;
           this.step02_block=true;
           this.step01_block=true;
@@ -287,9 +196,7 @@ export default {
         style : null,
         money:''
       }
-
       this.$data.addProList.push(obj);
-
     },
 
     //  实时计算输入金额
@@ -312,10 +219,8 @@ export default {
     delGoods(index){
       this.$data.addProList.splice(index,1);
       if(this.$data.addProList.length == 1){
-        // if(this.$data.addProList[0].money == ''){
-          this.$data.allMoney = this.$data.allMoney;
-          this.$data.allGoodLenght = 1;
-        // }
+        this.$data.allMoney = this.$data.allMoney;
+        this.$data.allGoodLenght = 1;
       }else{
         //删除一条之后，需要再计算金额
         let m ;
@@ -325,30 +230,12 @@ export default {
           if(this.$data.addProList[i].money){
             m += parseInt(this.$data.addProList[i].money);
           }
-
         }
-
         this.$data.allGoodLenght =this.$data.addProList.length
         this.$data.allMoney = m;
       }
     },
 
-    //  上传图片
-    handleRemove(file, fileList) {
-      // console.log(file, fileList);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.actionDialogVisible = true;
-      // console.log(file)
-      // console.log(this.dialogImageUrl)
-    },
-    // 上传成功后的回调
-    uploadSuccess (response, file, fileList) {
-      // console.log('上传文件', response);
-      // console.log(response.msg)
-      this.$data.imageListF.push(response.data.path);
-    },
 
     //最后的计算
     allPostM(){
@@ -362,7 +249,6 @@ export default {
         this.$data.pushGoods.push(arrAs);
       }
       let sendData = JSON.stringify(this.$data.pushGoods);
-      let listArry =  this.$data.imageListF.join(',');
       if(this.$data.NewRuleForm.textarea2 === ''){
         this.$data.pushRemk = this.$data.ruleForm.textarea2;
       }else if(this.$data.ruleForm.textarea2 === ''){
@@ -371,7 +257,6 @@ export default {
       let list = {
         'goods_info':sendData,
         'remark':this.$data.remarkString,
-        'files_web':listArry,
         'customer_id':this.$data.faceIdIs,
         'traffic_id':this.$data.traffic_id,
       }
@@ -379,9 +264,7 @@ export default {
       OrderApi.addGoods(qs.stringify(list)).then((res) => {
         this.$data.item = {};
         this.$data.pushGoods = [];
-
         if(res.data.errno === 0){
-
           this.$router.push({path: '/Order'});
           this.$message({
             message: '创建订单成功',
@@ -391,17 +274,7 @@ export default {
           this.$message.warning(res.data.msg)
         }
 
-        //完成订单之后，跳回列表页面
-        if(res.data.error == 0){
-          this.$refs.upload.clearFiles();
-          this.step_1=2;
-          this.step_2=2;
-          this.step_3=2;
-          this.step_4=1;
-        }
-
       });
-      // this.$router.push({path: '/Order'})
     },
     fnGoback(){
       this.$router.push('/Order')
