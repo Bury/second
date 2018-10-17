@@ -74,7 +74,7 @@
       <el-tab-pane label="来客列表" name="first">
         <table width="99%" class="table">
           <thead style="background: #fafafa;border: 1px solid #f5f5f5;border-bottom: 0;">
-          <tr height="58px">
+          <tr height="40">
             <th class="col-md-1 text-center">序号</th>
             <th class="col-md-2 text-center">人脸</th>
             <th class="col-md-2 text-center">姓名</th>
@@ -88,7 +88,7 @@
           </tr>
           </thead>
           <tbody style="text-align: center">
-          <tr v-for="(item,index) in tableData" :key="index" height="58px">
+          <tr v-for="(item,index) in tableData" :key="index" height="40">
             <td>{{(pagination.currentPage - 1) * 20 + index + 1 }}</td>
             <td>
               <div class="imgHover">
