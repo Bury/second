@@ -14,5 +14,14 @@ export default {
       })
     })
   },
+  list(list){
+    return new Promise((resolve, reject) => {
+      axios.post(global.Guest_Visited_Record_Lists_NEW, list).then((res) => {
+        resolve(res)
+      }).catch((err) => {
+        reject(err)
+      })
+    })
+  },
 
 }

@@ -33,11 +33,11 @@ axios.interceptors.response.use(function (res) {
             localStorage.setItem('knock_knock', '');
             localStorage.setItem('username', '');
             localStorage.setItem('domain', '');
-            window.location.href = '/';
-         // router.replace({
-         //     path: '/UserLogin',
-         //     query: {redirect: router.currentRoute.fullPath}
-         // })
+            // window.location.href = '/';
+         router.replace({
+             path: '/UserLogin',
+             query: {redirect: router.currentRoute.fullPath}
+         })
         }
     return res;
   }, function (err) {
@@ -45,11 +45,11 @@ axios.interceptors.response.use(function (res) {
             localStorage.setItem('knock_knock', '');
             localStorage.setItem('username', '');
             localStorage.setItem('domain', '')
-            window.location.href = '/';
-         // router.replace({
-         //     path: '/UserLogin',
-         //     query: {redirect: router.currentRoute.fullPath}
-         // })
+            // window.location.href = '/';
+         router.replace({
+             path: '/UserLogin',
+             query: {redirect: router.currentRoute.fullPath}
+         })
         }
     return Promise.reject(err);
   });

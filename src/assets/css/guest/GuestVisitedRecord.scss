@@ -5,10 +5,10 @@
     .store-record-list{
         overflow:hidden;
         .store-record-item{
-            float:left;
+            //float:left;
             margin-bottom:10px;
             padding:12px;
-            width:47%;
+            width:97%;
             border:1px solid #d2d2d2;
             box-sizing: border-box;
             border-radius: 5px;
@@ -31,9 +31,9 @@
                 }
             }
         }
-        .store-record-item:nth-child(2n){
-            float:right;
-        }
+        //.store-record-item:nth-child(2n){
+        //    float:right;
+        //}
         .store-record-item:hover{
             border:1px solid #409EFF;
         }
@@ -41,4 +41,9 @@
 }
 .el-pagination{
     margin:10px;
+}
+.item-time{
+  border-bottom: 1px solid #d5d5d5;
+  margin-bottom: 14px;
+  line-height: 36px;
 }

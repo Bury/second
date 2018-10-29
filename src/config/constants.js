@@ -75,6 +75,7 @@ global.TAG_LISTS_RESULTS = `${SERVER_IP}${COMMON}tag/tree-form`
 
 //到店记录
 global.Guest_Visited_Record_Lists = `${SERVER_IP}${COMMON}customer/store-recore`
+global.Guest_Visited_Record_Lists_NEW = `${SERVER_IP}${COMMON}customer/store-recore-new`
 //来客订单记录
 global.ORDER_LISTS_USER_RESULTS = `${SERVER_IP}${COMMON}customer/order-recore`
 //post order/search-traffic 查询人脸信息
